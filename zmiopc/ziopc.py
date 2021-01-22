@@ -327,6 +327,150 @@ def ziopc(pstart, x, y, z, data, weights, offsetx, offsetz):
     return llik
 
 
+def miop(pstart, x, y, z, data, weights, offsetx, offsetz):
+    """
+    Likelihood function for Middle-inflated Model
+    Number of outcomes must be odd
+
+    :param pstart: starting parameters.
+    :type pstart: numpy.ndarray
+    :param x: Ordered stage variables.
+    :type x: pandas.core.frame.DataFrame
+    :param y: DV.
+    :type y: pandas.core.frame.DataFrame
+    :param z: Inflation stage variables.
+    :type z: pandas.core.frame.DataFrame
+    :param data: dataset.
+    :type data: pandas.core.frame.DataFrame
+    :param weights: weights.
+    :type weights: int
+    :param offsetx: offset for X.
+    :type offsetx: int
+    :param offsetz: offset for z.
+    :type offsetz: int
+    """
+    n = len(data)
+    ycat = y.astype('category')
+    ycatu = np.unique(ycat)
+    yncat = len(ycatu)
+    y0 = np.sort(ycatu)
+    V = np.zeros((len(data), yncat))
+    for j in range(yncat):
+        V[:, j] = y == y0[j]
+    tau = np.repeat(1.0, yncat)
+    for j in range(yncat - 1):
+        if j == 0:
+            tau[j] = pstart[j]
+        else:
+            tau[j] = tau[j - 1] + np.exp(pstart[j])
+    beta = pstart[(yncat + len(z.columns) - 1): len(pstart)]
+    gamma = pstart[(yncat - 1): (yncat + len(z.columns) - 1)]
+    ZG = z.dot(gamma) + offsetz
+    XB = x.dot(beta) + offsetx
+    cprobs = np.zeros((n, yncat))
+    probs = np.zeros((n, yncat))
+    for i in range(yncat - 1):
+        cprobs[:, i] = norm.cdf(tau[i] - XB)
+    probs[:, 0] = (cprobs[:, 0]) * norm.cdf(ZG)
+    for i in range(1, yncat - 1):
+        if i == median(range(yncat)):
+            probs[:, i] = ((1 - norm.cdf(ZG))
+                           + (norm.cdf(ZG)
+                              * (cprobs[:, i] - cprobs[:, (i - 1)])))
+        else:
+            probs[:, i] = (norm.cdf(ZG) * (cprobs[:, i] - cprobs[:, (i - 1)]))
+    probs[:, yncat - 1] = (1 - cprobs[:, (yncat - 2)]) * norm.cdf(ZG)
+    lik = np.zeros((n, yncat))
+    for k in range(n):
+        for j in range(yncat):
+            lik[k, j] = V[k, j] * probs[k, j]
+    likk = np.log(lik[lik != 0])
+    llik = -1 * sum(likk * weights)
+    return llik
+
+
+def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
+    """
+    Likelihood function for Middle-inflated Correlated-Errors Model.
+    Number of outcomes must be odd.
+    :param pstart: starting parameters.
+    :type pstart: numpy.ndarray
+    :param x: Ordered stage variables.
+    :type x: pandas.core.frame.DataFrame
+    :param y: DV.
+    :type y: pandas.core.frame.DataFrame
+    :param z: Inflation stage variables.
+    :type z: pandas.core.frame.DataFrame
+    :param data: dataset.
+    :type data: pandas.core.frame.DataFrame
+    :param weights: weights.
+    :type weights: int
+    :param offsetx: offset for X.
+    :type offsetx: int
+    :param offsetz: offset for z.
+    :type offsetz: int
+    """
+    n = len(data)
+    ycat = y.astype('category')
+    ycatu = np.unique(ycat)
+    yncat = len(ycatu)
+    y0 = np.sort(ycatu)
+    V = np.zeros((len(data), yncat))
+    for j in range(yncat):
+        V[:, j] = y == y0[j]
+    tau = np.repeat(1.0, yncat)
+    for i in range(yncat - 1):
+        if i == 0:
+            tau[i] = pstart[i]
+        else:
+            tau[i] = tau[i - 1] + exp(pstart[i])
+    beta = pstart[(yncat + len(z.columns) - 1): len(pstart) - 1]
+    gamma = pstart[(yncat - 1): (yncat + len(z.columns) - 1)]
+    X_beta = x.dot(beta)
+    rho = pstart[len(pstart) - 1]
+    cprobs = np.zeros((len(X_beta), yncat))
+    probs = np.zeros((len(X_beta), yncat))
+    cutpoint = np.zeros((len(X_beta), yncat))
+    cutpointb = np.zeros((len(X_beta), yncat))
+    ZG = z.dot(gamma) + offsetz
+    XB = x.dot(beta) + offsetx
+    means = np.array([0, 0])
+    lower = np.array([-inf, -inf])
+    sigma = np.array([[1, rho], [rho, 1]])
+    nsigma = np.array([[1, -rho], [-rho, 1]])
+    for i in range(yncat - 1):
+        cprobs[:, i] = norm.cdf(tau[i] - XB)
+        cutpoint[:, i] = tau[i] - XB
+        cutpointb[:, i] = XB - tau[i]
+    upperb = np.zeros((len(X_beta), 2))
+    upper = np.zeros((len(X_beta), 2))
+    for j in range(n):
+        upperb[j, :] = [ZG[j], cutpointb[j, yncat - 2]]
+        upper[j, :] = [ZG[j], cutpoint[j, 0]]
+        probs[j, yncat - 1] = mvn.mvnun(lower, upperb[j], means, sigma)[0]
+        probs[j, 0] = mvn.mvnun(lower, upper[j], means, nsigma)[0]
+    for i in range(n):
+        for j in range(1, yncat - 1):
+            if j == median(range(yncat)):
+                probs[i, j] = ((1 - norm.cdf(ZG[i]))
+                               + mvn.mvnun(lower, [ZG[i], cutpoint[i, j]],
+                                           means, nsigma)[0]
+                               - mvn.mvnun(lower, [ZG[i], cutpoint[i, j - 1]],
+                                           means, nsigma)[0])
+            else:
+                probs[i, j] = (mvn.mvnun(lower, [ZG[i], cutpoint[i, j]],
+                                         means, nsigma)[0]
+                               - mvn.mvnun(lower, [ZG[i], cutpoint[i, j - 1]],
+                                           means, nsigma)[0])
+    lik = np.zeros((n, yncat))
+    for k in range(n):
+        for j in range(yncat):
+            lik[k, j] = V[k, j] * probs[k, j]
+    likk = np.log(lik[lik != 0])
+    llik = -1 * sum(likk * weights)
+    return llik
+
+
 def opresults(model, data, x, y):
     """Produce estimation results, part of :py:func:`opmod`.
 
