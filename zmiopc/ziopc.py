@@ -45,12 +45,13 @@ class OpModel:
 
 
 class ZiopModel:
-    """Store model results from :py:func:`ziopmod`."""
+    """Store model results from :py:func:`iopmod`."""
 
-    def __init__(self, llik, coef, aic, vcov, data, xs, zs, ts,
+    def __init__(self, modeltype, llik, coef, aic, vcov, data, xs, zs, ts,
                  x_, yx_, z_, yncat, xstr, ystr, zstr):
         """Store model results, goodness-of-fit tests, and other information.
 
+        :param modeltype: Type of Iop Model (ZiOP or MiOP)
         :param llik: Log-Likelihood
         :param coef: Model coefficients
         :param aic: Model Akaike information criterion
@@ -67,7 +68,9 @@ class ZiopModel:
         :param xstr: list of string for x names
         :param ystr: list of string for y names
         :param zstr: list of string for z names
+
         """
+        self.modeltype = modeltype
         self.llik = llik
         self.coefs = coef
         self.AIC = aic
@@ -86,13 +89,14 @@ class ZiopModel:
 
 
 class ZiopcModel:
-    """Store model results from :py:func:`ziopcmod`."""
+    """Store model results from :py:func:`iopcmod`."""
 
-    def __init__(self, llik, coef, aic, vcov, data,
+    def __init__(self, modeltype, llik, coef, aic, vcov, data,
                  xs, zs, ts, x_, yx_, z_, rho, yncat,
                  xstr, ystr, zstr):
         """Store model results, goodness-of-fit tests, and other information.
 
+        :param modeltype: Type of IopC Model (ZiOPC or MiOPC)
         :param llik: Log-Likelihood
         :param coef: Model coefficients
         :param AIC: Model Akaike information criterion
@@ -111,6 +115,7 @@ class ZiopcModel:
         :param ystr: list of string for y names
         :param zstr: list of string for z names
         """
+        self.modeltype = modeltype
         self.llik = llik
         self.coefs = coef
         self.AIC = aic
@@ -365,21 +370,21 @@ def miop(pstart, x, y, z, data, weights, offsetx, offsetz):
             tau[j] = tau[j - 1] + np.exp(pstart[j])
     beta = pstart[(yncat + len(z.columns) - 1): len(pstart)]
     gamma = pstart[(yncat - 1): (yncat + len(z.columns) - 1)]
-    ZG = z.dot(gamma) + offsetz
-    XB = x.dot(beta) + offsetx
+    zg = z.dot(gamma) + offsetz
+    xb = x.dot(beta) + offsetx
     cprobs = np.zeros((n, yncat))
     probs = np.zeros((n, yncat))
     for i in range(yncat - 1):
-        cprobs[:, i] = norm.cdf(tau[i] - XB)
-    probs[:, 0] = (cprobs[:, 0]) * norm.cdf(ZG)
+        cprobs[:, i] = norm.cdf(tau[i] - xb)
+    probs[:, 0] = (cprobs[:, 0]) * norm.cdf(zg)
     for i in range(1, yncat - 1):
         if i == median(range(yncat)):
-            probs[:, i] = ((1 - norm.cdf(ZG))
-                           + (norm.cdf(ZG)
+            probs[:, i] = ((1 - norm.cdf(zg))
+                           + (norm.cdf(zg)
                               * (cprobs[:, i] - cprobs[:, (i - 1)])))
         else:
-            probs[:, i] = (norm.cdf(ZG) * (cprobs[:, i] - cprobs[:, (i - 1)]))
-    probs[:, yncat - 1] = (1 - cprobs[:, (yncat - 2)]) * norm.cdf(ZG)
+            probs[:, i] = (norm.cdf(zg) * (cprobs[:, i] - cprobs[:, (i - 1)]))
+    probs[:, yncat - 1] = (1 - cprobs[:, (yncat - 2)]) * norm.cdf(zg)
     lik = np.zeros((n, yncat))
     for k in range(n):
         for j in range(yncat):
@@ -432,35 +437,35 @@ def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
     probs = np.zeros((len(X_beta), yncat))
     cutpoint = np.zeros((len(X_beta), yncat))
     cutpointb = np.zeros((len(X_beta), yncat))
-    ZG = z.dot(gamma) + offsetz
-    XB = x.dot(beta) + offsetx
+    zg = z.dot(gamma) + offsetz
+    xb = x.dot(beta) + offsetx
     means = np.array([0, 0])
     lower = np.array([-inf, -inf])
     sigma = np.array([[1, rho], [rho, 1]])
     nsigma = np.array([[1, -rho], [-rho, 1]])
     for i in range(yncat - 1):
-        cprobs[:, i] = norm.cdf(tau[i] - XB)
-        cutpoint[:, i] = tau[i] - XB
-        cutpointb[:, i] = XB - tau[i]
+        cprobs[:, i] = norm.cdf(tau[i] - xb)
+        cutpoint[:, i] = tau[i] - xb
+        cutpointb[:, i] = xb - tau[i]
     upperb = np.zeros((len(X_beta), 2))
     upper = np.zeros((len(X_beta), 2))
     for j in range(n):
-        upperb[j, :] = [ZG[j], cutpointb[j, yncat - 2]]
-        upper[j, :] = [ZG[j], cutpoint[j, 0]]
+        upperb[j, :] = [zg[j], cutpointb[j, yncat - 2]]
+        upper[j, :] = [zg[j], cutpoint[j, 0]]
         probs[j, yncat - 1] = mvn.mvnun(lower, upperb[j], means, sigma)[0]
         probs[j, 0] = mvn.mvnun(lower, upper[j], means, nsigma)[0]
     for i in range(n):
         for j in range(1, yncat - 1):
             if j == median(range(yncat)):
-                probs[i, j] = ((1 - norm.cdf(ZG[i]))
-                               + mvn.mvnun(lower, [ZG[i], cutpoint[i, j]],
+                probs[i, j] = ((1 - norm.cdf(zg[i]))
+                               + mvn.mvnun(lower, [zg[i], cutpoint[i, j]],
                                            means, nsigma)[0]
-                               - mvn.mvnun(lower, [ZG[i], cutpoint[i, j - 1]],
+                               - mvn.mvnun(lower, [zg[i], cutpoint[i, j - 1]],
                                            means, nsigma)[0])
             else:
-                probs[i, j] = (mvn.mvnun(lower, [ZG[i], cutpoint[i, j]],
+                probs[i, j] = (mvn.mvnun(lower, [zg[i], cutpoint[i, j]],
                                          means, nsigma)[0]
-                               - mvn.mvnun(lower, [ZG[i], cutpoint[i, j - 1]],
+                               - mvn.mvnun(lower, [zg[i], cutpoint[i, j - 1]],
                                            means, nsigma)[0])
     lik = np.zeros((n, yncat))
     for k in range(n):
@@ -535,14 +540,15 @@ def opmod(pstart, data, x, y,
     return results
 
 
-def ziopresults(model, data, x, y, z):
-    """Produce estimation results, part of :py:func:`ziopmod`.
+def iopresults(model, data, x, y, z, modeltype):
+    """Produce estimation results, part of :py:func:`iopmod`.
 
     :param model: model object created from minimization
     :param data: dataset
     :param x: Ordered stage variables
     :param y: : DV
     :param z: : Inflation stage variables
+    :param modeltype: : ZiOP or MiOP model
     """
     varlist = np.unique(y + z + x)
     dataset = data[varlist]
@@ -573,12 +579,12 @@ def ziopresults(model, data, x, y, z):
     coef = pd.DataFrame({'Coef': model.x, 'SE': ses, 'tscore': tscore,
                          'p': pval, '2.5%': lci, '97.5%': uci}, names)
     aic = -2 * (-model.fun) + 2 * (len(coef))
-    results = ZiopModel(model.fun, coef, aic, model.hess_inv, datasetnew,
+    results = ZiopModel(modeltype, model.fun, coef, aic, model.hess_inv, datasetnew,
                         xs, zs, ts, x_, yx_, z_, yncat, x, y, z)
     return results
 
 
-def ziopcresults(model, data, x, y, z):
+def iopcresults(model, data, x, y, z, modeltype):
     """Produce estimation results, part of :py:func:`ziopc  mod`.
 
     :param model: model object created from minimization
@@ -586,6 +592,7 @@ def ziopcresults(model, data, x, y, z):
     :param x: Ordered stage variables
     :param y: : DV
     :param z: : Inflation stage variables
+    :param modeltype: : ZiOPC or MiOPC model
     """
     varlist = np.unique(y + z + x)
     dataset = data[varlist]
@@ -618,13 +625,13 @@ def ziopcresults(model, data, x, y, z):
     coef = pd.DataFrame({'Coef': model.x, 'SE': ses, 'tscore': tscore,
                          'p': pval, '2.5%': lci, '97.5%': uci}, names)
     aic = -2 * (-model.fun) + 2 * (len(coef))
-    results = ZiopcModel(model.fun, coef, aic, model.hess_inv, datasetnew,
+    results = ZiopcModel(modeltype, model.fun, coef, aic, model.hess_inv, datasetnew,
                          xs, zs, ts, x_, yx_, z_, rho, yncat, x, y, z)
     return results
 
 
-def ziopmod(pstart, data, x, y, z,
-            method='BFGS', weights=1, offsetx=0, offsetz=0):
+def iopmod(modeltype, pstart, data, x, y, z,
+           method='BFGS', weights=1, offsetx=0, offsetz=0):
     """Estimate ZiOP model and return :class:`ZiopModel` class object as output.
 
     :param pstart: starting parameters
@@ -634,30 +641,49 @@ def ziopmod(pstart, data, x, y, z,
     :type y: list of str
     :param z: Inflation stage variables.
     :type z: list of str
+    :param modeltype: must be one of "ziop" or 'miop'
     :param method: method for optimization, default 'BFGS'
     :param weights: weights
     :param offsetx: offset for X
     :param offsetz: offset for Z
     :return: IopModel
     """
-    varlist = np.unique(y + z + x)
-    dataset = data[varlist]
-    datasetnew = dataset.dropna(how='any')
-    x_ = datasetnew[x]
-    y_ = datasetnew[y]
-    yx_ = y_.iloc[:, 0]
-    z_ = datasetnew[z]
-    z_.insert(0, 'ones', np.repeat(1, len(z_)))
-    model = minimize(ziop, pstart,
-                     args=(x_, yx_, z_, datasetnew, weights, offsetx, offsetz),
-                     method=method,
-                     options={'gtol': 1e-6, 'disp': True, 'maxiter': 500})
-    results = ziopresults(model, data, x, y, z)
-    return results
+
+    types = ['ziop', 'miop']
+    if modeltype in types:
+        varlist = np.unique(y + z + x)
+        dataset = data[varlist]
+        datasetnew = dataset.dropna(how='any')
+        x_ = datasetnew[x]
+        y_ = datasetnew[y]
+        yx_ = y_.iloc[:, 0]
+        z_ = datasetnew[z]
+        z_.insert(0, 'ones', np.repeat(1, len(z_)))
+        if modeltype == 'ziop':
+            model = minimize(ziop, pstart,
+                             args=(x_, yx_, z_, datasetnew,
+                                   weights, offsetx, offsetz),
+                             method=method,
+                             options={'gtol': 1e-6, 'disp': True, 'maxiter': 500})
+        elif modeltype == 'miop':
+            if len(np.unique(y_.astype('category').iloc[:, 0])) % 2 == 1:
+                model = minimize(miop, pstart,
+                                 args=(x_, yx_, z_, datasetnew,
+                                       weights, offsetx, offsetz),
+                                 method=method,
+                                 options={'gtol': 1e-6,
+                                          'disp': True, 'maxiter': 500})
+            else:
+                print('miop requires odd number of categories!')
+                return
+        results = iopresults(model, data, x, y, z, modeltype)
+        return results
+    else:
+        print('type must be ziop or miop')
 
 
-def ziopcmod(pstart, data, x, y, z,
-             method='BFGS', weights=1, offsetx=0, offsetz=0):
+def iopcmod(modeltype, pstart, data, x, y, z,
+            method='BFGS', weights=1, offsetx=0, offsetz=0):
     """Estimate ZiOPC model and return :class:`ZiopcModel` class object as output.
 
     :param pstart: starting parameters
@@ -667,33 +693,52 @@ def ziopcmod(pstart, data, x, y, z,
     :type y: list of str
     :param z: Inflation stage variables.
     :type z: list of str
+    :param modeltype: must be one of "ziopc" or 'miopc'
     :param method: method for optimization, default 'BFGS'
     :param weights: weights
     :param offsetx: offset for X
     :param offsetz: offset for Z
     :return: IopCModel
     """
-    varlist = np.unique(y + z + x)
-    dataset = data[varlist]
-    datasetnew = dataset.dropna(how='any')
-    datasetnew = datasetnew.reset_index(drop=True)
-    x_ = datasetnew[x]
-    y_ = datasetnew[y]
-    yx_ = y_.iloc[:, 0]
-    z_ = datasetnew[z]
-    z_.insert(0, 'ones', np.repeat(1, len(z_)))
-    model = minimize(ziopc, pstart,
-                     args=(x_, yx_, z_, datasetnew, weights, offsetx, offsetz),
-                     method=method,
-                     options={'gtol': 1e-6, 'disp': True, 'maxiter': 500})
-    results = ziopcresults(model, data, x, y, z)
-    return results
+
+    types = ['ziopc', 'miopc']
+    if modeltype in types:
+        varlist = np.unique(y + z + x)
+        dataset = data[varlist]
+        datasetnew = dataset.dropna(how='any')
+        datasetnew = datasetnew.reset_index(drop=True)
+        x_ = datasetnew[x]
+        y_ = datasetnew[y]
+        yx_ = y_.iloc[:, 0]
+        z_ = datasetnew[z]
+        z_.insert(0, 'ones', np.repeat(1, len(z_)))
+        if modeltype == 'ziopc':
+            model = minimize(ziopc, pstart,
+                             args=(x_, yx_, z_, datasetnew,
+                                   weights, offsetx, offsetz),
+                             method=method,
+                             options={'gtol': 1e-6, 'disp': True, 'maxiter': 500})
+        elif modeltype == 'miopc':
+            if len(np.unique(y_.astype('category').iloc[:, 0])) % 2 == 1:
+                model = minimize(miopc, pstart,
+                                 args=(x_, yx_, z_, datasetnew,
+                                       weights, offsetx, offsetz),
+                                 method=method,
+                                 options={'gtol': 1e-6,
+                                          'disp': True, 'maxiter': 500})
+            else:
+                print('miop requires odd number of categories!')
+                return
+        results = iopcresults(model, data, x, y, z, modeltype)
+        return results
+    else:
+        print('type must be ziopc or miopc')
 
 
-def ziopfit(model):
-    """Calculate probabilities from :py:func:`ziopmod`.
+def iopfit(model):
+    """Calculate probabilities from :py:func:`iopmod`.
 
-    :param model: ZiopModel object from ziopmod()
+    :param model: ZiopModel object from iopmod()
     :return: FittedVals object with fitted values
     """
     zg = model.Z.dot(model.inflate)
@@ -702,16 +747,33 @@ def ziopfit(model):
     n = len(model.data)
     probs = np.zeros((n, model.ycat))
     cprobs[0, 0] = model.cutpoints[0]
-    for j in range(1, model.ycat - 1):
-        cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
-    probs[:, model.ycat - 1] = ((norm.cdf(zg)) *
-                                (1 - norm.cdf(cprobs[model.ycat - 2, 0] - xb)))
-    probs[:, 0] = ((1 - norm.cdf(zg)) + (norm.cdf(zg)) *
-                   (norm.cdf(cprobs[0, 0] - xb)))
-    for j in range(1, model.ycat - 1):
-        probs[:, j] = (norm.cdf(zg)) * ((norm.cdf(cprobs[j, 0] - xb))
-                                        - (norm.cdf(cprobs[j - 1, 0] - xb)))
-    # ordered
+    if model.modeltype == 'ziop':
+        for j in range(1, model.ycat - 1):
+            cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
+        probs[:, model.ycat - 1] = ((norm.cdf(zg)) *
+                                    (1 - norm.cdf(cprobs[model.ycat - 2, 0] - xb)))
+        probs[:, 0] = ((1 - norm.cdf(zg)) + (norm.cdf(zg)) *
+                       (norm.cdf(cprobs[0, 0] - xb)))
+        for j in range(1, model.ycat - 1):
+            probs[:, j] = (norm.cdf(zg)) * ((norm.cdf(cprobs[j, 0] - xb))
+                                            - (norm.cdf(cprobs[j - 1, 0] - xb)))
+    elif model.modeltype == 'miop':
+        for j in range(1, model.ycat - 1):
+            cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
+        probs[:, model.ycat - 1] = ((norm.cdf(zg)) *
+                                    (1 - norm.cdf(cprobs[model.ycat - 2, 0] - xb)))
+        probs[:, 0] = norm.cdf(zg) * norm.cdf(cprobs[0, 0] - xb)
+
+        for i in range(1, model.yncat - 1):
+            if i == median(range(model.yncat)):
+                probs[:, i] = ((1 - norm.cdf(zg))
+                               + (norm.cdf(zg)
+                                  * (norm.cdf(cprobs[j, 0] - xb)
+                                     - norm.cdf(cprobs[j - 1, 0] - xb))))
+            else:
+                probs[:, i] = (norm.cdf(zg)
+                               * (norm.cdf(cprobs[:, i] - xb)
+                                  - norm.cdf(cprobs[j - 1, 0] - xb)))
     probsordered = np.zeros((n, model.ycat))
     probsordered[:, model.ycat - 1] = (
             1 - norm.cdf(cprobs[model.ycat - 2, 0] - xb))
@@ -728,9 +790,9 @@ def ziopfit(model):
 
 
 def ziopcfit(model):
-    """Calculate fitted probabilities from :py:func:`ziopcmod`.
+    """Calculate fitted probabilities from :py:func:`iopcmod`.
 
-    :param model: ZiopCModel object from ziopcmod()
+    :param model: ZiopCModel object from iopcmod()
     :return: FittedVals object with fitted values
     """
     zg = model.Z.dot(model.inflate)
@@ -744,7 +806,6 @@ def ziopcfit(model):
     lower = np.array([-inf, -inf])
     sigma = np.array([[1, rho], [rho, 1]])
     nsigma = np.array([[1, -rho], [-rho, 1]])
-
     for j in range(1, model.ycat - 1):
         cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
     for i in range(n):
@@ -801,7 +862,7 @@ def vuong_opziop(opmodel, ziopmodel):
     for j in range(len(x.columns)):
         xbop.iloc[:, j] = xop[j] * x.iloc[:, j]
     xbop_sum = xbop.sum(axis=1)
-    fitttedziop = ziopfit(ziopmodel).responsefull
+    fitttedziop = iopfit(ziopmodel).responsefull
     ycat = y.astype('category')
     ycatu = np.unique(ycat)
     yncat = len(ycatu)

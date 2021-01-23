@@ -36,13 +36,13 @@
 
 | Function         | Description                                                                                                          |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `ziopmod` | Fits a SP ordered probit model without correlated errors.  This estimator contains two latent equations: a split-probit equation in the first stage, and an OP equation in the second (outcome) stage.|
-| `ziopcmod` | Fits a SP ordered probit model with correlated errors.  It contains two latent equations: a split-probit equation in the first stage, and an OP equation in the second (outcome) stage.|
+| `iopmod` | Fits a SP ordered probit model without correlated errors.  This estimator contains two latent equations: a split-probit equation in the first stage, and an OP equation in the second (outcome) stage.|
+| `iopcmod` | Fits a SP ordered probit model with correlated errors.  It contains two latent equations: a split-probit equation in the first stage, and an OP equation in the second (outcome) stage.|
 | `opmod` | Fits an ordered probit model|
-|`ziopresults` | Stores the estimates of `ziopmod` and the following goodness of fit tests: Log-Likelihood, AIC, and variance-covariance matrix. |
-|`ziopcresults` | Stores the estimates of `ziopcmod` and the following goodness of fit tests: Log-Likelihood, AIC, and variance-covariance matrix.|
+|`iopresults` | Stores the estimates of `iopmod` and the following goodness of fit tests: Log-Likelihood, AIC, and variance-covariance matrix. |
+|`iopcresults` | Stores the estimates of `iopcmod` and the following goodness of fit tests: Log-Likelihood, AIC, and variance-covariance matrix.|
 |`opresults`| Stores the estimates of `opmod` and the following goodness of fit tests: Log-Likelihood, AIC, and variance-covariance matrix.|
-| `ziopfit` | Generates individual probabilities for each outcome from the ZiOP model.|
+| `iopfit` | Generates individual probabilities for each outcome from the ZiOP model.|
 | `ziopcfit` | Generates individual probabilities for each outcome from the estimated ZiOPC model.|
 | `vuong_opziop` | Vuong test to compare the performance of the Ordered Probit model versus the ZiOP model.|
 | `vuong_opziopc` | Vuong test to compare the performance of the Ordered Probit model versus the ZiOPC model.|
@@ -95,7 +95,7 @@ Y = ['rep_civwar_DV']
 pstartziop=np.array( [-1.31, .32, 2.5, -.21,.2, -0.2, -0.4, 0.2,.9,-.4])
 
 # Model estimation:
-ziop_JCR = ziopcpy.ziopmod(pstartziop, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
+ziop_JCR = ziopcpy.iopmod(pstartziop, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
 
 ```
 
@@ -178,7 +178,7 @@ print(ziop_JCR.vcov)
 pstartziopc = np.array([-1.31, .32, 2.5, -.21, .2, -0.2, -0.4, 0.2, .9, -.4, .1])
 
 # Model estimation:
-ziopc_JCR = ziopcpy.ziopcmod(pstartziopc, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
+ziopc_JCR = ziopcpy.iopcmod(pstartziopc, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
 ```
 
 Results of the ZiOPC model:

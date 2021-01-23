@@ -19,12 +19,12 @@ pstart = np.array([-1.31, .32, 2.5, -.21, .2, -0.2, -0.4, 0.2, .9, -.4, .1])  # 
 ##Numbers all over the place (copied from R codes)
 pstartx = np.array([-0.77, 0.90, 18.78, -2, .2, 0.04, -0.09, 0.26, 1.70, -0.42, -.1])
 
-ziopc_JCR = ziopc.ziopcmod(pstart, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
+ziopc_JCR = ziopc.iopcmod('ziopc', pstart, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
 
-ziop_JCR = ziopc.ziopmod(pstartziop, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
+ziop_JCR = ziopc.iopmod('ziop', pstartziop, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
 
 fitttedziopc = ziopc.ziopcfit(ziopc_JCR)
-fitttedziop = ziopc.ziopfit(ziop_JCR)
+fitttedziop = ziopc.iopfit(ziop_JCR)
 
 print(ziopc_JCR.coefs)
 print(ziop_JCR.coefs)
@@ -69,3 +69,29 @@ ziopcord = ordered_effects(ziopc_JCR, 1)
 
 ziopord.plot.box(grid='False')
 ziopcord.plot.box(grid='False')
+
+# MiOP Examples
+
+DAT = pd.read_stata("C:/Users/Nguyen/Box/Summer 20/EUKnowledge.dta")
+
+vars = ["EU_support_ET", "polit_trust", "Xenophobia", "discuss_politics", "univers_ed", "Professional",
+        "Executive", "Manual", "Farmer", "Unemployed", "rural", "female", "age", "EU_Know_obj", "Lie_EU_Know",
+        "student", "EUbid_Know", "income", "dk", "dkORlie", "EU_Know_subj", "TV", "Educ_high", "Educ_high_mid",
+        "Educ_low_mid"]
+
+data = DAT[vars]
+datasetnew = data.dropna(how='any')
+
+Y = ["EU_support_ET"]
+X = ['polit_trust', 'Xenophobia', 'discuss_politics', 'Professional', 'Executive', 'Manual', 'Farmer',
+     'Unemployed', 'rural', 'female', 'age', 'student', 'income', 'Educ_high', 'Educ_high_mid', 'Educ_low_mid']
+Z = ['discuss_politics', 'rural', 'female', 'age', 'student',
+     'EUbid_Know', 'EU_Know_obj', 'TV', 'Educ_high', 'Educ_high_mid', 'Educ_low_mid']
+
+b = np.repeat(.01, 30)
+bc = np.repeat(.01, 31)
+
+
+MIOPEUx = ziopc.iopmod('miop', b, datasetnew, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
+MIOPcEUx = ziopc.iopcmod('miopc', bc, datasetnew, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
+

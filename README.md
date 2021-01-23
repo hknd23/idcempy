@@ -22,9 +22,9 @@ The `ZiopcPy` Python package fits the following models for (zero-inflated) order
 
 | Function         | Description                                                                                                          |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `opmod`; `ziopmod`; `ziopcmod` | fit the standard OP model, the zero-inflated OP model without correlated errors (ZiOP), and the zero-inflated OP model with correlated errors (ZiOPC) respectively. |
-|`opresults`; `ziopresults`; `ziopcresults`| Stores and presents the covariate estimates, the Variance-Covariance (VCV) matrix, the Log-Likelihood and the AIC of `opmod`, `ziopmod`, and `ziopcmod` respectively. |
-| `ziopfit`; `ziopcfit`| Computes the fitted probabilities from the ZiOP and ZiOPC models respectively.|
+| `opmod`; `iopmod`; `iopcmod` | fit the standard OP model, the zero-inflated OP model without correlated errors (ZiOP), and the zero-inflated OP model with correlated errors (ZiOPC) respectively. |
+|`opresults`; `iopresults`; `iopcresults`| Stores and presents the covariate estimates, the Variance-Covariance (VCV) matrix, the Log-Likelihood and the AIC of `opmod`, `iopmod`, and `iopcmod` respectively. |
+| `iopfit`; `ziopcfit`| Computes the fitted probabilities from the ZiOP and ZiOPC models respectively.|
 | `vuong_opziop`;  `vuong_opziopc` | Calculates the Vuong test statistic to compare the performance of the OP versus the ZiOP and ZiOPC models respectively.|
 
 ### Compatibility
@@ -77,8 +77,8 @@ pstartop = np.array([-1, 0.3, -0.2, -0.5, 0.2, .9, -.4])
 ### Estimation of `ziop`, `ziopc` or `op` models
 ```
 # Model estimation:
-ziop_JCR = ziopcpy.ziopmod(pstartziop, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
-ziopc_JCR = ziopcpy.ziopcmod(pstartziopc, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
+ziop_JCR = ziopcpy.iopmod(pstartziop, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
+ziopc_JCR = ziopcpy.iopcmod(pstartziopc, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
 JCR_OP = ziopcpy.opmod(pstartop, data, X, Y, method='bfgs', weights=1, offsetx=0)
 ```
 The estimation results from the table above are stored in the three classes `ZiopModel`, `ZiopcModel`, and `OpModel` with the following attributes:
