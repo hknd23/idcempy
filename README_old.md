@@ -43,7 +43,7 @@
 |`iopcresults` | Stores the estimates of `iopcmod` and the following goodness of fit tests: Log-Likelihood, AIC, and variance-covariance matrix.|
 |`opresults`| Stores the estimates of `opmod` and the following goodness of fit tests: Log-Likelihood, AIC, and variance-covariance matrix.|
 | `iopfit` | Generates individual probabilities for each outcome from the ZiOP model.|
-| `ziopcfit` | Generates individual probabilities for each outcome from the estimated ZiOPC model.|
+| `iopcfit` | Generates individual probabilities for each outcome from the estimated ZiOPC model.|
 | `vuong_opziop` | Vuong test to compare the performance of the Ordered Probit model versus the ZiOP model.|
 | `vuong_opziopc` | Vuong test to compare the performance of the Ordered Probit model versus the ZiOPC model.|
 

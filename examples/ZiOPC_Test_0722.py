@@ -13,6 +13,7 @@ Z = ['logGDPpc', 'parliament']
 Y = ['rep_civwar_DV']
 data = DAT
 
+
 pstartziop = np.array([-1.31, .32, 2.5, -.21, .2, -0.2, -0.4, 0.2, .9, -.4])
 
 pstart = np.array([-1.31, .32, 2.5, -.21, .2, -0.2, -0.4, 0.2, .9, -.4, .1])  # These are correct pstart
@@ -23,8 +24,16 @@ ziopc_JCR = ziopc.iopcmod('ziopc', pstart, data, X, Y, Z, method='bfgs', weights
 
 ziop_JCR = ziopc.iopmod('ziop', pstartziop, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
 
-fitttedziopc = ziopc.ziopcfit(ziopc_JCR)
+
+miopc_JCR = ziopc.iopcmod('miopc', pstart, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
+
+miop_JCR = ziopc.iopmod('miop', pstartziop, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
+
+fitttedziopc = ziopc.iopcfit(ziopc_JCR)
 fitttedziop = ziopc.iopfit(ziop_JCR)
+fitttedmiopc = ziopc.iopcfit(miopc_JCR)
+fitttedmiop = ziopc.iopfit(miop_JCR)
+
 
 print(ziopc_JCR.coefs)
 print(ziop_JCR.coefs)
@@ -79,8 +88,8 @@ vars = ["EU_support_ET", "polit_trust", "Xenophobia", "discuss_politics", "unive
         "student", "EUbid_Know", "income", "dk", "dkORlie", "EU_Know_subj", "TV", "Educ_high", "Educ_high_mid",
         "Educ_low_mid"]
 
-data = DAT[vars]
-datasetnew = data.dropna(how='any')
+datax = DAT[vars]
+datasetnew = datax.dropna(how='any')
 
 Y = ["EU_support_ET"]
 X = ['polit_trust', 'Xenophobia', 'discuss_politics', 'Professional', 'Executive', 'Manual', 'Farmer',
@@ -95,3 +104,169 @@ bc = np.repeat(.01, 31)
 MIOPEUx = ziopc.iopmod('miop', b, datasetnew, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
 MIOPcEUx = ziopc.iopcmod('miopc', bc, datasetnew, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
 
+fitttedmiop = ziopc.iopfit(MIOPEUx)
+fitttedmiopc = ziopc.iopcfit(MIOPcEUx)
+
+
+fitttedmiopc = ziopcfit(ziopc_JCR)
+
+
+
+def ziopcfit(model):
+    """Calculate fitted probabilities from :py:func:`iopcmod`.
+
+    :param model: ZiopCModel object from iopcmod()
+    :return: FittedVals object with fitted values
+    """
+    zg = model.Z.dot(model.inflate)
+    xb = model.X.dot(model.ordered)
+    cprobs = np.zeros((model.ycat - 1, 1))
+    n = len(model.data)
+    probs = np.zeros((n, model.ycat))
+    cprobs[0, 0] = model.cutpoints[0]
+    rho = model.coefs.iloc[-1, 0]
+    means = np.array([0, 0])
+    lower = np.array([-inf, -inf])
+    sigma = np.array([[1, rho], [rho, 1]])
+    nsigma = np.array([[1, -rho], [-rho, 1]])
+    if model.modeltype == 'ziop':
+        for j in range(1, model.ycat - 1):
+            cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
+        for i in range(n):
+            probs[i, model.ycat - 1] = mvn.mvnun(
+                lower, [zg[i], (xb[i] -
+                                cprobs[model.ycat - 2][0])], means, sigma)[0]
+            probs[i, 0] = ((1 - norm.cdf(zg[i]))
+                           + mvn.mvnun(lower,
+                                       [zg[i], (cprobs[0][0] - xb[i])],
+                                       means, nsigma)[0])
+        for i in range(n):
+            for j in range(1, model.ycat - 1):
+                probs[i, j] = ((mvn.mvnun(lower,
+                                          [zg[i], (cprobs[j][0] - xb[i])],
+                                          means, nsigma)[0])
+                               - (mvn.mvnun(lower,
+                                            [zg[i], (cprobs[j - 1][0] - xb[i])],
+                                            means, nsigma)[0]))
+    elif model.modeltype == 'miopc':
+        for j in range(1, model.ycat - 1):
+            cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
+        for i in range(n):
+            probs[i, model.ycat - 1] = mvn.mvnun(
+                lower, [zg[i], (xb[i] -
+                                cprobs[model.ycat - 2][0])], means, sigma)[0]
+            probs[i, 0] = mvn.mvnun(lower,
+                                    [zg[i], (cprobs[0][0] - xb[i])],
+                                    means, nsigma)[0]
+        for i in range(1, model.ycat - 1):
+            if i == median(range(model.ycat)):
+                probs[:, i] = ((1 - norm.cdf(zg))
+                               + ((mvn.mvnun(lower,
+                                             [zg[i], (cprobs[j][0] - xb[i])],
+                                             means, nsigma)[0])
+                                  - (mvn.mvnun(lower,
+                                               [zg[i], (cprobs[j - 1][0] - xb[i])],
+                                               means, nsigma)[0])))
+            else:
+                probs[i, j] = ((mvn.mvnun(lower,
+                                          [zg[i], (cprobs[j][0] - xb[i])],
+                                          means, nsigma)[0])
+                               - (mvn.mvnun(lower,
+                                            [zg[i], (cprobs[j - 1][0] - xb[i])],
+                                            means, nsigma)[0]))
+
+    # ordered
+    probsordered = np.zeros((n, model.ycat))
+    probsordered[:, model.ycat - 1] = (1 - norm.cdf(cprobs[model.ycat - 2, 0]
+                                                    - xb))
+    probsordered[:, 0] = (norm.cdf(cprobs[0, 0] - xb))
+    for j in range(1, model.ycat - 1):
+        probsordered[:, j] = (norm.cdf(cprobs[j, 0] - xb)
+                              - (norm.cdf(cprobs[j - 1, 0] - xb)))
+
+    probsinfl = np.zeros((n, 1))
+    probsinfl[:, 0] = 1 - norm.cdf(zg)
+    # linear
+    probslin = pd.DataFrame({"zg": zg, "xb": xb})
+    fitted = FittedVals(probs, probsordered, probsinfl, probslin)
+    return fitted
+
+model=miopc_JCR
+model=ziopc_JCR
+
+zg = model.Z.dot(model.inflate)
+xb = model.X.dot(model.ordered)
+cprobs = np.zeros((model.ycat - 1, 1))
+n = len(model.data)
+probs = np.zeros((n, model.ycat))
+cprobs[0, 0] = model.cutpoints[0]
+rho = model.coefs.iloc[-1, 0]
+means = np.array([0, 0])
+lower = np.array([-inf, -inf])
+sigma = np.array([[1, rho], [rho, 1]])
+nsigma = np.array([[1, -rho], [-rho, 1]])
+if model.modeltype == 'ziopc':
+    for j in range(1, model.ycat - 1):
+        cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
+    for i in range(n):
+        probs[i, model.ycat - 1] = mvn.mvnun(
+            lower, [zg[i], (xb[i] -
+                            cprobs[model.ycat - 2][0])], means, sigma)[0]
+        probs[i, 0] = ((1 - norm.cdf(zg[i]))
+                       + mvn.mvnun(lower,
+                                   [zg[i], (cprobs[0][0] - xb[i])],
+                                   means, nsigma)[0])
+    for i in range(n):
+        for j in range(1, model.ycat - 1):
+            probs[i, j] = ((mvn.mvnun(lower,
+                                      [zg[i], (cprobs[j][0] - xb[i])],
+                                      means, nsigma)[0])
+                           - (mvn.mvnun(lower,
+                                        [zg[i], (cprobs[j - 1][0] - xb[i])],
+                                        means, nsigma)[0]))
+elif model.modeltype == 'miopc':
+    for j in range(1, model.ycat - 1):
+        cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
+    for i in range(n):
+        probs[i, model.ycat - 1] = mvn.mvnun(
+            lower, [zg[i], (xb[i] -
+                            cprobs[model.ycat - 2][0])], means, sigma)[0]
+        probs[i, 0] = mvn.mvnun(lower,
+                                [zg[i], (cprobs[0][0] - xb[i])],
+                                means, nsigma)[0]
+    for i in range(n):
+        for j in range(1, model.ycat - 1):
+            if j == median(range(model.ycat)):
+                probs[i, j] = ((1 - norm.cdf(zg[i]))
+                               + ((mvn.mvnun(lower,
+                                             [zg[i], (cprobs[j][0] - xb[i])],
+                                             means, nsigma)[0])
+                                  - (mvn.mvnun(lower,
+                                               [zg[i], (cprobs[j - 1][0] - xb[i])],
+                                               means, nsigma)[0])))
+            else:
+                probs[i, j] = ((mvn.mvnun(lower,
+                                          [zg[i], (cprobs[j][0] - xb[i])],
+                                          means, nsigma)[0])
+                               - (mvn.mvnun(lower,
+                                            [zg[i], (cprobs[j - 1][0] - xb[i])],
+                                            means, nsigma)[0]))
+
+# ordered
+probsordered = np.zeros((n, model.ycat))
+probsordered[:, model.ycat - 1] = (1 - norm.cdf(cprobs[model.ycat - 2, 0]
+                                                - xb))
+probsordered[:, 0] = (norm.cdf(cprobs[0, 0] - xb))
+for j in range(1, model.ycat - 1):
+    probsordered[:, j] = (norm.cdf(cprobs[j, 0] - xb)
+                          - (norm.cdf(cprobs[j - 1, 0] - xb)))
+
+probsinfl = np.zeros((n, 1))
+probsinfl[:, 0] = 1 - norm.cdf(zg)
+# linear
+probslin = pd.DataFrame({"zg": zg, "xb": xb})
+fitted = FittedVals(probs, probsordered, probsinfl, probslin)
+
+sums= np.zeros(len(model.data))
+for i in range(len(model.data)):
+    sums[i]=sum(probs[i])

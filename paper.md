@@ -51,7 +51,7 @@ The ZiOP model without correlated errors is estimated in Limdep/NLogit and by us
 
 * `opmod`; `iopmod`; `iopcmod`: `opmod` fits the standard OP model. `iopmod` and `iopcmod` fit the Zero-Inflated Ordered Probit model without and with correlated errors respectively.
 * `opresults`; `iopresults`; `iopcresults`: Stores and presents the covariate estimates, variance-covariance (VCV) matrix, log-likelihood and AIC results from the OP, ZiOP, and ZiOPC model.   
-* `iopfit`; `ziopcfit`: Computes the fitted probabilities from the estimated `iopmod` and `iopcmod`.
+* `iopfit`; `iopcfit`: Computes the fitted probabilities from the estimated `iopmod` and `iopcmod`.
 * `vuong_opziop`; `vuong_opziopc:` Calculates the Vuong test statistic to compare the performance of the OP to the ZiOP and ZiOPC model. 
 
 The covariate estimates, VCV matrix, and fitted probabilities from the estimated ZiOP(C) models in `ZiopcPy` can be used to calculate the marginal effect of the ZiOP(C) models’ (i) split-stage covariates on the probability of observations being in the always-zero versus Regime 1 group and (ii) outcome-stage covariates on the probability of each outcome category, conditional on observations being in the always-zero group. The Vuong test results evaluate the three estimated models’ performance and assesses whether the ZiOP(C) models are necessary to fit the relevant data.  To illustrate the `ZiopcPy` package's functionality, all the functions listed above are evaluated using the political violence ordered dependent variable in Besley and Persson’s (2009) data that is described in the package.

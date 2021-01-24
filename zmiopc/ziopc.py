@@ -44,7 +44,7 @@ class OpModel:
         self.ystr = ystr
 
 
-class ZiopModel:
+class IopModel:
     """Store model results from :py:func:`iopmod`."""
 
     def __init__(self, modeltype, llik, coef, aic, vcov, data, xs, zs, ts,
@@ -88,7 +88,7 @@ class ZiopModel:
         self.zstr = zstr
 
 
-class ZiopcModel:
+class IopCModel:
     """Store model results from :py:func:`iopcmod`."""
 
     def __init__(self, modeltype, llik, coef, aic, vcov, data,
@@ -579,8 +579,8 @@ def iopresults(model, data, x, y, z, modeltype):
     coef = pd.DataFrame({'Coef': model.x, 'SE': ses, 'tscore': tscore,
                          'p': pval, '2.5%': lci, '97.5%': uci}, names)
     aic = -2 * (-model.fun) + 2 * (len(coef))
-    results = ZiopModel(modeltype, model.fun, coef, aic, model.hess_inv, datasetnew,
-                        xs, zs, ts, x_, yx_, z_, yncat, x, y, z)
+    results = IopModel(modeltype, model.fun, coef, aic, model.hess_inv, datasetnew,
+                       xs, zs, ts, x_, yx_, z_, yncat, x, y, z)
     return results
 
 
@@ -625,8 +625,8 @@ def iopcresults(model, data, x, y, z, modeltype):
     coef = pd.DataFrame({'Coef': model.x, 'SE': ses, 'tscore': tscore,
                          'p': pval, '2.5%': lci, '97.5%': uci}, names)
     aic = -2 * (-model.fun) + 2 * (len(coef))
-    results = ZiopcModel(modeltype, model.fun, coef, aic, model.hess_inv, datasetnew,
-                         xs, zs, ts, x_, yx_, z_, rho, yncat, x, y, z)
+    results = IopCModel(modeltype, model.fun, coef, aic, model.hess_inv, datasetnew,
+                        xs, zs, ts, x_, yx_, z_, rho, yncat, x, y, z)
     return results
 
 
@@ -727,7 +727,7 @@ def iopcmod(modeltype, pstart, data, x, y, z,
                                  options={'gtol': 1e-6,
                                           'disp': True, 'maxiter': 500})
             else:
-                print('miop requires odd number of categories!')
+                print('miopc requires odd number of categories!')
                 return
         results = iopcresults(model, data, x, y, z, modeltype)
         return results
@@ -764,8 +764,8 @@ def iopfit(model):
                                     (1 - norm.cdf(cprobs[model.ycat - 2, 0] - xb)))
         probs[:, 0] = norm.cdf(zg) * norm.cdf(cprobs[0, 0] - xb)
 
-        for i in range(1, model.yncat - 1):
-            if i == median(range(model.yncat)):
+        for i in range(1, model.ycat - 1):
+            if i == median(range(model.ycat)):
                 probs[:, i] = ((1 - norm.cdf(zg))
                                + (norm.cdf(zg)
                                   * (norm.cdf(cprobs[j, 0] - xb)
@@ -789,7 +789,7 @@ def iopfit(model):
     return fitted
 
 
-def ziopcfit(model):
+def iopcfit(model):
     """Calculate fitted probabilities from :py:func:`iopcmod`.
 
     :param model: ZiopCModel object from iopcmod()
@@ -806,24 +806,53 @@ def ziopcfit(model):
     lower = np.array([-inf, -inf])
     sigma = np.array([[1, rho], [rho, 1]])
     nsigma = np.array([[1, -rho], [-rho, 1]])
-    for j in range(1, model.ycat - 1):
-        cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
-    for i in range(n):
-        probs[i, model.ycat - 1] = mvn.mvnun(
-            lower, [zg[i], (xb[i] -
-                            cprobs[model.ycat - 2][0])], means, sigma)[0]
-        probs[i, 0] = ((1 - norm.cdf(zg[i]))
-                       + mvn.mvnun(lower,
-                                   [zg[i], (cprobs[0][0] - xb[i])],
-                                   means, nsigma)[0])
-    for i in range(n):
+    if model.modeltype == 'ziopc':
         for j in range(1, model.ycat - 1):
-            probs[i, j] = ((mvn.mvnun(lower,
-                                      [zg[i], (cprobs[j][0] - xb[i])],
-                                      means, nsigma)[0])
-                           - (mvn.mvnun(lower,
-                                        [zg[i], (cprobs[j - 1][0] - xb[i])],
-                                        means, nsigma)[0]))
+            cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
+        for i in range(n):
+            probs[i, model.ycat - 1] = mvn.mvnun(
+                lower, [zg[i], (xb[i] -
+                                cprobs[model.ycat - 2][0])], means, sigma)[0]
+            probs[i, 0] = ((1 - norm.cdf(zg[i]))
+                           + mvn.mvnun(lower,
+                                       [zg[i], (cprobs[0][0] - xb[i])],
+                                       means, nsigma)[0])
+        for i in range(n):
+            for j in range(1, model.ycat - 1):
+                probs[i, j] = ((mvn.mvnun(lower,
+                                          [zg[i], (cprobs[j][0] - xb[i])],
+                                          means, nsigma)[0])
+                               - (mvn.mvnun(lower,
+                                            [zg[i], (cprobs[j - 1][0] - xb[i])],
+                                            means, nsigma)[0]))
+    elif model.modeltype == 'miopc':
+        for j in range(1, model.ycat - 1):
+            cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
+        for i in range(n):
+            probs[i, model.ycat - 1] = mvn.mvnun(
+                lower, [zg[i], (xb[i] -
+                                cprobs[model.ycat - 2][0])], means, sigma)[0]
+            probs[i, 0] = mvn.mvnun(lower,
+                                    [zg[i], (cprobs[0][0] - xb[i])],
+                                    means, nsigma)[0]
+        for i in range(n):
+            for j in range(1, model.ycat - 1):
+                if j == median(range(model.ycat)):
+                    probs[i, j] = ((1 - norm.cdf(zg[i]))
+                                   + ((mvn.mvnun(lower,
+                                                 [zg[i], (cprobs[j][0] - xb[i])],
+                                                 means, nsigma)[0])
+                                      - (mvn.mvnun(lower,
+                                                   [zg[i], (cprobs[j - 1][0] - xb[i])],
+                                                   means, nsigma)[0])))
+                else:
+                    probs[i, j] = ((mvn.mvnun(lower,
+                                              [zg[i], (cprobs[j][0] - xb[i])],
+                                              means, nsigma)[0])
+                                   - (mvn.mvnun(lower,
+                                                [zg[i], (cprobs[j - 1][0] - xb[i])],
+                                                means, nsigma)[0]))
+
     # ordered
     probsordered = np.zeros((n, model.ycat))
     probsordered[:, model.ycat - 1] = (1 - norm.cdf(cprobs[model.ycat - 2, 0]
@@ -912,7 +941,7 @@ def vuong_opziopc(opmodel, ziopcmodel):
     for j in range(len(x.columns)):
         xbop.iloc[:, j] = xop[j] * x.iloc[:, j]
     xbop_sum = xbop.sum(axis=1)
-    fitttedziopc = ziopcfit(ziopcmodel).responsefull
+    fitttedziopc = iopcfit(ziopcmodel).responsefull
     ycat = y.astype('category')
     ycatu = np.unique(ycat)
     yncat = len(ycatu)

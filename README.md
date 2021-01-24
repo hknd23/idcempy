@@ -24,7 +24,7 @@ The `ZiopcPy` Python package fits the following models for (zero-inflated) order
 | ---------------- | -------------------------------------------------------------------------------------------------------------------- |
 | `opmod`; `iopmod`; `iopcmod` | fit the standard OP model, the zero-inflated OP model without correlated errors (ZiOP), and the zero-inflated OP model with correlated errors (ZiOPC) respectively. |
 |`opresults`; `iopresults`; `iopcresults`| Stores and presents the covariate estimates, the Variance-Covariance (VCV) matrix, the Log-Likelihood and the AIC of `opmod`, `iopmod`, and `iopcmod` respectively. |
-| `iopfit`; `ziopcfit`| Computes the fitted probabilities from the ZiOP and ZiOPC models respectively.|
+| `iopfit`; `iopcfit`| Computes the fitted probabilities from the ZiOP and ZiOPC models respectively.|
 | `vuong_opziop`;  `vuong_opziopc` | Calculates the Vuong test statistic to compare the performance of the OP versus the ZiOP and ZiOPC models respectively.|
 
 ### Compatibility
