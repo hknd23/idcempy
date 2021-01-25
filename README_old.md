@@ -44,8 +44,8 @@
 |`opresults`| Stores the estimates of `opmod` and the following goodness of fit tests: Log-Likelihood, AIC, and variance-covariance matrix.|
 | `iopfit` | Generates individual probabilities for each outcome from the ZiOP model.|
 | `iopcfit` | Generates individual probabilities for each outcome from the estimated ZiOPC model.|
-| `vuong_opziop` | Vuong test to compare the performance of the Ordered Probit model versus the ZiOP model.|
-| `vuong_opziopc` | Vuong test to compare the performance of the Ordered Probit model versus the ZiOPC model.|
+| `vuong_opiop` | Vuong test to compare the performance of the Ordered Probit model versus the ZiOP model.|
+| `vuong_opiopc` | Vuong test to compare the performance of the Ordered Probit model versus the ZiOPC model.|
 
 ### Compatibility
 Package compatible with [Python] 3.5.2+
@@ -321,11 +321,11 @@ print(JCR_OP.vcov)
 To compare the performance of the ZiOP/ZiOPC model versus the OP model, the Vuong test can be implemented:
 
 ```
-ziopcpy.vuong_opziop(JCR_OP, ziop_JCR)
+ziopcpy.vuong_opiop(JCR_OP, ziop_JCR)
 
   -4.909399264831751
 
-ziopcpy.vuong_opziopc(JCR_OP, ziopc_JCR)
+ziopcpy.vuong_opiopc(JCR_OP, ziopc_JCR)
 
   -5.424415009176218
 ```

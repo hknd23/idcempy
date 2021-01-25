@@ -870,17 +870,17 @@ def iopcfit(model):
     return fitted
 
 
-def vuong_opziop(opmodel, ziopmodel):
+def vuong_opiop(opmodel, iopmodel):
     """Run the Vuong test to compare the performance of the OP and ZiOP model.
 
     :param opmodel: The OP model from :class:`OpModel`
-    :param ziopmodel: The ZiOP model from :class:`ZiopModel`
-    :return: vuongopziop: Result of the Vuong test
+    :param iopmodel: The ZiOP model from :class:`ZiopModel`
+    :return: vuongopiop: Result of the Vuong test
     """
     n1 = len(opmodel.data)
-    y = ziopmodel.Y
+    y = iopmodel.Y
     # can also y = opmodel.Y when 2 models have the same length
-    x = ziopmodel.X
+    x = iopmodel.X
     # can also x = opmodel.X when 2 models have the same length
     cuts_op = np.repeat(0, len(opmodel.cutpoints)).astype(float)
     xop = opmodel.ordered
@@ -891,7 +891,7 @@ def vuong_opziop(opmodel, ziopmodel):
     for j in range(len(x.columns)):
         xbop.iloc[:, j] = xop[j] * x.iloc[:, j]
     xbop_sum = xbop.sum(axis=1)
-    fitttedziop = iopfit(ziopmodel).responsefull
+    fitttediop = iopfit(iopmodel).responsefull
     ycat = y.astype('category')
     ycatu = np.unique(ycat)
     yncat = len(ycatu)
@@ -901,12 +901,12 @@ def vuong_opziop(opmodel, ziopmodel):
         v[:, j] = y == y0[j]
     m = np.zeros(n1)
     probs = np.zeros((n1, yncat))
-    probs[:, 0] = norm.cdf(cuts_op[0] - xbop_sum) / fitttedziop[:, 0]
+    probs[:, 0] = norm.cdf(cuts_op[0] - xbop_sum) / fitttediop[:, 0]
     probs[:, yncat - 1] = (1 - norm.cdf(cuts_op[yncat - 2] -
-                                        xbop_sum)) / fitttedziop[:, yncat - 1]
+                                        xbop_sum)) / fitttediop[:, yncat - 1]
     for i in range(1, yncat - 1):
         probs[:, i] = (norm.cdf(cuts_op[i] - xbop_sum) -
-                       norm.cdf(cuts_op[i - 1] - xbop_sum)) / fitttedziop[:, i]
+                       norm.cdf(cuts_op[i - 1] - xbop_sum)) / fitttediop[:, i]
     m = np.zeros((n1, yncat))
     for k in range(n1):
         for j in range(yncat):
@@ -915,22 +915,22 @@ def vuong_opziop(opmodel, ziopmodel):
     mlog = np.log(m2)
     diffmsq = (mlog - np.mean(mlog)) ** 2
     sumdms = sum(diffmsq)
-    vuongopziop = (np.sqrt(n1) * (1 / n1) *
-                   sum(mlog)) / (np.sqrt((1 / n1) * sumdms))
-    return vuongopziop
+    vuongopiop = (np.sqrt(n1) * (1 / n1) *
+                  sum(mlog)) / (np.sqrt((1 / n1) * sumdms))
+    return vuongopiop
 
 
-def vuong_opziopc(opmodel, ziopcmodel):
+def vuong_opiopc(opmodel, iopcmodel):
     """Run the Vuong test to compare the performance of the OP and ZiOPC model.
 
     :param opmodel: The OP model from :class:`OpModel`
-    :param ziopcmodel: The ZiOPC model from :class:`ZiopcModel`
-    :return: vuongopziopc: Result of the Vuong test
+    :param iopcmodel: The ZiOPC model from :class:`ZiopcModel`
+    :return: vuongopiopc: Result of the Vuong test
     """
     n1 = len(opmodel.data)
-    y = ziopcmodel.Y
+    y = iopcmodel.Y
     # can also y = opmodel.Y when 2 models have the same length
-    x = ziopcmodel.X
+    x = iopcmodel.X
     # can also x = opmodel.X when 2 models have the same length
     cuts_op = np.repeat(0, len(opmodel.cutpoints)).astype(float)
     xop = opmodel.ordered
@@ -941,7 +941,7 @@ def vuong_opziopc(opmodel, ziopcmodel):
     for j in range(len(x.columns)):
         xbop.iloc[:, j] = xop[j] * x.iloc[:, j]
     xbop_sum = xbop.sum(axis=1)
-    fitttedziopc = iopcfit(ziopcmodel).responsefull
+    fitttedziopc = iopcfit(iopcmodel).responsefull
     ycat = y.astype('category')
     ycatu = np.unique(ycat)
     yncat = len(ycatu)
@@ -966,9 +966,9 @@ def vuong_opziopc(opmodel, ziopcmodel):
     mlog = np.log(m2)
     diffmsq = (mlog - np.mean(mlog)) ** 2
     sumdms = sum(diffmsq)
-    vuongopziopc = (np.sqrt(n1) * (1 / n1) *
-                    sum(mlog)) / (np.sqrt((1 / n1) * sumdms))
-    return vuongopziopc
+    vuongopiopc = (np.sqrt(n1) * (1 / n1) *
+                   sum(mlog)) / (np.sqrt((1 / n1) * sumdms))
+    return vuongopiopc
 
 
 def split_effects(model, inflvar, nsims=10000):

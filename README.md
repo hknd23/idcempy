@@ -25,7 +25,7 @@ The `ZiopcPy` Python package fits the following models for (zero-inflated) order
 | `opmod`; `iopmod`; `iopcmod` | fit the standard OP model, the zero-inflated OP model without correlated errors (ZiOP), and the zero-inflated OP model with correlated errors (ZiOPC) respectively. |
 |`opresults`; `iopresults`; `iopcresults`| Stores and presents the covariate estimates, the Variance-Covariance (VCV) matrix, the Log-Likelihood and the AIC of `opmod`, `iopmod`, and `iopcmod` respectively. |
 | `iopfit`; `iopcfit`| Computes the fitted probabilities from the ZiOP and ZiOPC models respectively.|
-| `vuong_opziop`;  `vuong_opziopc` | Calculates the Vuong test statistic to compare the performance of the OP versus the ZiOP and ZiOPC models respectively.|
+| `vuong_opiop`;  `vuong_opiopc` | Calculates the Vuong test statistic to compare the performance of the OP versus the ZiOP and ZiOPC models respectively.|
 
 ### Compatibility
 Package compatible with [Python] 3.7+
@@ -150,11 +150,11 @@ print(JCR_OP.vcov)
 
 `ZiopcPy` also allows users to employ a variant of the Vuong test developed by Harris and Zhao (2007) to compare the performance of the OP model to both the ZiOP and ZiOPC models. The Vuong test results obtained from the OP, ZiOP, and ZiOPC models estimated on Besley and Persson’s (2009) data (reported below)  shows that the performance of the ZiOP and especially the ZiOPC model is superior to the OP model.    
 ```
-ziopcpy.vuong_opziop(JCR_OP, ziop_JCR)
+ziopcpy.vuong_opiop(JCR_OP, ziop_JCR)
 
   -4.909399264831751
 
-ziopcpy.vuong_opziopc(JCR_OP, ziopc_JCR)
+ziopcpy.vuong_opiopc(JCR_OP, ziopc_JCR)
 
   -5.424415009176218
 ```
