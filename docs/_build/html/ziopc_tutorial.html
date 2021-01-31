@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Tutorial for Estimating ZiOPC Model &#8212; ZiopcPy  documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ZiopcPy  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tutorial-for-estimating-ziopc-model">
+<h1>Tutorial for Estimating ZiOPC Model<a class="headerlink" href="#tutorial-for-estimating-ziopc-model" title="Permalink to this headline">¶</a></h1>
+<p>Our package also includes functions to fit split-population (SP) ” or zero-inflated” ordered probit models (ziopc) under the assumption that the two errors are correlated with each other (i.e. correlated errors). (see <a class="reference internal" href="ziop_tutorial.html"><span class="doc">Tutorial for Estimating ZiOP Model</span></a> for detail on data and variable descriptions). The model also includes the estimate ‘rho’.</p>
+<p>Data from Besley and Persson (2009).</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">urllib</span>
+<span class="c1">#Import pandas and urllib to read data from url</span>
+<span class="kn">from</span> <span class="nn">ziopcpy</span> <span class="kn">import</span> <span class="n">ziopcpy</span>
+<span class="c1">#Import data</span>
+<span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://github.com/hknd23/ziopcpy/raw/master/data/bp_exact_for_analysis.dta&#39;</span>
+<span class="n">data</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">read_stata</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+<span class="c1"># Specify list of variable names (strings) X,Y,Z:</span>
+<span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;logGDPpc&#39;</span><span class="p">,</span> <span class="s1">&#39;parliament&#39;</span><span class="p">,</span> <span class="s1">&#39;disaster&#39;</span><span class="p">,</span> <span class="s1">&#39;major_oil&#39;</span><span class="p">,</span> <span class="s1">&#39;major_primary&#39;</span><span class="p">]</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;logGDPpc&#39;</span><span class="p">,</span> <span class="s1">&#39;parliament&#39;</span><span class="p">]</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;rep_civwar_DV&#39;</span><span class="p">]</span>
+
+<span class="c1"># Starting parameters for optimization, note the extra parameter for rho:</span>
+<span class="n">pstart</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.31</span><span class="p">,</span> <span class="o">.</span><span class="mi">32</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="o">-.</span><span class="mi">21</span><span class="p">,</span> <span class="o">.</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="o">.</span><span class="mi">9</span><span class="p">,</span> <span class="o">-.</span><span class="mi">4</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># Model estimation:</span>
+<span class="n">ziopc_JCR</span> <span class="o">=</span> <span class="n">ziopcpy</span><span class="o">.</span><span class="n">ziopcmod</span><span class="p">(</span><span class="n">pstart</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;bfgs&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">offsetx</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">offsetz</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># See estimates:</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ziopc_JCR</span><span class="o">.</span><span class="n">coefs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="api.html#ziopcpy.ZiopcModel" title="ziopcpy.ZiopcModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ziopcpy.ZiopcModel</span></code></a> stores results from model estimation and other information.</p>
+<p>Results from the model:</p>
+<p>The following message will appear when the model finishes converging:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Warning: Desired error not necessarily achieved due to precision loss.
+      Current function value: 1374.171899
+      Iterations: 44
+      Function evaluations: 963
+      Gradient evaluations: 74
+</pre></div>
+</div>
+<p>Use print(ziopc_JCR.coefs) to see model results</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                    Coef          SE         2.5%      97.5%
+cut1              2.762593  0.369820     2.037746   3.487439
+cut2             -0.214227  0.048677    -0.309634  -0.118820
+Z int            11.597619  0.407915    10.798106  12.397132
+Z logGDPpc       -1.279668  0.049340    -1.376374  -1.182961
+Z parliament     -0.370217  0.296634    -0.951619   0.211186
+X logGDPpc        0.331656  0.053253     0.227281   0.436032
+X parliament      0.312728  0.292929    -0.261414   0.886869
+X disaster        0.197342  0.033247     0.132179   0.262506
+X major_oil       1.182631  0.373049     0.451455   1.913806
+X major_primary  -0.236625  0.209179    -0.646615   0.173365
+rho              -0.889492  0.040109    -0.968106  -0.810878
+</pre></div>
+</div>
+<p><a class="reference internal" href="api.html#ziopcpy.ZiopcModel" title="ziopcpy.ZiopcModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ziopcpy.ZiopcModel</span></code></a> also stores information such as log-likelihood, AIC, and Variance-Covariance matrix</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ziopc_JCR</span><span class="o">.</span><span class="n">llik</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ziopc_JCR</span><span class="o">.</span><span class="n">AIC</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ziopc_JCR</span><span class="o">.</span><span class="n">vcov</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To extract predicted probabilities from the model:
+<a class="reference internal" href="api.html#ziopcpy.ziopcfit" title="ziopcpy.ziopcfit"><code class="xref py py-func docutils literal notranslate"><span class="pre">ziopcpy.ziopcfit()</span></code></a> returns <a class="reference internal" href="api.html#ziopcpy.FittedVals" title="ziopcpy.FittedVals"><code class="xref py py-class docutils literal notranslate"><span class="pre">ziopcpy.FittedVals</span></code></a> containing fitted probablities.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">fitttedziopc</span> <span class="o">=</span> <span class="n">ziopcpy</span><span class="o">.</span><span class="n">ziopcfit</span><span class="p">(</span><span class="n">ziopc_JCR</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fitttedziopc</span><span class="o">.</span><span class="n">responsefull</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>array([[9.68868303e-01, 3.01063427e-02, 1.02535403e-03],
+    [9.07563628e-01, 7.88301952e-02, 1.36061769e-02],
+    [9.76972004e-01, 2.23954809e-02, 6.32514846e-04],
+    ...,
+    [9.66496738e-01, 3.19780772e-02, 1.52518446e-03],
+    [9.82515374e-01, 1.70648356e-02, 4.19790597e-04],
+    [9.83907141e-01, 1.57240833e-02, 3.68775369e-04]])
+</pre></div>
+</div>
+<p>The Vuong Test with a v statistic can be performed to compare the performance of the ZiOPC model versus the standard Ordered Probit (OP) model using <a class="reference internal" href="api.html#ziopcpy.vuong_opziopc" title="ziopcpy.vuong_opziopc"><code class="xref py py-func docutils literal notranslate"><span class="pre">ziopcpy.vuong_opziopc()</span></code></a>.
+The OP and ZiOPC must have the same number of observations, and the OP must have the same number of covariates as ZiOPC’s OP stage. (see <a class="reference internal" href="op_tutorial.html"><span class="doc">Tutorial for Estimating OP Model</span></a> for details on fitting the OP model)</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ziopcpy</span><span class="o">.</span><span class="n">vuong_opziopc</span><span class="p">(</span><span class="n">JCR_OP</span><span class="p">,</span> <span class="n">ziopc_JCR</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-5.424415009176218
+</pre></div>
+</div>
+<p>A v statistic where v &lt; -1.96 favors the ZiOPC model, -1.96 &lt; v &lt; 1.96 favors neither model, and v &gt; 1.96 favors the OP model.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/ziopc_tutorial.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ZiopcPy  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Nguyen Huynh.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+    </div>
+  </body>
+</html>

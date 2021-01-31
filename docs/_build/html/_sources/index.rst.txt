@@ -1,0 +1,25 @@
+
+
+Package Documentation: ZiopcPy
+==============================
+
+The ZiopcPy package implement mixture models for data in which the *ordinal* response variable is characterized by an *excessive* number of observations in one of the ordinal outcomes.
+Zero-inflated:
+
+
+Guide
+^^^^^
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Contents:
+
+   ziopcpy_tutorial
+   api
+   contact
+
+Indices and tables
+==================
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

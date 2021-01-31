@@ -1,0 +1,15 @@
+.. toctree::
+   :maxdepth: 3
+
+API Reference
+=============
+
+Classes and functions in ziopcpy package. For tutorial on how to use the package to estimate the ZiOP(C) model, see :doc:`ziop_tutorial` and :doc:`ziopc_tutorial`.
+
+
+The ziopcpy module
+------------------
+
+.. automodule:: ziopcpy
+   :members:
+   :member-order: bysource

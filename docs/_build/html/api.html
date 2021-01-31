@@ -1,0 +1,461 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>API Reference &#8212; ZiopcPy  documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contact" href="contact.html" />
+    <link rel="prev" title="ZiopcPy Package" href="ziopcpy_tutorial.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="contact.html" title="Contact"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ziopcpy_tutorial.html" title="ZiopcPy Package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ZiopcPy  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="toctree-wrapper compound">
+</div>
+<div class="section" id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<p>Classes and functions in ziopcpy package. For tutorial on how to use the package to estimate the ZiOP(C) model, see <a class="reference internal" href="ziop_tutorial.html"><span class="doc">Tutorial for Estimating ZiOP Model</span></a> and <a class="reference internal" href="ziopc_tutorial.html"><span class="doc">Tutorial for Estimating ZiOPC Model</span></a>.</p>
+<div class="section" id="module-ziopcpy">
+<span id="the-ziopcpy-module"></span><h2>The ziopcpy module<a class="headerlink" href="#module-ziopcpy" title="Permalink to this headline">¶</a></h2>
+<p>Classes and Functions for the ziopcpy module.</p>
+<dl class="class">
+<dt id="ziopcpy.OpModel">
+<em class="property">class </em><code class="sig-prename descclassname">ziopcpy.</code><code class="sig-name descname">OpModel</code><span class="sig-paren">(</span><em class="sig-param">llik</em>, <em class="sig-param">coef</em>, <em class="sig-param">aic</em>, <em class="sig-param">vcov</em>, <em class="sig-param">data</em>, <em class="sig-param">xs</em>, <em class="sig-param">ts</em>, <em class="sig-param">x_</em>, <em class="sig-param">yx_</em>, <em class="sig-param">yncat</em>, <em class="sig-param">xstr</em>, <em class="sig-param">ystr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ziopcpy.html#OpModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ziopcpy.OpModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store model results from <a class="reference internal" href="#ziopcpy.opmod" title="ziopcpy.opmod"><code class="xref py py-func docutils literal notranslate"><span class="pre">opmod()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ziopcpy.ZiopModel">
+<em class="property">class </em><code class="sig-prename descclassname">ziopcpy.</code><code class="sig-name descname">ZiopModel</code><span class="sig-paren">(</span><em class="sig-param">llik</em>, <em class="sig-param">coef</em>, <em class="sig-param">aic</em>, <em class="sig-param">vcov</em>, <em class="sig-param">data</em>, <em class="sig-param">xs</em>, <em class="sig-param">zs</em>, <em class="sig-param">ts</em>, <em class="sig-param">x_</em>, <em class="sig-param">yx_</em>, <em class="sig-param">z_</em>, <em class="sig-param">yncat</em>, <em class="sig-param">xstr</em>, <em class="sig-param">ystr</em>, <em class="sig-param">zstr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ziopcpy.html#ZiopModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ziopcpy.ZiopModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store model results from <a class="reference internal" href="#ziopcpy.ziopmod" title="ziopcpy.ziopmod"><code class="xref py py-func docutils literal notranslate"><span class="pre">ziopmod()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ziopcpy.ZiopcModel">
+<em class="property">class </em><code class="sig-prename descclassname">ziopcpy.</code><code class="sig-name descname">ZiopcModel</code><span class="sig-paren">(</span><em class="sig-param">llik</em>, <em class="sig-param">coef</em>, <em class="sig-param">aic</em>, <em class="sig-param">vcov</em>, <em class="sig-param">data</em>, <em class="sig-param">xs</em>, <em class="sig-param">zs</em>, <em class="sig-param">ts</em>, <em class="sig-param">x_</em>, <em class="sig-param">yx_</em>, <em class="sig-param">z_</em>, <em class="sig-param">rho</em>, <em class="sig-param">yncat</em>, <em class="sig-param">xstr</em>, <em class="sig-param">ystr</em>, <em class="sig-param">zstr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ziopcpy.html#ZiopcModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ziopcpy.ZiopcModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store model results from <a class="reference internal" href="#ziopcpy.ziopcmod" title="ziopcpy.ziopcmod"><code class="xref py py-func docutils literal notranslate"><span class="pre">ziopcmod()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ziopcpy.FittedVals">
+<em class="property">class </em><code class="sig-prename descclassname">ziopcpy.</code><code class="sig-name descname">FittedVals</code><span class="sig-paren">(</span><em class="sig-param">responsefull</em>, <em class="sig-param">responseordered</em>, <em class="sig-param">responseinflation</em>, <em class="sig-param">linear</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ziopcpy.html#FittedVals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ziopcpy.FittedVals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store fitted values for ZiOP/ZiOPC models.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ziopcpy.op">
+<code class="sig-prename descclassname">ziopcpy.</code><code class="sig-name descname">op</code><span class="sig-paren">(</span><em class="sig-param">pstart</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">data</em>, <em class="sig-param">weights</em>, <em class="sig-param">offsetx</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ziopcpy.html#op"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ziopcpy.op" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate likelihood function for Ordered Probit Model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pstart</strong> (<em>numpy.ndarray</em>) – starting parameters.</p></li>
+<li><p><strong>x</strong> (<em>pandas.core.frame.DataFrame</em>) – Ordered stage variables.</p></li>
+<li><p><strong>y</strong> (<em>pandas.core.frame.DataFrame</em>) – <ol class="upperroman simple" start="505">
+<li></li>
+</ol>
+</p></li>
+<li><p><strong>data</strong> (<em>pandas.core.frame.DataFrame</em>) – dataset.</p></li>
+<li><p><strong>weights</strong> (<em>int</em>) – weights.</p></li>
+<li><p><strong>offsetx</strong> (<em>int</em>) – offset for X.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ziopcpy.ziop">
+<code class="sig-prename descclassname">ziopcpy.</code><code class="sig-name descname">ziop</code><span class="sig-paren">(</span><em class="sig-param">pstart</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">z</em>, <em class="sig-param">data</em>, <em class="sig-param">weights</em>, <em class="sig-param">offsetx</em>, <em class="sig-param">offsetz</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ziopcpy.html#ziop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ziopcpy.ziop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate likelihood function for Zero-inflated Model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pstart</strong> (<em>numpy.ndarray</em>) – starting parameters.</p></li>
+<li><p><strong>x</strong> (<em>pandas.core.frame.DataFrame</em>) – Ordered stage variables.</p></li>
+<li><p><strong>y</strong> (<em>pandas.core.frame.DataFrame</em>) – <ol class="upperroman simple" start="505">
+<li></li>
+</ol>
+</p></li>
+<li><p><strong>z</strong> (<em>pandas.core.frame.DataFrame</em>) – Inflation stage variables.</p></li>
+<li><p><strong>data</strong> (<em>pandas.core.frame.DataFrame</em>) – dataset.</p></li>
+<li><p><strong>weights</strong> (<em>int</em>) – weights.</p></li>
+<li><p><strong>offsetx</strong> (<em>int</em>) – offset for X.</p></li>
+<li><p><strong>offsetz</strong> (<em>int</em>) – offset for z.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ziopcpy.ziopc">
+<code class="sig-prename descclassname">ziopcpy.</code><code class="sig-name descname">ziopc</code><span class="sig-paren">(</span><em class="sig-param">pstart</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">z</em>, <em class="sig-param">data</em>, <em class="sig-param">weights</em>, <em class="sig-param">offsetx</em>, <em class="sig-param">offsetz</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ziopcpy.html#ziopc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ziopcpy.ziopc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate likelihood function for Zero-inflated Correlated-Errors Model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pstart</strong> (<em>numpy.ndarray</em>) – starting parameters.</p></li>
+<li><p><strong>x</strong> (<em>pandas.core.frame.DataFrame</em>) – Ordered stage variables.</p></li>
+<li><p><strong>y</strong> (<em>pandas.core.frame.DataFrame</em>) – <ol class="upperroman simple" start="505">
+<li></li>
+</ol>
+</p></li>
+<li><p><strong>z</strong> (<em>pandas.core.frame.DataFrame</em>) – Inflation stage variables.</p></li>
+<li><p><strong>data</strong> (<em>pandas.core.frame.DataFrame</em>) – dataset.</p></li>
+<li><p><strong>weights</strong> (<em>int</em>) – weights.</p></li>
+<li><p><strong>offsetx</strong> (<em>int</em>) – offset for X.</p></li>
+<li><p><strong>offsetz</strong> (<em>int</em>) – offset for z.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ziopcpy.opresults">
+<code class="sig-prename descclassname">ziopcpy.</code><code class="sig-name descname">opresults</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">data</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ziopcpy.html#opresults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ziopcpy.opresults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce estimation results, part of <a class="reference internal" href="#ziopcpy.opmod" title="ziopcpy.opmod"><code class="xref py py-func docutils literal notranslate"><span class="pre">opmod()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – model object created from minimization</p></li>
+<li><p><strong>data</strong> – dataset</p></li>
+<li><p><strong>x</strong> – Ordered stage variables</p></li>
+<li><p><strong>y</strong> – : DV</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ziopcpy.opmod">
+<code class="sig-prename descclassname">ziopcpy.</code><code class="sig-name descname">opmod</code><span class="sig-paren">(</span><em class="sig-param">pstart</em>, <em class="sig-param">data</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">method='BFGS'</em>, <em class="sig-param">weights=1</em>, <em class="sig-param">offsetx=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ziopcpy.html#opmod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ziopcpy.opmod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate Ordered Probit model and return <a class="reference internal" href="#ziopcpy.OpModel" title="ziopcpy.OpModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">OpModel</span></code></a> class object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pstart</strong> – starting parameters</p></li>
+<li><p><strong>data</strong> – full dataset</p></li>
+<li><p><strong>y</strong> (<em>list of str</em>) – <ol class="upperroman simple" start="505">
+<li></li>
+</ol>
+</p></li>
+<li><p><strong>method</strong> – method for optimization, default ‘BFGS’</p></li>
+<li><p><strong>weights</strong> – weights</p></li>
+<li><p><strong>offsetx</strong> – offset for X</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>OpModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ziopcpy.ziopresults">
+<code class="sig-prename descclassname">ziopcpy.</code><code class="sig-name descname">ziopresults</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">data</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">z</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ziopcpy.html#ziopresults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ziopcpy.ziopresults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce estimation results, part of <a class="reference internal" href="#ziopcpy.ziopmod" title="ziopcpy.ziopmod"><code class="xref py py-func docutils literal notranslate"><span class="pre">ziopmod()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – model object created from minimization</p></li>
+<li><p><strong>data</strong> – dataset</p></li>
+<li><p><strong>x</strong> – Ordered stage variables</p></li>
+<li><p><strong>y</strong> – : DV</p></li>
+<li><p><strong>z</strong> – : Inflation stage variables</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ziopcpy.ziopcresults">
+<code class="sig-prename descclassname">ziopcpy.</code><code class="sig-name descname">ziopcresults</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">data</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">z</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ziopcpy.html#ziopcresults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ziopcpy.ziopcresults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce estimation results, part of <code class="xref py py-func docutils literal notranslate"><span class="pre">ziopc</span>&#160; <span class="pre">mod()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – model object created from minimization</p></li>
+<li><p><strong>data</strong> – dataset</p></li>
+<li><p><strong>x</strong> – Ordered stage variables</p></li>
+<li><p><strong>y</strong> – : DV</p></li>
+<li><p><strong>z</strong> – : Inflation stage variables</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ziopcpy.ziopmod">
+<code class="sig-prename descclassname">ziopcpy.</code><code class="sig-name descname">ziopmod</code><span class="sig-paren">(</span><em class="sig-param">pstart</em>, <em class="sig-param">data</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">z</em>, <em class="sig-param">method='BFGS'</em>, <em class="sig-param">weights=1</em>, <em class="sig-param">offsetx=0</em>, <em class="sig-param">offsetz=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ziopcpy.html#ziopmod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ziopcpy.ziopmod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate ZiOP model and return <a class="reference internal" href="#ziopcpy.ZiopModel" title="ziopcpy.ZiopModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZiopModel</span></code></a> class object as output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pstart</strong> – starting parameters</p></li>
+<li><p><strong>data</strong> – full dataset</p></li>
+<li><p><strong>y</strong> (<em>list of str</em>) – <ol class="upperroman simple" start="505">
+<li></li>
+</ol>
+</p></li>
+<li><p><strong>z</strong> (<em>list of str</em>) – Inflation stage variables.</p></li>
+<li><p><strong>method</strong> – method for optimization, default ‘BFGS’</p></li>
+<li><p><strong>weights</strong> – weights</p></li>
+<li><p><strong>offsetx</strong> – offset for X</p></li>
+<li><p><strong>offsetz</strong> – offset for Z</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>IopModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ziopcpy.ziopcmod">
+<code class="sig-prename descclassname">ziopcpy.</code><code class="sig-name descname">ziopcmod</code><span class="sig-paren">(</span><em class="sig-param">pstart</em>, <em class="sig-param">data</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">z</em>, <em class="sig-param">method='BFGS'</em>, <em class="sig-param">weights=1</em>, <em class="sig-param">offsetx=0</em>, <em class="sig-param">offsetz=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ziopcpy.html#ziopcmod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ziopcpy.ziopcmod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate ZiOPC model and return <a class="reference internal" href="#ziopcpy.ZiopcModel" title="ziopcpy.ZiopcModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZiopcModel</span></code></a> class object as output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pstart</strong> – starting parameters</p></li>
+<li><p><strong>data</strong> – full dataset</p></li>
+<li><p><strong>y</strong> (<em>list of str</em>) – <ol class="upperroman simple" start="505">
+<li></li>
+</ol>
+</p></li>
+<li><p><strong>z</strong> (<em>list of str</em>) – Inflation stage variables.</p></li>
+<li><p><strong>method</strong> – method for optimization, default ‘BFGS’</p></li>
+<li><p><strong>weights</strong> – weights</p></li>
+<li><p><strong>offsetx</strong> – offset for X</p></li>
+<li><p><strong>offsetz</strong> – offset for Z</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>IopCModel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ziopcpy.ziopfit">
+<code class="sig-prename descclassname">ziopcpy.</code><code class="sig-name descname">ziopfit</code><span class="sig-paren">(</span><em class="sig-param">model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ziopcpy.html#ziopfit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ziopcpy.ziopfit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate probabilities from <a class="reference internal" href="#ziopcpy.ziopmod" title="ziopcpy.ziopmod"><code class="xref py py-func docutils literal notranslate"><span class="pre">ziopmod()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>model</strong> – ZiopModel object from ziopmod()</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>FittedVals object with fitted values</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ziopcpy.ziopcfit">
+<code class="sig-prename descclassname">ziopcpy.</code><code class="sig-name descname">ziopcfit</code><span class="sig-paren">(</span><em class="sig-param">model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ziopcpy.html#ziopcfit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ziopcpy.ziopcfit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate fitted probabilities from <a class="reference internal" href="#ziopcpy.ziopcmod" title="ziopcpy.ziopcmod"><code class="xref py py-func docutils literal notranslate"><span class="pre">ziopcmod()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>model</strong> – ZiopCModel object from ziopcmod()</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>FittedVals object with fitted values</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ziopcpy.vuong_opziop">
+<code class="sig-prename descclassname">ziopcpy.</code><code class="sig-name descname">vuong_opziop</code><span class="sig-paren">(</span><em class="sig-param">opmodel</em>, <em class="sig-param">ziopmodel</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ziopcpy.html#vuong_opziop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ziopcpy.vuong_opziop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the Vuong test to compare the performance of the OP and ZiOP model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>opmodel</strong> – The OP model from <a class="reference internal" href="#ziopcpy.OpModel" title="ziopcpy.OpModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">OpModel</span></code></a></p></li>
+<li><p><strong>ziopmodel</strong> – The ZiOP model from <a class="reference internal" href="#ziopcpy.ZiopModel" title="ziopcpy.ZiopModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZiopModel</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>vuongopziop: Result of the Vuong test</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ziopcpy.vuong_opziopc">
+<code class="sig-prename descclassname">ziopcpy.</code><code class="sig-name descname">vuong_opziopc</code><span class="sig-paren">(</span><em class="sig-param">opmodel</em>, <em class="sig-param">ziopcmodel</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ziopcpy.html#vuong_opziopc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ziopcpy.vuong_opziopc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the Vuong test to compare the performance of the OP and ZiOPC model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>opmodel</strong> – The OP model from <a class="reference internal" href="#ziopcpy.OpModel" title="ziopcpy.OpModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">OpModel</span></code></a></p></li>
+<li><p><strong>ziopcmodel</strong> – The ZiOPC model from <a class="reference internal" href="#ziopcpy.ZiopcModel" title="ziopcpy.ZiopcModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZiopcModel</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>vuongopziopc: Result of the Vuong test</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ziopcpy.split_effects">
+<code class="sig-prename descclassname">ziopcpy.</code><code class="sig-name descname">split_effects</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">inflvar</em>, <em class="sig-param">nsims=10000</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ziopcpy.html#split_effects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ziopcpy.split_effects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the changes in probability of being 0 in the split-probit stage.</p>
+<p>This function calculate predicted probabilities
+when there is change in value of a variable in the split-probit equation.
+The chosen dummy variable is changed from 0 to 1,
+and chosen numerical variable is mean value + 1 standard deviation.
+Other variables are kept at 0 or mean value
+(Note: the current version of the function
+recognize ordinal variables as numerical).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – <a class="reference internal" href="#ziopcpy.ZiopModel" title="ziopcpy.ZiopModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZiopModel</span></code></a> or <a class="reference internal" href="#ziopcpy.ZiopcModel" title="ziopcpy.ZiopcModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZiopcModel</span></code></a></p></li>
+<li><p><strong>inflvar</strong> – int representing the location of variable
+in the split-probit equation
+(attribute .inflate of <a class="reference internal" href="#ziopcpy.ZiopModel" title="ziopcpy.ZiopModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZiopModel</span></code></a> or <a class="reference internal" href="#ziopcpy.ZiopcModel" title="ziopcpy.ZiopcModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZiopcModel</span></code></a>)</p></li>
+<li><p><strong>nsims</strong> – number of simulated observations, default to 10000</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>changeprobs: a dataframe of the predicted
+probabilities when there is change in the variable (1)
+versus original values (0).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ziopcpy.ordered_effects">
+<code class="sig-prename descclassname">ziopcpy.</code><code class="sig-name descname">ordered_effects</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">ordvar</em>, <em class="sig-param">nsims=10000</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ziopcpy.html#ordered_effects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ziopcpy.ordered_effects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the changes in probability in each outcome in OP stage.</p>
+<p>This function calculate predicted probabilities
+when there is change in value of a variable
+in the ordered probit equation.
+The chosen dummy variable is changed from 0 to 1,
+and chosen numerical variable is mean value + 1 standard deviation.
+Other variables are kept at 0 or mean value
+(Note: the current version of the function
+recognize ordinal variables as numerical).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – <a class="reference internal" href="#ziopcpy.ZiopModel" title="ziopcpy.ZiopModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZiopModel</span></code></a> or <a class="reference internal" href="#ziopcpy.ZiopcModel" title="ziopcpy.ZiopcModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZiopcModel</span></code></a></p></li>
+<li><p><strong>ordvar</strong> – int representing the location of variable
+in the ordered probit equation
+(attribute .ordered of <a class="reference internal" href="#ziopcpy.ZiopModel" title="ziopcpy.ZiopModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZiopModel</span></code></a> or <a class="reference internal" href="#ziopcpy.ZiopcModel" title="ziopcpy.ZiopcModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ZiopcModel</span></code></a>)</p></li>
+<li><p><strong>nsims</strong> – number of simulated observations, default to 10000</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>changeprobs: a dataframe of the predicted
+probabilities when there is change in the variable for each outcome (1)
+versus original values (0).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">API Reference</a><ul>
+<li><a class="reference internal" href="#module-ziopcpy">The ziopcpy module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ziopcpy_tutorial.html"
+                        title="previous chapter">ZiopcPy Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="contact.html"
+                        title="next chapter">Contact</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/api.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="contact.html" title="Contact"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ziopcpy_tutorial.html" title="ZiopcPy Package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ZiopcPy  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Nguyen Huynh.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+    </div>
+  </body>
+</html>
