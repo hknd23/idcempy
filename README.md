@@ -1,4 +1,4 @@
-# The `ZiopcPy` Package
+# The `IDCeMPy` Package
 
 *Nguyen K. Huynh, Sergio Bejar, Nicolas Schmidt, Vineeta Yadav, Bumba Mukherjee*
 
