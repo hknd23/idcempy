@@ -1,4 +1,4 @@
-# The `IDCeMPy` Package
+# IDCeMPy: Estimation of "Inflated" Discrete Choice Models
 
 *Nguyen K. Huynh, Sergio Bejar, Nicolas Schmidt, Vineeta Yadav, Bumba Mukherjee*
 
@@ -11,6 +11,15 @@
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 <!-- badges: end -->
 
+**IDCeMPy** is a Python package which:
+
+* Makes it easy to compose and fit ordered probit models when your discrete outcome variable is "inflated"  in either the zero (ZiOP/ZiOPC) or middle (MiOP/MiOPC) category.    
+* Fits inflated multi-nomial logit (MNL) models that account for the preponderant (and heterogeneous) share
+of observations in the baseline or any other lower category in unordered polytomous choice
+outcomes.
+* Allows you to easily compute the goodness-of-fit tests (AIC and Log-likelihood) and assess the performance of the "inflated" choice models with respect to standard ordered probit (OP) and multi-nomial logit (MNL) models. 
+
+  
 ### Description
 The `ZiopcPy` Python package fits the following models for (zero-inflated) ordered dependent variables in which the lowest outcome category has "excessive" zero observations: the zero-inflated ordered probit without correlated errors (ZiOP), the zero-inflated ordered probit with correlated errors (ZiOPC), and (as a baseline comparison) the standard ordered probit (OP) model.  The ZiOP and ZiOPC models jointly estimates a probit split-stage equation and an OP outcome-stage equation, which allows researchers to statistically account for excessive zeros in zero-inflated ordered dependent variables that relate to two data generating processes (d.g.p's).`ZiopcPy` also contains functions that allow users to compute the probability with which observations are in the always-zero group within the zero-inflated ordinal outcome variable, assess the goodness of fit of the models, obtain the marginal effects of the specified covariates, and to implement tests to perform model comparison. 
 
