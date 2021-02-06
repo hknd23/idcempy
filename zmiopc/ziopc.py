@@ -359,9 +359,9 @@ def miop(pstart, x, y, z, data, weights, offsetx, offsetz):
     ycatu = np.unique(ycat)
     yncat = len(ycatu)
     y0 = np.sort(ycatu)
-    V = np.zeros((len(data), yncat))
+    v = np.zeros((len(data), yncat))
     for j in range(yncat):
-        V[:, j] = y == y0[j]
+        v[:, j] = y == y0[j]
     tau = np.repeat(1.0, yncat)
     for j in range(yncat - 1):
         if j == 0:
@@ -388,7 +388,7 @@ def miop(pstart, x, y, z, data, weights, offsetx, offsetz):
     lik = np.zeros((n, yncat))
     for k in range(n):
         for j in range(yncat):
-            lik[k, j] = V[k, j] * probs[k, j]
+            lik[k, j] = v[k, j] * probs[k, j]
     likk = np.log(lik[lik != 0])
     llik = -1 * sum(likk * weights)
     return llik
