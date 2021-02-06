@@ -19,7 +19,7 @@ of observations in the baseline or any other lower category in unordered polytom
 outcomes.
 * Allows you to easily compute the goodness-of-fit tests (AIC and Log-likelihood) and assess the performance of the "inflated" choice models with respect to standard ordered probit (OP) and multi-nomial logit (MNL) models. 
 
-**IDCeMPy** uses Newton numerical optimization methods to estimated the "inflated" discrete choice models described above via Maximum Likelihood Estimation (MLE).  
+**IDCeMPy** uses Newton numerical optimization methods to estimate the "inflated" discrete choice models described above via Maximum Likelihood Estimation (MLE).  
 **IDCeMPY** is compatible with [Python] 3.7+
 
 ### Getting Started
