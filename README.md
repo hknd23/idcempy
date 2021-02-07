@@ -50,6 +50,7 @@ of observations in your ordered outcome variable.
 | `vuong_opiop`;  `vuong_opiopc` | Calculates the Vuong test statistic to compare the performance of the OP versus the ZiOP, ZiOPC, MiOP or MiOPC models respectively.|
 |`bimnlmod` | fits and inflated multi-nomial Logit (BiNML) model.|
 |`bimnlresults` | Stores and presents the covariate estimates, the Variance-Covariance (VCV) matrix, and the goodness-of-fit statistics (Log-Likelihood and AIC) of `bimnlmod`.|
+
 ## Dependencies
 - scipy
 - numpy
@@ -65,49 +66,65 @@ $ pip install ziopcpy
 
 ## Using the Package
 
-We illustrate the functionality of ZiopcPy using data from Besley and Persson (2009) that is included and described in the package. Specifically, we estimate the effects of economic and political covariates on their ordered dependent variable, political violence, which is labeled as “rep_civwar_DV”.
+We illustrate the functionality of **IDCePy** using data from the National Youth Tobacco Survey (2018) and XXXX (xxx). 
 
-Import `ZiopcPy` and other required packages:
+First, import `ZiopcPy`, required packages, and dataset.
 ```
 from ziopcpy import ziopcpy
 import pandas as pd
 import urllib
+url= 'https://github.com/hknd23/ziopcpy/raw/master/data/tobacco_cons.csv'
+DAT= pd.read_csv(url)
 ```
-
+We now specify arrays of variable names (strings) X, Y, Z.
 ```
-url='https://github.com/hknd23/ziopcpy/raw/master/data/bp_exact_for_analysis.dta'
-DAT=pd.read_stata(url)
-
-# Specifying array of variable names (strings) X,Y,Z:
-X = ['logGDPpc', 'parliament', 'disaster', 'major_oil', 'major_primary']
-Z = ['logGDPpc', 'parliament']
-Y = ['rep_civwar_DV']
+X = ['age', 'grade', 'gender']
+Y = ['cig_count']
+Z = ['age']
 ```
-#### Running the ZiOP, ZiOPC, and OP model
-
-Users should define an array of starting parameters before estimating `ziop`, `ziopc`, or `op` models. 
+In addition, we define an array of starting parameters before estimating the `ziopc` model. 
 ```
-# Starting parameters for optimization:
-pstartziop=np.array( [-1.31, .32, 2.5, -.21,.2, -0.2, -0.4, 0.2,.9,-.4])
-pstartziopc = np.array([-1.31, .32, 2.5, -.21, .2, -0.2, -0.4, 0.2, .9, -.4, .1])
-pstartop = np.array([-1, 0.3, -0.2, -0.5, 0.2, .9, -.4])
-
+pstart = np.array([.1, .15, .001, .2, .3, .3, .001, .2, .01, .01])
 ```
-
-### Estimation of `ziop`, `ziopc` or `op` models
+The following line of code creates a `ziopc` regression object model.
 ```
-# Model estimation:
-ziop_JCR = ziopcpy.iopmod(pstartziop, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
-ziopc_JCR = ziopcpy.iopcmod(pstartziopc, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
-JCR_OP = ziopcpy.opmod(pstartop, data, X, Y, method='bfgs', weights=1, offsetx=0)
+ziopc_tob = iopcmod('ziopc', pstartziopc, data, X, Y, Z, method='bfgs',
+                    weights=1, offsetx=0, offsetz=0)
 ```
-The estimation results from the table above are stored in the three classes `ZiopModel`, `ZiopcModel`, and `OpModel` with the following attributes:
-
+The results of this example are stored in a class (`ZiopcModel`) with the following attributes:
   * *coefs*: Model coefficients and standard errors
   * *llik*: Log-likelihood
   * *AIC*: Akaike information criterion
   * *vcov*: Variance-covariance matrix
-  
+
+We, for example, can print out the covariate estimates, standard errors, *p* value and *t* statistics by typing:
+```
+print(ziopc_tobb.coefs)
+```
+```
+              2.5%     97.5%      Coef        SE         p    tscore
+cut1     -1.140210  2.643246  0.751518  0.965167  0.436192  0.778640
+cut2     -1.209736 -0.130255 -0.669995  0.275378  0.014974 -2.433003
+cut3     -2.769668  0.324247 -1.222711  0.789264  0.121339 -1.549179
+cut4     -2.442634  1.208168 -0.617233  0.931327  0.507493 -0.662746
+Z int    -2.158451  2.020689 -0.068881  1.066107  0.948484 -0.064610
+Z age    -1.059072  1.024847 -0.017112  0.531612  0.974321 -0.032190
+X age    -0.120082  0.254096  0.067007  0.095454  0.482689  0.701984
+X grade  -0.447309  0.111297 -0.168006  0.142502  0.238408 -1.178975
+X gender -2.421751  0.795825 -0.812963  0.820810  0.321959 -0.990439
+rho      -1.575206  3.306348  0.865571  1.245294  0.487009  0.695073  
+```
+Or the Akaike Information Criterion (AIC):
+```
+print(ziopc_tobb.AIC)
+```
+```
+16061.716497590078
+```
+
+
+
+
   The following table summarizes the results obtained from the three models (standard errors in parentheses)
 
 |                           | OP       |         | ZiOP     |         | ZiOPC    |         |
