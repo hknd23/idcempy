@@ -22,12 +22,12 @@ outcomes.
 **IDCeMPy** uses Newton numerical optimization methods to estimate the "inflated" discrete choice models described above via Maximum Likelihood Estimation (MLE).  
 **IDCeMPY** is compatible with [Python](https://python.org) 3.7+
 
-### Getting Started
+## Getting Started
 
 You can try **IDCeMPy** now by downloading it from GitHub or PyPi.
 On [readthedocs](https://ziopcpy.readthedocs.io/) you will find the installation guide, a complete overview of all the fueatures included in **IDCeMPy**, and example scripts of all the models. 
 
-### Why **IDCeMPy**?
+## Why **IDCeMPy**?
 
 Researchers in natural and social sciences typically use Ordered Probit (OP) and Multi-Nomial Logit (MNL) models when working with discrete outcome variables that have more than two categories.  Using those models, however, may lead to biased inferences when:
 
@@ -40,21 +40,22 @@ excessive share and heterogeneous pool of observations.
 equations in zero and middle inflated OP models, and MNL models with unordered outcome variables, allowing to statistically assess the inflated share
 of observations in your ordered outcome variable.
 
-### Functions
+## Functions in the **IDCePy** Package
 
 | Function         | Description                                                                                                          |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `opmod`; `iopmod`; `iopcmod` | fit the standard OP model, the zero-inflated OP model without correlated errors (ZiOP), and the zero-inflated OP model with correlated errors (ZiOPC) respectively. |
-|`opresults`; `iopresults`; `iopcresults`| Stores and presents the covariate estimates, the Variance-Covariance (VCV) matrix, the Log-Likelihood and the AIC of `opmod`, `iopmod`, and `iopcmod` respectively. |
-| `iopfit`; `iopcfit`| Computes the fitted probabilities from the ZiOP and ZiOPC models respectively.|
-| `vuong_opiop`;  `vuong_opiopc` | Calculates the Vuong test statistic to compare the performance of the OP versus the ZiOP and ZiOPC models respectively.|
-
-### Dependencies
+| `opmod`; `iopmod`; `iopcmod` | fit the standard OP model, the zero-inflated and middle inflated OP models without correlated errors (ZiOP and MiOP), and the zero-inflated and middle inflated OP model with correlated errors (ZiOPC and MiOPC) respectively. |
+|`opresults`; `iopresults`; `iopcresults`| Stores and presents the covariate estimates, the Variance-Covariance (VCV) matrix, and goodness-of-fit statistics (Log-Likelihood and AIC) of `opmod`, `iopmod`, and `iopcmod` respectively. |
+| `iopfit`; `iopcfit`| Computes the fitted probabilities from the ZiOP, MiOP, ZiOPC and MiOPC models respectively.|
+| `vuong_opiop`;  `vuong_opiopc` | Calculates the Vuong test statistic to compare the performance of the OP versus the ZiOP, ZiOPC, MiOP or MiOPC models respectively.|
+|`bimnlmod` | fits and inflated multi-nomial Logit (BiNML) model.|
+|`bimnlresults` | Stores and presents the covariate estimates, the Variance-Covariance (VCV) matrix, and the goodness-of-fit statistics (Log-Likelihood and AIC) of `bimnlmod`.|
+## Dependencies
 - scipy
 - numpy
 - pandas
 
-### Installation
+## Installation
 
 From [PyPi](https://pypi.org/project/ziopcpy/0.1.2/):
 
@@ -62,7 +63,7 @@ From [PyPi](https://pypi.org/project/ziopcpy/0.1.2/):
 $ pip install ziopcpy
 ```
 
-### Using the Package
+## Using the Package
 
 We illustrate the functionality of ZiopcPy using data from Besley and Persson (2009) that is included and described in the package. Specifically, we estimate the effects of economic and political covariates on their ordered dependent variable, political violence, which is labeled as “rep_civwar_DV”.
 
