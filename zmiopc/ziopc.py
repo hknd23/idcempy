@@ -135,7 +135,7 @@ class IopCModel:
 
 
 class FittedVals:
-    """Store fitted values for ZiOP/ZiOPC models."""
+    """Store fitted values for iOP models."""
 
     def __init__(self, responsefull,
                  responseordered, responseinflation, linear):
@@ -156,7 +156,7 @@ def op(pstart, x, y, data, weights, offsetx):
     """Calculate likelihood function for Ordered Probit Model.
 
     :param pstart: starting parameters.
-    :type pstart: numpy.ndarray
+    :type pstart: numpy.ndarray or list
     :param x: Ordered stage variables.
     :type x: pandas.core.frame.DataFrame
     :param y: DV.
@@ -205,7 +205,7 @@ def ziop(pstart, x, y, z, data, weights, offsetx, offsetz):
     """Calculate likelihood function for Zero-inflated Model.
 
     :param pstart: starting parameters.
-    :type pstart: numpy.ndarray
+    :type pstart: numpy.ndarray or list
     :param x: Ordered stage variables.
     :type x: pandas.core.frame.DataFrame
     :param y: DV.
@@ -260,7 +260,7 @@ def ziopc(pstart, x, y, z, data, weights, offsetx, offsetz):
     """Calculate likelihood function for Zero-inflated Correlated-Errors Model.
 
     :param pstart: starting parameters.
-    :type pstart: numpy.ndarray
+    :type pstart: numpy.ndarray or list
     :param x: Ordered stage variables.
     :type x: pandas.core.frame.DataFrame
     :param y: DV.
@@ -338,7 +338,7 @@ def miop(pstart, x, y, z, data, weights, offsetx, offsetz):
     Number of outcomes must be odd
 
     :param pstart: starting parameters.
-    :type pstart: numpy.ndarray
+    :type pstart: numpy.ndarray or list
     :param x: Ordered stage variables.
     :type x: pandas.core.frame.DataFrame
     :param y: DV.
@@ -399,7 +399,7 @@ def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
     Likelihood function for Middle-inflated Correlated-Errors Model.
     Number of outcomes must be odd.
     :param pstart: starting parameters.
-    :type pstart: numpy.ndarray
+    :type pstart: numpy.ndarray or list
     :param x: Ordered stage variables.
     :type x: pandas.core.frame.DataFrame
     :param y: DV.
@@ -481,8 +481,8 @@ def opresults(model, data, x, y):
 
     :param model: model object created from minimization
     :param data: dataset
-    :param x: Ordered stage variables
-    :param y: : DV
+    :param x: Independent variables
+    :param y: : Dependent Variable
     """
     varlist = np.unique(y + x)
     dataset = data[varlist]
@@ -496,7 +496,7 @@ def opresults(model, data, x, y):
     for s in range(1, yncat):
         names.append("cut" + str(s))
     for s in range(x_.shape[1]):
-        names.append("X " + x_.columns[s])
+        names.append(x_.columns[s])
     ts = model.x[0:yncat - 1]
     xs = model.x[(yncat - 1):(yncat + x_.shape[1] - 1)]
     ses = np.sqrt(np.diag(model.hess_inv))
@@ -564,9 +564,9 @@ def iopresults(model, data, x, y, z, modeltype):
     for s in range(1, yncat):
         names.append("cut" + str(s))
     for s in range(z_.shape[1]):
-        names.append("Z " + z_.columns[s])
+        names.append("Inflation: " + z_.columns[s])
     for s in range(x_.shape[1]):
-        names.append("X " + x_.columns[s])
+        names.append("Ordered: " + x_.columns[s])
     ts = model.x[0:yncat - 1]
     zs = model.x[yncat - 1:(yncat + z_.shape[1] - 1)]
     xs = model.x[(yncat + z_.shape[1] - 1):(
@@ -579,8 +579,10 @@ def iopresults(model, data, x, y, z, modeltype):
     coef = pd.DataFrame({'Coef': model.x, 'SE': ses, 'tscore': tscore,
                          'p': pval, '2.5%': lci, '97.5%': uci}, names)
     aic = -2 * (-model.fun) + 2 * (len(coef))
-    results = IopModel(modeltype, model.fun, coef, aic, model.hess_inv, datasetnew,
-                       xs, zs, ts, x_, yx_, z_, yncat, x, y, z)
+    results = IopModel(modeltype, model.fun, coef, aic,
+                       model.hess_inv, datasetnew,
+                       xs, zs, ts, x_, yx_, z_,
+                       yncat, x, y, z)
     return results
 
 
@@ -608,9 +610,9 @@ def iopcresults(model, data, x, y, z, modeltype):
     for s in range(1, yncat):
         names.append("cut" + str(s))
     for s in range(z_.shape[1]):
-        names.append("Z " + z_.columns[s])
+        names.append("Inflation: " + z_.columns[s])
     for s in range(x_.shape[1]):
-        names.append("X " + x_.columns[s])
+        names.append("Ordered: " + x_.columns[s])
     names.append("rho")
     ts = model.x[0:yncat - 1]
     zs = model.x[yncat - 1:(yncat + z_.shape[1] - 1)]
@@ -625,14 +627,16 @@ def iopcresults(model, data, x, y, z, modeltype):
     coef = pd.DataFrame({'Coef': model.x, 'SE': ses, 'tscore': tscore,
                          'p': pval, '2.5%': lci, '97.5%': uci}, names)
     aic = -2 * (-model.fun) + 2 * (len(coef))
-    results = IopCModel(modeltype, model.fun, coef, aic, model.hess_inv, datasetnew,
-                        xs, zs, ts, x_, yx_, z_, rho, yncat, x, y, z)
+    results = IopCModel(modeltype, model.fun, coef, aic,
+                        model.hess_inv, datasetnew,
+                        xs, zs, ts, x_, yx_, z_,
+                        rho, yncat, x, y, z)
     return results
 
 
 def iopmod(modeltype, pstart, data, x, y, z,
            method='BFGS', weights=1, offsetx=0, offsetz=0):
-    """Estimate ZiOP model and return :class:`ZiopModel` class object as output.
+    """Estimate ZiOP model and return :class:`IopModel` class object as output.
 
     :param pstart: starting parameters
     :param data: full dataset
@@ -664,7 +668,8 @@ def iopmod(modeltype, pstart, data, x, y, z,
                              args=(x_, yx_, z_, datasetnew,
                                    weights, offsetx, offsetz),
                              method=method,
-                             options={'gtol': 1e-6, 'disp': True, 'maxiter': 500})
+                             options={'gtol': 1e-6, 'disp': True,
+                                      'maxiter': 500})
         elif modeltype == 'miop':
             if len(np.unique(y_.astype('category').iloc[:, 0])) % 2 == 1:
                 model = minimize(miop, pstart,
@@ -684,7 +689,8 @@ def iopmod(modeltype, pstart, data, x, y, z,
 
 def iopcmod(modeltype, pstart, data, x, y, z,
             method='BFGS', weights=1, offsetx=0, offsetz=0):
-    """Estimate ZiOPC model and return :class:`ZiopcModel` class object as output.
+    """Estimate an iOP model (ZiOP or MiOP) and return :class:`IopcModel`
+    class object as output.
 
     :param pstart: starting parameters
     :param data: full dataset
@@ -717,7 +723,8 @@ def iopcmod(modeltype, pstart, data, x, y, z,
                              args=(x_, yx_, z_, datasetnew,
                                    weights, offsetx, offsetz),
                              method=method,
-                             options={'gtol': 1e-6, 'disp': True, 'maxiter': 500})
+                             options={'gtol': 1e-6, 'disp': True,
+                                      'maxiter': 500})
         elif modeltype == 'miopc':
             if len(np.unique(y_.astype('category').iloc[:, 0])) % 2 == 1:
                 model = minimize(miopc, pstart,
@@ -738,8 +745,8 @@ def iopcmod(modeltype, pstart, data, x, y, z,
 def iopfit(model):
     """Calculate probabilities from :py:func:`iopmod`.
 
-    :param model: ZiopModel object from iopmod()
-    :return: FittedVals object with fitted values
+    :param model: :class:IopModel object from :py:func:`iopmod`
+    :return: :class:FittedVals object with fitted values
     """
     zg = model.Z.dot(model.inflate)
     xb = model.X.dot(model.ordered)
@@ -750,18 +757,21 @@ def iopfit(model):
     if model.modeltype == 'ziop':
         for j in range(1, model.ycat - 1):
             cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
-        probs[:, model.ycat - 1] = ((norm.cdf(zg)) *
-                                    (1 - norm.cdf(cprobs[model.ycat - 2, 0] - xb)))
-        probs[:, 0] = ((1 - norm.cdf(zg)) + (norm.cdf(zg)) *
-                       (norm.cdf(cprobs[0, 0] - xb)))
+        probs[:, model.ycat - 1] = ((norm.cdf(zg))
+                                    * (1 - norm.cdf(cprobs[model.ycat - 2,
+                                                           0] - xb)))
+        probs[:, 0] = ((1 - norm.cdf(zg)) + (norm.cdf(zg))
+                       * (norm.cdf(
+            cprobs[0, 0] - xb)))
         for j in range(1, model.ycat - 1):
             probs[:, j] = (norm.cdf(zg)) * ((norm.cdf(cprobs[j, 0] - xb))
                                             - (norm.cdf(cprobs[j - 1, 0] - xb)))
     elif model.modeltype == 'miop':
         for j in range(1, model.ycat - 1):
             cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
-        probs[:, model.ycat - 1] = ((norm.cdf(zg)) *
-                                    (1 - norm.cdf(cprobs[model.ycat - 2, 0] - xb)))
+        probs[:, model.ycat - 1] = ((norm.cdf(zg))
+                                    * (1 - norm.cdf(cprobs[model.ycat - 2, 0]
+                                                    - xb)))
         probs[:, 0] = norm.cdf(zg) * norm.cdf(cprobs[0, 0] - xb)
 
         for i in range(1, model.ycat - 1):
@@ -792,8 +802,8 @@ def iopfit(model):
 def iopcfit(model):
     """Calculate fitted probabilities from :py:func:`iopcmod`.
 
-    :param model: ZiopCModel object from iopcmod()
-    :return: FittedVals object with fitted values
+    :param model: :class:`IopCModel` object from :py:func:`iopcmod`
+    :return: :class:`FittedVals` object with fitted values
     """
     zg = model.Z.dot(model.inflate)
     xb = model.X.dot(model.ordered)
@@ -811,8 +821,8 @@ def iopcfit(model):
             cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
         for i in range(n):
             probs[i, model.ycat - 1] = mvn.mvnun(
-                lower, [zg[i], (xb[i] -
-                                cprobs[model.ycat - 2][0])], means, sigma)[0]
+                lower, [zg[i], (xb[i]
+                                - cprobs[model.ycat - 2][0])], means, sigma)[0]
             probs[i, 0] = ((1 - norm.cdf(zg[i]))
                            + mvn.mvnun(lower,
                                        [zg[i], (cprobs[0][0] - xb[i])],
@@ -840,17 +850,20 @@ def iopcfit(model):
                 if j == median(range(model.ycat)):
                     probs[i, j] = ((1 - norm.cdf(zg[i]))
                                    + ((mvn.mvnun(lower,
-                                                 [zg[i], (cprobs[j][0] - xb[i])],
+                                                 [zg[i],
+                                                  (cprobs[j][0] - xb[i])],
                                                  means, nsigma)[0])
                                       - (mvn.mvnun(lower,
-                                                   [zg[i], (cprobs[j - 1][0] - xb[i])],
+                                                   [zg[i],
+                                                    (cprobs[j - 1][0] - xb[i])],
                                                    means, nsigma)[0])))
                 else:
                     probs[i, j] = ((mvn.mvnun(lower,
                                               [zg[i], (cprobs[j][0] - xb[i])],
                                               means, nsigma)[0])
                                    - (mvn.mvnun(lower,
-                                                [zg[i], (cprobs[j - 1][0] - xb[i])],
+                                                [zg[i],
+                                                 (cprobs[j - 1][0] - xb[i])],
                                                 means, nsigma)[0]))
 
     # ordered
@@ -871,10 +884,10 @@ def iopcfit(model):
 
 
 def vuong_opiop(opmodel, iopmodel):
-    """Run the Vuong test to compare the performance of the OP and ZiOP model.
+    """Run the Vuong test to compare the performance of the OP and iOP model.
 
     :param opmodel: The OP model from :class:`OpModel`
-    :param iopmodel: The ZiOP model from :class:`ZiopModel`
+    :param iopmodel: The ZiOP model from :class:`IopModel`
     :return: vuongopiop: Result of the Vuong test
     """
     n1 = len(opmodel.data)
@@ -921,10 +934,10 @@ def vuong_opiop(opmodel, iopmodel):
 
 
 def vuong_opiopc(opmodel, iopcmodel):
-    """Run the Vuong test to compare the performance of the OP and ZiOPC model.
+    """Run the Vuong test to compare the performance of the OP and iOPC model.
 
     :param opmodel: The OP model from :class:`OpModel`
-    :param iopcmodel: The ZiOPC model from :class:`ZiopcModel`
+    :param iopcmodel: The iOPC model from :class:`IopCModel`
     :return: vuongopiopc: Result of the Vuong test
     """
     n1 = len(opmodel.data)
@@ -972,7 +985,8 @@ def vuong_opiopc(opmodel, iopcmodel):
 
 
 def split_effects(model, inflvar, nsims=10000):
-    """Calculate the changes in probability of being 0 in the split-probit stage.
+    """Calculate the changes in probability of being 0 in the split-probit
+    stage.
 
     This function calculate predicted probabilities
     when there is change in value of a variable in the split-probit equation.
@@ -982,10 +996,10 @@ def split_effects(model, inflvar, nsims=10000):
     (Note: the current version of the function
     recognize ordinal variables as numerical).
 
-    :param model: :class:`ZiopModel` or :class:`ZiopcModel`
+    :param model: :class:`IopModel` or :class:`IopCModel`
     :param inflvar: int representing the location of variable
         in the split-probit equation
-        (attribute .inflate of :class:`ZiopModel` or :class:`ZiopcModel`)
+        (attribute .inflate of :class:`IopModel` or :class:`IopCModel`)
     :param nsims: number of simulated observations, default to 10000
     :return: changeprobs: a dataframe of the predicted
         probabilities when there is change in the variable (1)
@@ -1037,10 +1051,10 @@ def ordered_effects(model, ordvar, nsims=10000):
     (Note: the current version of the function
     recognize ordinal variables as numerical).
 
-    :param model: :class:`ZiopModel` or :class:`ZiopcModel`
+    :param model: :class:`IopModel` or :class:`IopCModel`
     :param ordvar: int representing the location of variable
         in the ordered probit equation
-        (attribute .ordered of :class:`ZiopModel` or :class:`ZiopcModel`)
+        (attribute .ordered of :class:`IopModel` or :class:`IopCModel`)
     :param nsims: number of simulated observations, default to 10000
     :return: changeprobs: a dataframe of the predicted
         probabilities when there is change in the variable for each outcome (1)
