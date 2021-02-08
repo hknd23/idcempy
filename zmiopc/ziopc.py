@@ -496,7 +496,7 @@ def opresults(model, data, x, y):
     for s in range(1, yncat):
         names.append("cut" + str(s))
     for s in range(x_.shape[1]):
-        names.append("X " + x_.columns[s])
+        names.append(x_.columns[s])
     ts = model.x[0:yncat - 1]
     xs = model.x[(yncat - 1):(yncat + x_.shape[1] - 1)]
     ses = np.sqrt(np.diag(model.hess_inv))
@@ -564,9 +564,9 @@ def iopresults(model, data, x, y, z, modeltype):
     for s in range(1, yncat):
         names.append("cut" + str(s))
     for s in range(z_.shape[1]):
-        names.append("Z " + z_.columns[s])
+        names.append("Inflation: " + z_.columns[s])
     for s in range(x_.shape[1]):
-        names.append("X " + x_.columns[s])
+        names.append("Ordered: " + x_.columns[s])
     ts = model.x[0:yncat - 1]
     zs = model.x[yncat - 1:(yncat + z_.shape[1] - 1)]
     xs = model.x[(yncat + z_.shape[1] - 1):(
@@ -610,9 +610,9 @@ def iopcresults(model, data, x, y, z, modeltype):
     for s in range(1, yncat):
         names.append("cut" + str(s))
     for s in range(z_.shape[1]):
-        names.append("Z " + z_.columns[s])
+        names.append("Inflation: " + z_.columns[s])
     for s in range(x_.shape[1]):
-        names.append("X " + x_.columns[s])
+        names.append("Ordered: " + x_.columns[s])
     names.append("rho")
     ts = model.x[0:yncat - 1]
     zs = model.x[yncat - 1:(yncat + z_.shape[1] - 1)]

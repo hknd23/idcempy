@@ -57,14 +57,14 @@ class BimnlModel:
 
 def bimnl3(pstart, x2, x3, y, z, order):
     """
-    Likelihood function for the three-category BIMNL model.
+    Likelihood function for the baseline inflated three-category MNL model.
 
     :param pstart: starting parameters
     :param x2: X covariates
     :param x3: X covariates (should be identical to x2
     :param y: Dependent Variable
     :param z: Inflation stage covariates
-    :param order: order of categories
+    :param order: order of categories (first category-baseline is inflated)
     """
     b2 = pstart[len(z.columns):(len(z.columns) + len(x2.columns))]
     b3 = pstart[(len(z.columns) + len(x2.columns)):(len(pstart))]
@@ -85,14 +85,14 @@ def bimnl3(pstart, x2, x3, y, z, order):
 
 def simnl3(pstart, x2, x3, y, z, order):
     """
-    Likelihood function for the three-category BIMNL model.
+    Likelihood function for the second category inflated MNL model.
 
     :param pstart: starting parameters
     :param x2: X covariates
     :param x3: X covariates (should be identical to x2
     :param y: Dependent Variable
     :param z: Inflation stage covariates
-    :param order: order of categories
+    :param order: order of categories (second category is inflated)
     """
     b2 = pstart[len(z.columns):(len(z.columns) + len(x2.columns))]
     b3 = pstart[(len(z.columns) + len(x2.columns)):(len(pstart))]
@@ -113,14 +113,14 @@ def simnl3(pstart, x2, x3, y, z, order):
 
 def timnl3(pstart, x2, x3, y, z, order):
     """
-    Likelihood function for the three-category BIMNL model.
+    Likelihood function for the third category inflated MNL model.
 
     :param pstart: starting parameters
     :param x2: X covariates
     :param x3: X covariates (should be identical to x2
     :param y: Dependent Variable
     :param z: Inflation stage covariates
-    :param order: order of categories
+    :param order: order of categories (third category is inflated)
     """
     b2 = pstart[len(z.columns):(len(z.columns) + len(x2.columns))]
     b3 = pstart[(len(z.columns) + len(x2.columns)):(len(pstart))]
@@ -140,6 +140,18 @@ def timnl3(pstart, x2, x3, y, z, order):
 
 
 def imnlresults(model, data, x, y, z, modeltype, order, inflatecat):
+    """
+    Produce estimation results, part of :py:func:`imnlmod`
+
+    :param model:
+    :param data:
+    :param x:
+    :param y:
+    :param z:
+    :param modeltype:
+    :param order:
+    :param inflatecat:
+    """
     varlist = np.unique(y + z + x)
     dataset = data[varlist]
     datasetnew = dataset.dropna(how='any')
@@ -156,11 +168,11 @@ def imnlresults(model, data, x, y, z, modeltype, order, inflatecat):
         x2 = x_
         x3 = x_
         for s in range(z_.shape[1]):
-            names.append("Z " + z_.columns[s])
+            names.append("Inflation: " + z_.columns[s])
         for s in range(x2.shape[1]):
-            names.append("x2 " + x2.columns[s])
+            names.append(str(order[1]) + ": " + x2.columns[s])
         for s in range(x3.shape[1]):
-            names.append("x3 " + x3.columns[s])
+            names.append(str(order[2]) + ": " + x3.columns[s])
         xs = model.x[(z_.shape[1]):(z_.shape[1] + x2.shape[1] + x3.shape[1])]
     zs = model.x[0:(z_.shape[1])]
     ses = np.sqrt(np.diag(model.hess_inv))
@@ -189,7 +201,10 @@ def imnlmod(data, x, y, z, order, inflatecat,
     :param y: Dependent Variable. Variable needs to be in factor form,
     with a number from 0-2 representing each category
     :param z: Inflation stage covariates
-    
+    :param order:
+    :param inflatecat:
+    :param method:
+    :param pstart: Starting parameters. Number of parameter n = 
     """
     varlist = np.unique(y + z + x)
     dataset = data[varlist]

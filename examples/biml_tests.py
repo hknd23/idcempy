@@ -5,6 +5,9 @@ from zmiopc import bimnl
 DAT = pd.read_stata(
     "C:/Users/Nguyen/Documents/Replication II/Replication "
     "II/replicationdata.dta", convert_categoricals=False)
+DATw = pd.read_stata(
+    "C:/Users/Nguyen/Documents/Replication II/Replication "
+    "II/replicationdata.dta")
 
 x = ['educ', 'female', 'black', 'hispanic', 'party7', 'w3gbvalu2',
      'presbatt',
@@ -12,12 +15,12 @@ x = ['educ', 'female', 'black', 'hispanic', 'party7', 'w3gbvalu2',
      'cathXgmb2', 'other_rel', 'secular', 'secXgmb2', 'ideo', 'w3mobidx']
 z = ['educ', 'agegroup2', 'w3mobidx', 'secular']
 DAT['votenum'] = pd.factorize(DAT['vote_turn'])[0]
-y = ['votenum']
+y = ['vote_turn']
 
 order = [0, 1, 2]
 orders = [0, 2, 1]
-sorder = [1, 0, 2]
-sorders = [2, 0, 1]
+second_order = [1, 0, 2]
+second_order2 = [2, 0, 1]
 torder = [2, 1, 0]
 torders = [1, 2, 0]
 
@@ -30,9 +33,9 @@ model = bimnl.imnlmod(DAT, x, y, z, order, binflatecat,
 models = bimnl.imnlmod(DAT, x, y, z, orders, binflatecat,
                        method='BFGS')
 
-smodel = bimnl.imnlmod(DAT, x, y, z, sorder, sinflatecat,
+smodel = bimnl.imnlmod(DAT, x, y, z, second_order, sinflatecat,
                        method='BFGS')
-smodels = bimnl.imnlmod(DAT, x, y, z, sorders, sinflatecat,
+smodels = bimnl.imnlmod(DAT, x, y, z, second_order2, sinflatecat,
                         method='BFGS')
 
 tmodel = bimnl.imnlmod(DAT, x, y, z, torder, tinflatecat,
@@ -76,14 +79,14 @@ p1 = 1 / (1 + np.exp(xb2) + np.exp(xb3))
 p2 = p1 * np.exp(xb2)
 p3 = p1 * np.exp(xb3)
 
-lik = sum(np.log(pz * p1) * (y == sorder[0]) +
-          np.log((1 - pz) + pz * p2) * (y == sorder[1]) +
-          np.log(pz * p3) * (y == sorder[2]))
+lik = sum(np.log(pz * p1) * (y == second_order[0]) +
+          np.log((1 - pz) + pz * p2) * (y == second_order[1]) +
+          np.log(pz * p3) * (y == second_order[2]))
 llik = -1 * sum(lik)
 
 
-likx = sum(np.log(pz * p1) * (y == sorders[0]) +
-          np.log((1 - pz) + pz * p2) * (y == sorders[1]) +
-          np.log(pz * p3) * (y == sorders[2]))
+likx = sum(np.log(pz * p1) * (y == second_order2[0]) +
+           np.log((1 - pz) + pz * p2) * (y == second_order2[1]) +
+           np.log(pz * p3) * (y == second_order2[2]))
 
 liksss = (pz * p1) + ((1 - pz) + pz * p2)  + (pz * p3)
