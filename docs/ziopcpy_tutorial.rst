@@ -84,17 +84,16 @@ Object :class:`zmiopc.IopModel` stores model results and goodness-of-fit tests i
 
 Use print(ziop_tob.coefs) to see model results:
 
-.. testoutput::
-                           Coef        SE      2.5%      97.5%
-cut1                   1.693797  0.054383    1.587207   1.800387
-cut2                  -0.757830  0.032290   -0.821119  -0.694542
-cut3                  -1.804483  0.071237   -1.944107  -1.664860
-cut4                  -0.691907  0.052484   -0.794775  -0.589038
-Inflation: int         4.161455  3.864721   -3.413398  11.736309
-Inflation: gender_dum -3.462848  3.857160   -11.022881   4.097185
-Ordered: age          -0.029139  0.013290   -0.055187  -0.003090
-Ordered: grade         0.177897  0.012133    0.154116   0.201678
-Ordered: gender_dum    0.206509  0.034914    0.138078   0.274940
+.. testoutput::         Coef        SE     tscore             p       2.5%      97.5%
+cut1                   1.693797  0.054383  31.145912  0.000000e+00   1.587207   1.800387
+cut2                  -0.757830  0.032290 -23.469359  0.000000e+00  -0.821119  -0.694542
+cut3                  -1.804483  0.071237 -25.330846  0.000000e+00  -1.944107  -1.664860
+cut4                  -0.691907  0.052484 -13.183210  0.000000e+00  -0.794775  -0.589038
+Inflation: int         4.161455  3.864721   1.076780  2.815784e-01  -3.413398  11.736309
+Inflation: gender_dum -3.462848  3.857160  -0.897772  3.693074e-01 -11.022881   4.097185
+Ordered: age          -0.029139  0.013290  -2.192508  2.834282e-02  -0.055187  -0.003090
+Ordered: grade         0.177897  0.012133  14.661952  0.000000e+00   0.154116   0.201678
+Ordered: gender_dum    0.206509  0.034914   5.914823  3.322323e-09   0.138078   0.274940    
 
 In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals. 
 
