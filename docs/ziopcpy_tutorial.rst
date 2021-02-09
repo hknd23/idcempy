@@ -7,16 +7,15 @@ Tutorial to estimate the ZiOP, ZiOPC, and standard OP model using the zmiopc pac
 Data Description
 ================
 
-To illustrate the functionality of the package, we use a dataset extracted from Besley and Persson (`2009 <https://www.aeaweb.org/articles?id=10.1257/aer.99.2.292>`__).
+To illustrate the use of the ZiOP and ZiOPC functions, we use data from the National Youth Tobacco Survey (`2018 <https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm>`__).
 The authors use an Ordered Logit model to analyze the relationship between a number of economic and political covariates and the level of political violence.
-The outcome variable in our example is *'rep_civwar_DV'*. It measures the level of *Political Violence*, which is coded as follows:
+The outcome variable in our example is *'cig_count'*. It measures the level of *Political Violence*, which is coded as follows:
 
 + 0: Peace
 
 + 1: Repression
 
 + 2: Civil War
-
 .. image:: ../graphics/cig_count.png
     :width: 200px
     :align: center
