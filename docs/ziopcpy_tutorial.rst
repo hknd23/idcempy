@@ -111,8 +111,12 @@ The model object also stores three (3) different diagnostic tests: (1) Log-likel
   print(ziop_tob.AIC)
   print(ziop_tob.vcov)
 
+An example for the AIC:
+.. testcode::
+   print(ziop_tob.AIC)
+   
 .. testoutput:: 
-10138.321806674261
+   10138.321806674261
 
 **3. To extract predicted probabilities from the model:**
 :func:`zmiopc.iopfit` returns :class:`zmiopc.FittedVals` containing fitted probablities.
@@ -179,7 +183,7 @@ To print the estimates of the log-likelihood, AIC, and Variance-Covariance matri
   
 The AIC of the ziopc_tob model, for example, is:
 .. testoutput::
-10140.103819465658
+   10140.103819465658
 
 **3. Obtain predicted probabilities from the ziopc_tob model:**
 :func:`zmiopc.iopcfit` returns :class:`zmiopc.FittedVals` containing fitted probablities.
