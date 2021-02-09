@@ -140,12 +140,14 @@ An example for the AIC:
 **3. Estimation of the MiOP model**
  
  We begin by importing the Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) data on European Integration described above.  Recall that our outcome variable is "inflated" in the middle category.  
+
+.. testcode::
  
- .. testcode:: 
     url = 'https://github.com/hknd23/zmiopc/blob/main/data/'
     data2 = pd_read.stata(url)
  
 We then define the lists with the names of the variables used in the model
+
 .. testcode::
 
   X = ['', '', '']
@@ -220,8 +222,9 @@ To print the estimates of the log-likelihood, AIC, and Variance-Covariance matri
   print(ziopc_tob.vcov)
   
 The AIC of the ziopc_tob model, for example, is:
+
 .. testoutput::
-   10140.103819465658
+    10140.103819465658
 
 **3. Obtain predicted probabilities from the ziopc_tob model:**
 :func:`zmiopc.iopcfit` returns :class:`zmiopc.FittedVals` containing fitted probablities.
