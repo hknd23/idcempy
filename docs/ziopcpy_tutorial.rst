@@ -22,18 +22,7 @@ response, which is indeed high. Therefore, this dataset is useful to illustrate 
 
 The `iopmod`Function
 ====================
-Variables in the Outcome (Ordered Probit) equation:
-
-- *'age'*: Discrete variable that measures age. It ranges from 1 to 11. 
-
-- *'grade'*: Discrete variable, school grade of respondent. It ranges from 1 to 8. 
-
-- *'gender_dum'*: Dummy variable which equals 0 for Female and 1 for Male.
-
-
-Variables in the Inflation (Split-probit) equation:
-
-- *'gender_dum'*: See description above.
+The `iopmod` function estimates regression objects for "zero-inflated" and "middle-inflated" ordered probit models without correlated errors.  We illustrate its use below. 
 
 
 To set up the zmiopc package and import the dataset:
