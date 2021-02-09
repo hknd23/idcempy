@@ -36,11 +36,11 @@ Researchers in natural and social sciences typically use Ordered Probit (OP) and
 * The lower outcome categories incorporate an
 excessive share and heterogeneous pool of observations. 
   
-**IDCePy** combines two probability distributions by estimating two latent (split and outcome-stage)
+**IDCeMPy** combines two probability distributions by estimating two latent (split and outcome-stage)
 equations in zero and middle inflated OP models, and MNL models with unordered outcome variables, allowing to statistically assess the inflated share
 of observations in your ordered outcome variable.
 
-## Functions in the **IDCePy** Package
+## Functions in the **IDCeMPy** Package
 
 | Function         | Description                                                                                                          |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------- |
@@ -61,16 +61,20 @@ of observations in your ordered outcome variable.
 From [PyPi](https://pypi.org/project/ziopcpy/0.1.2/):
 
 ```sh
-$ pip install ziopcpy
+$ pip install IDCeMPy
 ```
 
 ## Using the Package
 
-We illustrate the functionality of **IDCePy** using data from the National Youth Tobacco Survey (2018) and XXXX (xxx). 
+###Example 1: Zero-inflated Ordered Probit Model with Correlated Errors (ZiOPC)
+We first illustrate how **IDCeMPy** can be used to estimate models when the ordered outcome variable presents "zero-inflation." 
+For that purpose we use data from the 2018 [National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm).  As mentioned above, **IDCeMPy** allows you to estimate "Zero-inflated" Ordered Probit models with and without correlated errors.
 
-First, import `ZiopcPy`, required packages, and dataset.
+We demonstrate the use of a "Zero-inflated" Ordered Probit Model with correlated errors (ZMiOPC).  An example of the ZiOP model withou correlated erros can be found in the documentation of the package. 
+
+First, import `IDCeMPy`, required packages, and dataset.
 ```
-from ziopcpy import ziopcpy
+from idcempy import ziopcpy
 import pandas as pd
 import urllib
 url= 'https://github.com/hknd23/ziopcpy/raw/master/data/tobacco_cons.csv'
@@ -84,13 +88,16 @@ Z = ['age']
 ```
 In addition, we define an array of starting parameters before estimating the `ziopc` model. 
 ```
-pstart = np.array([.1, .15, .001, .2, .3, .3, .001, .2, .01, .01])
+pstart = np.array([.01, .01, .01, .01, .01, .01, .01, .01, .01, .01])
 ```
-The following line of code creates a `ziopc` regression object model.
+The following line of code creates a ziopc regression object model.
 ```
-ziopc_tob = iopcmod('ziopc', pstartziopc, data, X, Y, Z, method='bfgs',
+ziopc_tob = ziopcpy.iopcmod('ziopc', pstartziopc, data, X, Y, Z, method='bfgs',
                     weights=1, offsetx=0, offsetz=0)
 ```
+If you like to estimate your model without correlated errors, you only substitute the parameter 'ziopc' for 'ziop'.
+
+
 The results of this example are stored in a class (`ZiopcModel`) with the following attributes:
   * *coefs*: Model coefficients and standard errors
   * *llik*: Log-likelihood
@@ -102,17 +109,17 @@ We, for example, can print out the covariate estimates, standard errors, *p* val
 print(ziopc_tobb.coefs)
 ```
 ```
-              2.5%     97.5%      Coef        SE         p    tscore
-cut1     -1.140210  2.643246  0.751518  0.965167  0.436192  0.778640
-cut2     -1.209736 -0.130255 -0.669995  0.275378  0.014974 -2.433003
-cut3     -2.769668  0.324247 -1.222711  0.789264  0.121339 -1.549179
-cut4     -2.442634  1.208168 -0.617233  0.931327  0.507493 -0.662746
-Z int    -2.158451  2.020689 -0.068881  1.066107  0.948484 -0.064610
-Z age    -1.059072  1.024847 -0.017112  0.531612  0.974321 -0.032190
-X age    -0.120082  0.254096  0.067007  0.095454  0.482689  0.701984
-X grade  -0.447309  0.111297 -0.168006  0.142502  0.238408 -1.178975
-X gender -2.421751  0.795825 -0.812963  0.820810  0.321959 -0.990439
-rho      -1.575206  3.306348  0.865571  1.245294  0.487009  0.695073  
+                          Coef        SE     tscore             p       2.5%      97.5%
+cut1                   1.696160  0.044726  37.923584  0.000000e+00   1.608497   1.783822
+cut2                  -0.758095  0.033462 -22.655678  0.000000e+00  -0.823679  -0.692510
+cut3                  -1.812077  0.060133 -30.134441  0.000000e+00  -1.929938  -1.694217
+cut4                  -0.705836  0.041432 -17.036110  0.000000e+00  -0.787043  -0.624630
+Inflation: int         9.538072  3.470689   2.748178  5.992748e-03   2.735521  16.340623
+Inflation: gender_dum -9.165963  3.420056  -2.680062  7.360844e-03 -15.869273  -2.462654
+Ordered: age          -0.028606  0.008883  -3.220369  1.280255e-03  -0.046016  -0.011196
+Ordered: grade         0.177541  0.010165  17.465452  0.000000e+00   0.157617   0.197465
+Ordered: gender_dum    0.602136  0.053084  11.343020  0.000000e+00   0.498091   0.706182
+rho                   -0.415770  0.074105  -5.610526  2.017123e-08  -0.561017  -0.270524
 ```
 Or the Akaike Information Criterion (AIC):
 ```
@@ -122,21 +129,28 @@ print(ziopc_tobb.AIC)
 16061.716497590078
 ```
 
-## Reduced Specification of MiOPC?
+### Example 2: "Middle-inflated" Ordered Probit Model with Correlated Errors (MiOPC)
+You can also use **IDCeMPy** to estimate "inflated" Ordered Probit models if your outcome variable presents inflation in the "middle" category. For the sake of consistency, we present below the code needed to estimate a "Middle-inflated" Ordered Probit Model with correlated errors. Data fot this example comes from Elgün and Tillman ([2007]()).   
+
+First, load the dataset.
 ```
 url= 'https://github.com/hknd23/zmiopc/raw/main/data/EUKnowledge.dta'
 data= pd.read_stata(url)
 
 ```
+Now, define the lists with names of the covariates you would like to include in the split-stage (Z) and the second-stage (X) as well as the name of your "middle-inflated" outcome variable (Y).
 ```
 Y = ["EU_support_ET"]
 X = ['Xenophobia', 'discuss_politics']
 Z = ['discuss_politics', 'EU_Know_obj']
 ```
+Run the model and print the results:
 ```
 miopc_EU = ziopc.iopcmod('miopc', DAT, X, Y, Z)
 ```
 ```
+print(miopc_EU.coefs)
+
                               Coef    SE  tscore     p   2.5%  97.5%
 cut1                        -1.370 0.044 -30.948 0.000 -1.456 -1.283
 cut2                        -0.322 0.103  -3.123 0.002 -0.524 -0.120
