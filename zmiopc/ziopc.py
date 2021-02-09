@@ -1024,12 +1024,14 @@ def split_effects(model, inflvar, nsims=10000):
     zsima = np.zeros(len(model_z.columns))
     zsima[0] = 1
     for j in range(1, len(model_z.columns)):
-        if max(model_z.iloc[:, j]) == 1 and min(model_z.iloc[:, j]) == 0:
+        if max(model_z.iloc[:, j]) == 1 and min(model_z.iloc[:, j]) == 0 \
+                and len(np.unique(model_z.iloc[:, j])) == 2:
             zsim1[j] = 0
         else:
             zsim1[j] = np.mean(model_z.iloc[:, j])
     for j in range(1, len(model_z.columns)):
-        if max(model_z.iloc[:, j]) == 1 and min(model_z.iloc[:, j]) == 0:
+        if max(model_z.iloc[:, j]) == 1 and min(model_z.iloc[:, j]) == 0 \
+                and len(np.unique(model_z.iloc[:, j])) == 2:
             zsima[j] = 1
         else:
             zsima[j] = np.mean(model_z.iloc[:, j]) + np.std(model_z.iloc[:, j])
@@ -1077,12 +1079,14 @@ def ordered_effects(model, ordvar, nsims=10000):
     xsim1 = np.zeros(len(model_x.columns))
     xsima = np.zeros(len(model_x.columns))
     for j in range(len(model_x.columns)):
-        if max(model_x.iloc[:, j]) == 1 and min(model_x.iloc[:, j]) == 0:
+        if max(model_x.iloc[:, j]) == 1 and min(model_x.iloc[:, j]) == 0 \
+                and len(np.unique(model_x.iloc[:, j])) == 2:
             xsim1[j] = 0
         else:
             xsim1[j] = np.mean(model_x.iloc[:, j])
     for j in range(len(model_x.columns)):
-        if max(model_x.iloc[:, j]) == 1 and min(model_x.iloc[:, j]) == 0:
+        if max(model_x.iloc[:, j]) == 1 and min(model_x.iloc[:, j]) == 0 \
+                and len(np.unique(model_x.iloc[:, j])) == 2:
             xsima[j] = 1
         else:
             xsima[j] = np.mean(model_x.iloc[:, j]) + np.std(model_x.iloc[:, j])
