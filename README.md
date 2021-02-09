@@ -148,6 +148,8 @@ Ordered: discuss_politics   -0.029 0.021  -1.398 0.162 -0.070  0.012
 rho                         -0.707 0.106  -6.694 0.000 -0.914 -0.500
 ```
 
+![alt text](https://github.com/hknd23/zmiopc/blob/main/graphics/MiOPC_Xenophobia.png)
+
 ## Reduced Specification of BiMNL?
 
 ```
