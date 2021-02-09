@@ -84,7 +84,7 @@ Object :class:`zmiopc.IopModel` stores model results and goodness-of-fit tests i
 
 Use print(ziop_tob.coefs) to see model results:
 
-.. testoutput::
+.. testoutput:: 
 
                         Coef        SE     tscore             p       2.5%      97.5%
 cut1                   1.693797  0.054383  31.145912  0.000000e+00   1.587207   1.800387
@@ -107,7 +107,7 @@ The model object also stores three (3) different diagnostic tests: (1) Log-likel
   print(ziop_tob.AIC)
   print(ziop_tob.vcov)
 
-.. testoutput::
+.. testoutput:: 
 10138.321806674261
 
 **3. To extract predicted probabilities from the model:**
