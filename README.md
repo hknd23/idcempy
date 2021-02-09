@@ -123,13 +123,37 @@ print(ziopc_tobb.AIC)
 ```
 
 ## Reduced Specification of MiOPC?
+```
+url= 'https://github.com/hknd23/zmiopc/raw/main/data/EUKnowledge.dta'
+data= pd.read_stata(url)
+
+```
+```
+Y = ["EU_support_ET"]
+X = ['Xenophobia', 'discuss_politics']
+Z = ['discuss_politics', 'EU_Know_obj']
+```
+```
+miopc_EU = ziopc.iopcmod('miopc', DAT, X, Y, Z)
+```
+```
+                              Coef    SE  tscore     p   2.5%  97.5%
+cut1                        -1.370 0.044 -30.948 0.000 -1.456 -1.283
+cut2                        -0.322 0.103  -3.123 0.002 -0.524 -0.120
+Inflation: int              -0.129 0.021  -6.188 0.000 -0.170 -0.088
+Inflation: discuss_politics  0.192 0.026   7.459 0.000  0.142  0.243
+Inflation: EU_Know_obj       0.194 0.027   7.154 0.000  0.141  0.248
+Ordered: Xenophobia         -0.591 0.045 -13.136 0.000 -0.679 -0.502
+Ordered: discuss_politics   -0.029 0.021  -1.398 0.162 -0.070  0.012
+rho                         -0.707 0.106  -6.694 0.000 -0.914 -0.500
+```
 
 ## Reduced Specification of BiMNL?
 
 ```
 from zmiopc import bimnl
 url= 'https://github.com/hknd23/zmiopc/raw/main/data/replicationdata.dta'
-DAT= pd.read_stata(url)
+data= pd.read_stata(url)
 ```
 ```
 x = ['educ', 'party7', 'agegroup2']
@@ -142,7 +166,7 @@ order = [0, 1, 2]
 inflatecat = "baseline"
 ```
 ```
-model_imnl = bimnl.imnlmod(DAT, x, y, z, order, inflatecat)
+imnl_2004vote = bimnl.imnlmod(data, x, y, z, order, inflatecat)
 ```
 ```
                        Coef    SE  tscore     p    2.5%  97.5%
