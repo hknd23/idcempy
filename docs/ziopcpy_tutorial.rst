@@ -17,10 +17,11 @@ We use data from the National Youth Tobacco Survey (`2018 <https://www.cdc.gov/t
 
 **Data Source for "Middle-inflated" Ordered Probit Models (MiOP/MiOPC)**
 
-Data for the "Middle-inflated" Ordered Probit Models (MiOP and MiOPC) comes from Elgun and Tillman(`_2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) who use ordered categorical responses to the following question in the Candidate Countries Eurobarometer 2002.2 survey to evaluate public attitudes toward European Union membership in 13 CEE candidate countries: “Generally speaking, do you think that (your country’s) membership of the European Union would be a good thing, a bad thing, or neither good nor bad?” Based on responses to this question, the discrete ordered-dependent variable—usually labeled as EU support—in Elgun and Tillman’s ('_2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) study and in similar related studies is coded as 1 for “a bad thing,” 2 for “neither good nor bad,” and 3 for “a good thing.”
+Data for the "Middle-inflated" Ordered Probit Models (MiOP and MiOPC) comes from Elgun and Tillman(`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) who use ordered categorical responses to the following question in the Candidate Countries Eurobarometer 2002.2 survey to evaluate public attitudes toward European Union membership in 13 CEE candidate countries: “Generally speaking, do you think that (your country’s) membership of the European Union would be a good thing, a bad thing, or neither good nor bad?” Based on responses to this question, the discrete ordered-dependent variable—usually labeled as EU support—in Elgun and Tillman’s (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) study and in similar related studies is coded as 1 for “a bad thing,” 2 for “neither good nor bad,” and 3 for “a good thing.” A close examination of the ordered *EU support* variable indicates that 39% of all respondents tothe survey question mentioned above opted for the middle category
+response, which is indeed high. Therefore, this dataset is useful to illustrate some important features of our package.  
 
-
-
+The `iopmod`Function
+====================
 Variables in the Outcome (Ordered Probit) equation:
 
 - *'age'*: Discrete variable that measures age. It ranges from 1 to 11. 
