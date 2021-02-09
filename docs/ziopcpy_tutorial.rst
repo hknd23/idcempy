@@ -93,7 +93,7 @@ Inflation: int         4.161455  3.864721   1.076780  2.815784e-01  -3.413398  1
 Inflation: gender_dum -3.462848  3.857160  -0.897772  3.693074e-01 -11.022881   4.097185
 Ordered: age          -0.029139  0.013290  -2.192508  2.834282e-02  -0.055187  -0.003090
 Ordered: grade         0.177897  0.012133  14.661952  0.000000e+00   0.154116   0.201678
-Ordered: gender_dum    0.206509  0.034914   5.914823  3.322323e-09   0.138078   0.274940    
+Ordered: gender_dum    0.206509  0.034914   5.914823  3.322323e-09   0.138078   0.274940
 
 In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals.
 
