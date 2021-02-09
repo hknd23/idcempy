@@ -9,23 +9,15 @@ Data Description
 
 Data for the applications below come from two different sources.
 
-- Data for "Zero-Inflated" Oprdered Probit Models 
+**Data Source for "Zero-inflated" Ordered Probit Models (ZiOP/ZiOPC)**
 
-We use data from the National Youth Tobacco Survey (`2018 <https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm>`__) to illustrate the use of ordered probit models with a "zero-inflated" outcome variable. This survey allows us to measure self-reported *Tobacco Consumption* among youngsters. Specifically, respondents of the survey answered the following question [Q9]: About how many cigarretes have you smoked in your entire life, and their responses are coded as follows:
-
-+ 0: I have never smoked cigarettes, not even one or two puffs 
-+ 1: 1 Cigarette 
-+ 2: 2 to 5 cigarettes
-+ 3: 6 to 15 cigarettes
-+ 4: More than 15 cigarettes
-
-.. image:: ../graphics/cig_count.png
-    :width: 200px
-    :align: center
-    :height: 100px
-    :alt: alternate text   
+We use data from the National Youth Tobacco Survey (`2018 <https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm>`__) to illustrate the use of ordered probit models with a "zero-inflated" outcome variable. This survey allows us to measure self-reported *Tobacco Consumption* among youngsters. Specifically, respondents of the survey answered the following question [Q9]: About how many cigarretes have you smoked in your entire life, and their responses are coded as 0 for "never smoked cigarettes", 1 for "1 cigarette", 2 for "2 to 5 cigarettes", 3 for "6 to 15 cigarettes," and 4 for "more than 15 cigarettes."
     
-The figure above plots the counts for each potential value of the first outcome variable *tobacco consumption*. Clearly, there is an excessive number of "0" -zero- observations thus making the aforementioned dataset appropriate for the estimation of ZiOP and ZiOPC models as opposed to conventional ordered logit or ordered probit models.  
+82% of the observations are in the first category (i.e. "never smoked cigarettes) of outcome variable *tobacco consumption*. So, there is an excessive number of "0" -zero- observations thus making the aforementioned dataset appropriate for the estimation of ZiOP and ZiOPC models.  
+
+**Data Source for "Middle-inflated" Ordered Probit Models (MiOP/MiOPC)**
+
+Data for the "Middle-inflated" Ordered Probit Models (MiOP and MiOPC) comes from Elgun and Tillman('_2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) who use ordered categorical responses to the following question in the Candidate Countries Eurobarometer 2002.2 survey to evaluate public attitudes toward European Union membership in 13 CEE candidate countries: “Generally speaking, do you think that (your country’s) membership of the European Union would be a good thing, a bad thing, or neither good nor bad?” Based on responses to this question, the discrete ordered-dependent variable—usually labeled as EU support—in Elgun and Tillman’s ('_2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) study and in similar related studies is coded as 1 for “a bad thing,” 2 for “neither good nor bad,” and 3 for “a good thing.”
 
 
 
