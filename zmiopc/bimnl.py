@@ -11,13 +11,13 @@ from scipy.optimize import minimize
 class BimnlModel:
     """Store model results from :py:func:`imnlmod`."""
 
-    def __init__(self, modeltype, order, inflatecat, llik,
+    def __init__(self, modeltype, reference, inflatecat, llik,
                  coef, aic, vcov, data, xs, zs,
                  x_, yx_, z_, ycatu, xstr, ystr, zstr):
         """Store model results, goodness-of-fit tests, and other information.
 
         :param modeltype: Type of IMNL Model (bimnl3)
-        :param order: Order of categories. The order category will be
+        :param reference: Order of categories. The order category will be
         the first element
         :param llik: Log-Likelihood
         :param coef: Model coefficients
@@ -37,7 +37,7 @@ class BimnlModel:
 
         """
         self.modeltype = modeltype
-        self.order = order
+        self.reference = reference
         self.inflatecat = inflatecat
         self.llik = llik
         self.coefs = coef
@@ -55,7 +55,7 @@ class BimnlModel:
         self.zstr = zstr
 
 
-def bimnl3(pstart, x2, x3, y, z, order):
+def bimnl3(pstart, x2, x3, y, z, reference):
     """
     Likelihood function for the baseline inflated three-category MNL model.
 
@@ -64,7 +64,7 @@ def bimnl3(pstart, x2, x3, y, z, order):
     :param x3: X covariates (should be identical to x2
     :param y: Dependent Variable
     :param z: Inflation stage covariates
-    :param order: order of categories (first category-baseline is inflated)
+    :param reference: order of categories (first category-baseline is inflated)
     """
     b2 = pstart[len(z.columns):(len(z.columns) + len(x2.columns))]
     b3 = pstart[(len(z.columns) + len(x2.columns)):(len(pstart))]
@@ -76,14 +76,14 @@ def bimnl3(pstart, x2, x3, y, z, order):
     p1 = 1 / (1 + np.exp(xb2) + np.exp(xb3))
     p2 = p1 * np.exp(xb2)
     p3 = p1 * np.exp(xb3)
-    lik = sum(np.log((1 - pz) + pz * p1) * (y == order[0]) +
-              np.log(pz * p2) * (y == order[1]) +
-              np.log(pz * p3) * (y == order[2]))
+    lik = sum(np.log((1 - pz) + pz * p1) * (y == reference[0]) +
+              np.log(pz * p2) * (y == reference[1]) +
+              np.log(pz * p3) * (y == reference[2]))
     llik = -1 * sum(lik)
     return llik
 
 
-def simnl3(pstart, x2, x3, y, z, order):
+def simnl3(pstart, x2, x3, y, z, reference):
     """
     Likelihood function for the second category inflated MNL model.
 
@@ -92,7 +92,7 @@ def simnl3(pstart, x2, x3, y, z, order):
     :param x3: X covariates (should be identical to x2
     :param y: Dependent Variable
     :param z: Inflation stage covariates
-    :param order: order of categories (second category is inflated)
+    :param reference: order of categories (second category is inflated)
     """
     b2 = pstart[len(z.columns):(len(z.columns) + len(x2.columns))]
     b3 = pstart[(len(z.columns) + len(x2.columns)):(len(pstart))]
@@ -104,14 +104,14 @@ def simnl3(pstart, x2, x3, y, z, order):
     p1 = 1 / (1 + np.exp(xb2) + np.exp(xb3))
     p2 = p1 * np.exp(xb2)
     p3 = p1 * np.exp(xb3)
-    lik = sum(np.log(pz * p1) * (y == order[0]) +
-              np.log((1 - pz) + pz * p2) * (y == order[1]) +
-              np.log(pz * p3) * (y == order[2]))
+    lik = sum(np.log(pz * p1) * (y == reference[0]) +
+              np.log((1 - pz) + pz * p2) * (y == reference[1]) +
+              np.log(pz * p3) * (y == reference[2]))
     llik = -1 * sum(lik)
     return llik
 
 
-def timnl3(pstart, x2, x3, y, z, order):
+def timnl3(pstart, x2, x3, y, z, reference):
     """
     Likelihood function for the third category inflated MNL model.
 
@@ -120,7 +120,7 @@ def timnl3(pstart, x2, x3, y, z, order):
     :param x3: X covariates (should be identical to x2
     :param y: Dependent Variable
     :param z: Inflation stage covariates
-    :param order: order of categories (third category is inflated)
+    :param reference: order of categories (third category is inflated)
     """
     b2 = pstart[len(z.columns):(len(z.columns) + len(x2.columns))]
     b3 = pstart[(len(z.columns) + len(x2.columns)):(len(pstart))]
@@ -132,14 +132,14 @@ def timnl3(pstart, x2, x3, y, z, order):
     p1 = 1 / (1 + np.exp(xb2) + np.exp(xb3))
     p2 = p1 * np.exp(xb2)
     p3 = p1 * np.exp(xb3)
-    lik = sum(np.log(pz * p1) * (y == order[0]) +
-              np.log(pz * p2) * (y == order[1]) +
-              np.log((1 - pz) + pz * p3) * (y == order[2]))
+    lik = sum(np.log(pz * p1) * (y == reference[0]) +
+              np.log(pz * p2) * (y == reference[1]) +
+              np.log((1 - pz) + pz * p3) * (y == reference[2]))
     llik = -1 * sum(lik)
     return llik
 
 
-def imnlresults(model, data, x, y, z, modeltype, order, inflatecat):
+def imnlresults(model, data, x, y, z, modeltype, reference, inflatecat):
     """
     Produce estimation results, part of :py:func:`imnlmod`
 
@@ -149,7 +149,7 @@ def imnlresults(model, data, x, y, z, modeltype, order, inflatecat):
     :param y:
     :param z:
     :param modeltype:
-    :param order:
+    :param reference:
     :param inflatecat:
     """
     varlist = np.unique(y + z + x)
@@ -170,9 +170,9 @@ def imnlresults(model, data, x, y, z, modeltype, order, inflatecat):
         for s in range(z_.shape[1]):
             names.append("Inflation: " + z_.columns[s])
         for s in range(x2.shape[1]):
-            names.append(str(order[1]) + ": " + x2.columns[s])
+            names.append(str(reference[1]) + ": " + x2.columns[s])
         for s in range(x3.shape[1]):
-            names.append(str(order[2]) + ": " + x3.columns[s])
+            names.append(str(reference[2]) + ": " + x3.columns[s])
         xs = model.x[(z_.shape[1]):(z_.shape[1] + x2.shape[1] + x3.shape[1])]
     zs = model.x[0:(z_.shape[1])]
     ses = np.sqrt(np.diag(model.hess_inv))
@@ -184,14 +184,14 @@ def imnlresults(model, data, x, y, z, modeltype, order, inflatecat):
                          'p': pval, '2.5%': lci, '97.5%': uci}, names)
     aic = -2 * (-model.fun) + 2 * (len(coef))
     llik = -1 * model.fun
-    model = BimnlModel(modeltype, order, inflatecat, llik, coef, aic,
+    model = BimnlModel(modeltype, reference, inflatecat, llik, coef, aic,
                        model.hess_inv, datasetnew,
                        xs, zs, x_, yx_, z_,
                        yncat, x, y, z)
     return model
 
 
-def imnlmod(data, x, y, z, order, inflatecat,
+def imnlmod(data, x, y, z, reference, inflatecat,
             method='BFGS', pstart=None):
     """
     Estimate inflatecatd Multinomial Logit model.
@@ -201,7 +201,7 @@ def imnlmod(data, x, y, z, order, inflatecat,
     :param y: Dependent Variable. Variable needs to be in factor form,
     with a number from 0-2 representing each category
     :param z: Inflation stage covariates
-    :param order:
+    :param reference:
     :param inflatecat:
     :param method:
     :param pstart: Starting parameters. Number of parameter n = 
@@ -229,21 +229,21 @@ def imnlmod(data, x, y, z, order, inflatecat,
                                      + len(z_.columns)))
         if inflatecat == "baseline":
             model = minimize(bimnl3, pstart,
-                             args=(x2, x3, yx_, z_, order),
+                             args=(x2, x3, yx_, z_, reference),
                              method=method,
                              options={'gtol': 1e-6,
                                       'disp': True, 'maxiter': 500})
         elif inflatecat == "second":
             model = minimize(simnl3, pstart,
-                             args=(x2, x3, yx_, z_, order),
+                             args=(x2, x3, yx_, z_, reference),
                              method=method,
                              options={'gtol': 1e-6,
                                       'disp': True, 'maxiter': 500})
         elif inflatecat == "third":
             model = minimize(timnl3, pstart,
-                             args=(x2, x3, yx_, z_, order),
+                             args=(x2, x3, yx_, z_, reference),
                              method=method,
                              options={'gtol': 1e-6,
                                       'disp': True, 'maxiter': 500})
-    results = imnlresults(model, data, x, y, z, modeltype, order, inflatecat)
+    results = imnlresults(model, data, x, y, z, modeltype, reference, inflatecat)
     return results
