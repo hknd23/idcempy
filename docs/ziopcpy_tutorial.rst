@@ -20,12 +20,12 @@ We use data from the National Youth Tobacco Survey (`2018 <https://www.cdc.gov/t
 Data for the "Middle-inflated" Ordered Probit Models (MiOP and MiOPC) comes from Elgun and Tillman(`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) who use ordered categorical responses to the following question in the Candidate Countries Eurobarometer 2002.2 survey to evaluate public attitudes toward European Union membership in 13 CEE candidate countries: “Generally speaking, do you think that (your country’s) membership of the European Union would be a good thing, a bad thing, or neither good nor bad?” Based on responses to this question, the discrete ordered-dependent variable—usually labeled as EU support—in Elgun and Tillman’s (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) study and in similar related studies is coded as 1 for “a bad thing,” 2 for “neither good nor bad,” and 3 for “a good thing.” A close examination of the ordered *EU support* variable indicates that 39% of all respondents tothe survey question mentioned above opted for the middle category
 response, which is indeed high. Therefore, this dataset is useful to illustrate some important features of our package.  
 
-The `iopmod`Function
-====================
-The `iopmod` function estimates regression objects for "zero-inflated" and "middle-inflated" ordered probit models without correlated errors.  We illustrate its use below. 
+Estimation of Zero-inflated and Middle-inflated Ordered Probit Models Without Correlated Errors
+=================================================================================================
+The `iopmod` function estimates regression objects for "zero-inflated" and "middle-inflated" ordered probit models without correlated errors.  Below you will find instructions to estimate a ZiOP model.  The estimation of MiOP models is also illustrated.  
 
 
-To set up the zmiopc package and import the dataset:
+**1. Import the required libraries, set up the package and import the dataset:**
 
 .. testcode::
 
@@ -36,16 +36,16 @@ To set up the zmiopc package and import the dataset:
   import urllib
   from zmiopc import zmiopc
   
-  # Now we import the "Youth Tobacco Consumption" dataset described above
+  # Import the "Youth Tobacco Consumption" dataset described above
   
   url='https://github.com/hknd23/zmiopc/blob/main/data/tobacco_cons.csv'
   data=pd.read_stata(url)
 
-The ZiOP and ZiOPC models are estimated with this specification.
+**2. Estimation of the ZiOP model.**
 
 .. testcode::
 
-  # Specify list of variable names (strings) X,Y,Z:
+  # Define a list of variable names (strings) X,Y,Z:
   X = ['age', 'grade', 'gender_dum']
   Z = ['gender_dum']
   Y = ['cig_count']
@@ -54,8 +54,6 @@ X is the list of variables in the Ordered Probit equation (second-stage).
 Z is the list of variables in the split-probit equation (first-stage). 
 Y is the outcome variable.
 
-Estimating the ZiOP Model
-=========================
 
 Users must set up an array of starting parameters (one for each covariate) before estimating the model.
 
@@ -64,10 +62,10 @@ Users must set up an array of starting parameters (one for each covariate) befor
 .. testcode::
 
   # Starting parameters for optimization:
-  pstartziop=np.array( [.01, ..01, .01, .01, .01, .01, .01 , .01, .01])
+  pstartziop = np.array([.01, ..01, .01, .01, .01, .01, .01 , .01, .01])
 
   # Model estimation:
-  ziop_tob= zmiopc.iopmod(pstartziop, data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
+  ziop_tob= zmiopc.iopmod('ziop', pstartziop, data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
 
   # See estimates:
   print(ziop_tob.coefs)
@@ -85,7 +83,8 @@ Warning: Desired error not necessarily achieved due to precision loss.
          Gradient evaluations: 100
          
 Object :class:`zmiopc.IopModel` stores model results and goodness-of-fit tests in its attributes 'coefs', 'AIC', 'llik', and 'vcov'.
-Use print(ziop_JCR.coefs) to see model results:
+
+Use print(ziop_tob.coefs) to see model results:
 
 .. testoutput::
 
@@ -100,7 +99,6 @@ Ordered: age          -0.029139  0.013290  -2.192508  2.834282e-02  -0.055187  -
 Ordered: grade         0.177897  0.012133  14.661952  0.000000e+00   0.154116   0.201678
 Ordered: gender_dum    0.206509  0.034914   5.914823  3.322323e-09   0.138078   0.274940
 
-
 In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals. 
 
 The model object also stores three (3) different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
@@ -113,115 +111,96 @@ The model object also stores three (3) different diagnostic tests: (1) Log-likel
 
 .. testoutput::
 
-  1385.9090536381054
-  2791.818107276211
-  [[ 1.24353127e-01  1.25663548e-03 -5.75548917e-02  1.70236103e-03
-  5.05273309e-02  1.70531099e-02 -2.86418193e-02  2.58717572e-03
-  -8.30490698e-03 -2.11871734e-03]
-  ...
-  [-2.11871734e-03  5.64634344e-04 -9.57288274e-03  3.62751905e-04
-  8.65751652e-03 -3.86427924e-04  1.58932049e-03  2.96437285e-04
-  -5.25452969e-02  6.93057415e-02]]
+print(model_tobb.AIC)
+10138.321806674261
 
-To extract predicted probabilities from the model:
+**3. To extract predicted probabilities from the model:**
 :func:`zmiopc.iopfit` returns :class:`zmiopc.FittedVals` containing fitted probablities.
 
 .. testcode::
 
-  fitttedziop = ziopc.iopfit(ziop_JCR)
+  fitttedziop = ziopc.iopfit(ziop_tob)
   print(fitttedziopc.responsefull)
 
 .. testoutput::
 
-  array([[0.96910461, 0.02038406, 0.01051134],
-       [0.95572439, 0.01995972, 0.02431589],
-       [0.97773287, 0.01467479, 0.00759234],
-       ...,
-       [0.97039298, 0.02020078, 0.00940624],
-       [0.97957951, 0.0150263 , 0.00539419],
-       [0.98114903, 0.01386849, 0.00498248]])
+  array[[0.8822262  0.06879832 0.01455244 0.0242539  0.01016914]
+ [0.84619828 0.08041296 0.01916279 0.03549797 0.01872801]
+ [0.93105632 0.04349743 0.00831396 0.0127043  0.004428  ]
+ ...
+ [0.73347708 0.1291157  0.03295816 0.06500889 0.03944016]
+ [0.87603805 0.06808193 0.01543795 0.02735256 0.01308951]
+ [0.82681957 0.08778215 0.02153509 0.04095753 0.02290566]]
 
-Estimating the ZiOPC Model
+Estimation of Zero-inflated and Middle-inflated Ordered Probit Models "With" Correlated Errors
 ==========================
 
-The package also includes functions to fit split-population (SP) " or zero-inflated" ordered probit models (ziopc) under the assumption that the two errors are correlated with each other (i.e. correlated errors).
+The package also includes the function `iopcmod` which fits "zero-inflated" ordered probit models (ZiOPC) and "middle-inflated" ordered probit models (MiOP) under the assumption that the two errors are correlated with each other (i.e. correlated errors). Both models include the estimate of'rho'. The models in this section use the same specification as the models estimated without correlated errors presented above.  
 
-The model also includes the estimate 'rho'. The ZiOPC model in this tutorial uses the same specification of the ZiOP model presented above.
-One extra parameter - rho - is estimated in the ZiOPC model.
-
+**1. Define an array with values of starting parameters**
 .. testcode::
-
-    # Starting parameters for optimization, note the extra parameter for rho:
-    pstart = np.array([-1.31, .32, 2.5, -.21, .2, -0.2, -0.4, 0.2, .9, -.4, .1])
-
-    # Model estimation:
-    ziopc_JCR = zmiopc.iopcmod(pstart, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
+    pstart = np.array([.01, ..01, .01, .01, .01, .01, .01 , .01, .01, .01])
+    
+**2. Estimate the ZiOPC model**
+.. testcode::
+    ziopc_tob = zmiopc.iopcmod('ziopc', pstart, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
 
 Similar to ZiOP, the results are stored in the attributes of :class:`zmiopc.IopCModel`.
 
 .. testoutput::
+         Current function value: 5060.051910
+         Iterations: 119
+         Function evaluations: 1562
+         Gradient evaluations: 142
 
-  Warning: Desired error not necessarily achieved due to precision loss.
-        Current function value: 1374.171899
-        Iterations: 44
-        Function evaluations: 963
-        Gradient evaluations: 74
-
-Use print(ziopc_JCR.coefs) to see model results
-
-.. testoutput::
-
-                      Coef          SE         2.5%      97.5%
-  cut1              2.762593  0.369820     2.037746   3.487439
-  cut2             -0.214227  0.048677    -0.309634  -0.118820
-  Z int            11.597619  0.407915    10.798106  12.397132
-  Z logGDPpc       -1.279668  0.049340    -1.376374  -1.182961
-  Z parliament     -0.370217  0.296634    -0.951619   0.211186
-  X logGDPpc        0.331656  0.053253     0.227281   0.436032
-  X parliament      0.312728  0.292929    -0.261414   0.886869
-  X disaster        0.197342  0.033247     0.132179   0.262506
-  X major_oil       1.182631  0.373049     0.451455   1.913806
-  X major_primary  -0.236625  0.209179    -0.646615   0.173365
-  rho              -0.889492  0.040109    -0.968106  -0.810878
-
-To extract information such as log-likelihood, AIC, and Variance-Covariance matrix:
-
+**3. Print the results**
 .. testcode::
-
-  print(ziopc_JCR.llik)
-  print(ziopc_JCR.AIC)
-  print(ziopc_JCR.vcov)
+    print(ziopc_tob.coefs)
 
 .. testoutput::
+                           Coef        SE     tscore             p       2.5%      97.5%
+cut1                   1.696160  0.044726  37.923584  0.000000e+00   1.608497   1.783822
+cut2                  -0.758095  0.033462 -22.655678  0.000000e+00  -0.823679  -0.692510
+cut3                  -1.812077  0.060133 -30.134441  0.000000e+00  -1.929938  -1.694217
+cut4                  -0.705836  0.041432 -17.036110  0.000000e+00  -0.787043  -0.624630
+Inflation: int         9.538072  3.470689   2.748178  5.992748e-03   2.735521  16.340623
+Inflation: gender_dum -9.165963  3.420056  -2.680062  7.360844e-03 -15.869273  -2.462654
+Ordered: age          -0.028606  0.008883  -3.220369  1.280255e-03  -0.046016  -0.011196
+Ordered: grade         0.177541  0.010165  17.465452  0.000000e+00   0.157617   0.197465
+Ordered: gender_dum    0.602136  0.053084  11.343020  0.000000e+00   0.498091   0.706182
+rho                   -0.415770  0.074105  -5.610526  2.017123e-08  -0.561017  -0.270524
 
-  1374.1718991713317
-  2770.3437983426634
-  [[ 1.36766528e-01 -1.50391291e-03 -2.25732999e-02 -1.42852474e-03
-    4.18278908e-03  1.95389976e-02  3.02647268e-03 -1.09348495e-03
-    3.22896421e-02 -9.24547286e-03 -3.83238156e-03]
-    ...
-  [-3.83238156e-03  8.85000862e-04  3.45224424e-03 -4.08558670e-04
-    -8.30687503e-04 -5.47455159e-04 -1.33691918e-03  3.12422823e-04
-    -3.71512027e-03 -7.29939034e-04  1.60875279e-03]]
+To print the estimates of the log-likelihood, AIC, and Variance-Covariance matrix, you should type:
+.. testcode::
+  print(ziopc_tob.llik)
+  print(ziopc_tob.AIC)
+  print(ziopc_tob.vcov)
+  
+The AIC of the ziopc_tob model, for example, is:
+.. testoutput::
+10140.103819465658
 
-To extract predicted probabilities from the model:
+**3. Obtain predicted probabilities from the ziopc_tob model:**
 :func:`zmiopc.iopcfit` returns :class:`zmiopc.FittedVals` containing fitted probablities.
 
 .. testcode::
 
-  fitttedziopc = zmiopc.iopcfit(ziopc_JCR)
+  fitttedziopc = zmiopc.iopcfit(ziopc_tob)
   print(fitttedziopc.responsefull)
 
 .. testoutput::
 
-  array([[9.68868303e-01, 3.01063427e-02, 1.02535403e-03],
-      [9.07563628e-01, 7.88301952e-02, 1.36061769e-02],
-      [9.76972004e-01, 2.23954809e-02, 6.32514846e-04],
-      ...,
-      [9.66496738e-01, 3.19780772e-02, 1.52518446e-03],
-      [9.82515374e-01, 1.70648356e-02, 4.19790597e-04],
-      [9.83907141e-01, 1.57240833e-02, 3.68775369e-04]])
-
+  array[[0.88223509 0.06878162 0.01445941 0.0241296  0.01039428]
+ [0.84550989 0.08074461 0.01940226 0.03589458 0.01844865]
+ [0.93110954 0.04346074 0.00825639 0.01264189 0.00453143]
+ ...
+ [0.73401588 0.12891071 0.03267436 0.06438928 0.04000977]
+ [0.87523652 0.06888286 0.01564958 0.0275354  0.01269564]
+ [0.82678185 0.0875059  0.02171135 0.04135142 0.02264948]]
+ 
+ 
+ 
+ 
 Estimating the OP Model
 =======================
 
