@@ -1,13 +1,15 @@
 ***************
-zmiopc Package
+IDCeMPy Package
 ***************
 
-The IDCeMPy package contains a number of functions that allow users to estimate "inflated" ordered probit (OP) models when the outcome variable has an excess number of observations in either the "zero" or the "middle" categories.  The models can be estimated without (ZiOP and MiOP) and with (ZiOPC and MiOPC) correlated errors.  In addition, IDCeMPy allows users to easily compute a number of post-estimation diagnostic tests, marginal effects. 
+The IDCeMPy package contains a number of functions that allow users to estimate "inflated" ordered probit (OP) models when the outcome variable has an excess number of observations in either the "zero" or the "middle" categories.  The models can be estimated without (ZiOP and MiOP) and with (ZiOPC and MiOPC) correlated errors.  In addition, IDCeMPy allows users to easily obtain fitted values, calculate goodness-of-fit and diagnostic tests, and marginal effects.  This tutorial introduces all the aforementioned features of the package.  
 
 Data Description
 ================
 
-To illustrate the use of the ZiOP and ZiOPC functions, we use data from the National Youth Tobacco Survey (`2018 <https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm>`__). This survey allows us to measure self-reported *Tobacco Consumption* among youngsters. Specifically, respondents of the survey answered the following question [Q9]: About how many cigarretes have you smoked in your entire life.  Responses in our application are coded as follows:
+Data for the applications below come from two different sources.
+
+1. We use data from the National Youth Tobacco Survey (`2018 <https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm>`__) to illustrate the use of ordered probit models with a "zero-inflated" outcome variable. This survey allows us to measure self-reported *Tobacco Consumption* among youngsters. Specifically, respondents of the survey answered the following question [Q9]: About how many cigarretes have you smoked in your entire life, and their responses are coded as follows:
 
 + 0: I have never smoked cigarettes, not even one or two puffs 
 + 1: 1 Cigarette 
@@ -21,10 +23,9 @@ To illustrate the use of the ZiOP and ZiOPC functions, we use data from the Nati
     :height: 100px
     :alt: alternate text   
     
-The figure above plots the counts for each potential value of the outcome variable. Clearly, there is an excessive number of "0" -zero- observations.
-Yet, as Bagozzi et al. (`2009 <https://journals.sagepub.com/doi/abs/10.1177/0022002713520530>`__) suggest, it is possible that two different types of zero observations account for the "zero-inflation" in the data.  Specifically, the first type of zeroes may exist when countries do not experience any domestic conflict while the second type can inlcude those cases when dissidents are deterred, but violence is still a possibility.
+The figure above plots the counts for each potential value of the first outcome variable *tobacco consumption*. Clearly, there is an excessive number of "0" -zero- observations thus making the aforementioned dataset appropriate for the estimation of ZiOP and ZiOPC models as opposed to conventional ordered logit or ordered probit models.  
 
-Because of the two types of zero observations, estimating a "zero-infllated" ordered probit (ZiOP) model is more appropriate than conventional ordered logit or ordered probit models.
+
 
 Variables in the Outcome (Ordered Probit) equation:
 
