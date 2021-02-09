@@ -66,7 +66,7 @@ $ pip install IDCeMPy
 
 ## Using the Package
 
-###Example 1: Zero-inflated Ordered Probit Model with Correlated Errors (ZiOPC)
+### Example 1: Zero-inflated Ordered Probit Model with Correlated Errors (ZiOPC)
 We first illustrate how **IDCeMPy** can be used to estimate models when the ordered outcome variable presents "zero-inflation." 
 For that purpose we use data from the 2018 [National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm).  As mentioned above, **IDCeMPy** allows you to estimate "Zero-inflated" Ordered Probit models with and without correlated errors.
 
