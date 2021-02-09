@@ -2,7 +2,7 @@
 zmiopc Package
 ***************
 
-Tutorial to estimate the ZiOP, ZiOPC, and standard OP model using the zmiopc package.
+The IDCeMPy package contains a number of functions that allow users to estimate "inflated" ordered probit (OP) models when the outcome variable has an excess number of observations in either the "zero" or the "middle" categories.  The models can be estimated without (ZiOP and MiOP) and with (ZiOPC and MiOPC) correlated errors.  In addition, IDCeMPy allows users to easily compute a number of post-estimation diagnostic tests, marginal effects. 
 
 Data Description
 ================
@@ -44,13 +44,16 @@ To set up the zmiopc package and import the dataset:
 
 .. testcode::
 
+  # Import the necessary libraries and package
+  
   import numpy as np
   import pandas as pd
   import urllib
-  #Import pandas and urllib to read data from url
   from zmiopc import zmiopc
-  #Import data
-  url=''
+  
+  # Now we import the "Youth Tobacco Consumption" dataset described above
+  
+  url='https://github.com/hknd23/zmiopc/blob/main/data/tobacco_cons.csv'
   data=pd.read_stata(url)
 
 The ZiOP and ZiOPC models are estimated with this specification.
@@ -86,41 +89,42 @@ Users must set up an array of starting parameters (one for each covariate) befor
 
 Results from the model:
 
-The following message will appear when the model finishes converging:
+The following message will appear when the model has converged:
 
 .. testoutput::
 
-  Warning: Desired error not necessarily achieved due to precision loss.
-       Current function value: 1385.909054
-       Iterations: 34
-       Function evaluations: 529
-       Gradient evaluations: 44
-
+Warning: Desired error not necessarily achieved due to precision loss.
+         Current function value: 5060.160903
+         Iterations: 79
+         Function evaluations: 1000
+         Gradient evaluations: 100
+         
 Object :class:`zmiopc.IopModel` stores model results and goodness-of-fit tests in its attributes 'coefs', 'AIC', 'llik', and 'vcov'.
 Use print(ziop_JCR.coefs) to see model results:
 
 .. testoutput::
 
-                      Coef        SE         2.5%      97.5%
-  cut1              0.771855  0.352637     0.080686   1.463024
-  cut2             -0.098204  0.046598    -0.189536  -0.006872
-  Z int            18.781755  0.289231    18.214862  19.348647
-  Z logGDPpc       -2.081926  0.025977    -2.132841  -2.031010
-  Z parliament     -0.292586  0.251139    -0.784819   0.199647
-  X logGDPpc        0.041251  0.048662    -0.054127   0.136629
-  X parliament     -0.095081  0.133979    -0.357679   0.167517
-  X disaster        0.264986  0.034355     0.197651   0.332321
-  X major_oil       1.706935  0.299351     1.120208   2.293663
-  X major_primary  -0.422205  0.263260    -0.938194   0.093785
+                           Coef        SE     tscore             p       2.5%      97.5%
+cut1                   1.693797  0.054383  31.145912  0.000000e+00   1.587207   1.800387
+cut2                  -0.757830  0.032290 -23.469359  0.000000e+00  -0.821119  -0.694542
+cut3                  -1.804483  0.071237 -25.330846  0.000000e+00  -1.944107  -1.664860
+cut4                  -0.691907  0.052484 -13.183210  0.000000e+00  -0.794775  -0.589038
+Inflation: int         4.161455  3.864721   1.076780  2.815784e-01  -3.413398  11.736309
+Inflation: gender_dum -3.462848  3.857160  -0.897772  3.693074e-01 -11.022881   4.097185
+Ordered: age          -0.029139  0.013290  -2.192508  2.834282e-02  -0.055187  -0.003090
+Ordered: grade         0.177897  0.012133  14.661952  0.000000e+00   0.154116   0.201678
+Ordered: gender_dum    0.206509  0.034914   5.914823  3.322323e-09   0.138078   0.274940
 
-In addition to estimates, standard errors, and confidence intervals are shown in the results table. The Log-likelihood, AIC, and Variance-Covariance Matrix are also stored.  Users can obtain these diagnostic tests by using the following command:
 
+In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals. 
+
+The model object also stores three (3) different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
 
 .. testcode::
 
-  print(ziop_JCR.llik)
-  print(ziop_JCR.AIC)
-  print(ziop_JCR.vcov)
+  print(ziop_tob.llik)
+  print(ziop_tob.AIC)
+  print(ziop_tob.vcov)
 
 .. testoutput::
 
