@@ -9,7 +9,9 @@ Data Description
 
 Data for the applications below come from two different sources.
 
-1. We use data from the National Youth Tobacco Survey (`2018 <https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm>`__) to illustrate the use of ordered probit models with a "zero-inflated" outcome variable. This survey allows us to measure self-reported *Tobacco Consumption* among youngsters. Specifically, respondents of the survey answered the following question [Q9]: About how many cigarretes have you smoked in your entire life, and their responses are coded as follows:
+- Data for "Zero-Inflated" Oprdered Probit Models 
+
+We use data from the National Youth Tobacco Survey (`2018 <https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm>`__) to illustrate the use of ordered probit models with a "zero-inflated" outcome variable. This survey allows us to measure self-reported *Tobacco Consumption* among youngsters. Specifically, respondents of the survey answered the following question [Q9]: About how many cigarretes have you smoked in your entire life, and their responses are coded as follows:
 
 + 0: I have never smoked cigarettes, not even one or two puffs 
 + 1: 1 Cigarette 
