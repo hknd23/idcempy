@@ -84,8 +84,7 @@ Object :class:`zmiopc.IopModel` stores model results and goodness-of-fit tests i
 
 Use print(ziop_tob.coefs) to see model results:
 
-..testcode:: 
-
+.. testcode:: 
 print(ziop_tob.coefs)
 
 .. testoutput:: 
