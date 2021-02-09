@@ -95,7 +95,7 @@ Ordered: age          -0.029139  0.013290  -2.192508  2.834282e-02  -0.055187  -
 Ordered: grade         0.177897  0.012133  14.661952  0.000000e+00   0.154116   0.201678
 Ordered: gender_dum    0.206509  0.034914   5.914823  3.322323e-09   0.138078   0.274940    
 
-In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals. 
+In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals.
 
 The model object also stores three (3) different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
 
@@ -106,8 +106,6 @@ The model object also stores three (3) different diagnostic tests: (1) Log-likel
   print(ziop_tob.vcov)
 
 .. testoutput::
-
-print(model_tobb.AIC)
 10138.321806674261
 
 **3. To extract predicted probabilities from the model:**
