@@ -17,7 +17,7 @@ The outcome variable in our example is *'rep_civwar_DV'*. It measures the level 
 
 + 2: Civil War
 
-.. image:: ../graphics/DV_Figure.png
+.. image:: ../graphics/cig_count.png
 
 The plot above illustrates the number of obervations (country-year) for each potential outcome of the outcome variable. It shows that there is an excessive number of "0" -zero- observations.
 Yet, as Bagozzi et al. (`2009 <https://journals.sagepub.com/doi/abs/10.1177/0022002713520530>`__) suggest, it is possible that two different types of zero observations account for the "zero-inflation" in the data.  Specifically, the first type of zeroes may exist when countries do not experience any domestic conflict while the second type can inlcude those cases when dissidents are deterred, but violence is still a possibility.
