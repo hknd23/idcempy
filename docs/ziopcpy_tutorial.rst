@@ -84,6 +84,10 @@ Object :class:`zmiopc.IopModel` stores model results and goodness-of-fit tests i
 
 Use print(ziop_tob.coefs) to see model results:
 
+..testcode:: 
+
+print(ziop_tob.coefs)
+
 .. testoutput:: 
 
                         Coef        SE     tscore             p       2.5%      97.5%
