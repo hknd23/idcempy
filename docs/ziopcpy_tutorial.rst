@@ -87,16 +87,17 @@ Object :class:`zmiopc.IopModel` stores model results and goodness-of-fit tests i
 Use print(ziop_tob.coefs) to see model results:
 
 .. testoutput::
-                           Coef        SE  ...       2.5%      97.5%
-cut1                   1.693797  0.054383  ...   1.587207   1.800387
-cut2                  -0.757830  0.032290  ...  -0.821119  -0.694542
-cut3                  -1.804483  0.071237  ...  -1.944107  -1.664860
-cut4                  -0.691907  0.052484  ...  -0.794775  -0.589038
-Inflation: int         4.161455  3.864721  ...  -3.413398  11.736309
-Inflation: gender_dum -3.462848  3.857160  ... -11.022881   4.097185
-Ordered: age          -0.029139  0.013290  ...  -0.055187  -0.003090
-Ordered: grade         0.177897  0.012133  ...   0.154116   0.201678
-Ordered: gender_dum    0.206509  0.034914  ...   0.138078   0.274940
+                           Coef        SE      2.5%      97.5%
+cut1                   1.693797  0.054383    1.587207   1.800387
+cut2                  -0.757830  0.032290   -0.821119  -0.694542
+cut3                  -1.804483  0.071237   -1.944107  -1.664860
+cut4                  -0.691907  0.052484   -0.794775  -0.589038
+Inflation: int         4.161455  3.864721   -3.413398  11.736309
+Inflation: gender_dum -3.462848  3.857160   -11.022881   4.097185
+Ordered: age          -0.029139  0.013290   -0.055187  -0.003090
+Ordered: grade         0.177897  0.012133    0.154116   0.201678
+Ordered: gender_dum    0.206509  0.034914    0.138078   0.274940
+
 In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals. 
 
 The model object also stores three (3) different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
@@ -156,19 +157,20 @@ Similar to ZiOP, the results are stored in the attributes of :class:`zmiopc.IopC
     print(ziopc_tob.coefs)
 
 .. testoutput::
-                           Coef        SE     tscore             p       2.5%      97.5%
-cut1                   1.696160  0.044726  37.923584  0.000000e+00   1.608497   1.783822
-cut2                  -0.758095  0.033462 -22.655678  0.000000e+00  -0.823679  -0.692510
-cut3                  -1.812077  0.060133 -30.134441  0.000000e+00  -1.929938  -1.694217
-cut4                  -0.705836  0.041432 -17.036110  0.000000e+00  -0.787043  -0.624630
-Inflation: int         9.538072  3.470689   2.748178  5.992748e-03   2.735521  16.340623
-Inflation: gender_dum -9.165963  3.420056  -2.680062  7.360844e-03 -15.869273  -2.462654
-Ordered: age          -0.028606  0.008883  -3.220369  1.280255e-03  -0.046016  -0.011196
-Ordered: grade         0.177541  0.010165  17.465452  0.000000e+00   0.157617   0.197465
-Ordered: gender_dum    0.602136  0.053084  11.343020  0.000000e+00   0.498091   0.706182
-rho                   -0.415770  0.074105  -5.610526  2.017123e-08  -0.561017  -0.270524
+                           Coef        SE      2.5%      97.5%
+cut1                   1.696160  0.044726    1.608497   1.783822
+cut2                  -0.758095  0.033462   -0.823679  -0.692510
+cut3                  -1.812077  0.060133   -1.929938  -1.694217
+cut4                  -0.705836  0.041432   -0.787043  -0.624630
+Inflation: int         9.538072  3.470689    2.735521  16.340623
+Inflation: gender_dum -9.165963  3.420056   -15.869273  -2.462654
+Ordered: age          -0.028606  0.008883   -0.046016  -0.011196
+Ordered: grade         0.177541  0.010165    0.157617   0.197465
+Ordered: gender_dum    0.602136  0.053084    0.498091   0.706182
+rho                   -0.415770  0.074105   -0.561017  -0.270524
 
 To print the estimates of the log-likelihood, AIC, and Variance-Covariance matrix, you should type:
+
 .. testcode::
   print(ziopc_tob.llik)
   print(ziopc_tob.AIC)
