@@ -136,8 +136,7 @@ An example for the AIC:
  [0.87603805 0.06808193 0.01543795 0.02735256 0.01308951]
  [0.82681957 0.08778215 0.02153509 0.04095753 0.02290566]]
  
- 
- **3. Estimation of the MiOP model**
+**3. Estimation of the MiOP model**
  
  We begin by importing the Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) data on European Integration described above.  Recall that our outcome variable is "inflated" in the middle category.  
  
