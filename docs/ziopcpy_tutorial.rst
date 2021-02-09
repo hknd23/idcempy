@@ -74,9 +74,7 @@ Results from the model:
 
 The following message will appear when the model has converged:
 
-.. testoutput::
-
-Warning: Desired error not necessarily achieved due to precision loss.
+.. testoutput:: Warning: Desired error not necessarily achieved due to precision loss.
          Current function value: 5060.160903
          Iterations: 79
          Function evaluations: 1000
