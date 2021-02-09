@@ -512,7 +512,7 @@ def opresults(model, data, x, y):
     return results
 
 
-def opmod(pstart, data, x, y,
+def opmod(data, x, y, pstart=None,
           method='BFGS', weights=1, offsetx=0):
     """Estimate Ordered Probit model and return :class:`OpModel` class object.
 
@@ -532,6 +532,9 @@ def opmod(pstart, data, x, y,
     x_ = datasetnew[x]
     y_ = datasetnew[y]
     yx_ = y_.iloc[:, 0]
+    yncat = len(np.unique(yx_))
+    if pstart is None:
+        pstart = np.repeat(.01, ((yncat - 1) + len(x_.columns)))
     model = minimize(op, pstart,
                      args=(x_, yx_, datasetnew, weights, offsetx),
                      method=method,
@@ -634,7 +637,7 @@ def iopcresults(model, data, x, y, z, modeltype):
     return results
 
 
-def iopmod(modeltype, pstart, data, x, y, z,
+def iopmod(modeltype, data, x, y, z, pstart=None,
            method='BFGS', weights=1, offsetx=0, offsetz=0):
     """Estimate ZiOP model and return :class:`IopModel` class object as output.
 
@@ -661,8 +664,12 @@ def iopmod(modeltype, pstart, data, x, y, z,
         x_ = datasetnew[x]
         y_ = datasetnew[y]
         yx_ = y_.iloc[:, 0]
+        yncat = len(np.unique(yx_))
         z_ = datasetnew[z]
         z_.insert(0, 'ones', np.repeat(1, len(z_)))
+        if pstart is None:
+            pstart = np.repeat(.01, ((yncat - 1) + len(x_.columns)
+                                     + len(z_.columns)))
         if modeltype == 'ziop':
             model = minimize(ziop, pstart,
                              args=(x_, yx_, z_, datasetnew,
@@ -687,7 +694,7 @@ def iopmod(modeltype, pstart, data, x, y, z,
         print('type must be ziop or miop')
 
 
-def iopcmod(modeltype, pstart, data, x, y, z,
+def iopcmod(modeltype, data, x, y, z, pstart=None,
             method='BFGS', weights=1, offsetx=0, offsetz=0):
     """Estimate an iOP model (ZiOP or MiOP) and return :class:`IopcModel`
     class object as output.
@@ -716,8 +723,12 @@ def iopcmod(modeltype, pstart, data, x, y, z,
         x_ = datasetnew[x]
         y_ = datasetnew[y]
         yx_ = y_.iloc[:, 0]
+        yncat = len(np.unique(yx_))
         z_ = datasetnew[z]
         z_.insert(0, 'ones', np.repeat(1, len(z_)))
+        if pstart is None:
+            pstart = np.repeat(.01, ((yncat - 1) + len(x_.columns)
+                                     + len(z_.columns) + 1))
         if modeltype == 'ziopc':
             model = minimize(ziopc, pstart,
                              args=(x_, yx_, z_, datasetnew,
@@ -762,7 +773,7 @@ def iopfit(model):
                                                            0] - xb)))
         probs[:, 0] = ((1 - norm.cdf(zg)) + (norm.cdf(zg))
                        * (norm.cdf(
-            cprobs[0, 0] - xb)))
+                    cprobs[0, 0] - xb)))
         for j in range(1, model.ycat - 1):
             probs[:, j] = (norm.cdf(zg)) * ((norm.cdf(cprobs[j, 0] - xb))
                                             - (norm.cdf(cprobs[j - 1, 0] - xb)))
