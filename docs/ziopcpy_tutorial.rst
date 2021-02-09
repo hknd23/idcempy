@@ -84,21 +84,29 @@ Object :class:`zmiopc.IopModel` stores model results and goodness-of-fit tests i
 
 Use print(ziop_tob.coefs) to see model results:
 
-.. testcode:: 
-print(ziop_tob.coefs)
+.. testoutput::
 
+                      Coef        SE    tscore       2.5%     97.5%
+  cut1            -1.072649  0.268849 -3.989777  -1.599594 -0.545704
+  cut2            -0.171055  0.045801 -3.734712  -0.260826 -0.081284
+  X logGDPpc      -0.212266  0.035124 -6.043404  -0.281108 -0.143424
+  X parliament    -0.538013  0.099811 -5.390330  -0.733642 -0.342384
+  X disaster       0.220324  0.026143  8.427678   0.169084  0.271564
+  X major_oil      0.907116  0.358585  2.529714   0.204290  1.609942
+  X major_primary -0.426577  0.245248 -1.739370  -0.907264  0.054109
+  
 .. testoutput:: 
 
-                        Coef        SE     tscore             p       2.5%      97.5%
-cut1                   1.693797  0.054383  31.145912  0.000000e+00   1.587207   1.800387
-cut2                  -0.757830  0.032290 -23.469359  0.000000e+00  -0.821119  -0.694542
-cut3                  -1.804483  0.071237 -25.330846  0.000000e+00  -1.944107  -1.664860
-cut4                  -0.691907  0.052484 -13.183210  0.000000e+00  -0.794775  -0.589038
-Inflation: int         4.161455  3.864721   1.076780  2.815784e-01  -3.413398  11.736309
-Inflation: gender_dum -3.462848  3.857160  -0.897772  3.693074e-01 -11.022881   4.097185
-Ordered: age          -0.029139  0.013290  -2.192508  2.834282e-02  -0.055187  -0.003090
-Ordered: grade         0.177897  0.012133  14.661952  0.000000e+00   0.154116   0.201678
-Ordered: gender_dum    0.206509  0.034914   5.914823  3.322323e-09   0.138078   0.274940
+                            Coef        SE      tscore        p           2.5%      97.5%
+   cut1                   1.693797  0.054383  31.145912  0.000000e+00   1.587207   1.800387
+   cut2                  -0.757830  0.032290 -23.469359  0.000000e+00  -0.821119  -0.694542
+   cut3                  -1.804483  0.071237 -25.330846  0.000000e+00  -1.944107  -1.664860
+   cut4                  -0.691907  0.052484 -13.183210  0.000000e+00  -0.794775  -0.589038
+   Inflation: int         4.161455  3.864721   1.076780  2.815784e-01  -3.413398  11.736309
+   Inflation: gender_dum -3.462848  3.857160  -0.897772  3.693074e-01 -11.022881   4.097185
+   Ordered: age          -0.029139  0.013290  -2.192508  2.834282e-02  -0.055187  -0.003090
+   Ordered: grade         0.177897  0.012133  14.661952  0.000000e+00   0.154116   0.201678
+   Ordered: gender_dum    0.206509  0.034914   5.914823  3.322323e-09   0.138078   0.274940
 
 In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals.
 
@@ -224,7 +232,8 @@ The following message will appear when the model finishes converging:
 .. testoutput::
 
   Warning: Desired error not necessarily achieved due to precision loss.
-      Current function value: 1385.909054
+      Current function value: 1385.909054de:: 
+print(ziop_tob.coefs)
       Iterations: 34
       Function evaluations: 529
       Gradient evaluations: 44
