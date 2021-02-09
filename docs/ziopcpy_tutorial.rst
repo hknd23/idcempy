@@ -118,7 +118,7 @@ An example for the AIC:
 .. testoutput:: 
    10138.321806674261
 
-**3. To extract predicted probabilities from the model:**
+**2.1 To extract predicted probabilities from the model:**
 :func:`zmiopc.iopfit` returns :class:`zmiopc.FittedVals` containing fitted probablities.
 
 .. testcode::
@@ -135,6 +135,43 @@ An example for the AIC:
  [0.73347708 0.1291157  0.03295816 0.06500889 0.03944016]
  [0.87603805 0.06808193 0.01543795 0.02735256 0.01308951]
  [0.82681957 0.08778215 0.02153509 0.04095753 0.02290566]]
+ 
+ **3. Estimation of the MiOP model**
+ 
+ We begin by importing the Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) data on European Integration described above.  Recall that our outcome variable is "inflated" in the middle category.  
+ 
+ .. testcode:: 
+    url = 'https://github.com/hknd23/zmiopc/blob/main/data/'
+    data2 = pd_read.stata(url)
+ 
+We then define the lists with the names of the variables used in the model
+.. testcode::
+
+  X = ['', '', '']
+  Z = ['']
+  Y = ['']
+
+X is the list of variables in the Ordered Probit equation (second-stage).
+Z is the list of variables in the split-probit equation (first-stage). 
+Y is the outcome variable. 
+
+Users must then set up an array of starting parameters (one for each covariate) before estimating the model.
+
+:func:`zmiopc.iopmod` estimates the MiOP model and returns :class:`zmiopc.IopModel`.
+
+.. testcode::
+
+  # Starting parameters for optimization:
+  pstartziop = np.array([.01, ..01, .01, .01, .01, .01, .01 , .01, .01])
+
+  # Model estimation:
+  miop_EU = zmiopc.iopmod('miop', pstartziop, data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
+
+  # See estimates:
+  print(miop_EU.coefs)
+
+
+
 
 Estimation of Zero-inflated and Middle-inflated Ordered Probit Models "With" Correlated Errors
 ==========================
