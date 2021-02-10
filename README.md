@@ -86,7 +86,7 @@ First, import `IDCeMPy`, required packages, and dataset.
 from idcempy import zmiopc
 import pandas as pd
 import urllib
-url= 'https://github.com/hknd23/idcempy/raw/master/data/tobacco_cons.csv'
+url= 'https://github.com/hknd23/idcempy/raw/main/data/tobacco_cons.csv'
 DAT= pd.read_csv(url)
 ```
 
