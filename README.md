@@ -74,10 +74,10 @@ python setup.py install
 ## Using the Package
 
 ### Example 1: Zero-inflated Ordered Probit Models with Correlated Errors (ZiOPC)
-We first illustrate how **IDCeMPy** can be used to estimate models when the ordered outcome variable presents "zero-inflation." 
+We first illustrate how **IDCeMPy** can be used to estimate models when the ordered outcome variable presents "zero-inflation."
 For that purpose we use data from the 2018 [National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm).  As mentioned above, **IDCeMPy** allows you to estimate "Zero-inflated" Ordered Probit models with and without correlated errors.
 
-We demonstrate the use of a "Zero-inflated" Ordered Probit Model with correlated errors (ZMiOPC).  An example of the ZiOP model withou correlated erros can be found in the documentation of the package. 
+We demonstrate the use of a "Zero-inflated" Ordered Probit Model with correlated errors (ZMiOPC).  An example of the ZiOP model withou correlated erros can be found in the documentation of the package.
 
 First, import `IDCeMPy`, required packages, and dataset.
 ```
@@ -151,9 +151,9 @@ ziopcgender.plot.box(grid='False')
 <p align="center">
    <img src="https://github.com/hknd23/idcempy/blob/main/graphics/ziopc_me.png?raw=true" width="500" height="300" />
 </p>
- 
+
 ### Example 2: "Middle-inflated" Ordered Probit Models with Correlated Errors (MiOPC)
-You can also use **IDCeMPy** to estimate "inflated" Ordered Probit models if your outcome variable presents inflation in the "middle" category. For the sake of consistency, we present below the code needed to estimate a "Middle-inflated" Ordered Probit Model with correlated errors. Data fot this example comes from Elgün and Tillman ([2007](https://journals.sagepub.com/doi/10.1177/1065912907305684)).   
+You can also use **IDCeMPy** to estimate "inflated" Ordered Probit models if your outcome variable presents inflation in the "middle" category. For the sake of consistency, we present below the code needed to estimate a "Middle-inflated" Ordered Probit Model with correlated errors. Data fot this example comes from Elgün and Tillman ([2007](https://journals.sagepub.com/doi/10.1177/1065912907305684)).
 
 First, load the dataset.
 ```
@@ -199,8 +199,8 @@ xeno.plot.box(grid='False')
    <img src="https://github.com/hknd23/zmiopc/blob/main/graphics/MiOPC_Xenophobia.png" width="500" height="300" />
 </p>
 
-### Example 3: Estimation of "inflated" Multinomial Logit Models 
-Unordered polytomous outcome variables sometimes present inflation in the baseline category, and not accounting for it could lead you to make faulty inferences.  But **IDCeMPy** has functions that make it easier for you to estimate Multinomial Logit Models that account for such inflation (iMNL).  This example shows how you can estimate iMNL models easily. 
+### Example 3: Estimation of "inflated" Multinomial Logit Models
+Unordered polytomous outcome variables sometimes present inflation in the baseline category, and not accounting for it could lead you to make faulty inferences.  But **IDCeMPy** has functions that make it easier for you to estimate Multinomial Logit Models that account for such inflation (iMNL).  This example shows how you can estimate iMNL models easily.
 Data comes from Arceneaux and Kolodny ([2009](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1540-5907.2009.00399.x))
 
 
@@ -248,6 +248,3 @@ educ                  0.157 0.203   0.772 0.440  -0.241  0.554
 party7               -0.577 0.058  -9.928 0.000  -0.691 -0.463
 agegroup2             0.916 0.235   3.905 0.000   0.456  1.376
 ```
-
-
- 
