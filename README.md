@@ -129,17 +129,12 @@ print(ziopc_tobb.AIC)
 16061.716497590078
 ```
 `split_effects` calculates the change in predicted probabilities of the outome variable when 'gender_dum' equals 0, and when 'gender_dum' equals 1. The box plots below illustrate the change in predicted probablities using the values from the 'ziopc' dataframe.
+
 ```
 ziopcgender = idcempy.split_effects(ziopc_tob, 1)
-```
-
-
-
-```
 ziopcgender.plot.box(grid='False')
 ```
-
-
+![alt text](
 
 ### Example 2: "Middle-inflated" Ordered Probit Models with Correlated Errors (MiOPC)
 You can also use **IDCeMPy** to estimate "inflated" Ordered Probit models if your outcome variable presents inflation in the "middle" category. For the sake of consistency, we present below the code needed to estimate a "Middle-inflated" Ordered Probit Model with correlated errors. Data fot this example comes from Elgün and Tillman ([2007](https://journals.sagepub.com/doi/10.1177/1065912907305684)).   
