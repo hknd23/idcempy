@@ -134,8 +134,10 @@ print(ziopc_tobb.AIC)
 ziopcgender = idcempy.split_effects(ziopc_tob, 1)
 ziopcgender.plot.box(grid='False')
 ```
-<img src="https://github.com/hknd23/idcempy/blob/main/graphics/ziopc_me.png?raw=true" width="500" height="300" />
-
+<p align="center">
+   <img src="https://github.com/hknd23/idcempy/blob/main/graphics/ziopc_me.png?raw=true" width="500" height="300" />
+</p>
+ 
 ### Example 2: "Middle-inflated" Ordered Probit Models with Correlated Errors (MiOPC)
 You can also use **IDCeMPy** to estimate "inflated" Ordered Probit models if your outcome variable presents inflation in the "middle" category. For the sake of consistency, we present below the code needed to estimate a "Middle-inflated" Ordered Probit Model with correlated errors. Data fot this example comes from Elgün and Tillman ([2007](https://journals.sagepub.com/doi/10.1177/1065912907305684)).   
 
@@ -173,7 +175,10 @@ rho                         -0.707 0.106  -6.694 0.000 -0.914 -0.500
 xeno = ziopc.ordered_effects(miopc_EU, 2, nsims=10000)
 xeno.plot.box(grid='False')
 ```
-![alt text](https://github.com/hknd23/zmiopc/blob/main/graphics/MiOPC_Xenophobia.png)
+
+<p align="center">
+   <img src="https://github.com/hknd23/zmiopc/blob/main/graphics/MiOPC_Xenophobia.png" width="500" height="300" />
+</p>
 
 ### Example 3: Estimation of "inflated" Multinomial Logit Models 
 Unordered polytomous outcome variables sometimes present inflation in the baseline category, and not accounting for it could lead you to make faulty inferences.  But **IDCeMPy** has functions that make it easier for you to estimate Multinomial Logit Models that account for such inflation (iMNL).  This example shows how you can estimate iMNL models easily. 
