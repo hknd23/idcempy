@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from zmiopc import imnl
+from idcempy import imnl
 
 DAT = pd.read_stata(
     "C:/Users/Nguyen/Documents/Replication II/Replication "
@@ -55,3 +55,5 @@ orders = [0, 2, 1]
 
 model_small = imnl.imnlmod(DAT, x2, y2, z2, order, binflatecat)
 models_small = imnl.imnlmod(DAT, x2, y2, z2, orders, binflatecat)
+
+

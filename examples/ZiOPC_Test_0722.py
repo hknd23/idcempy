@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 # import this after importing all other packages.
-from zmiopc import zmiopc
+from idcempy import zmiopc
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -142,3 +142,11 @@ fitttedmiopc = zmiopc.iopcfit(MIOPcEUx)
 
 fitttedmiopc = ziopcfit(ziopc_JCR)
 
+DATw = pd.read_stata(
+    "C:/Users/Nguyen/Documents/Replication I/Replication I/Least_Informed.dta")
+yy = ['votechoice_dk']
+xx = ['phone_only', 'age']
+zz = ['cXdem','cXrep']
+
+boiii = zmiopc.iopcmod('miop', DATw, xx, yy, zz,
+                       method='BFGS')
