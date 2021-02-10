@@ -150,9 +150,9 @@ We then define the lists with the names of the variables used in the model
 
 .. testcode::
 
-  X = ['', '', '']
-  Z = ['']
-  Y = ['']
+  X = ['Xenophobia', 'discuss_politics']
+  Z = ['discuss_politics', EU_Know_ob]
+  Y = ['EU_support_ET']
 
 X is the list of variables in the Ordered Probit equation (second-stage).
 Z is the list of variables in the split-probit equation (first-stage). 
@@ -170,12 +170,44 @@ Users must then set up an array of starting parameters (one for each covariate) 
   # Model estimation:
   miop_EU = zmiopc.iopmod('miop', pstartziop, data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
 
-  # See estimates:
-  print(miop_EU.coefs)
+.. testoutput::
+         Warning: Desired error not necessarily achieved due to precision loss.
+         Current function value: 10857.695490
+         Iterations: 37
+         Function evaluations: 488
+         Gradient evaluations: 61  # See estimates:
+.. testcode::         
+         print(miop_EU.coefs)
 
+.. testoutput::
+                                 Coef        SE     tscore             p      2.5%     97.5%
+cut1                        -1.159621  0.049373 -23.487133  0.000000e+00 -1.256392 -1.062851
+cut2                        -0.352743  0.093084  -3.789492  1.509555e-04 -0.535188 -0.170297
+Inflation: int              -0.236710  0.079449  -2.979386  2.888270e-03 -0.392431 -0.080989
+Inflation: discuss_politics  0.190595  0.035918   5.306454  1.117784e-07  0.120197  0.260993
+Inflation: EU_Know_obj       0.199574  0.020308   9.827158  0.000000e+00  0.159770  0.239379
+Ordered: Xenophobia         -0.663551  0.044657 -14.858898  0.000000e+00 -0.751079 -0.576024
+Ordered: discuss_politics    0.023784  0.029365   0.809964  4.179609e-01 -0.033770  0.081339
 
+In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals.
 
+The model object also stores three (3) different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
 
+.. testcode::
+
+  print(miop_EU.llik)
+  print(miop_EU.AIC)
+  print(miop_EU.vcov)
+
+An example for the AIC:
+.. testcode::
+   print(miop_EU.AIC)
+   
+.. testoutput:: 
+   21729.390980849777
+
+Please see **Section 2.1** for instructions on how to calculate and print the fitted values. 
+   
 Estimation of Zero-inflated and Middle-inflated Ordered Probit Models "With" Correlated Errors
 ==========================
 
@@ -197,7 +229,7 @@ Similar to ZiOP, the results are stored in the attributes of :class:`zmiopc.IopC
          Function evaluations: 1562
          Gradient evaluations: 142
 
-**3. Print the results**
+**2.1 Print the results**
 .. testcode::
     print(ziopc_tob.coefs)
 
@@ -226,7 +258,7 @@ The AIC of the ziopc_tob model, for example, is:
 .. testoutput::
     10140.103819465658
 
-**3. Obtain predicted probabilities from the ziopc_tob model:**
+**2.2. Obtain predicted probabilities from the ziopc_tob model:**
 :func:`zmiopc.iopcfit` returns :class:`zmiopc.FittedVals` containing fitted probablities.
 
 .. testcode::
@@ -244,9 +276,56 @@ The AIC of the ziopc_tob model, for example, is:
  [0.87523652 0.06888286 0.01564958 0.0275354  0.01269564]
  [0.82678185 0.0875059  0.02171135 0.04135142 0.02264948]]
  
+ **3. Estimation of MiOPC**
+ This example uses the the Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) data on European Integration described above.  Recall that our outcome variable is "inflated" in the middle category.  
+
+.. testcode::
  
+    url = 'https://github.com/hknd23/zmiopc/blob/main/data/'
+    data2 = pd_read.stata(url)
  
- 
+We then define the lists with the names of the variables used in the model
+
+.. testcode::
+
+  X = ['Xenophobia', 'discuss_politics']
+  Z = ['discuss_politics', EU_Know_ob]
+  Y = ['EU_support_ET']
+
+X is the list of variables in the Ordered Probit equation (second-stage).
+Z is the list of variables in the split-probit equation (first-stage). 
+Y is the outcome variable. 
+
+Users must then set up an array of starting parameters (one for each covariate) before estimating the model.
+
+:func:`zmiopc.iopmod` estimates the MiOP model and returns :class:`zmiopc.IopModel`.
+
+.. testcode::
+
+  # Starting parameters for optimization:
+  pstartziop = np.array([.01, .01, .01, .01, .01, .01, .01 , .01, .01, .01])
+
+  # Model estimation:
+  miopc_EU = zmiopc.iopcmod('miopc', pstartziop, data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
+
+.. testcode::         
+         print(miopc_EU.coefs)
+
+.. testoutput::
+
+
+In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals.
+
+The model object also stores three (3) different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
+
+.. testcode::
+
+  print(miop_EU.llik)
+  print(miop_EU.AIC)
+  print(miop_EU.vcov)
+
+Above you can read the instructions on how to calculate and print the fitted values.  
+
 Estimating the OP Model
 =======================
 
