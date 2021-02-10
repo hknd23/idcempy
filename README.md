@@ -66,7 +66,7 @@ $ pip install IDCeMPy
 
 From [GitHub](https://github.com/)
 
-```
+```git
 git clone https://github.com/hknd23/idcempy.git
 cd idcempy
 python setup.py install
@@ -82,7 +82,7 @@ We demonstrate the use of a "Zero-inflated" Ordered Probit Model with correlated
 
 First, import `IDCeMPy`, required packages, and dataset.
 
-```
+```python
 from idcempy import ziopcpy
 import pandas as pd
 import urllib
@@ -115,10 +115,11 @@ If you like to estimate your model without correlated errors, you only substitut
 
 
 The results of this example are stored in a class (`ZiopcModel`) with the following attributes:
-  * *coefs*: Model coefficients and standard errors
-  * *llik*: Log-likelihood
-  * *AIC*: Akaike information criterion
-  * *vcov*: Variance-covariance matrix
+
+* *coefs*: Model coefficients and standard errors
+* *llik*: Log-likelihood
+* *AIC*: Akaike information criterion
+* *vcov*: Variance-covariance matrix
 
 We, for example, can print out the covariate estimates, standard errors, *p* value and *t* statistics by typing:
 
