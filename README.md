@@ -61,12 +61,12 @@ of observations in your ordered outcome variable.
 From [PyPi](https://pypi.org/project/ziopcpy/0.1.2/):
 
 ```sh
-$ pip install IDCeMPy
+pip install IDCeMPy
 ```
 
 From [GitHub](https://github.com/)
 
-```git
+```sh
 git clone https://github.com/hknd23/idcempy.git
 cd idcempy
 python setup.py install
@@ -83,10 +83,10 @@ We demonstrate the use of a "Zero-inflated" Ordered Probit Model with correlated
 First, import `IDCeMPy`, required packages, and dataset.
 
 ```python
-from idcempy import ziopcpy
+from idcempy import zmiopc
 import pandas as pd
 import urllib
-url= 'https://github.com/hknd23/ziopcpy/raw/master/data/tobacco_cons.csv'
+url= 'https://github.com/hknd23/idcempy/raw/master/data/tobacco_cons.csv'
 DAT= pd.read_csv(url)
 ```
 
@@ -107,7 +107,7 @@ pstart = np.array([.01, .01, .01, .01, .01, .01, .01, .01, .01, .01])
 The following line of code creates a ziopc regression object model.
 
 ```python
-ziopc_tob = ziopcpy.iopcmod('ziopc', pstartziopc, data, X, Y, Z, method='bfgs',
+ziopc_tob = zmiopc.iopcmod('ziopc', pstartziopc, data, X, Y, Z, method='bfgs',
                     weights=1, offsetx=0, offsetz=0)
 ```
 
@@ -127,7 +127,7 @@ We, for example, can print out the covariate estimates, standard errors, *p* val
 print(ziopc_tobb.coefs)
 ```
 
-```
+```python
                           Coef        SE     tscore             p       2.5%      97.5%
 
 Split-stage
@@ -174,7 +174,7 @@ You can also use **IDCeMPy** to estimate "inflated" Ordered Probit models if you
 First, load the dataset.
 
 ```python
-url= 'https://github.com/hknd23/zmiopc/raw/main/data/EUKnowledge.dta'
+url= 'https://github.com/hknd23/idcempy/raw/main/data/EUKnowledge.dta'
 data= pd.read_stata(url)
 ```
 
@@ -189,7 +189,7 @@ Z = ['discuss_politics', 'EU_Know_obj']
 Run the model and print the results:
 
 ```python
-miopc_EU = ziopc.iopcmod('miopc', DAT, X, Y, Z)
+miopc_EU = zmiopc.iopcmod('miopc', DAT, X, Y, Z)
 ```
 
 ```python
@@ -214,12 +214,12 @@ rho                         -0.707 0.106  -6.694 0.000 -0.914 -0.500
 `ordered_effects()` calculates the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities when Xenophobia increases one standard deviation from its mean value.
 
 ```python
-xeno = ziopc.ordered_effects(miopc_EU, 2, nsims=10000)
+xeno = zmiopc.ordered_effects(miopc_EU, 2, nsims=10000)
 xeno.plot.box(grid='False')
 ```
 
 <p align="center">
-   <img src="https://github.com/hknd23/zmiopc/blob/main/graphics/MiOPC_Xenophobia.png" width="500" height="300" />
+   <img src="https://github.com/hknd23/idcempy/blob/main/graphics/MiOPC_Xenophobia.png" width="500" height="300" />
 </p>
 
 ### Example 3: Estimation of "inflated" Multinomial Logit Models
@@ -227,11 +227,11 @@ Unordered polytomous outcome variables sometimes present inflation in the baseli
 Data comes from Arceneaux and Kolodny ([2009](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1540-5907.2009.00399.x))
 
 
-We begin by importing the `bimnl` library and dataset.
+We begin by importing the `imnl` library and dataset.
 
 ```python
-from zmiopc import bimnl
-url= 'https://github.com/hknd23/zmiopc/raw/main/data/replicationdata.dta'
+from zmiopc import imnl
+url= 'https://github.com/hknd23/idcempy/raw/main/data/replicationdata.dta'
 data= pd.read_stata(url)
 ```
 
@@ -251,7 +251,7 @@ inflatecat = "baseline"
 The following line of code estimates the "inflated" Multinomial Logit Model (iMNL).
 
 ```python
-imnl_2004vote = bimnl.imnlmod(data, x, y, z, order, inflatecat)
+imnl_2004vote = imnl.imnlmod(data, x, y, z, order, inflatecat)
 ```
 
 Print the est
