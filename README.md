@@ -64,6 +64,13 @@ From [PyPi](https://pypi.org/project/ziopcpy/0.1.2/):
 $ pip install IDCeMPy
 ```
 
+From [GitHub](https://github.com/)
+```
+git clone https://github.com/hknd23/idcempy.git
+cd idcempy
+python setup.py install
+```
+
 ## Using the Package
 
 ### Example 1: Zero-inflated Ordered Probit Models with Correlated Errors (ZiOPC)
@@ -110,17 +117,24 @@ print(ziopc_tobb.coefs)
 ```
 ```
                           Coef        SE     tscore             p       2.5%      97.5%
+
+Split-stage
+-----------------------
+intercept              9.538072  3.470689   2.748178  5.992748e-03   2.735521  16.340623
+gender_dum            -9.165963  3.420056  -2.680062  7.360844e-03 -15.869273  -2.462654
+
+Second-stage
+-----------------------
+age                   -0.028606  0.008883  -3.220369  1.280255e-03  -0.046016  -0.011196
+grade                  0.177541  0.010165  17.465452  0.000000e+00   0.157617   0.197465
+gender_dum             0.602136  0.053084  11.343020  0.000000e+00   0.498091   0.706182
 cut1                   1.696160  0.044726  37.923584  0.000000e+00   1.608497   1.783822
 cut2                  -0.758095  0.033462 -22.655678  0.000000e+00  -0.823679  -0.692510
 cut3                  -1.812077  0.060133 -30.134441  0.000000e+00  -1.929938  -1.694217
 cut4                  -0.705836  0.041432 -17.036110  0.000000e+00  -0.787043  -0.624630
-Inflation: int         9.538072  3.470689   2.748178  5.992748e-03   2.735521  16.340623
-Inflation: gender_dum -9.165963  3.420056  -2.680062  7.360844e-03 -15.869273  -2.462654
-Ordered: age          -0.028606  0.008883  -3.220369  1.280255e-03  -0.046016  -0.011196
-Ordered: grade         0.177541  0.010165  17.465452  0.000000e+00   0.157617   0.197465
-Ordered: gender_dum    0.602136  0.053084  11.343020  0.000000e+00   0.498091   0.706182
 rho                   -0.415770  0.074105  -5.610526  2.017123e-08  -0.561017  -0.270524
 ```
+
 Or the Akaike Information Criterion (AIC):
 ```
 print(ziopc_tobb.AIC)
@@ -128,7 +142,7 @@ print(ziopc_tobb.AIC)
 ```
 16061.716497590078
 ```
-`split_effects` calculates the change in predicted probabilities of the outome variable when 'gender_dum' equals 0, and when 'gender_dum' equals 1. The box plots below illustrate the change in predicted probablities using the values from the 'ziopc' dataframe.
+`split_effects` creates a dataframe with values of the change in predicted probabilities of the outome variable when 'gender_dum' equals 0, and when 'gender_dum' equals 1. The box plots below illustrate the change in predicted probablities using the values from the 'ziopc' dataframe.
 
 ```
 ziopcgender = idcempy.split_effects(ziopc_tob, 1)
@@ -161,16 +175,21 @@ miopc_EU = ziopc.iopcmod('miopc', DAT, X, Y, Z)
 print(miopc_EU.coefs)
 
                               Coef    SE  tscore     p   2.5%  97.5%
+Split-stage
+---------------------------
+int                         -0.129 0.021  -6.188 0.000 -0.170 -0.088
+discuss_politics             0.192 0.026   7.459 0.000  0.142  0.243
+EU_Know_obj                  0.194 0.027   7.154 0.000  0.141  0.248
+
+Second-stage
+---------------------------
+Xenophobia                  -0.591 0.045 -13.136 0.000 -0.679 -0.502
+discuss_politics            -0.029 0.021  -1.398 0.162 -0.070  0.012
 cut1                        -1.370 0.044 -30.948 0.000 -1.456 -1.283
 cut2                        -0.322 0.103  -3.123 0.002 -0.524 -0.120
-Inflation: int              -0.129 0.021  -6.188 0.000 -0.170 -0.088
-Inflation: discuss_politics  0.192 0.026   7.459 0.000  0.142  0.243
-Inflation: EU_Know_obj       0.194 0.027   7.154 0.000  0.141  0.248
-Ordered: Xenophobia         -0.591 0.045 -13.136 0.000 -0.679 -0.502
-Ordered: discuss_politics   -0.029 0.021  -1.398 0.162 -0.070  0.012
 rho                         -0.707 0.106  -6.694 0.000 -0.914 -0.500
 ```
-`ordered_effects()` calculates the change in predicted probabilities when the value of a covarariate changes. The box plots below display the change in predicted probabilities when Xenophobia increases one standard deviation from its mean value.
+`ordered_effects()` calculates the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities when Xenophobia increases one standard deviation from its mean value.
 ```
 xeno = ziopc.ordered_effects(miopc_EU, 2, nsims=10000)
 xeno.plot.box(grid='False')
@@ -209,17 +228,25 @@ imnl_2004vote = bimnl.imnlmod(data, x, y, z, order, inflatecat)
 Print the est
 ```
                        Coef    SE  tscore     p    2.5%  97.5%
-Inflation: int       -4.935 2.777  -1.777 0.076 -10.379  0.508
-Inflation: educ       1.886 0.293   6.441 0.000   1.312  2.460
-Inflation: agegroup2  1.295 0.768   1.685 0.092  -0.211  2.800
-1: int               -4.180 1.636  -2.556 0.011  -7.387 -0.974
-1: educ               0.334 0.185   1.803 0.071  -0.029  0.697
-1: party7             0.454 0.057   7.994 0.000   0.343  0.566
-1: agegroup2          0.954 0.248   3.842 0.000   0.467  1.441
-2: int                0.900 1.564   0.576 0.565  -2.166  3.966
-2: educ               0.157 0.203   0.772 0.440  -0.241  0.554
-2: party7            -0.577 0.058  -9.928 0.000  -0.691 -0.463
-2: agegroup2          0.916 0.235   3.905 0.000   0.456  1.376
+Split-stage
+----------------------
+intercept            -4.935 2.777  -1.777 0.076 -10.379  0.508
+educ                  1.886 0.293   6.441 0.000   1.312  2.460
+agegroup2             1.295 0.768   1.685 0.092  -0.211  2.800
+
+Ordered-stage: 1
+---------------------
+intercept            -4.180 1.636  -2.556 0.011  -7.387 -0.974
+educ                  0.334 0.185   1.803 0.071  -0.029  0.697
+party7                0.454 0.057   7.994 0.000   0.343  0.566
+agegroup2             0.954 0.248   3.842 0.000   0.467  1.441
+
+Ordered-stage: 2
+----------------------
+intercept             0.900 1.564   0.576 0.565  -2.166  3.966
+educ                  0.157 0.203   0.772 0.440  -0.241  0.554
+party7               -0.577 0.058  -9.928 0.000  -0.691 -0.463
+agegroup2             0.916 0.235   3.905 0.000   0.456  1.376
 ```
 
 
