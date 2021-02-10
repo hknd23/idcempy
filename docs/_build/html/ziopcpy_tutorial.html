@@ -18,8 +18,8 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="imnl_tutorial.html" />
-    <link rel="prev" title="Package Documentation: zmiopc" href="index.html" /> 
+    <link rel="next" title="imnl Module" href="imnl_tutorial.html" />
+    <link rel="prev" title="Package Documentation: IDCeMPy" href="index.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -31,10 +31,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="imnl_tutorial.html" title="&lt;no title&gt;"
+          <a href="imnl_tutorial.html" title="imnl Module"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Package Documentation: zmiopc"
+          <a href="index.html" title="Package Documentation: IDCeMPy"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">IDCeMPy  documentation</a> &#187;</li> 
       </ul>
@@ -62,9 +62,7 @@ response, which is indeed high. Therefore, this dataset is useful to illustrate 
 <h2>Estimation of Zero-inflated and Middle-inflated Ordered Probit Models Without Correlated Errors<a class="headerlink" href="#estimation-of-zero-inflated-and-middle-inflated-ordered-probit-models-without-correlated-errors" title="Permalink to this headline">¶</a></h2>
 <p>The <cite>iopmod</cite> function estimates regression objects for “zero-inflated” and “middle-inflated” ordered probit models without correlated errors.  Below you will find instructions to estimate a ZiOP model.  The estimation of MiOP models is also illustrated.</p>
 <p><strong>1. Import the required libraries, set up the package and import the dataset:</strong></p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import the necessary libraries and package</span>
-
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">urllib</span>
 <span class="kn">from</span> <span class="nn">zmiopc</span> <span class="kn">import</span> <span class="n">zmiopc</span>
@@ -99,12 +97,16 @@ Y is the outcome variable.</p>
 </div>
 <p>Results from the model:</p>
 <p>The following message will appear when the model has converged:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Warning: Desired error not necessarily achieved due to precision loss.
+Current function value: 5060.160903
+Iterations: 79
+Function evaluations: 1000
+Gradient evaluations: 100
 </pre></div>
 </div>
 <p>Object <a class="reference internal" href="api.html#zmiopc.IopModel" title="zmiopc.IopModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">zmiopc.IopModel</span></code></a> stores model results and goodness-of-fit tests in its attributes ‘coefs’, ‘AIC’, ‘llik’, and ‘vcov’.</p>
 <p>Use the following line of code to see the estimates of coefficients:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ziop_tob</span><span class="o">.</span><span class="n">coefs</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                         Coef        SE      tscore        p           2.5%      97.5%
@@ -126,12 +128,11 @@ Ordered: gender_dum    0.206509  0.034914   5.914823  3.322323e-09   0.138078   
 <span class="nb">print</span><span class="p">(</span><span class="n">ziop_tob</span><span class="o">.</span><span class="n">vcov</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>An example for the AIC:
-.. testcode:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ziop_tob</span><span class="o">.</span><span class="n">AIC</span><span class="p">)</span>
+<p>An example for the AIC:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ziop_tob</span><span class="o">.</span><span class="n">AIC</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>10138.321806674261
 </pre></div>
 </div>
 <p><strong>2.1 To extract predicted probabilities from the model:</strong>
@@ -150,9 +151,7 @@ Ordered: gender_dum    0.206509  0.034914   5.914823  3.322323e-09   0.138078   
 </pre></div>
 </div>
 <p><strong>3. Estimation of the MiOP model</strong></p>
-<blockquote>
-<div><p>We begin by importing the Elgun and Tilam (<a class="reference external" href="https://journals.sagepub.com/doi/10.1177/1065912907305684">2007</a>) data on European Integration described above.  Recall that our outcome variable is “inflated” in the middle category.</p>
-</div></blockquote>
+<p>We begin by importing the Elgun and Tilam (<a class="reference external" href="https://journals.sagepub.com/doi/10.1177/1065912907305684">2007</a>) data on European Integration described above.  Recall that our outcome variable is “inflated” in the middle category.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/hknd23/zmiopc/blob/main/data/&#39;</span>
 <span class="n">data2</span> <span class="o">=</span> <span class="n">pd_read</span><span class="o">.</span><span class="n">stata</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 </pre></div>
@@ -175,13 +174,24 @@ Y is the outcome variable.</p>
 <span class="n">miop_EU</span> <span class="o">=</span> <span class="n">zmiopc</span><span class="o">.</span><span class="n">iopmod</span><span class="p">(</span><span class="s1">&#39;miop&#39;</span><span class="p">,</span> <span class="n">pstartziop</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;bfgs&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">offsetx</span><span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">offsetz</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Warning: Desired error not necessarily achieved due to precision loss.
+Current function value: 10857.695490
+Iterations: 37
+Function evaluations: 488
+Gradient evaluations: 61  # See estimates:
 </pre></div>
 </div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">miop_EU</span><span class="o">.</span><span class="n">coefs</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                              Coef        SE       tscore         p         2.5%     97.5%
+cut1                        -1.159621  0.049373 -23.487133  0.000000e+00 -1.256392 -1.062851
+cut2                        -0.352743  0.093084  -3.789492  1.509555e-04 -0.535188 -0.170297
+Inflation: int              -0.236710  0.079449  -2.979386  2.888270e-03 -0.392431 -0.080989
+Inflation: discuss_politics  0.190595  0.035918   5.306454  1.117784e-07  0.120197  0.260993
+Inflation: EU_Know_obj       0.199574  0.020308   9.827158  0.000000e+00  0.159770  0.239379
+Ordered: Xenophobia         -0.663551  0.044657 -14.858898  0.000000e+00 -0.751079 -0.576024
+Ordered: discuss_politics    0.023784  0.029365   0.809964  4.179609e-01 -0.033770  0.081339
 </pre></div>
 </div>
 <p>In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals.</p>
@@ -191,12 +201,11 @@ Y is the outcome variable.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">miop_EU</span><span class="o">.</span><span class="n">vcov</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>An example for the AIC:
-.. testcode:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">miop_EU</span><span class="o">.</span><span class="n">AIC</span><span class="p">)</span>
+<p>An example for the AIC:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">miop_EU</span><span class="o">.</span><span class="n">AIC</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>21729.390980849777
 </pre></div>
 </div>
 <p>Please see <strong>Section 2.1</strong> for instructions on how to calculate and print the fitted values.</p>
@@ -204,9 +213,8 @@ Y is the outcome variable.</p>
 <div class="section" id="estimation-of-zero-inflated-and-middle-inflated-ordered-probit-models-with-correlated-errors">
 <h2>Estimation of Zero-inflated and Middle-inflated Ordered Probit Models “With” Correlated Errors<a class="headerlink" href="#estimation-of-zero-inflated-and-middle-inflated-ordered-probit-models-with-correlated-errors" title="Permalink to this headline">¶</a></h2>
 <p>The package also includes the function <cite>iopcmod</cite> which fits “zero-inflated” ordered probit models (ZiOPC) and “middle-inflated” ordered probit models (MiOP) under the assumption that the two errors are correlated with each other (i.e. correlated errors). Both models include the estimate of’rho’. The models in this section use the same specification as the models estimated without correlated errors presented above.</p>
-<p><strong>1. Define an array with values of starting parameters</strong>
-.. testcode:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pstart</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">.</span><span class="mi">01</span><span class="p">,</span> <span class="o">.</span><span class="mi">01</span><span class="p">,</span> <span class="o">.</span><span class="mi">01</span><span class="p">,</span> <span class="o">.</span><span class="mi">01</span><span class="p">,</span> <span class="o">.</span><span class="mi">01</span><span class="p">,</span> <span class="o">.</span><span class="mi">01</span><span class="p">,</span> <span class="o">.</span><span class="mi">01</span> <span class="p">,</span> <span class="o">.</span><span class="mi">01</span><span class="p">,</span> <span class="o">.</span><span class="mi">01</span><span class="p">,</span> <span class="o">.</span><span class="mi">01</span><span class="p">])</span>
+<p><strong>1. Define an array with values of starting parameters</strong></p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">pstart</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">.</span><span class="mi">01</span><span class="p">,</span> <span class="o">.</span><span class="mi">01</span><span class="p">,</span> <span class="o">.</span><span class="mi">01</span><span class="p">,</span> <span class="o">.</span><span class="mi">01</span><span class="p">,</span> <span class="o">.</span><span class="mi">01</span><span class="p">,</span> <span class="o">.</span><span class="mi">01</span><span class="p">,</span> <span class="o">.</span><span class="mi">01</span> <span class="p">,</span> <span class="o">.</span><span class="mi">01</span><span class="p">,</span> <span class="o">.</span><span class="mi">01</span><span class="p">,</span> <span class="o">.</span><span class="mi">01</span><span class="p">])</span>
 </pre></div>
 </div>
 <p><strong>2. Estimate the ZiOPC model</strong>
@@ -215,23 +223,37 @@ Y is the outcome variable.</p>
 </pre></div>
 </div>
 <p>Similar to ZiOP, the results are stored in the attributes of <a class="reference internal" href="api.html#zmiopc.IopCModel" title="zmiopc.IopCModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">zmiopc.IopCModel</span></code></a>.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Current function value: 5060.051910
+Iterations: 119
+Function evaluations: 1562
+Gradient evaluations: 142
 </pre></div>
 </div>
-<p><strong>2.1 Print the results</strong>
-.. testcode:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ziopc_tob</span><span class="o">.</span><span class="n">coefs</span><span class="p">)</span>
+<p><strong>2.1 Print the results</strong></p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ziopc_tob</span><span class="o">.</span><span class="n">coefs</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                         Coef        SE     tscore             p       2.5%      97.5%
+cut1                   1.696160  0.044726  37.923584  0.000000e+00   1.608497   1.783822
+cut2                  -0.758095  0.033462 -22.655678  0.000000e+00  -0.823679  -0.692510
+cut3                  -1.812077  0.060133 -30.134441  0.000000e+00  -1.929938  -1.694217
+cut4                  -0.705836  0.041432 -17.036110  0.000000e+00  -0.787043  -0.624630
+Inflation: int         9.538072  3.470689   2.748178  5.992748e-03   2.735521  16.340623
+Inflation: gender_dum -9.165963  3.420056  -2.680062  7.360844e-03 -15.869273  -2.462654
+Ordered: age          -0.028606  0.008883  -3.220369  1.280255e-03  -0.046016  -0.011196
+Ordered: grade         0.177541  0.010165  17.465452  0.000000e+00   0.157617   0.197465
+Ordered: gender_dum    0.602136  0.053084  11.343020  0.000000e+00   0.498091   0.706182
+rho                   -0.415770  0.074105  -5.610526  2.017123e-08  -0.561017  -0.270524
 </pre></div>
 </div>
 <p>To print the estimates of the log-likelihood, AIC, and Variance-Covariance matrix, you should type:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ziopc_tob</span><span class="o">.</span><span class="n">llik</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ziopc_tob</span><span class="o">.</span><span class="n">AIC</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ziopc_tob</span><span class="o">.</span><span class="n">vcov</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The AIC of the ziopc_tob model, for example, is:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>10140.103819465658
 </pre></div>
 </div>
 <p><strong>2.2. Obtain predicted probabilities from the ziopc_tob model:</strong>
@@ -249,9 +271,9 @@ Y is the outcome variable.</p>
 [0.82678185 0.0875059  0.02171135 0.04135142 0.02264948]]
 
 **3. Estimation of MiOPC**
-This example uses the the Elgun and Tilam (`2007 &lt;https://journals.sagepub.com/doi/10.1177/1065912907305684&gt;`_) data on European Integration described above.  Recall that our outcome variable is &quot;inflated&quot; in the middle category.
 </pre></div>
 </div>
+<p>This example uses the the Elgun and Tilam (<a class="reference external" href="https://journals.sagepub.com/doi/10.1177/1065912907305684">2007</a>) data on European Integration described above. Recall that our outcome variable is “inflated” in the middle category.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/hknd23/zmiopc/blob/main/data/&#39;</span>
 <span class="n">data2</span> <span class="o">=</span> <span class="n">pd_read</span><span class="o">.</span><span class="n">stata</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 </pre></div>
@@ -274,10 +296,18 @@ Y is the outcome variable.</p>
 <span class="n">miopc_EU</span> <span class="o">=</span> <span class="n">zmiopc</span><span class="o">.</span><span class="n">iopcmod</span><span class="p">(</span><span class="s1">&#39;miopc&#39;</span><span class="p">,</span> <span class="n">pstartziop</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;bfgs&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">offsetx</span><span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">offsetz</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">miopc_EU</span><span class="o">.</span><span class="n">coefs</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                              Coef  SE     tscore  p     2.5%  97.5%
+cut1                        -1.370 0.044 -30.948 0.000 -1.456 -1.283
+cut2                        -0.322 0.103  -3.123 0.002 -0.524 -0.120
+Inflation: int              -0.129 0.021  -6.188 0.000 -0.170 -0.088
+Inflation: discuss_politics  0.192 0.026   7.459 0.000  0.142  0.243
+Inflation: EU_Know_obj       0.194 0.027   7.154 0.000  0.141  0.248
+Ordered: Xenophobia         -0.591 0.045 -13.136 0.000 -0.679 -0.502
+Ordered: discuss_politics   -0.029 0.021  -1.398 0.162 -0.070  0.012
+rho                         -0.707 0.106  -6.694 0.000 -0.914 -0.500
 </pre></div>
 </div>
 <p>In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals.</p>
@@ -293,13 +323,11 @@ Y is the outcome variable.</p>
 <h2>Estimating the OP Model<a class="headerlink" href="#estimating-the-op-model" title="Permalink to this headline">¶</a></h2>
 <p>The package also includes a fucntion that estimates a standard Ordered Probit (OP) model.
 The OP model does not account for the “zero inflation”, so it does not have a split-probit stage.</p>
-<blockquote>
-<div><dl class="simple">
-<dt># Define a list of variable names (strings) X,Y,Z:</dt><dd><p>X = [‘age’, ‘grade’, ‘gender_dum’]
-Y = [‘cig_count’]</p>
-</dd>
-</dl>
-</div></blockquote>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define a list of variable names (strings) X,Y,Z:</span>
+<span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;grade&#39;</span><span class="p">,</span> <span class="s1">&#39;gender_dum&#39;</span><span class="p">]</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cig_count&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
 <p>X is the list of variables in the Ordered Probit equation.
 Y is the outcome variable.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Starting parameters for optimization:</span>
@@ -314,15 +342,26 @@ Y is the outcome variable.</p>
 </div>
 <p>Results from the model:</p>
 <p>The following message will appear when the model has converged:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Warning: Desired error not necessarily achieved due to precision loss.
+Current function value: 4411.710049
+Iterations: 10
+Function evaluations: 976
+Gradient evaluations: 121
 </pre></div>
 </div>
 <p><a class="reference internal" href="api.html#zmiopc.OpModel" title="zmiopc.OpModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">zmiopc.OpModel</span></code></a> stores results from model estimation and other information in its attributes.
 The following line of code to see the estimates of coefficients:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">op_tob</span><span class="o">.</span><span class="n">coefs</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>             Coef        SE     tscore         p      2.5%     97.5%
+cut1        1.696175  0.047320  35.844532  0.000000  1.603427  1.788922
+cut2       -0.705037  0.031650 -22.276182  0.000000 -0.767071 -0.643004
+cut3       -2.304405  0.121410 -18.980329  0.000000 -2.542369 -2.066441
+cut4        2.197381  0.235338   9.337141  0.000000  1.736119  2.658643
+age        -0.070615  0.007581  -9.314701  0.000000 -0.085474 -0.055756
+grade       0.233741  0.010336  22.614440  0.000000  0.213483  0.254000
+gender_dum  0.020245  0.032263   0.627501  0.530331 -0.042991  0.083482
 </pre></div>
 </div>
 <p>Log-likelihood, AIC, and Variance-Covariance matrix can be extracted with:</p>
@@ -350,30 +389,30 @@ The Vuong test denotes m<sub>i</sub>as the natural logarithm of the ratio of the
 </div>
 <div class="section" id="split-equtation-predicted-probablities">
 <h2>Split Equtation Predicted Probablities<a class="headerlink" href="#split-equtation-predicted-probablities" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="api.html#zmiopc.split_effects" title="zmiopc.split_effects"><code class="xref py py-func docutils literal notranslate"><span class="pre">zmiopc.split_effects()</span></code></a> simulates data from ZiOP/ZiOPC model results and computes changes in predicted probabilities when the value of a variable changes.
-This allows us to illustrate how the changes in the split-probit covariates affect the probablilities of being in one population versus another.</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ziopparl</span> <span class="o">=</span> <span class="n">zmiopc</span><span class="o">.</span><span class="n">split_effects</span><span class="p">(</span><span class="n">ziop_JCR</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">ziopparl</span><span class="p">)</span>
+<p><a class="reference internal" href="api.html#zmiopc.split_effects" title="zmiopc.split_effects"><code class="xref py py-func docutils literal notranslate"><span class="pre">zmiopc.split_effects()</span></code></a> simulates data from ZiOP/ZiOPC and MiOP/MiOPC model results and computes changes in predicted probabilities when the value of a variable changes.
+This allows you to illustrate how the changes in the split-probit covariates affect the probablilities of being in one population versus another. The example below illustrates the marginal effects of the variable ‘gender_dum’ on the outcome variable in the ZiOPC model estimated in ths documentation.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ziopcgender</span> <span class="o">=</span> <span class="n">idcempy</span><span class="o">.</span><span class="n">split_effects</span><span class="p">(</span><span class="n">ziopc_tob</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nsims</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>        Z parliament 0  Z parliament 1
-0           0.990405        0.958839
-1           0.992943        0.965678
-2           0.982540        0.984868
-3           0.974472        0.961386
-4           0.973550        0.943025
-              ...             ...
-9995        0.981573        0.965662
-9996        0.990899        0.971891
-9997        0.988671        0.971410
-9998        0.995775        0.957148
-9999        0.984480        0.956248
-[10000 rows x 2 columns]
-</pre></div>
-</div>
-<p>The returned dataframe contains predicted probabilities when ‘parliament’ equals 0, and when ‘parliament’ equals 1.
+<p>The returned dataframe contains predicted probabilities when ‘gender_dum’ equals 0, and when ‘gender_dum’ equals 1.
 The box plots below illustrate the change in predicted probablities using the values from the ‘ziopparl’ dataframe.</p>
-<img alt="_images/ZiOP_Parliament.png" src="_images/ZiOP_Parliament.png" />
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ziopcgender</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="s1">&#39;False&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/ziopc_me.png" src="_images/ziopc_me.png" />
+</div>
+<div class="section" id="outcome-equation-predicted-probabilities">
+<h2>Outcome Equation Predicted Probabilities<a class="headerlink" href="#outcome-equation-predicted-probabilities" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">func:</dt>
+<dd class="field-odd"><p><cite>zmiopc.ordered_effects</cite> calculates the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities of the outcome variable in the MiOPC model estimated above when Xenophobia increases one standard deviation from its mean value.</p>
+</dd>
+</dl>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">xeno</span> <span class="o">=</span> <span class="n">zmiopc</span><span class="o">.</span><span class="n">ordered_effects</span><span class="p">(</span><span class="n">miopc_EU</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">nsims</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">)</span>
+<span class="n">xeno</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="s1">&#39;False&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/MiOPC_Xenophobia.png" src="_images/MiOPC_Xenophobia.png" />
 </div>
 </div>
 
@@ -392,16 +431,17 @@ The box plots below illustrate the change in predicted probablities using the va
 <li><a class="reference internal" href="#estimating-the-op-model">Estimating the OP Model</a></li>
 <li><a class="reference internal" href="#the-vuong-test">The Vuong Test</a></li>
 <li><a class="reference internal" href="#split-equtation-predicted-probablities">Split Equtation Predicted Probablities</a></li>
+<li><a class="reference internal" href="#outcome-equation-predicted-probabilities">Outcome Equation Predicted Probabilities</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
-                        title="previous chapter">Package Documentation: zmiopc</a></p>
+                        title="previous chapter">Package Documentation: IDCeMPy</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="imnl_tutorial.html"
-                        title="next chapter">&lt;no title&gt;</a></p>
+                        title="next chapter">imnl Module</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -433,10 +473,10 @@ The box plots below illustrate the change in predicted probablities using the va
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="imnl_tutorial.html" title="&lt;no title&gt;"
+          <a href="imnl_tutorial.html" title="imnl Module"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Package Documentation: zmiopc"
+          <a href="index.html" title="Package Documentation: IDCeMPy"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">IDCeMPy  documentation</a> &#187;</li> 
       </ul>

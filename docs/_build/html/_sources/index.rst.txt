@@ -1,6 +1,6 @@
 
 
-Package Documentation: zmiopc
+Package Documentation: IDCeMPy
 ==============================
 
 The zmiopc package implement mixture models for data in which the *ordinal* response variable is characterized by an *excessive* number of observations in one of the ordinal outcomes.
@@ -10,7 +10,7 @@ Guide
 ^^^^^
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 4
    :caption: Contents:
 
    ziopcpy_tutorial
