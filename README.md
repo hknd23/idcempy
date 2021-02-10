@@ -92,7 +92,7 @@ DAT= pd.read_csv(url)
 
 We now specify arrays of variable names (strings) X, Y, Z.
 
-```
+```python
 X = ['age', 'grade', 'gender']
 Y = ['cig_count']
 Z = ['age']
@@ -100,13 +100,13 @@ Z = ['age']
 
 In addition, we define an array of starting parameters before estimating the `ziopc` model.
 
-```
+```python
 pstart = np.array([.01, .01, .01, .01, .01, .01, .01, .01, .01, .01])
 ```
 
 The following line of code creates a ziopc regression object model.
 
-```
+```python
 ziopc_tob = ziopcpy.iopcmod('ziopc', pstartziopc, data, X, Y, Z, method='bfgs',
                     weights=1, offsetx=0, offsetz=0)
 ```
@@ -123,7 +123,7 @@ The results of this example are stored in a class (`ZiopcModel`) with the follow
 
 We, for example, can print out the covariate estimates, standard errors, *p* value and *t* statistics by typing:
 
-```
+```python
 print(ziopc_tobb.coefs)
 ```
 
@@ -149,17 +149,17 @@ rho                   -0.415770  0.074105  -5.610526  2.017123e-08  -0.561017  -
 
 Or the Akaike Information Criterion (AIC):
 
-```
+```python
 print(ziopc_tobb.AIC)
 ```
 
-```
+```python
 16061.716497590078
 ```
 
 `split_effects` creates a dataframe with values of the change in predicted probabilities of the outome variable when 'gender_dum' equals 0, and when 'gender_dum' equals 1. The box plots below illustrate the change in predicted probablities using the values from the 'ziopc' dataframe.
 
-```
+```python
 ziopcgender = idcempy.split_effects(ziopc_tob, 1)
 ziopcgender.plot.box(grid='False')
 ```
@@ -173,25 +173,26 @@ You can also use **IDCeMPy** to estimate "inflated" Ordered Probit models if you
 
 First, load the dataset.
 
-```
+```python
 url= 'https://github.com/hknd23/zmiopc/raw/main/data/EUKnowledge.dta'
 data= pd.read_stata(url)
-
 ```
+
 Now, define the lists with names of the covariates you would like to include in the split-stage (Z) and the second-stage (X) as well as the name of your "middle-inflated" outcome variable (Y).
 
-```
+```python
 Y = ["EU_support_ET"]
 X = ['Xenophobia', 'discuss_politics']
 Z = ['discuss_politics', 'EU_Know_obj']
 ```
+
 Run the model and print the results:
 
-```
+```python
 miopc_EU = ziopc.iopcmod('miopc', DAT, X, Y, Z)
 ```
 
-```
+```python
 print(miopc_EU.coefs)
 
                               Coef    SE  tscore     p   2.5%  97.5%
@@ -212,7 +213,7 @@ rho                         -0.707 0.106  -6.694 0.000 -0.914 -0.500
 
 `ordered_effects()` calculates the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities when Xenophobia increases one standard deviation from its mean value.
 
-```
+```python
 xeno = ziopc.ordered_effects(miopc_EU, 2, nsims=10000)
 xeno.plot.box(grid='False')
 ```
@@ -228,7 +229,7 @@ Data comes from Arceneaux and Kolodny ([2009](https://onlinelibrary.wiley.com/do
 
 We begin by importing the `bimnl` library and dataset.
 
-```
+```python
 from zmiopc import bimnl
 url= 'https://github.com/hknd23/zmiopc/raw/main/data/replicationdata.dta'
 data= pd.read_stata(url)
@@ -236,26 +237,26 @@ data= pd.read_stata(url)
 
 Define the outcome variable (y) covariates in the split-stage (z) and second-stage (x).
 
-```
+```python
 x = ['educ', 'party7', 'agegroup2']
 z = ['educ', 'agegroup2']
 y = ['vote_turn']
 ```
 
-```
+```python
 order = [0, 1, 2]
 inflatecat = "baseline"
 ```
 
 The following line of code estimates the "inflated" Multinomial Logit Model (iMNL).
 
-```
+```python
 imnl_2004vote = bimnl.imnlmod(data, x, y, z, order, inflatecat)
 ```
 
 Print the est
 
-```
+```python
                        Coef    SE  tscore     p    2.5%  97.5%
 Split-stage
 ----------------------
