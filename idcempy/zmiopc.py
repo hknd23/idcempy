@@ -16,19 +16,19 @@ class OpModel:
                  x_, yx_, yncat, xstr, ystr):
         """Store model results, goodness-of-fit tests, and other information.
 
-        :param llik: Log-Likelihood
-        :param coef: Model coefficients
-        :param aic: Model Akaike information criterion
-        :param vcov: Variance-Covariance matrix
+        :param llik: Log-Likelihood.
+        :param coef: Model coefficients.
+        :param aic: Model Akaike information criterion.
+        :param vcov: Variance-Covariance matrix.
             (optimized as inverted Hessian matrix)
-        :param data: Full dataset
-        :param ts: Cutpoints for ordered probit
-        :param xs: Ordered probit estimates (Betas)
-        :param yncat: Number of categories in the outcome variable
-        :param x_: X Data
-        :param yx_: Y (DV) data
-        :param xstr: list of strings for variable(s) names in the outcome stage (x)
-        :param ystr: list of strings for outcome variable name (y)
+        :param data: Full dataset.
+        :param ts: Cutpoints for ordered probit.
+        :param xs: Ordered probit estimates (Betas).
+        :param yncat: Number of categories in the outcome variable.
+        :param x_: X (Covariates) Data.
+        :param yx_: Y (Dependent Variable) data.
+        :param xstr: list of strings for variable(s) names in the outcome stage (x).
+        :param ystr: list of strings for outcome variable name (y).
         """
         self.llik = llik
         self.coefs = coef
@@ -51,23 +51,23 @@ class IopModel:
                  x_, yx_, z_, yncat, xstr, ystr, zstr):
         """Store model results, goodness-of-fit tests, and other information.
 
-        :param modeltype: Type of Iop Model (ZiOP or MiOP)
-        :param llik: Log-Likelihood
+        :param modeltype: Type of Iop Model (ziop or miop).
+        :param llik: Log-Likelihood.
         :param coef: Model coefficients
-        :param aic: Model Akaike information criterion
-        :param vcov: Variance-Covariance matrix
+        :param aic: Model Akaike information criterion.
+        :param vcov: Variance-Covariance matrix.
             (optimized as inverted Hessian matrix)
-        :param data: Full dataset
-        :param ts: Cutpoints for ordered probit
-        :param zs: Inflation stage estimates (Gammas)
-        :param xs: Ordered probit estimates (Betas)
-        :param yncat: Number of categories in the outcome variable
-        :param x_: X Data
-        :param yx_: Y (DV) data
-        :param z_: Z Data
-        :param xstr: list of strings for x names
-        :param ystr: list of strings for y names
-        :param zstr: list of strings for z names
+        :param data: Full dataset.
+        :param ts: Cutpoints for ordered probit.
+        :param zs: Inflation stage estimates (Gammas).
+        :param xs: Ordered probit estimates (Betas).
+        :param yncat: Number of categories in the Dependent Variable (DV).
+        :param x_: X Data.
+        :param yx_: Y (DV) data.
+        :param z_: Z Data.
+        :param xstr: list of strings for x names.
+        :param ystr: list of strings for y names.
+        :param zstr: list of strings for z names.
 
         """
         self.modeltype = modeltype
@@ -96,24 +96,24 @@ class IopCModel:
                  xstr, ystr, zstr):
         """Store model results, goodness-of-fit tests, and other information.
 
-        :param modeltype: Type of IopC Model (ZiOPC or MiOPC)
-        :param llik: Log-Likelihood
-        :param coef: Model coefficients
-        :param AIC: Model Akaike information criterion
-        :param vcov: Variance-Covariance matrix
+        :param modeltype: Type of IopC Model (ziopc or miopc).
+        :param llik: Log-Likelihood.
+        :param coef: Model coefficients.
+        :param AIC: Model Akaike information criterion.
+        :param vcov: Variance-Covariance matrix.
             (optimized as inverted Hessian matrix)
-        :param data: Full dataset
-        :param ts: Cutpoints for ordered probit
-        :param zs: Inflation stage estimates (Gammas)
-        :param xs: Ordered probit estimates (Betas)
-        :param rho: Rho
-        :param yncat: Number of DV categories
-        :param x_: X Data
-        :param yx_: Y (DV) data
-        :param z_: Z Data
-        :param xstr: list of strings for x names
-        :param ystr: list of strings for y names
-        :param zstr: list of strings for z names
+        :param data: Full dataset.
+        :param ts: Cutpoints for ordered probit.
+        :param zs: Inflation stage estimates (Gammas).
+        :param xs: Ordered probit estimates (Betas).
+        :param rho: Rho.
+        :param yncat: Number of categories in Dependent Variable (DV).
+        :param x_: X Data.
+        :param yx_: Y (DV) data.
+        :param z_: Z Data.
+        :param xstr: list of strings for x names.
+        :param ystr: list of strings for y names.
+        :param zstr: list of strings for z names.
         """
         self.modeltype = modeltype
         self.llik = llik
@@ -156,7 +156,7 @@ def op(pstart, x, y, data, weights, offsetx):
     """Calculate likelihood function for Ordered Probit Model.
 
     :param pstart: starting parameters.
-    :type pstart: numpy.ndarray or list
+    :type pstart: numpy.ndarray or list.
     :param x: Ordered stage variables.
     :type x: pandas.core.frame.DataFrame
     :param y: DV.
@@ -334,8 +334,8 @@ def ziopc(pstart, x, y, z, data, weights, offsetx, offsetz):
 
 def miop(pstart, x, y, z, data, weights, offsetx, offsetz):
     """
-    Likelihood function for Middle-inflated Model
-    Number of outcomes must be odd
+    Likelihood function for Middle-inflated Ordered Probit Model "without" correlated errors.
+    Number of outcomes must be odd.
 
     :param pstart: starting parameters.
     :type pstart: numpy.ndarray or list
@@ -402,7 +402,7 @@ def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
     :type pstart: numpy.ndarray or list
     :param x: Ordered stage variables.
     :type x: pandas.core.frame.DataFrame
-    :param y: DV.
+    :param y: Dependent Variable (DV).
     :type y: pandas.core.frame.DataFrame
     :param z: Inflation stage variables.
     :type z: pandas.core.frame.DataFrame
@@ -477,12 +477,12 @@ def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
 
 
 def opresults(model, data, x, y):
-    """Produce estimation results, part of :py:func:`opmod`.
+    """Produces estimation results, part of :py:func:`opmod`.
 
-    :param model: model object created from minimization
-    :param data: dataset
-    :param x: Independent variables
-    :param y: : Dependent Variable
+    :param model: model object created from minimization.
+    :param data: dataset.
+    :param x: Independent variables.
+    :param y: : Dependent Variable.
     """
     varlist = np.unique(y + x)
     dataset = data[varlist]
@@ -516,14 +516,14 @@ def opmod(data, x, y, pstart=None,
           method='BFGS', weights=1, offsetx=0):
     """Estimate Ordered Probit model and return :class:`OpModel` class object.
 
-    :param pstart: starting parameters
-    :param data: full dataset
+    :param pstart: starting parameters.
+    :param data: full dataset.
     :type x: list of str
-    :param y: DV.
+    :param y: Dependent Variable (DV).
     :type y: list of str
-    :param method: method for optimization, default 'BFGS'
-    :param weights: weights
-    :param offsetx: offset for X
+    :param method: method for optimization, default 'BFGS'.
+    :param weights: weights.
+    :param offsetx: offset for X.
     :return: OpModel
     """
     varlist = np.unique(y + x)
@@ -546,12 +546,12 @@ def opmod(data, x, y, pstart=None,
 def iopresults(model, data, x, y, z, modeltype):
     """Produce estimation results, part of :py:func:`iopmod`.
 
-    :param model: model object created from minimization
-    :param data: dataset
-    :param x: Ordered stage variables
-    :param y: : DV
-    :param z: : Inflation stage variables
-    :param modeltype: : ZiOP or MiOP model
+    :param model: model object created from minimization.
+    :param data: dataset.
+    :param x: Ordered stage variables.
+    :param y: : Dependent Variable (DV).
+    :param z: : Inflation stage variables.
+    :param modeltype: : 'ziop' or 'miop' model.
     """
     varlist = np.unique(y + z + x)
     dataset = data[varlist]
@@ -592,12 +592,12 @@ def iopresults(model, data, x, y, z, modeltype):
 def iopcresults(model, data, x, y, z, modeltype):
     """Produce estimation results, part of :py:func:`ziopc  mod`.
 
-    :param model: model object created from minimization
-    :param data: dataset
-    :param x: Ordered stage variables
-    :param y: : DV
-    :param z: : Inflation stage variables
-    :param modeltype: : ZiOPC or MiOPC model
+    :param model: model object created from minimization.
+    :param data: dataset.
+    :param x: Ordered stage variables.
+    :param y: : Dependent Variable (DV).
+    :param z: : Inflation stage variables.
+    :param modeltype: : Type of model. Options are: 'ziopc' or 'miopc'
     """
     varlist = np.unique(y + z + x)
     dataset = data[varlist]
@@ -641,18 +641,18 @@ def iopmod(modeltype, data, x, y, z, pstart=None,
            method='BFGS', weights=1, offsetx=0, offsetz=0):
     """Estimate ZiOP model and return :class:`IopModel` class object as output.
 
-    :param pstart: starting parameters
-    :param data: full dataset
-    :type x: list of str
-    :param y: DV.
-    :type y: list of str
+    :param pstart: starting parameters.
+    :param data: full dataset.
+    :type x: list of str.
+    :param y: Dependent Variable (DV).
+    :type y: list of str.
     :param z: Inflation stage variables.
-    :type z: list of str
-    :param modeltype: must be one of "ziop" or 'miop'
-    :param method: method for optimization, default 'BFGS'
-    :param weights: weights
-    :param offsetx: offset for X
-    :param offsetz: offset for Z
+    :type z: list of str.
+    :param modeltype: must be one of "ziop" or 'miop'.
+    :param method: method for optimization, default 'BFGS'.
+    :param weights: weights.
+    :param offsetx: offset for X.
+    :param offsetz: offset for Z.
     :return: IopModel
     """
 
@@ -698,18 +698,18 @@ def iopcmod(modeltype, data, x, y, z, pstart=None,
     """Estimate an iOP model (ZiOP or MiOP) and return :class:`IopcModel`
     class object as output.
 
-    :param pstart: starting parameters
-    :param data: full dataset
+    :param pstart: starting parameters.
+    :param data: dataset.
     :type x: list of str
-    :param y: DV.
+    :param y: Dependent Variable (DV).
     :type y: list of str
     :param z: Inflation stage variables.
     :type z: list of str
-    :param modeltype: must be one of "ziopc" or 'miopc'
+    :param modeltype: Type of model to be estimated. Must be one of "ziopc" or 'miopc'.
     :param method: method for optimization, default 'BFGS'
-    :param weights: weights
-    :param offsetx: offset for X
-    :param offsetz: offset for Z
+    :param weights: weights.
+    :param offsetx: offset for X.
+    :param offsetz: offset for Z.
     :return: IopCModel
     """
 
@@ -896,8 +896,8 @@ def iopcfit(model):
 def vuong_opiop(opmodel, iopmodel):
     """Run the Vuong test to compare the performance of the OP and iOP model.
 
-    :param opmodel: The OP model from :class:`OpModel`
-    :param iopmodel: The ZiOP model from :class:`IopModel`
+    :param opmodel: The OP model from :class:`OpModel`.
+    :param iopmodel: The ZiOP model from :class:`IopModel`.
     :return: vuongopiop: Result of the Vuong test
     """
     n1 = len(opmodel.data)
@@ -946,8 +946,8 @@ def vuong_opiop(opmodel, iopmodel):
 def vuong_opiopc(opmodel, iopcmodel):
     """Run the Vuong test to compare the performance of the OP and iOPC model.
 
-    :param opmodel: The OP model from :class:`OpModel`
-    :param iopcmodel: The iOPC model from :class:`IopCModel`
+    :param opmodel: The OP model from :class:`OpModel`.
+    :param iopcmodel: The iOPC model from :class:`IopCModel`.
     :return: vuongopiopc: Result of the Vuong test
     """
     n1 = len(opmodel.data)
@@ -998,7 +998,7 @@ def split_effects(model, inflvar, nsims=10000):
     """Calculate the changes in probability of being 0 in the split-probit
     stage.
 
-    This function calculate predicted probabilities
+    This function calculates the predicted probabilities
     when there is change in value of a variable in the split-probit equation.
     The chosen dummy variable is changed from 0 to 1,
     and chosen numerical variable is mean value + 1 standard deviation.
@@ -1006,11 +1006,11 @@ def split_effects(model, inflvar, nsims=10000):
     (Note: the current version of the function
     recognize ordinal variables as numerical).
 
-    :param model: :class:`IopModel` or :class:`IopCModel`
+    :param model: :class:`IopModel` or :class:`IopCModel`.
     :param inflvar: int representing the location of variable
-        in the split-probit equation
+        in the split-probit equation.
         (attribute .inflate of :class:`IopModel` or :class:`IopCModel`)
-    :param nsims: number of simulated observations, default to 10000
+    :param nsims: number of simulated observations, default to 10000.
     :return: changeprobs: a dataframe of the predicted
         probabilities when there is change in the variable (1)
         versus original values (0).
@@ -1054,7 +1054,7 @@ def split_effects(model, inflvar, nsims=10000):
 def ordered_effects(model, ordvar, nsims=10000):
     """Calculate the changes in probability in each outcome in OP stage.
 
-    This function calculate predicted probabilities
+    This function calculates predicted probabilities
     when there is change in value of a variable
     in the ordered probit equation.
     The chosen dummy variable is changed from 0 to 1,
@@ -1063,11 +1063,11 @@ def ordered_effects(model, ordvar, nsims=10000):
     (Note: the current version of the function
     recognize ordinal variables as numerical).
 
-    :param model: :class:`IopModel` or :class:`IopCModel`
+    :param model: :class:`IopModel` or :class:`IopCModel`.
     :param ordvar: int representing the location of variable
-        in the ordered probit equation
+        in the ordered probit equation.
         (attribute .ordered of :class:`IopModel` or :class:`IopCModel`)
-    :param nsims: number of simulated observations, default to 10000
+    :param nsims: number of simulated observations, default to 10000.
     :return: changeprobs: a dataframe of the predicted
         probabilities when there is change in the variable for each outcome (1)
         versus original values (0).
