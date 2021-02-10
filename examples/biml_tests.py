@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from zmiopc import bimnl
+from zmiopc import imnl
 
 DAT = pd.read_stata(
     "C:/Users/Nguyen/Documents/Replication II/Replication "
@@ -28,20 +28,20 @@ binflatecat = "baseline"
 sinflatecat = "second"
 tinflatecat = "third"
 
-model = bimnl.imnlmod(DAT, x, y, z, order, binflatecat,
+model = imnl.imnlmod(DAT, x, y, z, order, binflatecat,
+                     )
+models = imnl.imnlmod(DAT, x, y, z, orders, binflatecat,
                       )
-models = bimnl.imnlmod(DAT, x, y, z, orders, binflatecat,
-                       )
 
-smodel = bimnl.imnlmod(DAT, x, y, z, second_order, sinflatecat,
+smodel = imnl.imnlmod(DAT, x, y, z, second_order, sinflatecat,
+                      method='BFGS')
+smodels = imnl.imnlmod(DAT, x, y, z, second_order2, sinflatecat,
                        method='BFGS')
-smodels = bimnl.imnlmod(DAT, x, y, z, second_order2, sinflatecat,
-                        method='BFGS')
 
-tmodel = bimnl.imnlmod(DAT, x, y, z, torder, tinflatecat,
+tmodel = imnl.imnlmod(DAT, x, y, z, torder, tinflatecat,
+                      method='BFGS')
+tmodels = imnl.imnlmod(DAT, x, y, z, torders, tinflatecat,
                        method='BFGS')
-tmodels = bimnl.imnlmod(DAT, x, y, z, torders, tinflatecat,
-                        method='BFGS')
 
 print(model.coefs)
 print(models.coefs)
@@ -53,5 +53,5 @@ y2 = ['vote_turn']
 order = [0, 1, 2]
 orders = [0, 2, 1]
 
-model_small = bimnl.imnlmod(DAT, x2, y2, z2, order, binflatecat)
-models_small = bimnl.imnlmod(DAT, x2, y2, z2, orders, binflatecat)
+model_small = imnl.imnlmod(DAT, x2, y2, z2, order, binflatecat)
+models_small = imnl.imnlmod(DAT, x2, y2, z2, orders, binflatecat)

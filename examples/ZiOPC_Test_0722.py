@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 # import this after importing all other packages.
-from zmiopc import ziopc
+from zmiopc import zmiopc
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -26,33 +26,33 @@ pstartziopc = np.array([-1.31, .32, 2.5, -.21,
 pstartx = np.array(
     [-0.77, 0.90, 18.78, -2, .2, 0.04, -0.09, 0.26, 1.70, -0.42, -.1])
 
-ziopc_JCR = ziopc.iopcmod('ziopc',
-                          data, X, Y, Z, pstart=pstartziopc, method='bfgs',
-                          weights=1,
-                          offsetx=0, offsetz=0)
+ziopc_JCR = zmiopc.iopcmod('ziopc',
+                           data, X, Y, Z, pstart=pstartziopc, method='bfgs',
+                           weights=1,
+                           offsetx=0, offsetz=0)
 
-ziop_JCR = ziopc.iopmod('ziop',
-                        data, X, Y, Z, pstart=pstartziop,
-                        method='bfgs', weights=1,
-                        offsetx=0,
-                        offsetz=0)
+ziop_JCR = zmiopc.iopmod('ziop',
+                         data, X, Y, Z, pstart=pstartziop,
+                         method='bfgs', weights=1,
+                         offsetx=0,
+                         offsetz=0)
 
-ziopc_JCR_test = ziopc.iopcmod('ziopc',  data, X, Y, Z)
+ziopc_JCR_test = zmiopc.iopcmod('ziopc', data, X, Y, Z)
 
-ziop_JCR = ziopc.iopmod('ziop', data, X, Y, Z)
+ziop_JCR = zmiopc.iopmod('ziop', data, X, Y, Z)
 
-ziop_JCRsmall = ziopc.iopmod('ziop', pstartziopsmall,
-                             data, Xsmall, Y, Z, method='bfgs', weights=1,
-                             offsetx=0, offsetz=0)
+ziop_JCRsmall = zmiopc.iopmod('ziop', pstartziopsmall,
+                              data, Xsmall, Y, Z, method='bfgs', weights=1,
+                              offsetx=0, offsetz=0)
 
 # ziopc_JCR.coefs.to_csv("ZIOPC_0131.csv")
 # ziop_JCR.coefs.to_csv("ZIOP_0131.csv")
 
 
-fitttedziopc = ziopc.iopcfit(ziopc_JCR)
-fitttedziop = ziopc.iopfit(ziop_JCR)
-fitttedmiopc = ziopc.iopcfit(miopc_JCR)
-fitttedmiop = ziopc.iopfit(miop_JCR)
+fitttedziopc = zmiopc.iopcfit(ziopc_JCR)
+fitttedziop = zmiopc.iopfit(ziop_JCR)
+fitttedmiopc = zmiopc.iopcfit(miopc_JCR)
+fitttedmiop = zmiopc.iopfit(miop_JCR)
 
 print(ziopc_JCR.coefs)
 print(ziop_JCR.coefs)
@@ -76,7 +76,7 @@ DAT = pd.read_stata("C:/Users/Nguyen/Box/Summer 20/bp_exact_for_analysis.dta")
 X = ['logGDPpc', 'parliament', 'disaster', 'major_oil', 'major_primary']
 Y = ['rep_civwar_DV']
 data = DAT
-JCR_OP = ziopc.opmod(pstartop, data, X, Y, method='bfgs', weights=1, offsetx=0)
+JCR_OP = zmiopc.opmod(pstartop, data, X, Y, method='bfgs', weights=1, offsetx=0)
 
 # Plots
 
@@ -89,12 +89,12 @@ data['rep_civwar_DV'] = data['rep_civwar_DV'].astype(int)
 sns.catplot(x='rep_civwar_DV', kind="count", palette="hls", data=data)
 
 # Vuong test
-ziopc.vuong_opiop(JCR_OP, ziop_JCR)
-ziopc.vuong_opiopc(JCR_OP, ziopc_JCR)
+zmiopc.vuong_opiop(JCR_OP, ziop_JCR)
+zmiopc.vuong_opiopc(JCR_OP, ziopc_JCR)
 
 # Box plots for predicted probabilities
-ziopparl = ziopc.split_effects(ziop_JCR, 2)
-ziopcparl = ziopc.split_effects(ziopc_JCR, 2)
+ziopparl = zmiopc.split_effects(ziop_JCR, 2)
+ziopcparl = zmiopc.split_effects(ziopc_JCR, 2)
 
 ziopparl.plot.box(grid='False')
 ziopcparl.plot.box(grid='False')
@@ -132,13 +132,13 @@ Z = ['discuss_politics', 'rural', 'female', 'age', 'student',
 b = np.repeat(.01, 30)
 bc = np.repeat(.01, 31)
 
-MIOPEUx = ziopc.iopmod('miop', b, datasetnew, X, Y, Z, method='bfgs', weights=1,
-                       offsetx=0, offsetz=0)
-MIOPcEUx = ziopc.iopcmod('miopc', bc, datasetnew, X, Y, Z, method='bfgs',
-                         weights=1, offsetx=0, offsetz=0)
+MIOPEUx = zmiopc.iopmod('miop', b, datasetnew, X, Y, Z, method='bfgs', weights=1,
+                        offsetx=0, offsetz=0)
+MIOPcEUx = zmiopc.iopcmod('miopc', bc, datasetnew, X, Y, Z, method='bfgs',
+                          weights=1, offsetx=0, offsetz=0)
 
-fitttedmiop = ziopc.iopfit(MIOPEUx)
-fitttedmiopc = ziopc.iopcfit(MIOPcEUx)
+fitttedmiop = zmiopc.iopfit(MIOPEUx)
+fitttedmiopc = zmiopc.iopcfit(MIOPcEUx)
 
 fitttedmiopc = ziopcfit(ziopc_JCR)
 
