@@ -9,8 +9,6 @@
 [![Downloads](https://pepy.tech/badge/ziopcpy)](https://pepy.tech/project/ziopcpy)
 [![Project Status: Active â€“ The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
-[![GitHub Super-Linter](https://github.com/hknd23/idcempy/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
-
 <!-- badges: end -->
 
 **IDCeMPy** is a Python package which:
@@ -136,7 +134,7 @@ print(ziopc_tobb.AIC)
 ziopcgender = idcempy.split_effects(ziopc_tob, 1)
 ziopcgender.plot.box(grid='False')
 ```
-![alt text](
+![alt text](https://github.com/hknd23/idcempy/blob/main/graphics/ziopc_me.png?raw=true)
 
 ### Example 2: "Middle-inflated" Ordered Probit Models with Correlated Errors (MiOPC)
 You can also use **IDCeMPy** to estimate "inflated" Ordered Probit models if your outcome variable presents inflation in the "middle" category. For the sake of consistency, we present below the code needed to estimate a "Middle-inflated" Ordered Probit Model with correlated errors. Data fot this example comes from Elgün and Tillman ([2007](https://journals.sagepub.com/doi/10.1177/1065912907305684)).   
