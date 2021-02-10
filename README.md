@@ -134,7 +134,7 @@ print(ziopc_tobb.AIC)
 ziopcgender = idcempy.split_effects(ziopc_tob, 1)
 ziopcgender.plot.box(grid='False')
 ```
-<img src="https://github.com/hknd23/idcempy/blob/main/graphics/ziopc_me.png?raw=true" width="300" height="300" />
+<img src="https://github.com/hknd23/idcempy/blob/main/graphics/ziopc_me.png?raw=true" width="500" height="300" />
 
 ### Example 2: "Middle-inflated" Ordered Probit Models with Correlated Errors (MiOPC)
 You can also use **IDCeMPy** to estimate "inflated" Ordered Probit models if your outcome variable presents inflation in the "middle" category. For the sake of consistency, we present below the code needed to estimate a "Middle-inflated" Ordered Probit Model with correlated errors. Data fot this example comes from Elgün and Tillman ([2007](https://journals.sagepub.com/doi/10.1177/1065912907305684)).   
