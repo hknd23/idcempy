@@ -1,7 +1,7 @@
 Tutorial for Estimating ZiOP Model
 ==================================
 
-The ziopcpy package contains functions to estimate "zero-inflated" ordered probit (ZiOP) models (ziop).
+The zmiopc package contains functions to estimate "zero-inflated" ordered probit (ZiOP) models (ziop).
 
 To illustrate its functionality, we use a dataset extracted from Besley and Persson (	`2009 <https://www.aeaweb.org/articles?id=10.1257/aer.99.2.292>`__). They use an Ordered Logit model to analyze the relationship between a number of economic and political covariates and the level of political violence. The outcome variable in our example is *'rep_civwar_DV'*. It measures the level of *Political Violence*, which is coded as follows:
 
@@ -43,9 +43,9 @@ The following code shows how to estimate the ZiOP model in Python:
   import pandas as pd
   import urllib
   #Import pandas and urllib to read data from url
-  from ziopcpy import ziopcpy
+  from  import zmiopc
   #Import data
-  url='https://github.com/hknd23/ziopcpy/raw/master/data/bp_exact_for_analysis.dta'
+  url='https://github.com/hknd23/zmiopc/raw/master/data/bp_exact_for_analysis.dta'
   data=pd.read_stata(url)
 
   # Specify list of variable names (strings) X,Y,Z:
@@ -57,12 +57,12 @@ The following code shows how to estimate the ZiOP model in Python:
   pstartziop=np.array( [-1.31, .32, 2.5, -.21,.2, -0.2, -0.4, 0.2,.9,-.4])
 
   # Model estimation:
-  ziop_JCR= ziopcpy.ziopmod(pstartziop, data, X, Y, Z,method='bfgs', weights= 1,offsetx= 0, offsetz=0)
+  ziop_JCR= zmiopc.ziopmod(pstartziop, data, X, Y, Z,method='bfgs', weights= 1,offsetx= 0, offsetz=0)
 
   # See estimates:
   print(ziop_JCR.coefs)
 
-:class:`ziopcpy.ZiopModel` stores results from model estimation and other information.
+:class:`zmiopc.ZiopModel` stores results from model estimation and other information.
 
 Results from the model:
 
@@ -92,7 +92,7 @@ Use print(ziop_JCR.coefs) to see model results:
   X major_oil       1.706935  0.299351     1.120208   2.293663
   X major_primary  -0.422205  0.263260    -0.938194   0.093785
 
-:class:`ziopcpy.ZiopModel` also stores information such as log-likelihood, AIC, and Variance-Covariance matrix
+:class:`zmiopc.ZiopModel` also stores information such as log-likelihood, AIC, and Variance-Covariance matrix
 
 .. testcode::
 
@@ -102,7 +102,7 @@ Use print(ziop_JCR.coefs) to see model results:
 
 
 To extract predicted probabilities from the model:
-:func:`ziopcpy.ziopfit` returns :class:`ziopcpy.FittedVals` containing fitted probablities.
+:func:`zmiopc.ziopfit` returns :class:`zmiopc.FittedVals` containing fitted probablities.
 
 .. testcode::
 
@@ -119,12 +119,12 @@ To extract predicted probabilities from the model:
        [0.97957951, 0.0150263 , 0.00539419],
        [0.98114903, 0.01386849, 0.00498248]])
 
-The Vuong Test with a v statistic can be performed to compare the performance of the ZiOP model versus the standard Ordered Probit (OP) model using :func:`ziopcpy.vuong_opziop`.
+The Vuong Test with a v statistic can be performed to compare the performance of the ZiOP model versus the standard Ordered Probit (OP) model using :func:`zmiopc.vuong_opziop`.
 The OP and ZiOP must have the same number of observations, and the OP must have the same number of covariates as ZiOP's OP stage. (see :doc:`op_tutorial` for details on fitting the OP model)
 
 .. testcode::
 
-  ziopcpy.vuong_opziop(JCR_OP, ziop_JCR)
+  zmiopc.vuong_opziop(JCR_OP, ziop_JCR)
 
 .. testoutput::
 

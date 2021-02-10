@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Tutorial for Estimating ZiOP Model &#8212; ZiopcPy  documentation</title>
+    <title>Tutorial for Estimating ZiOP Model &#8212; IDCeMPy  documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -28,7 +28,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ZiopcPy  documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">IDCeMPy  documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -39,7 +39,7 @@
             
   <div class="section" id="tutorial-for-estimating-ziop-model">
 <h1>Tutorial for Estimating ZiOP Model<a class="headerlink" href="#tutorial-for-estimating-ziop-model" title="Permalink to this headline">¶</a></h1>
-<p>The ziopcpy package contains functions to estimate “zero-inflated” ordered probit (ZiOP) models (ziop).</p>
+<p>The zmiopc package contains functions to estimate “zero-inflated” ordered probit (ZiOP) models (ziop).</p>
 <p>To illustrate its functionality, we use a dataset extracted from Besley and Persson (   <a class="reference external" href="https://www.aeaweb.org/articles?id=10.1257/aer.99.2.292">2009</a>). They use an Ordered Logit model to analyze the relationship between a number of economic and political covariates and the level of political violence. The outcome variable in our example is <em>‘rep_civwar_DV’</em>. It measures the level of <em>Political Violence</em>, which is coded as follows:</p>
 <ul class="simple">
 <li><p>0: Peace</p></li>
@@ -67,9 +67,9 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">urllib</span>
 <span class="c1">#Import pandas and urllib to read data from url</span>
-<span class="kn">from</span> <span class="nn">ziopcpy</span> <span class="kn">import</span> <span class="n">ziopcpy</span>
+<span class="kn">from</span>  <span class="nn">import</span> <span class="n">zmiopc</span>
 <span class="c1">#Import data</span>
-<span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://github.com/hknd23/ziopcpy/raw/master/data/bp_exact_for_analysis.dta&#39;</span>
+<span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://github.com/hknd23/zmiopc/raw/master/data/bp_exact_for_analysis.dta&#39;</span>
 <span class="n">data</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">read_stata</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 
 <span class="c1"># Specify list of variable names (strings) X,Y,Z:</span>
@@ -81,13 +81,13 @@
 <span class="n">pstartziop</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.31</span><span class="p">,</span> <span class="o">.</span><span class="mi">32</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="o">-.</span><span class="mi">21</span><span class="p">,</span><span class="o">.</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span><span class="o">.</span><span class="mi">9</span><span class="p">,</span><span class="o">-.</span><span class="mi">4</span><span class="p">])</span>
 
 <span class="c1"># Model estimation:</span>
-<span class="n">ziop_JCR</span><span class="o">=</span> <span class="n">ziopcpy</span><span class="o">.</span><span class="n">ziopmod</span><span class="p">(</span><span class="n">pstartziop</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;bfgs&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">offsetx</span><span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">offsetz</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ziop_JCR</span><span class="o">=</span> <span class="n">zmiopc</span><span class="o">.</span><span class="n">ziopmod</span><span class="p">(</span><span class="n">pstartziop</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;bfgs&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">offsetx</span><span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">offsetz</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="c1"># See estimates:</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">ziop_JCR</span><span class="o">.</span><span class="n">coefs</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference internal" href="api.html#ziopcpy.ZiopModel" title="ziopcpy.ZiopModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ziopcpy.ZiopModel</span></code></a> stores results from model estimation and other information.</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">zmiopc.ZiopModel</span></code> stores results from model estimation and other information.</p>
 <p>Results from the model:</p>
 <p>The following message will appear when the model finishes converging</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Warning: Desired error not necessarily achieved due to precision loss.
@@ -111,14 +111,14 @@ X major_oil       1.706935  0.299351     1.120208   2.293663
 X major_primary  -0.422205  0.263260    -0.938194   0.093785
 </pre></div>
 </div>
-<p><a class="reference internal" href="api.html#ziopcpy.ZiopModel" title="ziopcpy.ZiopModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ziopcpy.ZiopModel</span></code></a> also stores information such as log-likelihood, AIC, and Variance-Covariance matrix</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">zmiopc.ZiopModel</span></code> also stores information such as log-likelihood, AIC, and Variance-Covariance matrix</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ziop_JCR</span><span class="o">.</span><span class="n">llik</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">ziop_JCR</span><span class="o">.</span><span class="n">AIC</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">ziop_JCR</span><span class="o">.</span><span class="n">vcov</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>To extract predicted probabilities from the model:
-<a class="reference internal" href="api.html#ziopcpy.ziopfit" title="ziopcpy.ziopfit"><code class="xref py py-func docutils literal notranslate"><span class="pre">ziopcpy.ziopfit()</span></code></a> returns <a class="reference internal" href="api.html#ziopcpy.FittedVals" title="ziopcpy.FittedVals"><code class="xref py py-class docutils literal notranslate"><span class="pre">ziopcpy.FittedVals</span></code></a> containing fitted probablities.</p>
+<code class="xref py py-func docutils literal notranslate"><span class="pre">zmiopc.ziopfit()</span></code> returns <a class="reference internal" href="api.html#zmiopc.FittedVals" title="zmiopc.FittedVals"><code class="xref py py-class docutils literal notranslate"><span class="pre">zmiopc.FittedVals</span></code></a> containing fitted probablities.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">fitttedziop</span> <span class="o">=</span> <span class="n">ziopc</span><span class="o">.</span><span class="n">ziopfit</span><span class="p">(</span><span class="n">ziop_JCR</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">fitttedziopc</span><span class="o">.</span><span class="n">responsefull</span><span class="p">)</span>
 </pre></div>
@@ -132,9 +132,9 @@ X major_primary  -0.422205  0.263260    -0.938194   0.093785
      [0.98114903, 0.01386849, 0.00498248]])
 </pre></div>
 </div>
-<p>The Vuong Test with a v statistic can be performed to compare the performance of the ZiOP model versus the standard Ordered Probit (OP) model using <a class="reference internal" href="api.html#ziopcpy.vuong_opziop" title="ziopcpy.vuong_opziop"><code class="xref py py-func docutils literal notranslate"><span class="pre">ziopcpy.vuong_opziop()</span></code></a>.
+<p>The Vuong Test with a v statistic can be performed to compare the performance of the ZiOP model versus the standard Ordered Probit (OP) model using <code class="xref py py-func docutils literal notranslate"><span class="pre">zmiopc.vuong_opziop()</span></code>.
 The OP and ZiOP must have the same number of observations, and the OP must have the same number of covariates as ZiOP’s OP stage. (see <a class="reference internal" href="op_tutorial.html"><span class="doc">Tutorial for Estimating OP Model</span></a> for details on fitting the OP model)</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">ziopcpy</span><span class="o">.</span><span class="n">vuong_opziop</span><span class="p">(</span><span class="n">JCR_OP</span><span class="p">,</span> <span class="n">ziop_JCR</span><span class="p">)</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">zmiopc</span><span class="o">.</span><span class="n">vuong_opziop</span><span class="p">(</span><span class="n">JCR_OP</span><span class="p">,</span> <span class="n">ziop_JCR</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-4.909399264831751
@@ -179,11 +179,11 @@ The OP and ZiOP must have the same number of observations, and the OP must have 
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ZiopcPy  documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">IDCeMPy  documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2020, Nguyen Huynh.
+        &#169; Copyright 2021, Nguyen Huynh.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
     </div>
   </body>
