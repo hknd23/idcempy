@@ -8,7 +8,7 @@ import sys
 from os import path
 
 current_dir = os.path.dirname(__file__)
-target_dir = os.path.abspath(os.path.join(current_dir, "../ziopcpy"))
+target_dir = os.path.abspath(os.path.join(current_dir, "../idcempy"))
 
 sys.path.insert(0, target_dir)
 # check if dir is correct and list all files
@@ -34,8 +34,8 @@ except ImportError:
     print "no scipy"
 # -- Project information -----------------------------------------------------
 
-project = 'ZiopcPy'
-copyright = '2020, Nguyen Huynh'
+project = 'IDCeMPy'
+copyright = '2021, Nguyen Huynh'
 author = 'Nguyen Huynh'
 # -- General configuration ---------------------------------------------------
 

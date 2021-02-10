@@ -1,0 +1,331 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>imnl &#8212; IDCeMPy  documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">IDCeMPy  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for imnl</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Classes and Functions for the biml module.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="c1"># ZiOPC model converges extremely</span>
+<span class="c1"># faster with import * rather than import as np.</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+
+
+<div class="viewcode-block" id="BimnlModel"><a class="viewcode-back" href="../api.html#imnl.BimnlModel">[docs]</a><span class="k">class</span> <span class="nc">BimnlModel</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Store model results from :py:func:`imnlmod`.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modeltype</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">inflatecat</span><span class="p">,</span> <span class="n">llik</span><span class="p">,</span>
+                 <span class="n">coef</span><span class="p">,</span> <span class="n">aic</span><span class="p">,</span> <span class="n">vcov</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">zs</span><span class="p">,</span>
+                 <span class="n">x_</span><span class="p">,</span> <span class="n">yx_</span><span class="p">,</span> <span class="n">z_</span><span class="p">,</span> <span class="n">ycatu</span><span class="p">,</span> <span class="n">xstr</span><span class="p">,</span> <span class="n">ystr</span><span class="p">,</span> <span class="n">zstr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Store model results, goodness-of-fit tests, and other information.</span>
+
+<span class="sd">        :param modeltype: Type of IMNL Model (bimnl3)</span>
+<span class="sd">        :param reference: Order of categories. The order category will be</span>
+<span class="sd">        the first element</span>
+<span class="sd">        :param llik: Log-Likelihood</span>
+<span class="sd">        :param coef: Model coefficients</span>
+<span class="sd">        :param aic: Model Akaike information criterion</span>
+<span class="sd">        :param vcov: Variance-Covariance matrix</span>
+<span class="sd">            (optimized as inverted Hessian matrix)</span>
+<span class="sd">        :param data: Full dataset</span>
+<span class="sd">        :param zs: Inflation stage estimates (Gammas)</span>
+<span class="sd">        :param xs: Ordered probit estimates (Betas)</span>
+<span class="sd">        :param ycatu: Number of DV categories</span>
+<span class="sd">        :param x_: X Data</span>
+<span class="sd">        :param yx_: Y (DV) data</span>
+<span class="sd">        :param z_: Z Data</span>
+<span class="sd">        :param xstr: list of string for x names</span>
+<span class="sd">        :param ystr: list of string for y names</span>
+<span class="sd">        :param zstr: list of string for z names</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modeltype</span> <span class="o">=</span> <span class="n">modeltype</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reference</span> <span class="o">=</span> <span class="n">reference</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inflatecat</span> <span class="o">=</span> <span class="n">inflatecat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">llik</span> <span class="o">=</span> <span class="n">llik</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coefs</span> <span class="o">=</span> <span class="n">coef</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AIC</span> <span class="o">=</span> <span class="n">aic</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vcov</span> <span class="o">=</span> <span class="n">vcov</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inflatecat</span> <span class="o">=</span> <span class="n">zs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multinom</span> <span class="o">=</span> <span class="n">xs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ycat</span> <span class="o">=</span> <span class="n">ycatu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">x_</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Y</span> <span class="o">=</span> <span class="n">yx_</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Z</span> <span class="o">=</span> <span class="n">z_</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xstr</span> <span class="o">=</span> <span class="n">xstr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ystr</span> <span class="o">=</span> <span class="n">ystr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zstr</span> <span class="o">=</span> <span class="n">zstr</span></div>
+
+
+<div class="viewcode-block" id="bimnl3"><a class="viewcode-back" href="../api.html#imnl.bimnl3">[docs]</a><span class="k">def</span> <span class="nf">bimnl3</span><span class="p">(</span><span class="n">pstart</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">reference</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Likelihood function for the baseline inflated three-category MNL model.</span>
+
+<span class="sd">    :param pstart: starting parameters</span>
+<span class="sd">    :param x2: X covariates</span>
+<span class="sd">    :param x3: X covariates (should be identical to x2</span>
+<span class="sd">    :param y: Dependent Variable</span>
+<span class="sd">    :param z: Inflation stage covariates</span>
+<span class="sd">    :param reference: order of categories (first category-baseline is inflated)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">b2</span> <span class="o">=</span> <span class="n">pstart</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">columns</span><span class="p">):(</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">x2</span><span class="o">.</span><span class="n">columns</span><span class="p">))]</span>
+    <span class="n">b3</span> <span class="o">=</span> <span class="n">pstart</span><span class="p">[(</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">x2</span><span class="o">.</span><span class="n">columns</span><span class="p">)):(</span><span class="nb">len</span><span class="p">(</span><span class="n">pstart</span><span class="p">))]</span>
+    <span class="n">gamma</span> <span class="o">=</span> <span class="n">pstart</span><span class="p">[</span><span class="mi">0</span><span class="p">:(</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">columns</span><span class="p">))]</span>
+    <span class="n">xb2</span> <span class="o">=</span> <span class="n">x2</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b2</span><span class="p">)</span>
+    <span class="n">xb3</span> <span class="o">=</span> <span class="n">x3</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b3</span><span class="p">)</span>
+    <span class="n">zg</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span>
+    <span class="n">pz</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">zg</span><span class="p">))</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">xb2</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">xb3</span><span class="p">))</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">xb2</span><span class="p">)</span>
+    <span class="n">p3</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">xb3</span><span class="p">)</span>
+    <span class="n">lik</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pz</span><span class="p">)</span> <span class="o">+</span> <span class="n">pz</span> <span class="o">*</span> <span class="n">p1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">reference</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span>
+              <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pz</span> <span class="o">*</span> <span class="n">p2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">reference</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span>
+              <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pz</span> <span class="o">*</span> <span class="n">p3</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">reference</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+    <span class="n">llik</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">lik</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">llik</span></div>
+
+
+<div class="viewcode-block" id="simnl3"><a class="viewcode-back" href="../api.html#imnl.simnl3">[docs]</a><span class="k">def</span> <span class="nf">simnl3</span><span class="p">(</span><span class="n">pstart</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">reference</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Likelihood function for the second category inflated MNL model.</span>
+
+<span class="sd">    :param pstart: starting parameters</span>
+<span class="sd">    :param x2: X covariates</span>
+<span class="sd">    :param x3: X covariates (should be identical to x2</span>
+<span class="sd">    :param y: Dependent Variable</span>
+<span class="sd">    :param z: Inflation stage covariates</span>
+<span class="sd">    :param reference: order of categories (second category is inflated)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">b2</span> <span class="o">=</span> <span class="n">pstart</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">columns</span><span class="p">):(</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">x2</span><span class="o">.</span><span class="n">columns</span><span class="p">))]</span>
+    <span class="n">b3</span> <span class="o">=</span> <span class="n">pstart</span><span class="p">[(</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">x2</span><span class="o">.</span><span class="n">columns</span><span class="p">)):(</span><span class="nb">len</span><span class="p">(</span><span class="n">pstart</span><span class="p">))]</span>
+    <span class="n">gamma</span> <span class="o">=</span> <span class="n">pstart</span><span class="p">[</span><span class="mi">0</span><span class="p">:(</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">columns</span><span class="p">))]</span>
+    <span class="n">xb2</span> <span class="o">=</span> <span class="n">x2</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b2</span><span class="p">)</span>
+    <span class="n">xb3</span> <span class="o">=</span> <span class="n">x3</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b3</span><span class="p">)</span>
+    <span class="n">zg</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span>
+    <span class="n">pz</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">zg</span><span class="p">))</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">xb2</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">xb3</span><span class="p">))</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">xb2</span><span class="p">)</span>
+    <span class="n">p3</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">xb3</span><span class="p">)</span>
+    <span class="n">lik</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pz</span> <span class="o">*</span> <span class="n">p1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">reference</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span>
+              <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pz</span><span class="p">)</span> <span class="o">+</span> <span class="n">pz</span> <span class="o">*</span> <span class="n">p2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">reference</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span>
+              <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pz</span> <span class="o">*</span> <span class="n">p3</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">reference</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+    <span class="n">llik</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">lik</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">llik</span></div>
+
+
+<div class="viewcode-block" id="timnl3"><a class="viewcode-back" href="../api.html#imnl.timnl3">[docs]</a><span class="k">def</span> <span class="nf">timnl3</span><span class="p">(</span><span class="n">pstart</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">reference</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Likelihood function for the third category inflated MNL model.</span>
+
+<span class="sd">    :param pstart: starting parameters</span>
+<span class="sd">    :param x2: X covariates</span>
+<span class="sd">    :param x3: X covariates (should be identical to x2</span>
+<span class="sd">    :param y: Dependent Variable</span>
+<span class="sd">    :param z: Inflation stage covariates</span>
+<span class="sd">    :param reference: order of categories (third category is inflated)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">b2</span> <span class="o">=</span> <span class="n">pstart</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">columns</span><span class="p">):(</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">x2</span><span class="o">.</span><span class="n">columns</span><span class="p">))]</span>
+    <span class="n">b3</span> <span class="o">=</span> <span class="n">pstart</span><span class="p">[(</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">x2</span><span class="o">.</span><span class="n">columns</span><span class="p">)):(</span><span class="nb">len</span><span class="p">(</span><span class="n">pstart</span><span class="p">))]</span>
+    <span class="n">gamma</span> <span class="o">=</span> <span class="n">pstart</span><span class="p">[</span><span class="mi">0</span><span class="p">:(</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">columns</span><span class="p">))]</span>
+    <span class="n">xb2</span> <span class="o">=</span> <span class="n">x2</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b2</span><span class="p">)</span>
+    <span class="n">xb3</span> <span class="o">=</span> <span class="n">x3</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b3</span><span class="p">)</span>
+    <span class="n">zg</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span>
+    <span class="n">pz</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">zg</span><span class="p">))</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">xb2</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">xb3</span><span class="p">))</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">xb2</span><span class="p">)</span>
+    <span class="n">p3</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">xb3</span><span class="p">)</span>
+    <span class="n">lik</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pz</span> <span class="o">*</span> <span class="n">p1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">reference</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span>
+              <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pz</span> <span class="o">*</span> <span class="n">p2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">reference</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span>
+              <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pz</span><span class="p">)</span> <span class="o">+</span> <span class="n">pz</span> <span class="o">*</span> <span class="n">p3</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">reference</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+    <span class="n">llik</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">lik</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">llik</span></div>
+
+
+<div class="viewcode-block" id="imnlresults"><a class="viewcode-back" href="../api.html#imnl.imnlresults">[docs]</a><span class="k">def</span> <span class="nf">imnlresults</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">modeltype</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">inflatecat</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Produce estimation results, part of :py:func:`imnlmod`</span>
+
+<span class="sd">    :param model:</span>
+<span class="sd">    :param data:</span>
+<span class="sd">    :param x:</span>
+<span class="sd">    :param y:</span>
+<span class="sd">    :param z:</span>
+<span class="sd">    :param modeltype:</span>
+<span class="sd">    :param reference:</span>
+<span class="sd">    :param inflatecat:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">varlist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">z</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">varlist</span><span class="p">]</span>
+    <span class="n">datasetnew</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;any&#39;</span><span class="p">)</span>
+    <span class="n">datasetnew</span> <span class="o">=</span> <span class="n">datasetnew</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">x_</span> <span class="o">=</span> <span class="n">datasetnew</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+    <span class="n">y_</span> <span class="o">=</span> <span class="n">datasetnew</span><span class="p">[</span><span class="n">y</span><span class="p">]</span>
+    <span class="n">yx_</span> <span class="o">=</span> <span class="n">y_</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">yncat</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">yx_</span><span class="p">))</span>
+    <span class="n">z_</span> <span class="o">=</span> <span class="n">datasetnew</span><span class="p">[</span><span class="n">z</span><span class="p">]</span>
+    <span class="n">z_</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">z_</span><span class="p">)))</span>
+    <span class="n">x_</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_</span><span class="p">)))</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">modeltype</span> <span class="o">==</span> <span class="s1">&#39;bimnl3&#39;</span><span class="p">:</span>
+        <span class="n">x2</span> <span class="o">=</span> <span class="n">x_</span>
+        <span class="n">x3</span> <span class="o">=</span> <span class="n">x_</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">z_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Inflation: &quot;</span> <span class="o">+</span> <span class="n">z_</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">s</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">reference</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="n">x2</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">s</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x3</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">reference</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="n">x3</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">s</span><span class="p">])</span>
+        <span class="n">xs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">[(</span><span class="n">z_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):(</span><span class="n">z_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x3</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+    <span class="n">zs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">:(</span><span class="n">z_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+    <span class="n">ses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">hess_inv</span><span class="p">))</span>
+    <span class="n">tscore</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span> <span class="o">/</span> <span class="n">ses</span>
+    <span class="n">pval</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">tscore</span><span class="p">))))</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="n">lci</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="mf">1.96</span> <span class="o">*</span> <span class="n">ses</span>
+    <span class="n">uci</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="mf">1.96</span> <span class="o">*</span> <span class="n">ses</span>
+    <span class="n">coef</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Coef&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;SE&#39;</span><span class="p">:</span> <span class="n">ses</span><span class="p">,</span> <span class="s1">&#39;tscore&#39;</span><span class="p">:</span> <span class="n">tscore</span><span class="p">,</span>
+                         <span class="s1">&#39;p&#39;</span><span class="p">:</span> <span class="n">pval</span><span class="p">,</span> <span class="s1">&#39;2.5%&#39;</span><span class="p">:</span> <span class="n">lci</span><span class="p">,</span> <span class="s1">&#39;97.5%&#39;</span><span class="p">:</span> <span class="n">uci</span><span class="p">},</span> <span class="n">names</span><span class="p">)</span>
+    <span class="n">aic</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="n">model</span><span class="o">.</span><span class="n">fun</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coef</span><span class="p">))</span>
+    <span class="n">llik</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">model</span><span class="o">.</span><span class="n">fun</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">BimnlModel</span><span class="p">(</span><span class="n">modeltype</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">inflatecat</span><span class="p">,</span> <span class="n">llik</span><span class="p">,</span> <span class="n">coef</span><span class="p">,</span> <span class="n">aic</span><span class="p">,</span>
+                       <span class="n">model</span><span class="o">.</span><span class="n">hess_inv</span><span class="p">,</span> <span class="n">datasetnew</span><span class="p">,</span>
+                       <span class="n">xs</span><span class="p">,</span> <span class="n">zs</span><span class="p">,</span> <span class="n">x_</span><span class="p">,</span> <span class="n">yx_</span><span class="p">,</span> <span class="n">z_</span><span class="p">,</span>
+                       <span class="n">yncat</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">model</span></div>
+
+
+<div class="viewcode-block" id="imnlmod"><a class="viewcode-back" href="../api.html#imnl.imnlmod">[docs]</a><span class="k">def</span> <span class="nf">imnlmod</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">inflatecat</span><span class="p">,</span>
+            <span class="n">method</span><span class="o">=</span><span class="s1">&#39;BFGS&#39;</span><span class="p">,</span> <span class="n">pstart</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Estimate inflatecatd Multinomial Logit model.</span>
+
+<span class="sd">    :param data: dataset</span>
+<span class="sd">    :param x: MNL stage covariates</span>
+<span class="sd">    :param y: Dependent Variable. Variable needs to be in factor form,</span>
+<span class="sd">    with a number from 0-2 representing each category</span>
+<span class="sd">    :param z: Inflation stage covariates</span>
+<span class="sd">    :param reference:</span>
+<span class="sd">    :param inflatecat:</span>
+<span class="sd">    :param method:</span>
+<span class="sd">    :param pstart: Starting parameters. Number of parameter n = </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">varlist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">z</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">varlist</span><span class="p">]</span>
+    <span class="n">datasetnew</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;any&#39;</span><span class="p">)</span>
+    <span class="n">datasetnew</span> <span class="o">=</span> <span class="n">datasetnew</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">x_</span> <span class="o">=</span> <span class="n">datasetnew</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+    <span class="n">y_</span> <span class="o">=</span> <span class="n">datasetnew</span><span class="p">[</span><span class="n">y</span><span class="p">]</span>
+    <span class="n">yx_</span> <span class="o">=</span> <span class="n">y_</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">yncat</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">yx_</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">yncat</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">modeltype</span> <span class="o">=</span> <span class="s1">&#39;bimnl3&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Function only supports Dependent Variable with 3 &quot;</span>
+                        <span class="s2">&quot;categories.&quot;</span><span class="p">)</span>
+    <span class="n">z_</span> <span class="o">=</span> <span class="n">datasetnew</span><span class="p">[</span><span class="n">z</span><span class="p">]</span>
+    <span class="n">z_</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">z_</span><span class="p">)))</span>
+    <span class="n">x_</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_</span><span class="p">)))</span>
+    <span class="k">if</span> <span class="n">modeltype</span> <span class="o">==</span> <span class="s1">&#39;bimnl3&#39;</span><span class="p">:</span>
+        <span class="n">x2</span> <span class="o">=</span> <span class="n">x_</span>
+        <span class="n">x3</span> <span class="o">=</span> <span class="n">x_</span>
+        <span class="k">if</span> <span class="n">pstart</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">pstart</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="o">.</span><span class="mi">01</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x2</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">x3</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+                                     <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">z_</span><span class="o">.</span><span class="n">columns</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">inflatecat</span> <span class="o">==</span> <span class="s2">&quot;baseline&quot;</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">bimnl3</span><span class="p">,</span> <span class="n">pstart</span><span class="p">,</span>
+                             <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">yx_</span><span class="p">,</span> <span class="n">z_</span><span class="p">,</span> <span class="n">reference</span><span class="p">),</span>
+                             <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+                             <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;gtol&#39;</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">,</span>
+                                      <span class="s1">&#39;disp&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;maxiter&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">})</span>
+        <span class="k">elif</span> <span class="n">inflatecat</span> <span class="o">==</span> <span class="s2">&quot;second&quot;</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">simnl3</span><span class="p">,</span> <span class="n">pstart</span><span class="p">,</span>
+                             <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">yx_</span><span class="p">,</span> <span class="n">z_</span><span class="p">,</span> <span class="n">reference</span><span class="p">),</span>
+                             <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+                             <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;gtol&#39;</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">,</span>
+                                      <span class="s1">&#39;disp&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;maxiter&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">})</span>
+        <span class="k">elif</span> <span class="n">inflatecat</span> <span class="o">==</span> <span class="s2">&quot;third&quot;</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">timnl3</span><span class="p">,</span> <span class="n">pstart</span><span class="p">,</span>
+                             <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">yx_</span><span class="p">,</span> <span class="n">z_</span><span class="p">,</span> <span class="n">reference</span><span class="p">),</span>
+                             <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+                             <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;gtol&#39;</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">,</span>
+                                      <span class="s1">&#39;disp&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;maxiter&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">})</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">imnlresults</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">modeltype</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">inflatecat</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">results</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">IDCeMPy  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Nguyen Huynh.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+    </div>
+  </body>
+</html>

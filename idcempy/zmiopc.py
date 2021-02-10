@@ -686,12 +686,11 @@ def iopmod(modeltype, data, x, y, z, pstart=None,
                                  options={'gtol': 1e-6,
                                           'disp': True, 'maxiter': 500})
             else:
-                print('miop requires odd number of categories!')
-                return
+                raise Exception('miop requires odd number of categories.')
         results = iopresults(model, data, x, y, z, modeltype)
         return results
     else:
-        print('type must be ziop or miop')
+        raise Exception('type must be ziop or miop')
 
 
 def iopcmod(modeltype, data, x, y, z, pstart=None,
@@ -745,12 +744,12 @@ def iopcmod(modeltype, data, x, y, z, pstart=None,
                                  options={'gtol': 1e-6,
                                           'disp': True, 'maxiter': 500})
             else:
-                print('miopc requires odd number of categories!')
+                raise Exception('miopc requires odd number of categories.')
                 return
         results = iopcresults(model, data, x, y, z, modeltype)
         return results
     else:
-        print('type must be ziopc or miopc')
+        raise Exception('type must be ziopc or miopc')
 
 
 def iopfit(model):

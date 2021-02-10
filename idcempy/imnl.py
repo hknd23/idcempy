@@ -217,7 +217,8 @@ def imnlmod(data, x, y, z, reference, inflatecat,
     if yncat == 3:
         modeltype = 'bimnl3'
     else:
-        print("Function only supports 3 categories.")
+        raise Exception("Function only supports Dependent Variable with 3 "
+                        "categories.")
     z_ = datasetnew[z]
     z_.insert(0, 'int', np.repeat(1, len(z_)))
     x_.insert(0, 'int', np.repeat(1, len(x_)))

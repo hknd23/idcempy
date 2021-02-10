@@ -13,7 +13,8 @@ Guide
    :maxdepth: 3
    :caption: Contents:
 
-   zmiopc_tutorial
+   ziopcpy_tutorial
+   imnl_tutorial
    api
    contact
 
