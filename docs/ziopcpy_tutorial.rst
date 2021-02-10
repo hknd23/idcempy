@@ -139,7 +139,7 @@ An example for the AIC:
 
 **3. Estimation of the MiOP model**
  
- We begin by importing the Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) data on European Integration described above.  Recall that our outcome variable is "inflated" in the middle category.  
+We begin by importing the Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) data on European Integration described above.  Recall that our outcome variable is "inflated" in the middle category.  
 
 .. testcode::
  
@@ -277,7 +277,7 @@ The AIC of the ziopc_tob model, for example, is:
  [0.82678185 0.0875059  0.02171135 0.04135142 0.02264948]]
  
  **3. Estimation of MiOPC**
- This example uses the the Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) data on European Integration described above.  Recall that our outcome variable is "inflated" in the middle category.  
+This example uses the the Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) data on European Integration described above.  Recall that our outcome variable is "inflated" in the middle category.  
 
 .. testcode::
  
@@ -340,9 +340,10 @@ Estimating the OP Model
 The package also includes a fucntion that estimates a standard Ordered Probit (OP) model.
 The OP model does not account for the "zero inflation", so it does not have a split-probit stage. 
 
- # Define a list of variable names (strings) X,Y,Z:
-  X = ['age', 'grade', 'gender_dum']
-  Y = ['cig_count']
+.. testcode::
+     # Define a list of variable names (strings) X,Y,Z:
+     X = ['age', 'grade', 'gender_dum']
+     Y = ['cig_count']
 
 X is the list of variables in the Ordered Probit equation.
 Y is the outcome variable.
@@ -421,31 +422,23 @@ The Vuong test can also be implemented to compare the ZiOPC, MiOP and MiOPC mode
 Split Equtation Predicted Probablities
 ======================================
 
-:func:`zmiopc.split_effects` simulates data from ZiOP/ZiOPC model results and computes changes in predicted probabilities when the value of a variable changes.
-This allows us to illustrate how the changes in the split-probit covariates affect the probablilities of being in one population versus another.
+:func:`zmiopc.split_effects` simulates data from ZiOP/ZiOPC and MiOP/MiOPC model results and computes changes in predicted probabilities when the value of a variable changes.
+This allows you to illustrate how the changes in the split-probit covariates affect the probablilities of being in one population versus another. The example below illustrates the marginal effects of the variable 'gender_dum' on the outcome variable in the ZiOPC model estimated in ths documentation.
 
 .. testcode::
 
-  ziopparl = zmiopc.split_effects(ziop_JCR, 2)
-  print(ziopparl)
-
-.. testoutput::
-
-          Z parliament 0  Z parliament 1
-  0           0.990405        0.958839
-  1           0.992943        0.965678
-  2           0.982540        0.984868
-  3           0.974472        0.961386
-  4           0.973550        0.943025
-                ...             ...
-  9995        0.981573        0.965662
-  9996        0.990899        0.971891
-  9997        0.988671        0.971410
-  9998        0.995775        0.957148
-  9999        0.984480        0.956248
-  [10000 rows x 2 columns]
-
+    ziopcgender = idcempy.split_effects(ziopc_tob, 1)
+   
 The returned dataframe contains predicted probabilities when 'parliament' equals 0, and when 'parliament' equals 1.
 The box plots below illustrate the change in predicted probablities using the values from the 'ziopparl' dataframe.
+ 
+.. testcode::
+     ziopcgender.plot.box(grid='False')
+ 
+ .. image:: ../graphics/ziopc_me.png
 
-.. image:: ../graphics/ZiOP_Parliament.png
+Outcome Equation Predicted Probabilities
+========================================
+
+
+
