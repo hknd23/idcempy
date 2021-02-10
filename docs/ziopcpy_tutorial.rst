@@ -62,7 +62,7 @@ Users must set up an array of starting parameters (one for each covariate) befor
 .. testcode::
 
   # Starting parameters for optimization:
-  pstartziop = np.array([.01, ..01, .01, .01, .01, .01, .01 , .01, .01])
+  pstartziop = np.array([.01, .01, .01, .01, .01, .01, .01 , .01, .01])
 
   # Model estimation:
   ziop_tob= zmiopc.iopmod('ziop', pstartziop, data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
@@ -165,7 +165,7 @@ Users must then set up an array of starting parameters (one for each covariate) 
 .. testcode::
 
   # Starting parameters for optimization:
-  pstartziop = np.array([.01, ..01, .01, .01, .01, .01, .01 , .01, .01])
+  pstartziop = np.array([.01, .01, .01, .01, .01, .01, .01 , .01, .01])
 
   # Model estimation:
   miop_EU = zmiopc.iopmod('miop', pstartziop, data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
@@ -180,14 +180,14 @@ Users must then set up an array of starting parameters (one for each covariate) 
          print(miop_EU.coefs)
 
 .. testoutput::
-                                 Coef        SE     tscore             p      2.5%     97.5%
-cut1                        -1.159621  0.049373 -23.487133  0.000000e+00 -1.256392 -1.062851
-cut2                        -0.352743  0.093084  -3.789492  1.509555e-04 -0.535188 -0.170297
-Inflation: int              -0.236710  0.079449  -2.979386  2.888270e-03 -0.392431 -0.080989
-Inflation: discuss_politics  0.190595  0.035918   5.306454  1.117784e-07  0.120197  0.260993
-Inflation: EU_Know_obj       0.199574  0.020308   9.827158  0.000000e+00  0.159770  0.239379
-Ordered: Xenophobia         -0.663551  0.044657 -14.858898  0.000000e+00 -0.751079 -0.576024
-Ordered: discuss_politics    0.023784  0.029365   0.809964  4.179609e-01 -0.033770  0.081339
+                                 Coef        SE       tscore         p         2.5%     97.5%
+   cut1                        -1.159621  0.049373 -23.487133  0.000000e+00 -1.256392 -1.062851
+   cut2                        -0.352743  0.093084  -3.789492  1.509555e-04 -0.535188 -0.170297
+   Inflation: int              -0.236710  0.079449  -2.979386  2.888270e-03 -0.392431 -0.080989
+   Inflation: discuss_politics  0.190595  0.035918   5.306454  1.117784e-07  0.120197  0.260993
+   Inflation: EU_Know_obj       0.199574  0.020308   9.827158  0.000000e+00  0.159770  0.239379
+   Ordered: Xenophobia         -0.663551  0.044657 -14.858898  0.000000e+00 -0.751079 -0.576024
+   Ordered: discuss_politics    0.023784  0.029365   0.809964  4.179609e-01 -0.033770  0.081339
 
 In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals.
 
@@ -215,7 +215,7 @@ The package also includes the function `iopcmod` which fits "zero-inflated" orde
 
 **1. Define an array with values of starting parameters**
 .. testcode::
-    pstart = np.array([.01, ..01, .01, .01, .01, .01, .01 , .01, .01, .01])
+    pstart = np.array([.01, .01, .01, .01, .01, .01, .01 , .01, .01, .01])
     
 **2. Estimate the ZiOPC model**
 .. testcode::
@@ -312,7 +312,15 @@ Users must then set up an array of starting parameters (one for each covariate) 
          print(miopc_EU.coefs)
 
 .. testoutput::
-
+                                 Coef  SE     tscore  p     2.5%  97.5%
+   cut1                        -1.370 0.044 -30.948 0.000 -1.456 -1.283
+   cut2                        -0.322 0.103  -3.123 0.002 -0.524 -0.120
+   Inflation: int              -0.129 0.021  -6.188 0.000 -0.170 -0.088
+   Inflation: discuss_politics  0.192 0.026   7.459 0.000  0.142  0.243
+   Inflation: EU_Know_obj       0.194 0.027   7.154 0.000  0.141  0.248
+   Ordered: Xenophobia         -0.591 0.045 -13.136 0.000 -0.679 -0.502
+   Ordered: discuss_politics   -0.029 0.021  -1.398 0.162 -0.070  0.012
+   rho                         -0.707 0.106  -6.694 0.000 -0.914 -0.500
 
 In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals.
 
@@ -330,62 +338,60 @@ Estimating the OP Model
 =======================
 
 The package also includes a fucntion that estimates a standard Ordered Probit (OP) model.
-The OP model does not account for the "zero inflation", so it does not have a split-probit stage.
+The OP model does not account for the "zero inflation", so it does not have a split-probit stage. 
+
+ # Define a list of variable names (strings) X,Y,Z:
+  X = ['age', 'grade', 'gender_dum']
+  Y = ['cig_count']
+
+X is the list of variables in the Ordered Probit equation.
+Y is the outcome variable.
 
 .. testcode::
 
-  # Specify list of variable names (strings) X,Y:
-  X = ['logGDPpc', 'parliament', 'disaster', 'major_oil', 'major_primary']
-  Y = ['rep_civwar_DV']
-
   # Starting parameters for optimization:
-  pstartop = np.array([-1, 0.3, -0.2, -0.5, 0.2, .9, -.4])
+  pstartop = np.array([.01, .01, .01, .01, .01, .01, .01])
 
   # Model estimation:
-  JCR_OP = zmiopc.opmod(pstartop, data, X, Y, method='bfgs', weights=1, offsetx=0)
+  op_tob = zmiopc.opmod(pstartop, data, X, Y, method='bfgs', weights=1, offsetx=0)
+  
+  # See estimates:
+  print(ziop_tob.coefs)
 
-The following message will appear when the model finishes converging:
+Results from the model:
 
-.. testoutput::
+The following message will appear when the model has converged:
 
-  Warning: Desired error not necessarily achieved due to precision loss.
-      Current function value: 1385.909054de:: 
-print(ziop_tob.coefs)
-      Iterations: 34
-      Function evaluations: 529
-      Gradient evaluations: 44
+.. testoutput:: 
+         Warning: Desired error not necessarily achieved due to precision loss.
+         Current function value: 4411.710049
+         Iterations: 10
+         Function evaluations: 976
+         Gradient evaluations: 121         
 
 :class:`zmiopc.OpModel` stores results from model estimation and other information in its attributes.
-Use print(JCR_OP.coefs) to see model results:
+The following line of code to see the estimates of coefficients:
 
+.. testcode::
+   print(op_tob.coefs)
+  
 .. testoutput::
-
-                      Coef        SE    tscore       2.5%     97.5%
-  cut1            -1.072649  0.268849 -3.989777  -1.599594 -0.545704
-  cut2            -0.171055  0.045801 -3.734712  -0.260826 -0.081284
-  X logGDPpc      -0.212266  0.035124 -6.043404  -0.281108 -0.143424
-  X parliament    -0.538013  0.099811 -5.390330  -0.733642 -0.342384
-  X disaster       0.220324  0.026143  8.427678   0.169084  0.271564
-  X major_oil      0.907116  0.358585  2.529714   0.204290  1.609942
-  X major_primary -0.426577  0.245248 -1.739370  -0.907264  0.054109
+                Coef        SE     tscore         p      2.5%     97.5%
+   cut1        1.696175  0.047320  35.844532  0.000000  1.603427  1.788922
+   cut2       -0.705037  0.031650 -22.276182  0.000000 -0.767071 -0.643004
+   cut3       -2.304405  0.121410 -18.980329  0.000000 -2.542369 -2.066441
+   cut4        2.197381  0.235338   9.337141  0.000000  1.736119  2.658643
+   age        -0.070615  0.007581  -9.314701  0.000000 -0.085474 -0.055756
+   grade       0.233741  0.010336  22.614440  0.000000  0.213483  0.254000
+   gender_dum  0.020245  0.032263   0.627501  0.530331 -0.042991  0.083482
 
 Log-likelihood, AIC, and Variance-Covariance matrix can be extracted with:
 
 .. testcode::
 
-  print(JCR_OP.llik)
-  print(JCR_OP.AIC)
-  print(JCR_OP.vcov)
-
-.. testoutput::
-
-  1432.2413576717308
-  2878.4827153434617
-  [[ 7.22800339e-02 -7.80059925e-04  9.35795290e-03 -1.10683026e-02
-    -6.57753182e-05 -4.83722782e-03  3.86783131e-03]
-    ...
-  [ 3.86783131e-03 -2.83366327e-04  3.16586107e-04  1.71164606e-03
-    2.83414563e-04 -5.98088317e-02  6.01466912e-02]]
+  print(op_tob.llik)
+  print(op_tob.AIC)
+  print(op_tob.vcov)
 
 The Vuong Test
 ==============
@@ -404,7 +410,7 @@ The OP and ZiOP models must have the same number of observations, and the OP mus
 
 .. testcode::
 
-  zmiopc.vuong_opiop(JCR_OP, ziop_JCR)
+  zmiopc.vuong_opiop(ziop_tob, op_tob)
 
 .. testoutput::
 
