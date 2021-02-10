@@ -28,7 +28,6 @@ The `iopmod` function estimates regression objects for "zero-inflated" and "midd
 **1. Import the required libraries, set up the package and import the dataset:**
 
 .. testcode::
-
   # Import the necessary libraries and package
   
   import numpy as np
@@ -44,7 +43,6 @@ The `iopmod` function estimates regression objects for "zero-inflated" and "midd
 **2. Estimation of the ZiOP model.**
 
 .. testcode::
-
   # Define a list of variable names (strings) X,Y,Z:
   X = ['age', 'grade', 'gender_dum']
   Z = ['gender_dum']
@@ -60,7 +58,6 @@ Users must set up an array of starting parameters (one for each covariate) befor
 :func:`zmiopc.iopmod` estimates the ZiOP model and returns :class:`zmiopc.IopModel`.
 
 .. testcode::
-
   # Starting parameters for optimization:
   pstartziop = np.array([.01, .01, .01, .01, .01, .01, .01 , .01, .01])
 
@@ -89,7 +86,6 @@ Use the following line of code to see the estimates of coefficients:
    print(ziop_tob.coefs)
   
 .. testoutput:: 
-
                             Coef        SE      tscore        p           2.5%      97.5%
    cut1                   1.693797  0.054383  31.145912  0.000000e+00   1.587207   1.800387
    cut2                  -0.757830  0.032290 -23.469359  0.000000e+00  -0.821119  -0.694542
@@ -106,7 +102,6 @@ In addition to coefficient estimates, the table also presents the standard error
 The model object also stores three (3) different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
 
 .. testcode::
-
   print(ziop_tob.llik)
   print(ziop_tob.AIC)
   print(ziop_tob.vcov)
@@ -127,7 +122,6 @@ An example for the AIC:
   print(fitttedziopc.responsefull)
 
 .. testoutput::
-
   array[[0.8822262  0.06879832 0.01455244 0.0242539  0.01016914]
  [0.84619828 0.08041296 0.01916279 0.03549797 0.01872801]
  [0.93105632 0.04349743 0.00831396 0.0127043  0.004428  ]
@@ -142,14 +136,12 @@ An example for the AIC:
 We begin by importing the Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) data on European Integration described above.  Recall that our outcome variable is "inflated" in the middle category.  
 
 .. testcode::
- 
     url = 'https://github.com/hknd23/zmiopc/blob/main/data/'
     data2 = pd_read.stata(url)
  
 We then define the lists with the names of the variables used in the model
 
 .. testcode::
-
   X = ['Xenophobia', 'discuss_politics']
   Z = ['discuss_politics', EU_Know_ob]
   Y = ['EU_support_ET']
@@ -194,7 +186,6 @@ In addition to coefficient estimates, the table also presents the standard error
 The model object also stores three (3) different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
 
 .. testcode::
-
   print(miop_EU.llik)
   print(miop_EU.AIC)
   print(miop_EU.vcov)
@@ -262,7 +253,6 @@ The AIC of the ziopc_tob model, for example, is:
 :func:`zmiopc.iopcfit` returns :class:`zmiopc.FittedVals` containing fitted probablities.
 
 .. testcode::
-
   fitttedziopc = zmiopc.iopcfit(ziopc_tob)
   print(fitttedziopc.responsefull)
 
@@ -280,14 +270,12 @@ The AIC of the ziopc_tob model, for example, is:
 This example uses the the Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) data on European Integration described above.  Recall that our outcome variable is "inflated" in the middle category.  
 
 .. testcode::
- 
     url = 'https://github.com/hknd23/zmiopc/blob/main/data/'
     data2 = pd_read.stata(url)
  
 We then define the lists with the names of the variables used in the model
 
 .. testcode::
-
   X = ['Xenophobia', 'discuss_politics']
   Z = ['discuss_politics', EU_Know_ob]
   Y = ['EU_support_ET']
@@ -301,7 +289,6 @@ Users must then set up an array of starting parameters (one for each covariate) 
 :func:`zmiopc.iopmod` estimates the MiOP model and returns :class:`zmiopc.IopModel`.
 
 .. testcode::
-
   # Starting parameters for optimization:
   pstartziop = np.array([.01, .01, .01, .01, .01, .01, .01 , .01, .01, .01])
 
@@ -327,7 +314,6 @@ In addition to coefficient estimates, the table also presents the standard error
 The model object also stores three (3) different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
 
 .. testcode::
-
   print(miop_EU.llik)
   print(miop_EU.AIC)
   print(miop_EU.vcov)
@@ -402,15 +388,13 @@ The Vuong test denotes m\ :sub:`i`\ as the natural logarithm of the ratio of the
 via a bidirectional test statistic of:
 
 .. math::
-
-   v = \frac{\sqrt{N}(\frac{1}{N}\sum_{i}^{N}m_{i})}{\sqrt{\frac{1}{N}\sum_{i}^{N}(m_{i}-\bar{m})^{2}}}
+    v = \frac{\sqrt{N}(\frac{1}{N}\sum_{i}^{N}m_{i})}{\sqrt{\frac{1}{N}\sum_{i}^{N}(m_{i}-\bar{m})^{2}}}
 
 where v < -1.96 favors the more general (ZiOP/ZiOPC) model, -1.96 < v < 1.96 lends no support to either model, and v > 1.96 supports the simpler (OP) model.
 
 The OP and ZiOP models must have the same number of observations, and the OP must have the same number of covariates as ZiOP's OP stage.
 
 .. testcode::
-
   zmiopc.vuong_opiop(op_tob, ziop_tob)
 
 .. testoutput::
@@ -426,19 +410,23 @@ Split Equtation Predicted Probablities
 This allows you to illustrate how the changes in the split-probit covariates affect the probablilities of being in one population versus another. The example below illustrates the marginal effects of the variable 'gender_dum' on the outcome variable in the ZiOPC model estimated in ths documentation.
 
 .. testcode::
-
-    ziopcgender = idcempy.split_effects(ziopc_tob, 1)
+    ziopcgender = idcempy.split_effects(ziopc_tob, 1, nsims = 10000)
    
-The returned dataframe contains predicted probabilities when 'parliament' equals 0, and when 'parliament' equals 1.
+The returned dataframe contains predicted probabilities when 'gender_dum' equals 0, and when 'gender_dum' equals 1.
 The box plots below illustrate the change in predicted probablities using the values from the 'ziopparl' dataframe.
  
 .. testcode::
      ziopcgender.plot.box(grid='False')
  
- .. image:: ../graphics/ziopc_me.png
+.. image:: ../graphics/ziopc_me.png
 
 Outcome Equation Predicted Probabilities
 ========================================
+:func:: `zmiopc.ordered_effects` calculates the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities of the outcome variable in the MiOPC model estimated above when Xenophobia increases one standard deviation from its mean value.
 
-
-
+.. testcode::
+    xeno = zmiopc.ordered_effects(miopc_EU, 2, nsims = 10000)
+    xeno.plot.box(grid='False')
+    
+.. image:: ../graphics/MiOPC_Xenophobia.png 
+  
