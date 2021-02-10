@@ -161,7 +161,11 @@ Ordered: Xenophobia         -0.591 0.045 -13.136 0.000 -0.679 -0.502
 Ordered: discuss_politics   -0.029 0.021  -1.398 0.162 -0.070  0.012
 rho                         -0.707 0.106  -6.694 0.000 -0.914 -0.500
 ```
-
+`ordered_effects()` calculates the change in predicted probabilities when the value of a covarariate changes. The box plots below display the change in predicted probabilities when Xenophobia increases one standard deviation from its mean value.
+```
+xeno = ziopc.ordered_effects(miopc_EU, 2, nsims=10000)
+xeno.plot.box(grid='False')
+```
 ![alt text](https://github.com/hknd23/zmiopc/blob/main/graphics/MiOPC_Xenophobia.png)
 
 ### Example 3: Estimation of "inflated" Multinomial Logit Models 
