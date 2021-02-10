@@ -410,23 +410,13 @@ The OP and ZiOP models must have the same number of observations, and the OP mus
 
 .. testcode::
 
-  zmiopc.vuong_opiop(ziop_tob, op_tob)
+  zmiopc.vuong_opiop(op_tob, ziop_tob)
 
 .. testoutput::
 
-   -4.909399264831751
-
-The Vuong test can also be implemented to compare the ZiOPC model and the OP model:
-
-.. testcode::
-
-  zmiopc.vuong_opiopc(JCR_OP, ziopc_JCR)
-
-.. testoutput::
-
-   -5.424415009176218
-
-A v statistic where v < -1.96 favors the ZiOP model, -1.96 < v < 1.96 favors neither model, and v > 1.96 favors the OP model.
+   6.624742132792222
+   
+The Vuong test can also be implemented to compare the ZiOPC, MiOP and MiOPC models and the OP model.
 
 Split Equtation Predicted Probablities
 ======================================
