@@ -25,7 +25,7 @@ outcomes.
 ## Getting Started
 
 You can try **IDCeMPy** now by downloading it from GitHub or PyPi.
-On [readthedocs](https://ziopcpy.readthedocs.io/) you will find the installation guide, a complete overview of all the fueatures included in **IDCeMPy**, and example scripts of all the models.
+On [readthedocs](https://idcempy.readthedocs.io/) you will find the installation guide, a complete overview of all the fueatures included in **IDCeMPy**, and example scripts of all the models.
 
 ## Why **IDCeMPy**?
 
