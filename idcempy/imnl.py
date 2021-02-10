@@ -27,7 +27,7 @@ class BimnlModel:
         :param data: Full dataset
         :param zs: Inflation stage estimates (Gammas)
         :param xs: Ordered probit estimates (Betas)
-        :param ycatu: Number of DV categories
+        :param ycatu: Number of categories in Dependent Variable (DV)
         :param x_: X Data
         :param yx_: Y (DV) data
         :param z_: Z Data
