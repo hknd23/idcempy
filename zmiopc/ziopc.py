@@ -24,11 +24,11 @@ class OpModel:
         :param data: Full dataset
         :param ts: Cutpoints for ordered probit
         :param xs: Ordered probit estimates (Betas)
-        :param yncat: Number of DV categories
+        :param yncat: Number of categories in the outcome variable
         :param x_: X Data
         :param yx_: Y (DV) data
-        :param xstr: list of string for x names
-        :param ystr: list of string for y names
+        :param xstr: list of strings for variable(s) names in the outcome stage (x)
+        :param ystr: list of strings for outcome variable name (y)
         """
         self.llik = llik
         self.coefs = coef
@@ -61,13 +61,13 @@ class IopModel:
         :param ts: Cutpoints for ordered probit
         :param zs: Inflation stage estimates (Gammas)
         :param xs: Ordered probit estimates (Betas)
-        :param yncat: Number of DV categories
+        :param yncat: Number of categories in the outcome variable
         :param x_: X Data
         :param yx_: Y (DV) data
         :param z_: Z Data
-        :param xstr: list of string for x names
-        :param ystr: list of string for y names
-        :param zstr: list of string for z names
+        :param xstr: list of strings for x names
+        :param ystr: list of strings for y names
+        :param zstr: list of strings for z names
 
         """
         self.modeltype = modeltype
@@ -111,9 +111,9 @@ class IopCModel:
         :param x_: X Data
         :param yx_: Y (DV) data
         :param z_: Z Data
-        :param xstr: list of string for x names
-        :param ystr: list of string for y names
-        :param zstr: list of string for z names
+        :param xstr: list of strings for x names
+        :param ystr: list of strings for y names
+        :param zstr: list of strings for z names
         """
         self.modeltype = modeltype
         self.llik = llik
@@ -208,7 +208,7 @@ def ziop(pstart, x, y, z, data, weights, offsetx, offsetz):
     :type pstart: numpy.ndarray or list
     :param x: Ordered stage variables.
     :type x: pandas.core.frame.DataFrame
-    :param y: DV.
+    :param y: Dependent Variable (DV).
     :type y: pandas.core.frame.DataFrame
     :param z: Inflation stage variables.
     :type z: pandas.core.frame.DataFrame
@@ -263,7 +263,7 @@ def ziopc(pstart, x, y, z, data, weights, offsetx, offsetz):
     :type pstart: numpy.ndarray or list
     :param x: Ordered stage variables.
     :type x: pandas.core.frame.DataFrame
-    :param y: DV.
+    :param y: Dependent Variable (DV)
     :type y: pandas.core.frame.DataFrame
     :param z: Inflation stage variables.
     :type z: pandas.core.frame.DataFrame
@@ -341,7 +341,7 @@ def miop(pstart, x, y, z, data, weights, offsetx, offsetz):
     :type pstart: numpy.ndarray or list
     :param x: Ordered stage variables.
     :type x: pandas.core.frame.DataFrame
-    :param y: DV.
+    :param y: Dependent Variable (DV)
     :type y: pandas.core.frame.DataFrame
     :param z: Inflation stage variables.
     :type z: pandas.core.frame.DataFrame
