@@ -98,7 +98,7 @@ Y = ['cig_count']
 Z = ['age']
 ```
 
-In addition, we define an array of starting parameters before estimating the `ziopc` model.
+In addition, we define an array of starting parameters before estimating the `ziopc` model. If starting parameters are not specified, the function automatically generates them.
 
 ```python
 pstart = np.array([.01, .01, .01, .01, .01, .01, .01, .01, .01, .01])
