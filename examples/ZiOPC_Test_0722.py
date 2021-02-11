@@ -99,8 +99,8 @@ ziopcparl = zmiopc.split_effects(ziopc_JCR, 2)
 ziopparl.plot.box(grid='False')
 ziopcparl.plot.box(grid='False')
 
-ziopord = ordered_effects(ziop_JCR, 1)
-ziopcord = ordered_effects(ziopc_JCR, 1)
+ziopord = zmiopc.ordered_effects(ziop_JCR, 1)
+ziopcord = zmiopc.ordered_effects(ziopc_JCR, 1)
 
 ziopord.plot.box(grid='False')
 ziopcord.plot.box(grid='False')

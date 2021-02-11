@@ -12,7 +12,8 @@ from scipy.stats import mvn, norm
 class OpModel:
     """Store model results from :py:func:`opmod`."""
 
-    def __init__(self, llik, coef, aic, vcov, data, xs, ts, x_, yx_, yncat, xstr, ystr):
+    def __init__(self, llik, coef, aic, vcov, data, xs, ts, x_, yx_, yncat,
+                 xstr, ystr):
         """Store model results, goodness-of-fit tests, and other information.
 
         :param llik: Log-Likelihood.
@@ -170,7 +171,8 @@ class IopCModel:
 class FittedVals:
     """Store fitted values for iOP models."""
 
-    def __init__(self, responsefull, responseordered, responseinflation, linear):
+    def __init__(self, responsefull, responseordered, responseinflation,
+                 linear):
         """Store different type of equation in each attribute.
 
         :param responsefull: responsefull
@@ -214,7 +216,7 @@ def op(pstart, x, y, data, weights, offsetx):
             tau[j] = pstart[j]
         else:
             tau[j] = tau[j - 1] + np.exp(pstart[j])
-    beta = pstart[(yncat - 1) : len(pstart)]
+    beta = pstart[(yncat - 1): len(pstart)]
     xb = x.dot(beta) + offsetx
     cprobs = np.zeros((n, yncat))
     probs = np.zeros((n, yncat))
@@ -267,8 +269,8 @@ def ziop(pstart, x, y, z, data, weights, offsetx, offsetz):
             tau[j] = pstart[j]
         else:
             tau[j] = tau[j - 1] + np.exp(pstart[j])
-    beta = pstart[(yncat + len(z.columns) - 1) : len(pstart)]
-    gamma = pstart[(yncat - 1) : (yncat + len(z.columns) - 1)]
+    beta = pstart[(yncat + len(z.columns) - 1): len(pstart)]
+    gamma = pstart[(yncat - 1): (yncat + len(z.columns) - 1)]
     zg = z.dot(gamma) + offsetz
     xb = x.dot(beta) + offsetx
     cprobs = np.zeros((n, yncat))
@@ -322,8 +324,8 @@ def ziopc(pstart, x, y, z, data, weights, offsetx, offsetz):
             tau[j] = pstart[j]
         else:
             tau[j] = tau[j - 1] + np.exp(pstart[j])
-    beta = pstart[(yncat + len(z.columns) - 1) : len(pstart) - 1]
-    gamma = pstart[(yncat - 1) : (yncat + len(z.columns) - 1)]
+    beta = pstart[(yncat + len(z.columns) - 1): len(pstart) - 1]
+    gamma = pstart[(yncat - 1): (yncat + len(z.columns) - 1)]
     x_beta = x.dot(beta)
     # correlation
     rho = pstart[len(pstart) - 1]
@@ -347,14 +349,15 @@ def ziopc(pstart, x, y, z, data, weights, offsetx, offsetz):
         upperb[j, :] = [zg[j], cutb[j, yncat - 2]]
         upper[j, :] = [zg[j], cut[j, 0]]
         probs[j, yncat - 1] = mvn.mvnun(lower, upperb[j], means, sigma)[0]
-        probs[j, 0] = (1 - norm.cdf(zg[j])) + mvn.mvnun(lower, upper[j], means, nsigma)[
-            0
-        ]
+        probs[j, 0] = (1 - norm.cdf(zg[j])) + \
+                      mvn.mvnun(lower, upper[j], means, nsigma)[
+                          0
+                      ]
     for j in range(n):
         for i in range(1, yncat - 1):
             probs[j, i] = (
-                mvn.mvnun(lower, [zg[j], cut[j, i]], means, nsigma)[0]
-                - mvn.mvnun(lower, [zg[j], cut[j, i - 1]], means, nsigma)[0]
+                    mvn.mvnun(lower, [zg[j], cut[j, i]], means, nsigma)[0]
+                    - mvn.mvnun(lower, [zg[j], cut[j, i - 1]], means, nsigma)[0]
             )
     lik = np.zeros((n, yncat))
     for k in range(n):
@@ -401,8 +404,8 @@ def miop(pstart, x, y, z, data, weights, offsetx, offsetz):
             tau[j] = pstart[j]
         else:
             tau[j] = tau[j - 1] + np.exp(pstart[j])
-    beta = pstart[(yncat + len(z.columns) - 1) : len(pstart)]
-    gamma = pstart[(yncat - 1) : (yncat + len(z.columns) - 1)]
+    beta = pstart[(yncat + len(z.columns) - 1): len(pstart)]
+    gamma = pstart[(yncat - 1): (yncat + len(z.columns) - 1)]
     zg = z.dot(gamma) + offsetz
     xb = x.dot(beta) + offsetx
     cprobs = np.zeros((n, yncat))
@@ -413,7 +416,7 @@ def miop(pstart, x, y, z, data, weights, offsetx, offsetz):
     for i in range(1, yncat - 1):
         if i == median(range(yncat)):
             probs[:, i] = (1 - norm.cdf(zg)) + (
-                norm.cdf(zg) * (cprobs[:, i] - cprobs[:, (i - 1)])
+                    norm.cdf(zg) * (cprobs[:, i] - cprobs[:, (i - 1)])
             )
         else:
             probs[:, i] = norm.cdf(zg) * (cprobs[:, i] - cprobs[:, (i - 1)])
@@ -462,8 +465,8 @@ def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
             tau[i] = pstart[i]
         else:
             tau[i] = tau[i - 1] + exp(pstart[i])
-    beta = pstart[(yncat + len(z.columns) - 1) : len(pstart) - 1]
-    gamma = pstart[(yncat - 1) : (yncat + len(z.columns) - 1)]
+    beta = pstart[(yncat + len(z.columns) - 1): len(pstart) - 1]
+    gamma = pstart[(yncat - 1): (yncat + len(z.columns) - 1)]
     X_beta = x.dot(beta)
     rho = pstart[len(pstart) - 1]
     cprobs = np.zeros((len(X_beta), yncat))
@@ -491,14 +494,18 @@ def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
         for j in range(1, yncat - 1):
             if j == median(range(yncat)):
                 probs[i, j] = (
-                    (1 - norm.cdf(zg[i]))
-                    + mvn.mvnun(lower, [zg[i], cutpoint[i, j]], means, nsigma)[0]
-                    - mvn.mvnun(lower, [zg[i], cutpoint[i, j - 1]], means, nsigma)[0]
+                        (1 - norm.cdf(zg[i]))
+                        + mvn.mvnun(lower, [zg[i], cutpoint[i, j]], means,
+                                    nsigma)[0]
+                        - mvn.mvnun(lower, [zg[i], cutpoint[i, j - 1]], means,
+                                    nsigma)[0]
                 )
             else:
                 probs[i, j] = (
-                    mvn.mvnun(lower, [zg[i], cutpoint[i, j]], means, nsigma)[0]
-                    - mvn.mvnun(lower, [zg[i], cutpoint[i, j - 1]], means, nsigma)[0]
+                        mvn.mvnun(lower, [zg[i], cutpoint[i, j]], means,
+                                  nsigma)[0]
+                        - mvn.mvnun(lower, [zg[i], cutpoint[i, j - 1]], means,
+                                    nsigma)[0]
                 )
     lik = np.zeros((n, yncat))
     for k in range(n):
@@ -530,8 +537,8 @@ def opresults(model, data, x, y):
         names.append("cut" + str(s))
     for s in range(x_.shape[1]):
         names.append(x_.columns[s])
-    ts = model.x[0 : yncat - 1]
-    xs = model.x[(yncat - 1) : (yncat + x_.shape[1] - 1)]
+    ts = model.x[0: yncat - 1]
+    xs = model.x[(yncat - 1): (yncat + x_.shape[1] - 1)]
     ses = np.sqrt(np.diag(model.hess_inv))
     tscore = model.x / ses
     pval = (1 - (norm.cdf(abs(tscore)))) * 2
@@ -550,7 +557,8 @@ def opresults(model, data, x, y):
     )
     aic = -2 * (-model.fun) + 2 * (len(coef))
     results = OpModel(
-        model.fun, coef, aic, model.hess_inv, datasetnew, xs, ts, x_, yx_, yncat, x, y
+        model.fun, coef, aic, model.hess_inv, datasetnew, xs, ts, x_, yx_,
+        yncat, x, y
     )
     return results
 
@@ -615,9 +623,10 @@ def iopresults(model, data, x, y, z, modeltype):
         names.append("Inflation: " + z_.columns[s])
     for s in range(x_.shape[1]):
         names.append("Ordered: " + x_.columns[s])
-    ts = model.x[0 : yncat - 1]
-    zs = model.x[yncat - 1 : (yncat + z_.shape[1] - 1)]
-    xs = model.x[(yncat + z_.shape[1] - 1) : (yncat + z_.shape[1] + x_.shape[1] - 1)]
+    ts = model.x[0: yncat - 1]
+    zs = model.x[yncat - 1: (yncat + z_.shape[1] - 1)]
+    xs = model.x[
+         (yncat + z_.shape[1] - 1): (yncat + z_.shape[1] + x_.shape[1] - 1)]
     ses = np.sqrt(np.diag(model.hess_inv))
     tscore = model.x / ses
     pval = (1 - (norm.cdf(abs(tscore)))) * 2
@@ -684,9 +693,10 @@ def iopcresults(model, data, x, y, z, modeltype):
     for s in range(x_.shape[1]):
         names.append("Ordered: " + x_.columns[s])
     names.append("rho")
-    ts = model.x[0 : yncat - 1]
-    zs = model.x[yncat - 1 : (yncat + z_.shape[1] - 1)]
-    xs = model.x[(yncat + z_.shape[1] - 1) : (yncat + z_.shape[1] + x_.shape[1] - 1)]
+    ts = model.x[0: yncat - 1]
+    zs = model.x[yncat - 1: (yncat + z_.shape[1] - 1)]
+    xs = model.x[
+         (yncat + z_.shape[1] - 1): (yncat + z_.shape[1] + x_.shape[1] - 1)]
     rho = model.x[-1]
     ses = np.sqrt(np.diag(model.hess_inv))
     tscore = model.x / ses
@@ -728,16 +738,16 @@ def iopcresults(model, data, x, y, z, modeltype):
 
 
 def iopmod(
-    modeltype,
-    data,
-    x,
-    y,
-    z,
-    pstart=None,
-    method="BFGS",
-    weights=1,
-    offsetx=0,
-    offsetz=0,
+        modeltype,
+        data,
+        x,
+        y,
+        z,
+        pstart=None,
+        method="BFGS",
+        weights=1,
+        offsetx=0,
+        offsetz=0,
 ):
     """Estimate ZiOP model and return :class:`IopModel` class object as output.
 
@@ -768,7 +778,8 @@ def iopmod(
         z_ = datasetnew[z]
         z_.insert(0, "ones", np.repeat(1, len(z_)))
         if pstart is None:
-            pstart = np.repeat(0.01, ((yncat - 1) + len(x_.columns) + len(z_.columns)))
+            pstart = np.repeat(0.01, (
+                        (yncat - 1) + len(x_.columns) + len(z_.columns)))
         if modeltype == "ziop":
             model = minimize(
                 ziop,
@@ -795,16 +806,16 @@ def iopmod(
 
 
 def iopcmod(
-    modeltype,
-    data,
-    x,
-    y,
-    z,
-    pstart=None,
-    method="BFGS",
-    weights=1,
-    offsetx=0,
-    offsetz=0,
+        modeltype,
+        data,
+        x,
+        y,
+        z,
+        pstart=None,
+        method="BFGS",
+        weights=1,
+        offsetx=0,
+        offsetz=0,
 ):
     """Estimate an iOP model (ZiOP or MiOP) and return :class:`IopcModel`
     class object as output.
@@ -882,35 +893,39 @@ def iopfit(model):
         for j in range(1, model.ycat - 1):
             cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
         probs[:, model.ycat - 1] = (norm.cdf(zg)) * (
-            1 - norm.cdf(cprobs[model.ycat - 2, 0] - xb)
+                1 - norm.cdf(cprobs[model.ycat - 2, 0] - xb)
         )
         probs[:, 0] = (1 - norm.cdf(zg)) + (norm.cdf(zg)) * (
             norm.cdf(cprobs[0, 0] - xb)
         )
         for j in range(1, model.ycat - 1):
             probs[:, j] = (norm.cdf(zg)) * (
-                (norm.cdf(cprobs[j, 0] - xb)) - (norm.cdf(cprobs[j - 1, 0] - xb))
+                    (norm.cdf(cprobs[j, 0] - xb)) - (
+                norm.cdf(cprobs[j - 1, 0] - xb))
             )
     elif model.modeltype == "miop":
         for j in range(1, model.ycat - 1):
             cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
         probs[:, model.ycat - 1] = (norm.cdf(zg)) * (
-            1 - norm.cdf(cprobs[model.ycat - 2, 0] - xb)
+                1 - norm.cdf(cprobs[model.ycat - 2, 0] - xb)
         )
         probs[:, 0] = norm.cdf(zg) * norm.cdf(cprobs[0, 0] - xb)
 
         for i in range(1, model.ycat - 1):
             if i == median(range(model.ycat)):
                 probs[:, i] = (1 - norm.cdf(zg)) + (
-                    norm.cdf(zg)
-                    * (norm.cdf(cprobs[j, 0] - xb) - norm.cdf(cprobs[j - 1, 0] - xb))
+                        norm.cdf(zg)
+                        * (norm.cdf(cprobs[j, 0] - xb) - norm.cdf(
+                    cprobs[j - 1, 0] - xb))
                 )
             else:
                 probs[:, i] = norm.cdf(zg) * (
-                    norm.cdf(cprobs[:, i] - xb) - norm.cdf(cprobs[j - 1, 0] - xb)
+                        norm.cdf(cprobs[:, i] - xb) - norm.cdf(
+                    cprobs[j - 1, 0] - xb)
                 )
     probsordered = np.zeros((n, model.ycat))
-    probsordered[:, model.ycat - 1] = 1 - norm.cdf(cprobs[model.ycat - 2, 0] - xb)
+    probsordered[:, model.ycat - 1] = 1 - norm.cdf(
+        cprobs[model.ycat - 2, 0] - xb)
     probsordered[:, 0] = norm.cdf(cprobs[0, 0] - xb)
     for j in range(1, model.ycat - 1):
         probsordered[:, j] = (norm.cdf(cprobs[j, 0] - xb)) - (
@@ -945,7 +960,8 @@ def iopcfit(model):
             cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
         for i in range(n):
             probs[i, model.ycat - 1] = mvn.mvnun(
-                lower, [zg[i], (xb[i] - cprobs[model.ycat - 2][0])], means, sigma
+                lower, [zg[i], (xb[i] - cprobs[model.ycat - 2][0])], means,
+                sigma
             )[0]
             probs[i, 0] = (1 - norm.cdf(zg[i])) + mvn.mvnun(
                 lower, [zg[i], (cprobs[0][0] - xb[i])], means, nsigma
@@ -953,18 +969,23 @@ def iopcfit(model):
         for i in range(n):
             for j in range(1, model.ycat - 1):
                 probs[i, j] = (
-                    mvn.mvnun(lower, [zg[i], (cprobs[j][0] - xb[i])], means, nsigma)[0]
-                ) - (
-                    mvn.mvnun(
-                        lower, [zg[i], (cprobs[j - 1][0] - xb[i])], means, nsigma
-                    )[0]
-                )
+                                  mvn.mvnun(lower,
+                                            [zg[i], (cprobs[j][0] - xb[i])],
+                                            means, nsigma)[0]
+                              ) - (
+                                  mvn.mvnun(
+                                      lower,
+                                      [zg[i], (cprobs[j - 1][0] - xb[i])],
+                                      means, nsigma
+                                  )[0]
+                              )
     elif model.modeltype == "miopc":
         for j in range(1, model.ycat - 1):
             cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
         for i in range(n):
             probs[i, model.ycat - 1] = mvn.mvnun(
-                lower, [zg[i], (xb[i] - cprobs[model.ycat - 2][0])], means, sigma
+                lower, [zg[i], (xb[i] - cprobs[model.ycat - 2][0])], means,
+                sigma
             )[0]
             probs[i, 0] = mvn.mvnun(
                 lower, [zg[i], (cprobs[0][0] - xb[i])], means, nsigma
@@ -973,34 +994,40 @@ def iopcfit(model):
             for j in range(1, model.ycat - 1):
                 if j == median(range(model.ycat)):
                     probs[i, j] = (1 - norm.cdf(zg[i])) + (
-                        (
-                            mvn.mvnun(
-                                lower, [zg[i], (cprobs[j][0] - xb[i])], means, nsigma
-                            )[0]
-                        )
-                        - (
-                            mvn.mvnun(
-                                lower,
-                                [zg[i], (cprobs[j - 1][0] - xb[i])],
-                                means,
-                                nsigma,
-                            )[0]
-                        )
+                            (
+                                mvn.mvnun(
+                                    lower, [zg[i], (cprobs[j][0] - xb[i])],
+                                    means, nsigma
+                                )[0]
+                            )
+                            - (
+                                mvn.mvnun(
+                                    lower,
+                                    [zg[i], (cprobs[j - 1][0] - xb[i])],
+                                    means,
+                                    nsigma,
+                                )[0]
+                            )
                     )
                 else:
                     probs[i, j] = (
-                        mvn.mvnun(
-                            lower, [zg[i], (cprobs[j][0] - xb[i])], means, nsigma
-                        )[0]
-                    ) - (
-                        mvn.mvnun(
-                            lower, [zg[i], (cprobs[j - 1][0] - xb[i])], means, nsigma
-                        )[0]
-                    )
+                                      mvn.mvnun(
+                                          lower,
+                                          [zg[i], (cprobs[j][0] - xb[i])],
+                                          means, nsigma
+                                      )[0]
+                                  ) - (
+                                      mvn.mvnun(
+                                          lower,
+                                          [zg[i], (cprobs[j - 1][0] - xb[i])],
+                                          means, nsigma
+                                      )[0]
+                                  )
 
     # ordered
     probsordered = np.zeros((n, model.ycat))
-    probsordered[:, model.ycat - 1] = 1 - norm.cdf(cprobs[model.ycat - 2, 0] - xb)
+    probsordered[:, model.ycat - 1] = 1 - norm.cdf(
+        cprobs[model.ycat - 2, 0] - xb)
     probsordered[:, 0] = norm.cdf(cprobs[0, 0] - xb)
     for j in range(1, model.ycat - 1):
         probsordered[:, j] = norm.cdf(cprobs[j, 0] - xb) - (
@@ -1047,13 +1074,15 @@ def vuong_opiop(opmodel, iopmodel):
     m = np.zeros(n1)
     probs = np.zeros((n1, yncat))
     probs[:, 0] = norm.cdf(cuts_op[0] - xbop_sum) / fitttediop[:, 0]
-    probs[:, yncat - 1] = (1 - norm.cdf(cuts_op[yncat - 2] - xbop_sum)) / fitttediop[
-        :, yncat - 1
-    ]
+    probs[:, yncat - 1] = (1 - norm.cdf(
+        cuts_op[yncat - 2] - xbop_sum)) / fitttediop[
+                                          :, yncat - 1
+                                          ]
     for i in range(1, yncat - 1):
         probs[:, i] = (
-            norm.cdf(cuts_op[i] - xbop_sum) - norm.cdf(cuts_op[i - 1] - xbop_sum)
-        ) / fitttediop[:, i]
+                              norm.cdf(cuts_op[i] - xbop_sum) - norm.cdf(
+                          cuts_op[i - 1] - xbop_sum)
+                      ) / fitttediop[:, i]
     m = np.zeros((n1, yncat))
     for k in range(n1):
         for j in range(yncat):
@@ -1062,7 +1091,8 @@ def vuong_opiop(opmodel, iopmodel):
     mlog = np.log(m2)
     diffmsq = (mlog - np.mean(mlog)) ** 2
     sumdms = sum(diffmsq)
-    vuongopiop = (np.sqrt(n1) * (1 / n1) * sum(mlog)) / (np.sqrt((1 / n1) * sumdms))
+    vuongopiop = (np.sqrt(n1) * (1 / n1) * sum(mlog)) / (
+        np.sqrt((1 / n1) * sumdms))
     return vuongopiop
 
 
@@ -1098,13 +1128,15 @@ def vuong_opiopc(opmodel, iopcmodel):
     m = np.zeros(n1)
     probs = np.zeros((n1, yncat))
     probs[:, 0] = norm.cdf(cuts_op[0] - xbop_sum) / fitttedziopc[:, 0]
-    probs[:, yncat - 1] = (1 - norm.cdf(cuts_op[yncat - 2] - xbop_sum)) / fitttedziopc[
-        :, yncat - 1
-    ]
+    probs[:, yncat - 1] = (1 - norm.cdf(
+        cuts_op[yncat - 2] - xbop_sum)) / fitttedziopc[
+                                          :, yncat - 1
+                                          ]
     for i in range(1, yncat - 1):
         probs[:, i] = (
-            norm.cdf(cuts_op[i] - xbop_sum) - norm.cdf(cuts_op[i - 1] - xbop_sum)
-        ) / fitttedziopc[:, i]
+                              norm.cdf(cuts_op[i] - xbop_sum) - norm.cdf(
+                          cuts_op[i - 1] - xbop_sum)
+                      ) / fitttedziopc[:, i]
     m = np.zeros((n1, yncat))
     for k in range(n1):
         for j in range(yncat):
@@ -1113,7 +1145,8 @@ def vuong_opiopc(opmodel, iopcmodel):
     mlog = np.log(m2)
     diffmsq = (mlog - np.mean(mlog)) ** 2
     sumdms = sum(diffmsq)
-    vuongopiopc = (np.sqrt(n1) * (1 / n1) * sum(mlog)) / (np.sqrt((1 / n1) * sumdms))
+    vuongopiopc = (np.sqrt(n1) * (1 / n1) * sum(mlog)) / (
+        np.sqrt((1 / n1) * sumdms))
     return vuongopiopc
 
 
@@ -1147,18 +1180,18 @@ def split_effects(model, inflvar, nsims=10000):
     zsima[0] = 1
     for j in range(1, len(model_z.columns)):
         if (
-            max(model_z.iloc[:, j]) == 1
-            and min(model_z.iloc[:, j]) == 0
-            and len(np.unique(model_z.iloc[:, j])) == 2
+                max(model_z.iloc[:, j]) == 1
+                and min(model_z.iloc[:, j]) == 0
+                and len(np.unique(model_z.iloc[:, j])) == 2
         ):
             zsim1[j] = 0
         else:
             zsim1[j] = np.mean(model_z.iloc[:, j])
     for j in range(1, len(model_z.columns)):
         if (
-            max(model_z.iloc[:, j]) == 1
-            and min(model_z.iloc[:, j]) == 0
-            and len(np.unique(model_z.iloc[:, j])) == 2
+                max(model_z.iloc[:, j]) == 1
+                and min(model_z.iloc[:, j]) == 0
+                and len(np.unique(model_z.iloc[:, j])) == 2
         ):
             zsima[j] = 1
         else:
@@ -1170,7 +1203,7 @@ def split_effects(model, inflvar, nsims=10000):
     probs2 = np.zeros(nsims)
     for i in range(nsims):
         gsim = np.random.multivariate_normal(estimate, vcov)
-        gsim2 = gsim[model.ycat - 1 : model.ycat - 1 + len(model.inflate)]
+        gsim2 = gsim[model.ycat - 1: model.ycat - 1 + len(model.inflate)]
         zg1 = zsim1.dot(gsim2)
         zg2 = zsim2.dot(gsim2)
         probs1[i] = norm.cdf(zg1)
@@ -1208,18 +1241,18 @@ def ordered_effects(model, ordvar, nsims=10000):
     xsima = np.zeros(len(model_x.columns))
     for j in range(len(model_x.columns)):
         if (
-            max(model_x.iloc[:, j]) == 1
-            and min(model_x.iloc[:, j]) == 0
-            and len(np.unique(model_x.iloc[:, j])) == 2
+                max(model_x.iloc[:, j]) == 1
+                and min(model_x.iloc[:, j]) == 0
+                and len(np.unique(model_x.iloc[:, j])) == 2
         ):
             xsim1[j] = 0
         else:
             xsim1[j] = np.mean(model_x.iloc[:, j])
     for j in range(len(model_x.columns)):
         if (
-            max(model_x.iloc[:, j]) == 1
-            and min(model_x.iloc[:, j]) == 0
-            and len(np.unique(model_x.iloc[:, j])) == 2
+                max(model_x.iloc[:, j]) == 1
+                and min(model_x.iloc[:, j]) == 0
+                and len(np.unique(model_x.iloc[:, j])) == 2
         ):
             xsima[j] = 1
         else:
@@ -1241,32 +1274,31 @@ def ordered_effects(model, ordvar, nsims=10000):
     for i in range(nsims):
         bsim = np.random.multivariate_normal(estimate, vcov)
         bsim2 = bsim[
-            model.ycat
-            - 1
-            + len(model.inflate) : model.ycat
-            - 1
-            + len(model.inflate)
-            + len(model.ordered)
-        ]
+                model.ycat
+                - 1
+                + len(model.inflate): model.ycat
+                                      - 1
+                                      + len(model.inflate)
+                                      + len(model.ordered)
+                ]
         xb1 = xsim1.dot(bsim2)
         xb2 = xsim2.dot(bsim2)
-        probsordered1[model.ycat - 1] = 1 - norm.cdf(cprobs[model.ycat - 2, 0] - xb1)
+        probsordered1[model.ycat - 1] = 1 - norm.cdf(
+            cprobs[model.ycat - 2, 0] - xb1)
         probsordered1[0] = norm.cdf(cprobs[0, 0] - xb1)
         for j in range(1, model.ycat - 1):
             probsordered1[j] = norm.cdf(cprobs[j, 0] - xb1) - (
                 norm.cdf(cprobs[j - 1, 0] - xb1)
             )
-        probsordered2[model.ycat - 1] = 1 - norm.cdf(cprobs[model.ycat - 2, 0] - xb2)
+        probsordered2[model.ycat - 1] = 1 - norm.cdf(
+            cprobs[model.ycat - 2, 0] - xb2)
         probsordered2[0] = norm.cdf(cprobs[0, 0] - xb2)
         for j in range(1, model.ycat - 1):
             probsordered2[j] = norm.cdf(cprobs[j, 0] - xb2) - (
                 norm.cdf(cprobs[j - 1, 0] - xb2)
             )
-        probs1.iloc[
-            i:,
-        ] = probsordered1
-        probs2.iloc[
-            i:,
-        ] = probsordered2
+        probs1.iloc[i:, ] = probsordered1
+        probs2.iloc[i:, ] = probsordered2
+
         changeprobs = probs1.merge(probs2, right_index=True, left_index=True)
     return changeprobs
