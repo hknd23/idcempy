@@ -1,13 +1,11 @@
 """Classes and Functions for the ziopcpy module."""
 import numpy as np
-from numpy import *
-
 # ZiOPC model converges extremely
 # faster with import * rather than import as np.
 import pandas as pd
-from scipy.stats import norm
+from numpy import *
 from scipy.optimize import minimize
-from scipy.stats import mvn
+from scipy.stats import mvn, norm
 
 
 class OpModel:
