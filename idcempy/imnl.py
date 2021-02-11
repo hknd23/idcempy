@@ -1,6 +1,7 @@
 """Classes and Functions for the biml module."""
 import numpy as np
 from numpy import *
+
 # ZiOPC model converges extremely
 # faster with import * rather than import as np.
 import pandas as pd
@@ -11,9 +12,26 @@ from scipy.optimize import minimize
 class BimnlModel:
     """Store model results from :py:func:`imnlmod`."""
 
-    def __init__(self, modeltype, reference, inflatecat, llik,
-                 coef, aic, vcov, data, xs, zs,
-                 x_, yx_, z_, ycatu, xstr, ystr, zstr):
+    def __init__(
+        self,
+        modeltype,
+        reference,
+        inflatecat,
+        llik,
+        coef,
+        aic,
+        vcov,
+        data,
+        xs,
+        zs,
+        x_,
+        yx_,
+        z_,
+        ycatu,
+        xstr,
+        ystr,
+        zstr,
+    ):
         """Store model results, goodness-of-fit tests, and other information.
 
         :param modeltype: Type of IMNL Model (bimnl3).
@@ -66,9 +84,9 @@ def bimnl3(pstart, x2, x3, y, z, reference):
     :param z: Inflation stage covariates.
     :param reference: order of categories (first category-baseline is inflated).
     """
-    b2 = pstart[len(z.columns):(len(z.columns) + len(x2.columns))]
-    b3 = pstart[(len(z.columns) + len(x2.columns)):(len(pstart))]
-    gamma = pstart[0:(len(z.columns))]
+    b2 = pstart[len(z.columns) : (len(z.columns) + len(x2.columns))]
+    b3 = pstart[(len(z.columns) + len(x2.columns)) : (len(pstart))]
+    gamma = pstart[0 : (len(z.columns))]
     xb2 = x2.dot(b2)
     xb3 = x3.dot(b3)
     zg = z.dot(gamma)
@@ -76,9 +94,11 @@ def bimnl3(pstart, x2, x3, y, z, reference):
     p1 = 1 / (1 + np.exp(xb2) + np.exp(xb3))
     p2 = p1 * np.exp(xb2)
     p3 = p1 * np.exp(xb3)
-    lik = sum(np.log((1 - pz) + pz * p1) * (y == reference[0]) +
-              np.log(pz * p2) * (y == reference[1]) +
-              np.log(pz * p3) * (y == reference[2]))
+    lik = sum(
+        np.log((1 - pz) + pz * p1) * (y == reference[0])
+        + np.log(pz * p2) * (y == reference[1])
+        + np.log(pz * p3) * (y == reference[2])
+    )
     llik = -1 * sum(lik)
     return llik
 
@@ -94,9 +114,9 @@ def simnl3(pstart, x2, x3, y, z, reference):
     :param z: Inflation stage covariates.
     :param reference: order of categories (second category is inflated).
     """
-    b2 = pstart[len(z.columns):(len(z.columns) + len(x2.columns))]
-    b3 = pstart[(len(z.columns) + len(x2.columns)):(len(pstart))]
-    gamma = pstart[0:(len(z.columns))]
+    b2 = pstart[len(z.columns) : (len(z.columns) + len(x2.columns))]
+    b3 = pstart[(len(z.columns) + len(x2.columns)) : (len(pstart))]
+    gamma = pstart[0 : (len(z.columns))]
     xb2 = x2.dot(b2)
     xb3 = x3.dot(b3)
     zg = z.dot(gamma)
@@ -104,9 +124,11 @@ def simnl3(pstart, x2, x3, y, z, reference):
     p1 = 1 / (1 + np.exp(xb2) + np.exp(xb3))
     p2 = p1 * np.exp(xb2)
     p3 = p1 * np.exp(xb3)
-    lik = sum(np.log(pz * p1) * (y == reference[0]) +
-              np.log((1 - pz) + pz * p2) * (y == reference[1]) +
-              np.log(pz * p3) * (y == reference[2]))
+    lik = sum(
+        np.log(pz * p1) * (y == reference[0])
+        + np.log((1 - pz) + pz * p2) * (y == reference[1])
+        + np.log(pz * p3) * (y == reference[2])
+    )
     llik = -1 * sum(lik)
     return llik
 
@@ -122,9 +144,9 @@ def timnl3(pstart, x2, x3, y, z, reference):
     :param z: Inflation stage covariates.
     :param reference: order of categories (third category is inflated).
     """
-    b2 = pstart[len(z.columns):(len(z.columns) + len(x2.columns))]
-    b3 = pstart[(len(z.columns) + len(x2.columns)):(len(pstart))]
-    gamma = pstart[0:(len(z.columns))]
+    b2 = pstart[len(z.columns) : (len(z.columns) + len(x2.columns))]
+    b3 = pstart[(len(z.columns) + len(x2.columns)) : (len(pstart))]
+    gamma = pstart[0 : (len(z.columns))]
     xb2 = x2.dot(b2)
     xb3 = x3.dot(b3)
     zg = z.dot(gamma)
@@ -132,9 +154,11 @@ def timnl3(pstart, x2, x3, y, z, reference):
     p1 = 1 / (1 + np.exp(xb2) + np.exp(xb3))
     p2 = p1 * np.exp(xb2)
     p3 = p1 * np.exp(xb3)
-    lik = sum(np.log(pz * p1) * (y == reference[0]) +
-              np.log(pz * p2) * (y == reference[1]) +
-              np.log((1 - pz) + pz * p3) * (y == reference[2]))
+    lik = sum(
+        np.log(pz * p1) * (y == reference[0])
+        + np.log(pz * p2) * (y == reference[1])
+        + np.log((1 - pz) + pz * p3) * (y == reference[2])
+    )
     llik = -1 * sum(lik)
     return llik
 
@@ -154,17 +178,17 @@ def imnlresults(model, data, x, y, z, modeltype, reference, inflatecat):
     """
     varlist = np.unique(y + z + x)
     dataset = data[varlist]
-    datasetnew = dataset.dropna(how='any')
+    datasetnew = dataset.dropna(how="any")
     datasetnew = datasetnew.reset_index(drop=True)
     x_ = datasetnew[x]
     y_ = datasetnew[y]
     yx_ = y_.iloc[:, 0]
     yncat = len(np.unique(yx_))
     z_ = datasetnew[z]
-    z_.insert(0, 'int', np.repeat(1, len(z_)))
-    x_.insert(0, 'int', np.repeat(1, len(x_)))
+    z_.insert(0, "int", np.repeat(1, len(z_)))
+    x_.insert(0, "int", np.repeat(1, len(x_)))
     names = list()
-    if modeltype == 'bimnl3':
+    if modeltype == "bimnl3":
         x2 = x_
         x3 = x_
         for s in range(z_.shape[1]):
@@ -173,26 +197,49 @@ def imnlresults(model, data, x, y, z, modeltype, reference, inflatecat):
             names.append(str(reference[1]) + ": " + x2.columns[s])
         for s in range(x3.shape[1]):
             names.append(str(reference[2]) + ": " + x3.columns[s])
-        xs = model.x[(z_.shape[1]):(z_.shape[1] + x2.shape[1] + x3.shape[1])]
-    zs = model.x[0:(z_.shape[1])]
+        xs = model.x[(z_.shape[1]) : (z_.shape[1] + x2.shape[1] + x3.shape[1])]
+    zs = model.x[0 : (z_.shape[1])]
     ses = np.sqrt(np.diag(model.hess_inv))
     tscore = model.x / ses
     pval = (1 - (norm.cdf(abs(tscore)))) * 2
     lci = model.x - 1.96 * ses
     uci = model.x + 1.96 * ses
-    coef = pd.DataFrame({'Coef': model.x, 'SE': ses, 'tscore': tscore,
-                         'p': pval, '2.5%': lci, '97.5%': uci}, names)
+    coef = pd.DataFrame(
+        {
+            "Coef": model.x,
+            "SE": ses,
+            "tscore": tscore,
+            "p": pval,
+            "2.5%": lci,
+            "97.5%": uci,
+        },
+        names,
+    )
     aic = -2 * (-model.fun) + 2 * (len(coef))
     llik = -1 * model.fun
-    model = BimnlModel(modeltype, reference, inflatecat, llik, coef, aic,
-                       model.hess_inv, datasetnew,
-                       xs, zs, x_, yx_, z_,
-                       yncat, x, y, z)
+    model = BimnlModel(
+        modeltype,
+        reference,
+        inflatecat,
+        llik,
+        coef,
+        aic,
+        model.hess_inv,
+        datasetnew,
+        xs,
+        zs,
+        x_,
+        yx_,
+        z_,
+        yncat,
+        x,
+        y,
+        z,
+    )
     return model
 
 
-def imnlmod(data, x, y, z, reference, inflatecat,
-            method='BFGS', pstart=None):
+def imnlmod(data, x, y, z, reference, inflatecat, method="BFGS", pstart=None):
     """
     Estimate inflated Multinomial Logit model.
 
@@ -204,47 +251,55 @@ def imnlmod(data, x, y, z, reference, inflatecat,
     :param reference: order of categories.
     :param inflatecat: inflated category.
     :param method: Optimization method.  Default is 'BFGS'
-    :param pstart: Starting parameters. Number of parameter n = 
+    :param pstart: Starting parameters. Number of parameter n =
     """
     varlist = np.unique(y + z + x)
     dataset = data[varlist]
-    datasetnew = dataset.dropna(how='any')
+    datasetnew = dataset.dropna(how="any")
     datasetnew = datasetnew.reset_index(drop=True)
     x_ = datasetnew[x]
     y_ = datasetnew[y]
     yx_ = y_.iloc[:, 0]
     yncat = len(np.unique(yx_))
     if yncat == 3:
-        modeltype = 'bimnl3'
+        modeltype = "bimnl3"
     else:
-        raise Exception("Function only supports Dependent Variable with 3 "
-                        "categories.")
+        raise Exception(
+            "Function only supports Dependent Variable with 3 " "categories."
+        )
     z_ = datasetnew[z]
-    z_.insert(0, 'int', np.repeat(1, len(z_)))
-    x_.insert(0, 'int', np.repeat(1, len(x_)))
-    if modeltype == 'bimnl3':
+    z_.insert(0, "int", np.repeat(1, len(z_)))
+    x_.insert(0, "int", np.repeat(1, len(x_)))
+    if modeltype == "bimnl3":
         x2 = x_
         x3 = x_
         if pstart is None:
-            pstart = np.repeat(.01, (len(x2.columns) + len(x3.columns)
-                                     + len(z_.columns)))
+            pstart = np.repeat(
+                0.01, (len(x2.columns) + len(x3.columns) + len(z_.columns))
+            )
         if inflatecat == "baseline":
-            model = minimize(bimnl3, pstart,
-                             args=(x2, x3, yx_, z_, reference),
-                             method=method,
-                             options={'gtol': 1e-6,
-                                      'disp': True, 'maxiter': 500})
+            model = minimize(
+                bimnl3,
+                pstart,
+                args=(x2, x3, yx_, z_, reference),
+                method=method,
+                options={"gtol": 1e-6, "disp": True, "maxiter": 500},
+            )
         elif inflatecat == "second":
-            model = minimize(simnl3, pstart,
-                             args=(x2, x3, yx_, z_, reference),
-                             method=method,
-                             options={'gtol': 1e-6,
-                                      'disp': True, 'maxiter': 500})
+            model = minimize(
+                simnl3,
+                pstart,
+                args=(x2, x3, yx_, z_, reference),
+                method=method,
+                options={"gtol": 1e-6, "disp": True, "maxiter": 500},
+            )
         elif inflatecat == "third":
-            model = minimize(timnl3, pstart,
-                             args=(x2, x3, yx_, z_, reference),
-                             method=method,
-                             options={'gtol': 1e-6,
-                                      'disp': True, 'maxiter': 500})
+            model = minimize(
+                timnl3,
+                pstart,
+                args=(x2, x3, yx_, z_, reference),
+                method=method,
+                options={"gtol": 1e-6, "disp": True, "maxiter": 500},
+            )
     results = imnlresults(model, data, x, y, z, modeltype, reference, inflatecat)
     return results
