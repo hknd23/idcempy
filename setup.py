@@ -1,6 +1,4 @@
-from setuptools import setup, find_packages:
-
-# read the contents of your README file
+from setuptools import setup, find_packages
 from os import path
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
@@ -10,7 +8,7 @@ setup(
     name='idcempy',  # How you named your package folder (MyLib)
     packages=['idcempy'],  # Chose the same as "name"
     version='0.0.1',  # Start with a small number and increase it
-    packages=find_packages(),    
+    packages=find_packages(),
     license='mit',  # https://help.github.com/articles/licensing-a-repository
     description='Inflated Discrete Choice Models',  # Give description
     long_description=long_description,
@@ -27,7 +25,6 @@ setup(
     classifiers=[
         'Development Status :: 3 - Alpha',
         "License :: OSI Approved :: MIT License",
-        # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable"
         'Programming Language :: Python :: 3.7',
         'Intended Audience :: Science/Research',
     ],
