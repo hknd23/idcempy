@@ -7,19 +7,19 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='idcempy',  # How you named your package folder (MyLib)
-    packages=['idcempy'],  # Chose the same as "name"
-    version='0.0.1',  # Start with a small number and increase it
+    name='idcempy',
+    packages=['idcempy'],
+    version='0.0.1',
     packages=find_packages(),
-    license='mit',  # https://help.github.com/articles/licensing-a-repository
-    description='Inflated Discrete Choice Models',  # Give description
+    license='mit',
+    description='Inflated Discrete Choice Models',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    author='Nguyen Huynh, Sergio Bejar, Vineeta Yadav, Bumba Mukherjee',  # Type in your name
-    author_email='nguyenhuynh831@gmail.com',  # Type in your E-Mail
-    url='https://github.com/hknd23/idcempy',  # Link to GitHub/website
-    keywords=['Inflated', 'Mixture', 'Ordered Probit', 'Multinomial Logit'],  # Keywords
-    install_requires=[  # I get to this in a second
+    author='Nguyen Huynh, Sergio Bejar, Vineeta Yadav, Bumba Mukherjee',
+    author_email='nguyenhuynh831@gmail.com',
+    url='https://github.com/hknd23/idcempy',
+    keywords=['Inflated', 'Mixture', 'Ordered Probit', 'Multinomial Logit'],
+    install_requires=[
         'scipy',
         'numpy',
         'pandas'
