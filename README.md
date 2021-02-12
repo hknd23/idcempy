@@ -93,9 +93,9 @@ DAT= pd.read_csv(url)
 We now specify arrays of variable names (strings) X, Y, Z.
 
 ```python
-X = ['age', 'grade', 'gender']
+X = ['age', 'grade', 'gender_dum']
 Y = ['cig_count']
-Z = ['age']
+Z = ['gender_dum']
 ```
 
 In addition, we define an array of starting parameters before estimating the `ziopc` model. If starting parameters are not specified, the function automatically generates them.
