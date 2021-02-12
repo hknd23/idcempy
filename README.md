@@ -49,7 +49,7 @@ of observations in your ordered outcome variable.
 | `iopfit`; `iopcfit`| Computes the fitted probabilities from the model objects described avobe.|
 | `vuong_opiop`;  `vuong_opiopc` | Calculates the Vuong test statistic to compare the performance of the OP versus the ZiOP, ZiOPC, MiOP or MiOPC models respectively.|
 |`imnlmod` | fits and inflated multi-nomial Logit (iNML) model.|
-|`imnlresults` | Stores and presents the covariate estimates, the Variance-Covariance (VCV) matrix, and the goodness-of-fit statistics (Log-Likelihood and AIC) of `bimnlmod`.|
+|`imnlresults` | Stores and presents the covariate estimates, the Variance-Covariance (VCV) matrix, and the goodness-of-fit statistics (Log-Likelihood and AIC) of `imnlmod`.|
 
 ## Dependencies
 - scipy
