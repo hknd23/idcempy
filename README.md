@@ -233,10 +233,16 @@ cut2                        -0.322 0.103  -3.123 0.002 -0.524 -0.120
 rho                         -0.707 0.106  -6.694 0.000 -0.914 -0.500
 ```
 
+
+
+<p align="center">
+   <img src="https://github.com/hknd23/idcempy/raw/main/graphics/MiOPC_Split_EUKnow.png" width="500" height="300" />
+</p>
+
 `ordered_effects()` calculates the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities when Xenophobia increases one standard deviation from its mean value.
 
 ```python
-xeno = zmiopc.ordered_effects(miopc_EU, 2, nsims=10000)
+xeno = zmiopc.ordered_effects(miopc_EU, 2)
 xeno.plot.box(grid='False')
 ```
 
