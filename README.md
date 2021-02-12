@@ -86,8 +86,8 @@ First, import `IDCeMPy`, required packages, and dataset.
 from idcempy import zmiopc
 import pandas as pd
 import urllib
-url= 'https://github.com/hknd23/idcempy/raw/main/data/tobacco_cons.csv'
-DAT= pd.read_csv(url)
+url = 'https://github.com/hknd23/idcempy/raw/main/data/tobacco_cons.csv'
+data = pd.read_csv(url)
 ```
 
 We now specify arrays of variable names (strings) X, Y, Z.
@@ -160,13 +160,35 @@ print(ziopc_tobb.AIC)
 `split_effects` creates a dataframe with values of the change in predicted probabilities of the outome variable when 'gender_dum' equals 0, and when 'gender_dum' equals 1. The box plots below illustrate the change in predicted probablities using the values from the 'ziopc' dataframe.
 
 ```python
-ziopcgender = zmiopc.split_effects(ziopc_tob, 1)
-ziopcgender.plot.box(grid='False')
+ziopcgender_split = zmiopc.split_effects(ziopc_tob, 1)
+ziopcgender_split.plot.box(grid='False')
 ```
 
 <p align="center">
    <img src="https://github.com/hknd23/idcempy/blob/main/graphics/ziopc_me.png?raw=true" width="500" height="300" />
 </p>
+
+Similarly `ordered_effects`, calculates the change in predicted probabilities of each outcome in the ordered stage.
+
+```python
+ziopcgender_ordered = zmiopc.ordered_effects(ziopc_tob, 2)
+ziopcgender_ordered.plot.box(grid='False')
+```
+
+<p align="center">
+   <img src="https://github.com/hknd23/idcempy/blob/main/graphics/ZiOPC_Order_Gender.png" width="500" height="300" />
+</p>
+
+Module `zmiopc` also provides function `vuong_opiopc` to compare the performace of the ZiOPC model with a standard Ordered Probit model (also available through `opmod`).
+
+```python
+op_tob = zmiopc.opmod(data, X, Y)
+zmiopc.vuong_opiopc(op_tob,ziopc_tob)
+```
+
+```python
+6.5762
+```
 
 ### Example 2: "Middle-inflated" Ordered Probit Models with Correlated Errors (MiOPC)
 You can also use **IDCeMPy** to estimate "inflated" Ordered Probit models if your outcome variable presents inflation in the "middle" category. For the sake of consistency, we present below the code needed to estimate a "Middle-inflated" Ordered Probit Model with correlated errors. Data fot this example comes from Elgün and Tillman ([2007](https://journals.sagepub.com/doi/10.1177/1065912907305684)).
