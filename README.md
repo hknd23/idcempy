@@ -160,7 +160,7 @@ print(ziopc_tobb.AIC)
 `split_effects` creates a dataframe with values of the change in predicted probabilities of the outome variable when 'gender_dum' equals 0, and when 'gender_dum' equals 1. The box plots below illustrate the change in predicted probablities using the values from the 'ziopc' dataframe.
 
 ```python
-ziopcgender = idcempy.split_effects(ziopc_tob, 1)
+ziopcgender = zmiopc.split_effects(ziopc_tob, 1)
 ziopcgender.plot.box(grid='False')
 ```
 
