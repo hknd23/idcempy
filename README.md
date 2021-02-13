@@ -251,6 +251,16 @@ xeno.plot.box(grid='False')
    <img src="https://github.com/hknd23/idcempy/blob/main/graphics/MiOPC_Xenophobia.png" width="500" height="300" />
 </p>
 
+The performance of a MiOPC model can also be compared with an Ordered Probit with the Vuong test: 
+
+```python
+op_EU = zmiopc.opmod(DAT, X, Y)
+zmiopc.vuong_opiopc(op_EU, miopc_EU)
+```
+
+```python
+-10.4357
+
 ### Example 3: Estimation of "inflated" Multinomial Logit Models
 Unordered polytomous outcome variables sometimes present inflation in the baseline category, and not accounting for it could lead you to make faulty inferences.  But **IDCeMPy** has functions that make it easier for you to estimate Multinomial Logit Models that account for such inflation (iMNL).  This example shows how you can estimate iMNL models easily.
 Data comes from Arceneaux and Kolodny ([2009](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1540-5907.2009.00399.x))
