@@ -46,7 +46,7 @@ tmodels = imnl.imnlmod(DAT, x, y, z, torders, tinflatecat,
 print(model.coefs)
 print(models.coefs)
 
-x2 = ['educ', 'female', 'black', 'hispanic', 'party7', 'agegroup2']
+x2 = ['educ', 'party7', 'agegroup2']
 z2 = ['educ', 'agegroup2']
 y2 = ['vote_turn']
 
