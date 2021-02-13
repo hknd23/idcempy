@@ -18,23 +18,23 @@ sets of “inflated” discrete choice models. Specifically, it contains functio
 model) to evaluate zero-inflated ordered choice outcomes that results from a dual data generating
 process (d.g.p.).
 * Fit the Middle-Inflated Ordered Probit (MIOP) model without and with correlated errors (MIOPC) to account for the inflated middle-category in ordered choice measures that relates to a dual d.g.p.
-* Fit inflated Multinomial Logit (IMNL) models that account for the preponderant and heterogeneous share of observations in the baseline or any lower category in unordered polytomous choice outcomes.
-* •	Compute goodness-of-fit (AIC and Log-likelihood) statistics and the Vuong Test statistic to assess the performance of each "inflated" discrete choice model included in the package.
+* Fit Inflated Multinomial Logit (IMNL) models that account for the preponderant and heterogeneous share of observations in the baseline or any lower category in unordered polytomous choice outcomes.
+* Compute AIC and Log-likelihood statistics and the Vuong Test statistic to assess the performance of each inflated discrete choice model in the package.
 
-**IDCeMPy** uses Newton numerical optimization methods to estimate the "inflated" discrete choice models described above via Maximum Likelihood Estimation (MLE).  
+**IDCeMPy** uses Newton numerical optimization methods to estimate the inflated discrete choice models listed above via Maximum Likelihood Estimation (MLE).  
 **IDCeMPY** is compatible with [Python](https://python.org) 3.7+
 
 ## Why **IDCeMPy**?
 
-An excessive (“inflated”) share of observations—stemming from two distinct d.g.p’s—fall into a single choice category in many ordered and unordered polytomous outcome variables. Standard discrete choice Ordered Probit and Multinomial Logit models cannot account for such category inflation which leads to biased inferences. Examples include,
+An excessive (“inflated”) share of observations—stemming from two distinct d.g.p’s—fall into a single choice category in many ordered and unordered polytomous outcome variables. Standard Ordered Probit and Multinomial Logit models cannot account for such category inflation which leads to biased inferences. Examples include,
 
-*	The inflated zero category of no smoking in ordered measures of self-reported smoking behavior is generated from nonsmokers who never smoke cigarettes and those who smoked previously but temporarily stopped smoking because of high cigarette prices.
+*	The inflated zero-category of no smoking in ordered measures of self-reported smoking behavior is generated from nonsmokers who never smoke cigarettes and those who smoked previously but temporarily stopped smoking because of high cigarette prices.
 
-*	The inflated indifference middle category within survey measures of immigration attitudes includes respondents truly indifferent to immigration and those that choose indifference for social desirability reasons.  
+*	The inflated indifference middle-category in ordered measures of immigration attitudes includes respondents truly indifferent to immigration and those that choose indifference for social desirability reasons.  
 
 *	The inflated baseline or other lower outcome categories of unordered polytomous outcome measures of vote choice include nonvoters who temporarily abstain from voting and routine nonvoters who always abstain. 
 
-**IDCeMPy** includes the ZIOP(C) models for evaluating zero-inflated ordered choice outcomes stemming from a dual d.g.p, MIOP(C) models that address inflated middle-category ordered outcome measures arising from distinct d.g.p’s, and IMNL models that account for inflated baseline or other lower categories in unordered polytomous outcome variables. 
+**IDCeMPy** includes the ZIOP(C) models for evaluating zero-inflated ordered choice outcomes stemming from a dual d.g.p, the MIOP(C) models that address inflated middle-category ordered outcome measures arising from distinct d.g.p’s, and IMNL models that account for inflated baseline or other lower categories for unordered polytomous outcomes. 
 
 Each inflated discrete choice model in this package addresses category inflation in one’s discrete outcome—unordered or unordered polytomous—of interest by jointly estimating a binary split-stage equation and an ordered or multinomial discrete choice outcome equation.   
 
@@ -43,12 +43,12 @@ Each inflated discrete choice model in this package addresses category inflation
 | Function         | Description                                                                                                          |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------- |
 | `opmod`; `iopmod`; `iopcmod` |Fits respectively the ordered probit (OP) model, the Zero-Inflated (ZIOP) and Middle-Inflated ordered probit (MIOP) models without correlated errors, and the ZIOPC and MIOPC models that incorporate correlated errors. |
-|`opresults`; `iopresults`; `iopcresults`| Presents covariate estimates, the Variance-Covariance (VCV) matrix, and goodness-of-fit statistics (Log-Likelihood and AIC) of `opmod`, `iopmod`, and `iopcmod`. |
-| `iopfit`; `iopcfit`| Computes the fitted probabilities from each estimated mode's object.|
+|`opresults`; `iopresults`; `iopcresults`| Presents covariate estimates, Variance-Covariance matrix, and goodness-of-fit statistics (Log-Likelihood and AIC) of `opmod`, `iopmod`, and `iopcmod`. |
+| `iopfit`; `iopcfit`| Computes the fitted probabilities from each estimated model's object.|
 | `vuong_opiop`;  `vuong_opiopc` | Calculates Vuong test statistic for comparing the performance of the OP with the ZiOP(C) and MiOP(C) models.|
 |`split_effects`; `ordered_effects`| Estimates marginal effects of covariates in the split-stage and outcome-stage respectively.|
-|`imnlmod` | fits baseline and other lower-category inflated MNL models.|
-|`imnlresults` | Presents covariate estimates, Variance-Covariance (VCV) matrix, and goodness-of-fit statistics of `imnlmod`.|
+|`imnlmod` | Fits baseline and other lower-category inflated MNL models.|
+|`imnlresults` | Presents covariate estimates, Variance-Covariance matrix, and goodness-of-fit statistics of `imnlmod`.|
 
 ## Dependencies
 - scipy
