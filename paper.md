@@ -1,5 +1,6 @@
 ---
-title: 'ZiopcPy: A Python Package for the Zero-Inflated Ordered Probit Models Without and With Correlated Errors'
+title: 'IDCeMPy: A Python Package to Estimate "Inflated" Discrete Choice Models'
+
 authors:
 - affiliation: 1
   name: Nguyen K. Huynh
