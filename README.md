@@ -188,7 +188,7 @@ zmiopc.vuong_opiopc(op_tob,ziopc_tob)
 ```
 
 ```python
-6.5762
+6.576246015382724
 ```
 
 ### Example 2: "Middle-inflated" Ordered Probit Models with Correlated Errors (MiOPC)
@@ -259,7 +259,7 @@ zmiopc.vuong_opiopc(op_EU, miopc_EU)
 ```
 
 ```python
--10.4357
+-10.435718518003675
 ```
 
 ### Example 3: Estimation of "inflated" Multinomial Logit Models
