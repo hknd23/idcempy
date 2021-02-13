@@ -51,14 +51,11 @@ ziop_JCRsmall = zmiopc.iopmod('ziop', pstartziopsmall,
 
 fitttedziopc = zmiopc.iopcfit(ziopc_JCR)
 fitttedziop = zmiopc.iopfit(ziop_JCR)
-fitttedmiopc = zmiopc.iopcfit(miopc_JCR)
-fitttedmiop = zmiopc.iopfit(miop_JCR)
+
 
 print(ziopc_JCR.coefs)
 print(ziop_JCR.coefs)
-print(JCR_OP.AIC)
-print(JCR_OP.llik)
-print(JCR_OP.vcov)
+
 
 # OP Model
 pstartop = np.array([-1, 0.3, -0.2, -0.5, 0.2, .9, -.4])
@@ -109,44 +106,53 @@ ziopcord.plot.box(grid='False')
 
 DAT = pd.read_stata("C:/Users/Nguyen/Box/Summer 20/EUKnowledge.dta")
 
-vars = ["EU_support_ET", "polit_trust", "Xenophobia", "discuss_politics",
-        "univers_ed", "Professional",
-        "Executive", "Manual", "Farmer", "Unemployed", "rural", "female", "age",
-        "EU_Know_obj", "Lie_EU_Know",
-        "student", "EUbid_Know", "income", "dk", "dkORlie", "EU_Know_subj",
-        "TV", "Educ_high", "Educ_high_mid",
-        "Educ_low_mid"]
-
-datax = DAT[vars]
-datasetnew = datax.dropna(how='any')
-
 Y = ["EU_support_ET"]
-X = ['polit_trust', 'Xenophobia', 'discuss_politics', 'Professional',
-     'Executive', 'Manual', 'Farmer',
-     'Unemployed', 'rural', 'female', 'age', 'student', 'income', 'Educ_high',
-     'Educ_high_mid', 'Educ_low_mid']
-Z = ['discuss_politics', 'rural', 'female', 'age', 'student',
-     'EUbid_Know', 'EU_Know_obj', 'TV', 'Educ_high', 'Educ_high_mid',
-     'Educ_low_mid']
+X = ['Xenophobia', 'discuss_politics']
+Z = ['discuss_politics', 'EU_Know_obj']
 
-b = np.repeat(.01, 30)
-bc = np.repeat(.01, 31)
+miopc_EU = zmiopc.iopcmod('miopc', DAT, X, Y, Z)
+op_EU = zmiopc.opmod(DAT, X, Y)
 
-MIOPEUx = zmiopc.iopmod('miop', b, datasetnew, X, Y, Z, method='bfgs', weights=1,
-                        offsetx=0, offsetz=0)
-MIOPcEUx = zmiopc.iopcmod('miopc', bc, datasetnew, X, Y, Z, method='bfgs',
-                          weights=1, offsetx=0, offsetz=0)
+zmiopc.vuong_opiopc(op_EU, miopc_EU)
 
-fitttedmiop = zmiopc.iopfit(MIOPEUx)
-fitttedmiopc = zmiopc.iopcfit(MIOPcEUx)
+miopc_EU_xeno = zmiopc.ordered_effects(miopc_EU, 0)
+miopc_EU__diss = zmiopc.ordered_effects(miopc_EU, 1)
 
-fitttedmiopc = ziopcfit(ziopc_JCR)
+miopc_EU_xeno.plot.box(grid='False')
+miopc_EU__diss.plot.box(grid='False')
 
-DATw = pd.read_stata(
-    "C:/Users/Nguyen/Documents/Replication I/Replication I/Least_Informed.dta")
-yy = ['votechoice_dk']
-xx = ['phone_only', 'age']
-zz = ['cXdem','cXrep']
+miopc_EU_diss = zmiopc.split_effects(miopc_EU, 1)
+miopc_EU_know = zmiopc.split_effects(miopc_EU, 2)
 
-boiii = zmiopc.iopcmod('miop', DATw, xx, yy, zz,
-                       method='BFGS')
+miopc_EU_diss.plot.box(grid='False')
+miopc_EU_know.plot.box(grid='False')
+
+
+###Tobacco data
+
+
+DAT = pd.read_csv("C:/Users/Nguyen/Google "
+                  "Drive/zmiopc/zmiopc/data/tobacco_cons.csv")
+X = ['age', 'grade', 'gender_dum']
+Y = ['cig_count']
+Z = ['gender_dum']
+pstart = np.array([.01, .01, .01, .01, .01, .01, .01, .01, .01, .01])
+
+ziopc_tob = zmiopc.iopcmod('ziopc', DAT, X, Y, Z)
+op_tob = zmiopc.opmod(DAT, X, Y)
+
+zmiopc.vuong_opiopc(op_tob,ziopc_tob)
+
+ziopcage = zmiopc.ordered_effects(ziopc_tob, 0)
+ziopcgrade = zmiopc.ordered_effects(ziopc_tob, 1)
+ziopcgender = zmiopc.ordered_effects(ziopc_tob, 2)
+
+ziopcage.plot.box(grid='False')
+ziopcgrade.plot.box(grid='False',fontsize='small')
+ziopcgender.plot.box(grid='False',fontsize='small')
+
+
+ziopcgenders = zmiopc.split_effects(ziopc_tob, 1)
+ziopcgenders.plot.box(grid='False')
+ziopcgenders = zmiopc.split_effects(ziopc_tob, 0)
+ziopcgenders.plot.box(grid='False')

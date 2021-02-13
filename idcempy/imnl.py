@@ -9,24 +9,24 @@ class BimnlModel:
     """Store model results from :py:func:`imnlmod`."""
 
     def __init__(
-        self,
-        modeltype,
-        reference,
-        inflatecat,
-        llik,
-        coef,
-        aic,
-        vcov,
-        data,
-        xs,
-        zs,
-        x_,
-        yx_,
-        z_,
-        ycatu,
-        xstr,
-        ystr,
-        zstr,
+            self,
+            modeltype,
+            reference,
+            inflatecat,
+            llik,
+            coef,
+            aic,
+            vcov,
+            data,
+            xs,
+            zs,
+            x_,
+            yx_,
+            z_,
+            ycatu,
+            xstr,
+            ystr,
+            zstr,
     ):
         """Store model results, goodness-of-fit tests, and other information.
 
@@ -80,9 +80,9 @@ def bimnl3(pstart, x2, x3, y, z, reference):
     :param z: Inflation stage covariates.
     :param reference: order of categories (first category/baseline inflated).
     """
-    b2 = pstart[len(z.columns) : (len(z.columns) + len(x2.columns))]
-    b3 = pstart[(len(z.columns) + len(x2.columns)) : (len(pstart))]
-    gamma = pstart[0 : (len(z.columns))]
+    b2 = pstart[len(z.columns): (len(z.columns) + len(x2.columns))]
+    b3 = pstart[(len(z.columns) + len(x2.columns)): (len(pstart))]
+    gamma = pstart[0: (len(z.columns))]
     xb2 = x2.dot(b2)
     xb3 = x3.dot(b3)
     zg = z.dot(gamma)
@@ -110,9 +110,9 @@ def simnl3(pstart, x2, x3, y, z, reference):
     :param z: Inflation stage covariates.
     :param reference: order of categories (second category is inflated).
     """
-    b2 = pstart[len(z.columns) : (len(z.columns) + len(x2.columns))]
-    b3 = pstart[(len(z.columns) + len(x2.columns)) : (len(pstart))]
-    gamma = pstart[0 : (len(z.columns))]
+    b2 = pstart[len(z.columns): (len(z.columns) + len(x2.columns))]
+    b3 = pstart[(len(z.columns) + len(x2.columns)): (len(pstart))]
+    gamma = pstart[0: (len(z.columns))]
     xb2 = x2.dot(b2)
     xb3 = x3.dot(b3)
     zg = z.dot(gamma)
@@ -140,9 +140,9 @@ def timnl3(pstart, x2, x3, y, z, reference):
     :param z: Inflation stage covariates.
     :param reference: order of categories (third category is inflated).
     """
-    b2 = pstart[len(z.columns) : (len(z.columns) + len(x2.columns))]
-    b3 = pstart[(len(z.columns) + len(x2.columns)) : (len(pstart))]
-    gamma = pstart[0 : (len(z.columns))]
+    b2 = pstart[len(z.columns): (len(z.columns) + len(x2.columns))]
+    b3 = pstart[(len(z.columns) + len(x2.columns)): (len(pstart))]
+    gamma = pstart[0: (len(z.columns))]
     xb2 = x2.dot(b2)
     xb3 = x3.dot(b3)
     zg = z.dot(gamma)
@@ -193,8 +193,8 @@ def imnlresults(model, data, x, y, z, modeltype, reference, inflatecat):
             names.append(str(reference[1]) + ": " + x2.columns[s])
         for s in range(x3.shape[1]):
             names.append(str(reference[2]) + ": " + x3.columns[s])
-        xs = model.x[(z_.shape[1]) : (z_.shape[1] + x2.shape[1] + x3.shape[1])]
-    zs = model.x[0 : (z_.shape[1])]
+        xs = model.x[(z_.shape[1]): (z_.shape[1] + x2.shape[1] + x3.shape[1])]
+    zs = model.x[0: (z_.shape[1])]
     ses = np.sqrt(np.diag(model.hess_inv))
     tscore = model.x / ses
     pval = (1 - (norm.cdf(abs(tscore)))) * 2
@@ -297,5 +297,6 @@ def imnlmod(data, x, y, z, reference, inflatecat, method="BFGS", pstart=None):
                 method=method,
                 options={"gtol": 1e-6, "disp": True, "maxiter": 500},
             )
-    results = imnlresults(model, data, x, y, z, modeltype, reference, inflatecat)
+    results = imnlresults(model, data, x, y, z, modeltype, reference,
+                          inflatecat)
     return results

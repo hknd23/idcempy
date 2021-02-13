@@ -27,7 +27,7 @@ class OpModel:
         :param yncat: Number of categories in the outcome variable.
         :param x_: X (Covariates) Data.
         :param yx_: Y (Dependent Variable) data.
-        :param xstr: list of strings for variable(s) names in the outcome stage (x).
+        :param xstr: list of strings for variable(s) in the outcome stage (x).
         :param ystr: list of strings for outcome variable name (y).
         """
         self.llik = llik
@@ -48,23 +48,23 @@ class IopModel:
     """Store model results from :py:func:`iopmod`."""
 
     def __init__(
-        self,
-        modeltype,
-        llik,
-        coef,
-        aic,
-        vcov,
-        data,
-        xs,
-        zs,
-        ts,
-        x_,
-        yx_,
-        z_,
-        yncat,
-        xstr,
-        ystr,
-        zstr,
+            self,
+            modeltype,
+            llik,
+            coef,
+            aic,
+            vcov,
+            data,
+            xs,
+            zs,
+            ts,
+            x_,
+            yx_,
+            z_,
+            yncat,
+            xstr,
+            ystr,
+            zstr,
     ):
         """Store model results, goodness-of-fit tests, and other information.
 
@@ -109,24 +109,24 @@ class IopCModel:
     """Store model results from :py:func:`iopcmod`."""
 
     def __init__(
-        self,
-        modeltype,
-        llik,
-        coef,
-        aic,
-        vcov,
-        data,
-        xs,
-        zs,
-        ts,
-        x_,
-        yx_,
-        z_,
-        rho,
-        yncat,
-        xstr,
-        ystr,
-        zstr,
+            self,
+            modeltype,
+            llik,
+            coef,
+            aic,
+            vcov,
+            data,
+            xs,
+            zs,
+            ts,
+            x_,
+            yx_,
+            z_,
+            rho,
+            yncat,
+            xstr,
+            ystr,
+            zstr,
     ):
         """Store model results, goodness-of-fit tests, and other information.
 
@@ -349,16 +349,15 @@ def ziopc(pstart, x, y, z, data, weights, offsetx, offsetz):
         upperb[j, :] = [zg[j], cutb[j, yncat - 2]]
         upper[j, :] = [zg[j], cut[j, 0]]
         probs[j, yncat - 1] = mvn.mvnun(lower, upperb[j], means, sigma)[0]
-        probs[j, 0] = (1 - norm.cdf(zg[j])) + \
-                      mvn.mvnun(lower, upper[j], means, nsigma)[
-                          0
-                      ]
+        probs[j, 0] = (1 - norm.cdf(zg[j])) + mvn.mvnun(lower, upper[j],
+                                                        means, nsigma)[0]
     for j in range(n):
         for i in range(1, yncat - 1):
             probs[j, i] = (
-                    mvn.mvnun(lower, [zg[j], cut[j, i]], means, nsigma)[0]
-                    - mvn.mvnun(lower, [zg[j], cut[j, i - 1]], means, nsigma)[0]
-            )
+                    mvn.mvnun(lower, [zg[j],
+                                      cut[j, i]], means, nsigma)[0]
+                    - mvn.mvnun(lower, [zg[j],
+                                        cut[j, i - 1]], means, nsigma)[0])
     lik = np.zeros((n, yncat))
     for k in range(n):
         for j in range(yncat):
@@ -370,7 +369,8 @@ def ziopc(pstart, x, y, z, data, weights, offsetx, offsetz):
 
 def miop(pstart, x, y, z, data, weights, offsetx, offsetz):
     """
-    Likelihood function for Middle-inflated Ordered Probit Model "without" correlated errors.
+    Likelihood function for Middle-inflated Ordered Probit Model
+    "without" correlated errors.
     Number of outcomes must be odd.
 
     :param pstart: starting parameters.
@@ -414,7 +414,7 @@ def miop(pstart, x, y, z, data, weights, offsetx, offsetz):
         cprobs[:, i] = norm.cdf(tau[i] - xb)
     probs[:, 0] = (cprobs[:, 0]) * norm.cdf(zg)
     for i in range(1, yncat - 1):
-        if i == median(range(yncat)):
+        if i == np.median(range(yncat)):
             probs[:, i] = (1 - norm.cdf(zg)) + (
                     norm.cdf(zg) * (cprobs[:, i] - cprobs[:, (i - 1)])
             )
@@ -434,6 +434,7 @@ def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
     """
     Likelihood function for Middle-inflated Correlated-Errors Model.
     Number of outcomes must be odd.
+
     :param pstart: starting parameters.
     :type pstart: numpy.ndarray or list
     :param x: Ordered stage variables.
@@ -456,23 +457,23 @@ def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
     ycatu = np.unique(ycat)
     yncat = len(ycatu)
     y0 = np.sort(ycatu)
-    V = np.zeros((len(data), yncat))
+    v = np.zeros((len(data), yncat))
     for j in range(yncat):
-        V[:, j] = y == y0[j]
+        v[:, j] = y == y0[j]
     tau = np.repeat(1.0, yncat)
     for i in range(yncat - 1):
         if i == 0:
             tau[i] = pstart[i]
         else:
-            tau[i] = tau[i - 1] + exp(pstart[i])
+            tau[i] = tau[i - 1] + np.exp(pstart[i])
     beta = pstart[(yncat + len(z.columns) - 1): len(pstart) - 1]
     gamma = pstart[(yncat - 1): (yncat + len(z.columns) - 1)]
-    X_beta = x.dot(beta)
+    x_beta = x.dot(beta)
     rho = pstart[len(pstart) - 1]
-    cprobs = np.zeros((len(X_beta), yncat))
-    probs = np.zeros((len(X_beta), yncat))
-    cutpoint = np.zeros((len(X_beta), yncat))
-    cutpointb = np.zeros((len(X_beta), yncat))
+    cprobs = np.zeros((len(x_beta), yncat))
+    probs = np.zeros((len(x_beta), yncat))
+    cutpoint = np.zeros((len(x_beta), yncat))
+    cutpointb = np.zeros((len(x_beta), yncat))
     zg = z.dot(gamma) + offsetz
     xb = x.dot(beta) + offsetx
     means = np.array([0, 0])
@@ -483,8 +484,8 @@ def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
         cprobs[:, i] = norm.cdf(tau[i] - xb)
         cutpoint[:, i] = tau[i] - xb
         cutpointb[:, i] = xb - tau[i]
-    upperb = np.zeros((len(X_beta), 2))
-    upper = np.zeros((len(X_beta), 2))
+    upperb = np.zeros((len(x_beta), 2))
+    upper = np.zeros((len(x_beta), 2))
     for j in range(n):
         upperb[j, :] = [zg[j], cutpointb[j, yncat - 2]]
         upper[j, :] = [zg[j], cutpoint[j, 0]]
@@ -492,7 +493,7 @@ def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
         probs[j, 0] = mvn.mvnun(lower, upper[j], means, nsigma)[0]
     for i in range(n):
         for j in range(1, yncat - 1):
-            if j == median(range(yncat)):
+            if j == np.median(range(yncat)):
                 probs[i, j] = (
                         (1 - norm.cdf(zg[i]))
                         + mvn.mvnun(lower, [zg[i], cutpoint[i, j]], means,
@@ -510,14 +511,14 @@ def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
     lik = np.zeros((n, yncat))
     for k in range(n):
         for j in range(yncat):
-            lik[k, j] = V[k, j] * probs[k, j]
+            lik[k, j] = v[k, j] * probs[k, j]
     likk = np.log(lik[lik != 0])
     llik = -1 * sum(likk * weights)
     return llik
 
 
 def opresults(model, data, x, y):
-    """Produces estimation results, part of :py:func:`opmod`.
+    """Produce estimation results, part of :py:func:`opmod`.
 
     :param model: model object created from minimization.
     :param data: dataset.
@@ -765,7 +766,6 @@ def iopmod(
     :param offsetz: offset for Z.
     :return: IopModel
     """
-
     types = ["ziop", "miop"]
     if modeltype in types:
         varlist = np.unique(y + z + x)
@@ -779,7 +779,7 @@ def iopmod(
         z_.insert(0, "ones", np.repeat(1, len(z_)))
         if pstart is None:
             pstart = np.repeat(0.01, (
-                        (yncat - 1) + len(x_.columns) + len(z_.columns)))
+                    (yncat - 1) + len(x_.columns) + len(z_.columns)))
         if modeltype == "ziop":
             model = minimize(
                 ziop,
@@ -817,8 +817,7 @@ def iopcmod(
         offsetx=0,
         offsetz=0,
 ):
-    """Estimate an iOP model (ZiOP or MiOP) and return :class:`IopcModel`
-    class object as output.
+    """Estimate an iOP model (ZiOP or MiOP) and return :class:`IopcModel`.
 
     :param pstart: starting parameters.
     :param data: dataset.
@@ -827,14 +826,13 @@ def iopcmod(
     :type y: list of str
     :param z: Inflation stage variables.
     :type z: list of str
-    :param modeltype: Type of model to be estimated. Must be one of "ziopc" or 'miopc'.
+    :param modeltype: Type of model to be estimated ("ziopc" or 'miopc').
     :param method: method for optimization, default 'BFGS'
     :param weights: weights.
     :param offsetx: offset for X.
     :param offsetz: offset for Z.
     :return: IopCModel
     """
-
     types = ["ziopc", "miopc"]
     if modeltype in types:
         varlist = np.unique(y + z + x)
@@ -899,10 +897,9 @@ def iopfit(model):
             norm.cdf(cprobs[0, 0] - xb)
         )
         for j in range(1, model.ycat - 1):
-            probs[:, j] = (norm.cdf(zg)) * (
-                    (norm.cdf(cprobs[j, 0] - xb)) - (
-                norm.cdf(cprobs[j - 1, 0] - xb))
-            )
+            probs[:, j] = (norm.cdf(zg)) * ((norm.cdf(cprobs[j, 0] - xb))
+                                            - (norm.cdf(cprobs[j - 1, 0]
+                                                        - xb)))
     elif model.modeltype == "miop":
         for j in range(1, model.ycat - 1):
             cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
@@ -912,17 +909,15 @@ def iopfit(model):
         probs[:, 0] = norm.cdf(zg) * norm.cdf(cprobs[0, 0] - xb)
 
         for i in range(1, model.ycat - 1):
-            if i == median(range(model.ycat)):
+            if i == np.median(range(model.ycat)):
                 probs[:, i] = (1 - norm.cdf(zg)) + (
                         norm.cdf(zg)
-                        * (norm.cdf(cprobs[j, 0] - xb) - norm.cdf(
-                    cprobs[j - 1, 0] - xb))
-                )
+                        * (norm.cdf(cprobs[j, 0] - xb)
+                           - norm.cdf(cprobs[j - 1, 0] - xb)))
             else:
                 probs[:, i] = norm.cdf(zg) * (
-                        norm.cdf(cprobs[:, i] - xb) - norm.cdf(
-                    cprobs[j - 1, 0] - xb)
-                )
+                        norm.cdf(cprobs[:, i] - xb)
+                        - norm.cdf(cprobs[j - 1, 0] - xb))
     probsordered = np.zeros((n, model.ycat))
     probsordered[:, model.ycat - 1] = 1 - norm.cdf(
         cprobs[model.ycat - 2, 0] - xb)
@@ -992,37 +987,23 @@ def iopcfit(model):
             )[0]
         for i in range(n):
             for j in range(1, model.ycat - 1):
-                if j == median(range(model.ycat)):
+                if j == np.median(range(model.ycat)):
                     probs[i, j] = (1 - norm.cdf(zg[i])) + (
-                            (
-                                mvn.mvnun(
-                                    lower, [zg[i], (cprobs[j][0] - xb[i])],
-                                    means, nsigma
-                                )[0]
-                            )
-                            - (
-                                mvn.mvnun(
-                                    lower,
-                                    [zg[i], (cprobs[j - 1][0] - xb[i])],
-                                    means,
-                                    nsigma,
-                                )[0]
-                            )
-                    )
+                            (mvn.mvnun(
+                                lower, [zg[i], (cprobs[j][0] - xb[i])],
+                                means, nsigma)[0])
+                            - (mvn.mvnun(lower,
+                                         [zg[i], (cprobs[j - 1][0] -
+                                                  xb[i])],
+                                         means, nsigma)[0]))
                 else:
-                    probs[i, j] = (
-                                      mvn.mvnun(
-                                          lower,
-                                          [zg[i], (cprobs[j][0] - xb[i])],
-                                          means, nsigma
-                                      )[0]
-                                  ) - (
-                                      mvn.mvnun(
-                                          lower,
-                                          [zg[i], (cprobs[j - 1][0] - xb[i])],
-                                          means, nsigma
-                                      )[0]
-                                  )
+                    probs[i, j] = (mvn.mvnun(lower,
+                                             [zg[i], (cprobs[j][0] - xb[i])],
+                                             means, nsigma)[0]) - (
+                                      mvn.mvnun(lower, [zg[i],
+                                                        (cprobs[j - 1][0] -
+                                                         xb[i])],
+                                                means, nsigma)[0])
 
     # ordered
     probsordered = np.zeros((n, model.ycat))
@@ -1075,14 +1056,11 @@ def vuong_opiop(opmodel, iopmodel):
     probs = np.zeros((n1, yncat))
     probs[:, 0] = norm.cdf(cuts_op[0] - xbop_sum) / fitttediop[:, 0]
     probs[:, yncat - 1] = (1 - norm.cdf(
-        cuts_op[yncat - 2] - xbop_sum)) / fitttediop[
-                                          :, yncat - 1
-                                          ]
+        cuts_op[yncat - 2] - xbop_sum)) / fitttediop[:, yncat - 1]
     for i in range(1, yncat - 1):
-        probs[:, i] = (
-                              norm.cdf(cuts_op[i] - xbop_sum) - norm.cdf(
-                          cuts_op[i - 1] - xbop_sum)
-                      ) / fitttediop[:, i]
+        probs[:, i] = (norm.cdf(cuts_op[i] - xbop_sum)
+                       - norm.cdf(cuts_op[i - 1]
+                                  - xbop_sum)) / fitttediop[:, i]
     m = np.zeros((n1, yncat))
     for k in range(n1):
         for j in range(yncat):
@@ -1105,9 +1083,7 @@ def vuong_opiopc(opmodel, iopcmodel):
     """
     n1 = len(opmodel.data)
     y = iopcmodel.Y
-    # can also y = opmodel.Y when 2 models have the same length
     x = iopcmodel.X
-    # can also x = opmodel.X when 2 models have the same length
     cuts_op = np.repeat(0, len(opmodel.cutpoints)).astype(float)
     xop = opmodel.ordered
     cuts_op[0] = opmodel.cutpoints[0]
@@ -1125,18 +1101,13 @@ def vuong_opiopc(opmodel, iopcmodel):
     v = np.zeros((n1, yncat))
     for j in range(yncat):
         v[:, j] = y == y0[j]
-    m = np.zeros(n1)
     probs = np.zeros((n1, yncat))
     probs[:, 0] = norm.cdf(cuts_op[0] - xbop_sum) / fitttedziopc[:, 0]
     probs[:, yncat - 1] = (1 - norm.cdf(
-        cuts_op[yncat - 2] - xbop_sum)) / fitttedziopc[
-                                          :, yncat - 1
-                                          ]
+        cuts_op[yncat - 2] - xbop_sum)) / fitttedziopc[:, yncat - 1]
     for i in range(1, yncat - 1):
-        probs[:, i] = (
-                              norm.cdf(cuts_op[i] - xbop_sum) - norm.cdf(
-                          cuts_op[i - 1] - xbop_sum)
-                      ) / fitttedziopc[:, i]
+        probs[:, i] = (norm.cdf(cuts_op[i] - xbop_sum) - norm.cdf(
+            cuts_op[i - 1] - xbop_sum)) / fitttedziopc[:, i]
     m = np.zeros((n1, yncat))
     for k in range(n1):
         for j in range(yncat):
@@ -1151,8 +1122,7 @@ def vuong_opiopc(opmodel, iopcmodel):
 
 
 def split_effects(model, inflvar, nsims=10000):
-    """Calculate the changes in probability of being 0 in the split-probit
-    stage.
+    """Calculate change in probability of being 0 in the split-probit stage.
 
     This function calculates the predicted probabilities
     when there is change in value of a variable in the split-probit equation.
@@ -1266,21 +1236,17 @@ def ordered_effects(model, ordvar, nsims=10000):
     cprobs[0, 0] = model.cutpoints[0]
     for j in range(1, model.ycat - 1):
         cprobs[j, 0] = cprobs[j - 1, 0] + np.exp(model.cutpoints[j])
-    probs1 = pd.DataFrame(index=np.arange(nsims), columns=np.arange(model.ycat))
-    probs2 = pd.DataFrame(index=np.arange(nsims), columns=np.arange(model.ycat))
+    probs1 = pd.DataFrame(index=np.arange(nsims),
+                          columns=np.arange(model.ycat))
+    probs2 = pd.DataFrame(index=np.arange(nsims),
+                          columns=np.arange(model.ycat))
     name = model.coefs.index[model.ycat - 1 + len(model.inflate) + ordvar]
     probs1 = probs1.add_suffix(": " + name + " = 0")
     probs2 = probs2.add_suffix(": " + name + " = 1")
     for i in range(nsims):
         bsim = np.random.multivariate_normal(estimate, vcov)
-        bsim2 = bsim[
-                model.ycat
-                - 1
-                + len(model.inflate): model.ycat
-                                      - 1
-                                      + len(model.inflate)
-                                      + len(model.ordered)
-                ]
+        bsim2 = bsim[model.ycat - 1 + len(model.inflate):
+                     model.ycat - 1 + len(model.inflate) + len(model.ordered)]
         xb1 = xsim1.dot(bsim2)
         xb2 = xsim2.dot(bsim2)
         probsordered1[model.ycat - 1] = 1 - norm.cdf(
