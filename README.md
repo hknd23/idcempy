@@ -267,7 +267,7 @@ Unordered polytomous outcome variables sometimes present inflation in the baseli
 Data comes from Arceneaux and Kolodny ([2009](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1540-5907.2009.00399.x))
 
 
-We begin by importing the `imnl` library and dataset.
+We begin by importing the `imnl` module and the 2004 Presidential Vote dataset.
 
 ```python
 from zmiopc import imnl
@@ -275,7 +275,7 @@ url= 'https://github.com/hknd23/idcempy/raw/main/data/replicationdata.dta'
 data= pd.read_stata(url)
 ```
 
-Define the outcome variable (y) covariates in the split-stage (z) and second-stage (x).
+Define the outcome variable (y, whose categories are numerically represented by 0, 1, and 2), covariates in the split-stage (z) and second-stage (x).
 
 ```python
 x = ['educ', 'party7', 'agegroup2']
@@ -284,14 +284,14 @@ y = ['vote_turn']
 ```
 
 ```python
-order = [0, 1, 2]
+reference = [0, 1, 2]
 inflatecat = "baseline"
 ```
 
-The following line of code estimates the "inflated" Multinomial Logit Model (iMNL).
+The following line of code estimates the "inflated" Multinomial Logit Model (iMNL). Through the argument `reference`, users can select which category of the dependent variable as the baseline, or 'reference' category by placing it first. `imnlmod` can account for inflation in any of the three catergories. Argument `inflatecat` allows user to specify the inflated category. In this example, '0' is the baseline and inflated category.
 
 ```python
-imnl_2004vote = imnl.imnlmod(data, x, y, z, order, inflatecat)
+imnl_2004vote = imnl.imnlmod(data, x, y, z, reference, inflatecat)
 ```
 
 Print the est
