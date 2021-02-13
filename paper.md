@@ -6,14 +6,11 @@ authors:
 - affiliation: 2
   name: Sergio Béjar
   orcid: 0000-0002-9352-3892
-- affiliation: 3
-  name: Nicolás Schmidt
-  orcid: 0000-0001-5083-5792
 - affiliation: 1
   name: Vineeta Yadav
 - affiliation: 1
   name: Bumba Mukherjee
-date: "02 February 2020"
+date: "13 February 2021"
 output:
   html_document:
     df_print: paged
@@ -21,45 +18,106 @@ output:
 bibliography: paper.bib
 
 tags:
-- Python
+- Python, Inflated Order Probit Models, Inflated Multinomial Models
 
 affiliations:
 - index: 1
   name: Dept. of Political Science, Pennsylvania State University
 - index: 2
   name: Dept. of Political Science, San Jose State University
-- index: 3
-  name: Dept. of Political Science. Universidad de la República, UY
-
+  
 ---
 # Summary
+Inflated discrete choice models have been recently developed to
+address category inflation in ordered and unordered 
+polytomous choice variables [@harris2007zero; @bagozzi2012mixture; @bagozzi2017distinguishing].
+`IDCeMPy` is a comprehensive Python package that allows users 
+to easily fit three distinct sets of inflated discrete choice 
+models: Zero-Inflated Ordered Probit (ZIOP), Middle-Inflated Ordered Probit (MIOP), 
+and Inflated Multinomial Logit (IMNL) models. While the ZIOP model
+permits careful evaluation of zero-inflated ordered choice outcomes
+that results from two  data generating processes (hereafter, “d.g.p’s”),
+the MIOP model accounts for ordered choice outcomes in which the 
+inflated middle-category emerges from distinct d.g.p’s. 
+The IMNL models account for the large proportion—and heterogeneous 
+mixture—of observations in the baseline and other lower outcome 
+categories within MNL models that are employed to analyze multiple
+unordered polytomous outcomes. `IDCeMPy` thus provides users with 
+versatile tools that provide accurate inferences when working with inflated
+ordered and unordered polytomous outcome variables. It can be 
+applied to data in Economics, Engineering, Political Science, Psychology, and Public Health. 
 
+# Statement of Need
+Scholars and Data Scientists often use discrete choice models to evaluate ordered outcomes using the ordered 
+probit model and unordered polytomous measures via the multinomial logit (MNL) estimator. These models, 
+however, cannot account for the fact that in many ordered and unordered polytomous choice situations, 
+an excessive share of observations—stemming from two distinct d.g.p’s—fall into a single category which 
+is thus “inflated.” For instance, ordered outcome measures of self-reported smoking behavior that range 
+from 0 for “no smoking” to 3 for “smoking 20 cigarettes or more daily” contain excessive observations 
+in the zero (no smoking) category that includes two types of non-smokers: individuals who never smoke 
+cigarettes, and those who smoked previously but temporarily stopped smoking because of their high price 
+[@harris2007zero; @greene2015inflated].  
 
-Ordered dependent variables that range from the lowest outcome category of zero to a higher category are employed in Biomedical research, Economics, Political Science, Psychology and Public Health. For example, in Public Health, self-reported ordered survey response measures on severity of depression are operationalized as 0 for none, 1 for mild, 2 for moderate, and 3 for severe [@crossley2002reliability; @baker2004self; @greene2015inflated]. Ordered survey response data on individual smoking behavior evaluated by economists range from 0 for “no smoking” to 3 for “smoking 20 or more cigarettes per day” [@harris2007zero]. Such ordered dependent variables are analyzed via standard ordered probit (OP) or ordered logit (OL) models. However, the OP (and OL) model cannot statistically account for the preponderance of zero observations that often exists in the lowest (i.e., “zero”) outcome category in ordered dependent variables, particularly when these zeros result from two distinct data generating processes [@harris2007zero; @bagozzi2015modeling]. An example of a “zero-inflated” ordered dependent variable in which the lowest outcome category has excessive zero observations produced by two data generating processes (d.g.p’s) is self-reported smoking behavior. Indeed, the high share of zeros observed in the “no smoking” outcome category is recorded as 0 for individuals in Regime 0 (“always-zero” group) who never smoke cigarettes and for those in Regime 1 who smoked previously but temporarily stopped smoking because of the high price of cigarettes[@harris2007zero: 1074]. 
+In ordered choice measures such as immigration attitudes, it is the middle-category of “indifference” 
+that is inflated since it includes respondents who are truly indifferent about immigration and those 
+who select “indifference” because of social desirability reasons 
+[@bagozzi2012mixture; @brown2020modelling]. Further, in unordered polytomous variables of vote choice, 
+for example, the baseline category is frequently inflated as it includes non-voters who abstain from 
+voting in an election owing to temporary factors and routine non-voters who are disengaged from 
+the political process [@arceneaux2009educating; @bagozzi2017distinguishing]. Failing to account for such category inflation in discrete choice measures leads to model misspecification, 
+biased estimates, and incorrect inferences. 
 
-Excessive zeros observed in the lowest outcome of the ordered depression severity response variable also emerges from two populations: one group that has never experienced depression, and a second group that experienced clinical depression in the past but not during the assessed time-period analyzed in the survey questionnaire. Failing to account for excessive zeros produced by distinct d.g.p’s in a zero-inflated ordinal dependent variable—as done by the OP and OL model—leads to model misspecification and biased estimates. To address this limitation, @harris2007zero developed the Zero-Inflated Ordered Probit (ZiOP) model that accounts for excessive zeros in ordered dependent variables that relate to two d.g.p’s. The ZiOP model does so by jointly estimating two latent equations: (1) the probit split-stage equation that estimates the effect of covariates on the probability of observations being in Regime 0 versus Regime 1, and (2) an OP outcome equation that estimates the effect of a second set of covariates on the probability of observing each ordered category, conditional on observations being in Regime 0. The stochastic error terms from these two latent equations are correlated in the ZiOPC model but are independent in the ZiOP model.  By jointly estimating the two aforementioned latent equations, the ZiOP(C) models avoid model misspecification since they statistically account for the preponderant share of zero observations in one’s zero-inflated ordinal dependent variable that results from two d.g.p’s. Our `ZiopcPy` Python package described below contains functions to fit the OP, ZiOP and ZiOPC models, and assess their performance.
+@dale2018estimation's ZiOP STATA command fits the Zero-Inflated Ordered Probit without
+correlated errors, while @xia2019gidm's gidm STATA command fits discrete choice models 
+without correlated errors for inflated zero and other lower-category discrete outcomes. 
+But there does not exist a comprehensive (e.g., Python) package that offers functions to 
+estimate and assess the performance of inflated ordered probit models with correlated errors, 
+the Middle-Inflated Ordered Probit, and inflated MNL models. 
 
+# Package Architecture
+`IDCeMPy` provides functions to fit the Zero-Inflated Ordered Probit (ZiOP) model without 
+and with correlated errors (ZiOPC model), and the Middle-Inflated Ordered Probit (MiOP) model
+without and with correlated errors (MiOPC). These models account for the inflated share of 
+observations in either the zero or middle-category by combining a single binary “split-stage” 
+probit equation with an ordered probit “outcome-stage” equation. Users can treat the error terms 
+from these two equations as independent or correlated in the package’s estimation routines. 
+`IDCeMPy` also includes functions to fit inflated MNL models—combining a logit split-stage equation,
+and a MNL outcome-stage equation—to account for the preponderant and heterogeneous share of 
+observations in the baseline or any lower category in unordered polytomous outcome measures. 
+Combining two probability distributions by estimating two equations in each aforementioned 
+model statistically addresses the inflated share of observations in an ordered or unordered 
+choice category that results from distinct d.g.p’s. This ensures that each inflated discrete 
+choice model in `IDCeMPy` avoids model misspecification and provides accurate estimates when 
+evaluating inflated ordered and unordered polytomous dependent variables. `IDCeMPy`
+also provides functions to assess each included model’s goodness-of-fit, extract marginal effects, 
+and conduct tests for model comparison. The ZiOP(C) models can assess, for instance, zero-inflation 
+in ordered outcome measures of self-reported smoking behavior [@harris2007zero], 
+demand for health treatment [@greene2015inflated], and accident injury-severity 
+outcomes [@fountas2018analysis]. The MiOP(C) models can address middle-category 
+inflation in, for example, ordered measures like monetary policy [@brown2020modelling] and attitudes 
+towards European Union (EU) membership [@bagozzi2012mixture]. The inflated MNL models can 
+evaluate inflated unordered polytomous outcome measures such as voter choice 
+[@arceneaux2009educating] and consumer demand [@richards2018new].    
 
-# Statement of Need 
+IDCeMPy contains the functions listed below to estimate the aforementioned inflated discrete choice models via MLE using Newton numerical optimization methods: 
+* `opmod`; `iopmod`; `iopcmod`: Fits respectively the ordered probit (OP) model, the Zero-Inflated (ZIOP) and Middle-Inflated ordered probit (MIOP) models without correlated errors, and the ZIOPC and MIOPC models with correlated errors.
+* `opresults`; `iopresults`; `iopcresults`: Stores covariate estimates, Variance-Covariance (VCV) matrix, Log-Likelihood and AIC statistics of the object models.
+* `iopfit`; `iopcfit`: Computes fitted probabilities from each estimated model’s objects.
+* `vuong_opiop`; `vuong_opiopc`: Calculates Vuong test statistic for comparing the performance of the OP with the ZiOP(C) and MiOP(C) models.
+* `split_effects`; `ordered_effects`: Estimates marginal effects of covariates in the split-stage and outcome-stage respectively. 
+* `imnlmod`: Fits baseline and other lower-category inflated MNL models.
+* `imnlresults`: Store are illustrated using the ordered EU membership attitudes outcome variable covariate estimates, VCV matrix, Log-Likelihood and AIC statistics of `imnlmod`.  
 
-The ZiOP model without correlated errors is estimated in Limdep/NLogit and by using dale2018estimation `zioprobit` command in STATA 15. The `zioprobit` command, however, does not estimate the ZiOP with correlated errors even though the error term from the model’s two latent equations are often correlated [@harris2007zero; @bagozzi2015modeling]. There also does not exist any Python package that provides functions to estimate the ZiOP model with and without correlated errors, and assess these models using post-estimation commands. Our `ZiopcPy` Python package incorporates functions to estimate and evaluate the OP model, the ZiOP model without correlated errors, and ZiOPC model with correlated errors. The probit split-stage equation and OP outcome-stage equation are jointly estimated for both the ZiOP and ZiOPC models. By combining two probability distributions—via estimation of these two latent equations—that jointly produce the observed data, the ZiOP(C) models statistically account for the dual d.g.p. that generate excessive zero observations in zero-inflated ordered dependent variables. This feature avoids model misspecification and provides accurate estimates when evaluating the impact of covariates on zero-inflated ordered dependent variables. `ZiopcPy` also includes functions to compute the probability with which observations in the sample are in the Regime 0 versus Regime 1 group in the zero-inflated outcome category, assess the models’ goodness-of-fit, obtain the covariates marginal effects, and implement tests to perform model comparison. The ZiOP(C) models can evaluate the following zero-inflated ordered dependent variables: self-assessed health status or depression severity [@greene2015inflated], self-reported smoking behavior [@harris2007zero], interstate conflict escalation [@senese1997between; @bagozzi2015modeling], and state-perpetrated repression [@besley2009repression].
-
-
-# ZiopcPy Python Package  
-
-`ZiopcPy` contains the following functions to estimate the OP, ZiOP and ZiOPC models via Maximum Likelihood Estimation using Newton numerical optimization methods: 
-
-* `opmod`; `iopmod`; `iopcmod`: `opmod` fits the standard OP model. `iopmod` and `iopcmod` fit the Zero-Inflated Ordered Probit model without and with correlated errors respectively.
-* `opresults`; `iopresults`; `iopcresults`: Stores and presents the covariate estimates, variance-covariance (VCV) matrix, log-likelihood and AIC results from the OP, ZiOP, and ZiOPC model.   
-* `iopfit`; `iopcfit`: Computes the fitted probabilities from the estimated `iopmod` and `iopcmod`.
-* `vuong_opiop`; `vuong_opiopc:` Calculates the Vuong test statistic to compare the performance of the OP to the ZiOP and ZiOPC model. 
-
-The covariate estimates, VCV matrix, and fitted probabilities from the estimated ZiOP(C) models in `ZiopcPy` can be used to calculate the marginal effect of the ZiOP(C) models’ (i) split-stage covariates on the probability of observations being in the always-zero versus Regime 1 group and (ii) outcome-stage covariates on the probability of each outcome category, conditional on observations being in the always-zero group. The Vuong test results evaluate the three estimated models’ performance and assesses whether the ZiOP(C) models are necessary to fit the relevant data.  To illustrate the `ZiopcPy` package's functionality, all the functions listed above are evaluated using the political violence ordered dependent variable in Besley and Persson’s (2009) data that is described in the package.
+The functions in IDCeMPy that fit the (i) ZiOP(C) models are presented using the ordered self-reported 
+smoking behavior dependent variable from the [2018 National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm), (ii) MiOP(C) models 
+are illustrated using the ordered EU membership attitudes outcome variable 
+in @bagozzi2012mixture's data, and (iii) inflated MNL models are evaluated using the unordered 
+polytomous vote choice dependent variable in @arceneaux2009educating's data. 
+These three datasets are described in the package.
 
 # Availability 
-`ZiopcPy` is written in Python 3. Code and detailed installation instructions can be found at https://github.com/hknd23/ziopcpy. `ZiopcPy` is also available on [PyPi](https://pypi.org/project/ziopcpy/0.1.2/)
+IDCeMPy is an Open-source software made available under the MIT license that can be installed from its [GitHub repository](https://github.com/hknd23/idcempy). 
 
-# References
 
 
 
