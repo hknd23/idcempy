@@ -28,9 +28,9 @@ process (d.g.p.).
 
 An excessive (“inflated”) share of observations—stemming from two distinct d.g.p’s—fall into a single choice category in many ordered and unordered polytomous outcome variables. Standard Ordered Probit and Multinomial Logit models cannot account for such category inflation which leads to biased inferences. Examples include,
 
-*	The inflated zero-category of no smoking in ordered measures of self-reported smoking behavior is generated from nonsmokers who never smoke cigarettes and those who smoked previously but temporarily stopped smoking because of high cigarette prices.
+*	The inflated zero-category of "no smoking" in ordered measures of self-reported smoking behavior is generated from nonsmokers who never smoke cigarettes and those who smoked previously but temporarily stopped smoking because of high cigarette prices.
 
-*	The inflated indifference middle-category in ordered measures of immigration attitudes includes respondents truly indifferent to immigration and those that choose indifference for social desirability reasons.  
+*	The inflated "indifference" middle-category in ordered measures of immigration attitudes includes respondents truly indifferent to immigration and those that choose indifference for social desirability reasons.  
 
 *	The inflated baseline or other lower outcome categories of unordered polytomous outcome measures of vote choice include nonvoters who temporarily abstain from voting and routine nonvoters who always abstain. 
 
@@ -42,8 +42,8 @@ Each inflated discrete choice model in this package addresses category inflation
 
 | Function         | Description                                                                                                          |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `opmod`; `iopmod`; `iopcmod` |Fits respectively the ordered probit (OP) model, the Zero-Inflated (ZIOP) and Middle-Inflated ordered probit (MIOP) models without correlated errors, and the ZIOPC and MIOPC models that incorporate correlated errors. |
-|`opresults`; `iopresults`; `iopcresults`| Presents covariate estimates, Variance-Covariance matrix, and goodness-of-fit statistics (Log-Likelihood and AIC) of `opmod`, `iopmod`, and `iopcmod`. |
+| `opmod`; `iopmod`; `iopcmod` |Fits respectively the ordered probit (OP) model, the Zero-Inflated (ZIOP) and Middle-Inflated ordered probit (MIOP) models without correlated errors, and the ZIOPC & MIOPC models that incorporate correlated errors. |
+|`opresults`; `iopresults`; `iopcresults`| Presents covariate estimates, Variance-Covariance matrix, and goodness-of-fit statistics (Log-Likelihood and AIC) of `opmod`, `iopmod`, `iopcmod`. |
 | `iopfit`; `iopcfit`| Computes the fitted probabilities from each estimated model's object.|
 | `vuong_opiop`;  `vuong_opiopc` | Calculates Vuong test statistic for comparing the performance of the OP with the ZiOP(C) and MiOP(C) models.|
 |`split_effects`; `ordered_effects`| Estimates marginal effects of covariates in the split-stage and outcome-stage respectively.|
@@ -75,11 +75,11 @@ all the models.
 
 ## Using the Package
 
-### Example 1: Zero-inflated Ordered Probit Models with Correlated Errors (ZiOPC)
-We first illustrate how **IDCeMPy** can be used to estimate models when the ordered outcome variable presents "zero-inflation."
-For that purpose we use data from the 2018 [National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm).  As mentioned above, **IDCeMPy** allows you to estimate "Zero-inflated" Ordered Probit models with and without correlated errors.
+### Example 1: Zero-inflated Ordered Probit Model with Correlated Errors (ZIOPC)
+We first illustrate how **IDCeMPy** can be used to estimate the OP and ZIOP(C) models for zero-inflated ordered outcome variables
+We do so by using the CDC's 2018 [National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm) in which the self-reported ordered tobacco consumption outcome variable ranges from 0 for "no smoking" to 2 for "x". The zero (no smoking) category in this ordered measure contains excessive observations that includes nonsmokers who never smoke (non-inflated cases) and those who temporarily stopped smoking because of high cigarette prices.   
 
-We demonstrate the use of a "Zero-inflated" Ordered Probit Model with correlated errors (ZMiOPC).  An example of the ZiOP model without correlated erros can be found in the documentation of the package.
+**IDCeMPy** allows users to estimate the Zero-inflated Ordered Probit (ZIOP) model without and with correlated errors (ZIOPC). The application of the standard OP model and ZIOP model without correlated errors to the CDC's 2018 Tobacco Consumption data is provided in the package's documentation. We fit the Zero-Inflated Ordered Probit Model with correlated errors (ZIOPC) to this data below. 
 
 First, import `IDCeMPy`, required packages, and dataset.
 
@@ -99,7 +99,7 @@ Y = ['cig_count']
 Z = ['gender_dum']
 ```
 
-In addition, we define an array of starting parameters before estimating the `ziopc` model. If starting parameters are not specified, the function automatically generates them.
+In addition, we define an array of starting parameters before estimating the `ziopc` model. If the starting parameters are not specified, the function automatically generates them.
 
 ```python
 pstart = np.array([.01, .01, .01, .01, .01, .01, .01, .01, .01, .01])
@@ -112,17 +112,16 @@ ziopc_tob = zmiopc.iopcmod('ziopc', pstartziopc, data, X, Y, Z, method='bfgs',
                     weights=1, offsetx=0, offsetz=0)
 ```
 
-If you like to estimate your model without correlated errors, you only substitute the parameter 'ziopc' for 'ziop'.
+Users can estimate the ZIOP model without correlated errors by simply substituting the parameter 'ziop' for 'ziopc'.
 
-
-The results of this example are stored in a class (`ZiopcModel`) with the following attributes:
+The results from the ZIOPC model for this application are stored in a class (`ZiopcModel`) with the following attributes:
 
 * *coefs*: Model coefficients and standard errors
 * *llik*: Log-likelihood
 * *AIC*: Akaike information criterion
 * *vcov*: Variance-covariance matrix
 
-We, for example, can print out the covariate estimates, standard errors, *p* value and *t* statistics by typing:
+We can generate the covariate estimates, standard errors, *p* value and *t* statistics in the ZIOPC case by typing:
 
 ```python
 print(ziopc_tobb.coefs)
@@ -131,12 +130,12 @@ print(ziopc_tobb.coefs)
 ```python
                           Coef        SE     tscore             p       2.5%      97.5%
 
-Split-stage
+Probit Split-stage
 -----------------------
 intercept              9.538072  3.470689   2.748178  5.992748e-03   2.735521  16.340623
 gender_dum            -9.165963  3.420056  -2.680062  7.360844e-03 -15.869273  -2.462654
 
-Second-stage
+OP Outcome-stage
 -----------------------
 age                   -0.028606  0.008883  -3.220369  1.280255e-03  -0.046016  -0.011196
 grade                  0.177541  0.010165  17.465452  0.000000e+00   0.157617   0.197465
@@ -148,7 +147,7 @@ cut4                  -0.705836  0.041432 -17.036110  0.000000e+00  -0.787043  -
 rho                   -0.415770  0.074105  -5.610526  2.017123e-08  -0.561017  -0.270524
 ```
 
-Or the Akaike Information Criterion (AIC):
+The Akaike Information Criterion (AIC) statistics for the ZIOPC model is obtained from:
 
 ```python
 print(ziopc_tobb.AIC)
