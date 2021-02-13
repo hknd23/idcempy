@@ -260,6 +260,7 @@ zmiopc.vuong_opiopc(op_EU, miopc_EU)
 
 ```python
 -10.4357
+```
 
 ### Example 3: Estimation of "inflated" Multinomial Logit Models
 Unordered polytomous outcome variables sometimes present inflation in the baseline category, and not accounting for it could lead you to make faulty inferences.  But **IDCeMPy** has functions that make it easier for you to estimate Multinomial Logit Models that account for such inflation (iMNL).  This example shows how you can estimate iMNL models easily.
