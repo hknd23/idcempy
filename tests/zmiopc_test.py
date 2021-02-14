@@ -43,18 +43,18 @@ def test_iop_fitted():
 # MiOP Examples
 dataeu = pd.read_stata(os.getcwd()+"/data/EUKnowledge.dta")
 
-Y = ["EU_support_ET"]
-X = ['Xenophobia', 'discuss_politics']
-Z = ['discuss_politics', 'EU_Know_obj']
-yvar = np.unique(dataeu[Y])
+Y2 = ["EU_support_ET"]
+X2 = ['Xenophobia', 'discuss_politics']
+Z2 = ['discuss_politics', 'EU_Know_obj']
+yvar = np.unique(dataeu[Y2])
 
 
 def test_miopc_coefs():
     miopc_EU = zmiopc.iopcmod('miopc',
-                              dataeu, X, Y, Z)
-    assert len(miopc_EU.coefs) == len(X + Z) + len(yvar) + 1
+                              dataeu, X2, Y2, Z2)
+    assert len(miopc_EU.coefs) == len(X2 + Z2) + len(yvar) + 1
 
 
 def test_miop_coefs():
-    miop_EU = zmiopc.iopmod('miop', dataeu, X, Y, Z)
-    assert len(miop_EU.coefs) == len(X + Z) + len(yvar)
+    miop_EU = zmiopc.iopmod('miop', dataeu, X2, Y2, Z2)
+    assert len(miop_EU.coefs) == len(X2 + Z2) + len(yvar)
