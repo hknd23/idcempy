@@ -101,6 +101,7 @@ evaluate inflated unordered polytomous outcome measures such as voter choice
 [@arceneaux2009educating] and consumer demand [@richards2018new].    
 
 IDCeMPy contains the functions listed below to estimate the aforementioned inflated discrete choice models via MLE using Newton numerical optimization methods: 
+
 * `opmod`; `iopmod`; `iopcmod`: Fits respectively the ordered probit (OP) model, the Zero-Inflated (ZIOP) and Middle-Inflated ordered probit (MIOP) models without correlated errors, and the ZIOPC and MIOPC models with correlated errors.
 
 * `opresults`; `iopresults`; `iopcresults`: Stores covariate estimates, Variance-Covariance (VCV) matrix, Log-Likelihood and AIC statistics of the object models.
@@ -113,7 +114,7 @@ IDCeMPy contains the functions listed below to estimate the aforementioned infla
 
 * `imnlmod`: Fits baseline and other lower-category inflated MNL models.
 
-* `imnlresults`: Store are illustrated using the ordered EU membership attitudes outcome variable covariate estimates, VCV matrix, Log-Likelihood and AIC statistics of `imnlmod`.  
+* `imnlresults`: Stores covariate estimates, VCV matrix, Log-Likelihood and AIC statistics of `imnlmod`.  
 
 The functions in IDCeMPy that fit the (i) ZiOP(C) models are presented using the ordered self-reported 
 smoking behavior dependent variable from the [2018 National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm), (ii) MiOP(C) models 
