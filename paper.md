@@ -102,11 +102,17 @@ evaluate inflated unordered polytomous outcome measures such as voter choice
 
 IDCeMPy contains the functions listed below to estimate the aforementioned inflated discrete choice models via MLE using Newton numerical optimization methods: 
 * `opmod`; `iopmod`; `iopcmod`: Fits respectively the ordered probit (OP) model, the Zero-Inflated (ZIOP) and Middle-Inflated ordered probit (MIOP) models without correlated errors, and the ZIOPC and MIOPC models with correlated errors.
+
 * `opresults`; `iopresults`; `iopcresults`: Stores covariate estimates, Variance-Covariance (VCV) matrix, Log-Likelihood and AIC statistics of the object models.
+
 * `iopfit`; `iopcfit`: Computes fitted probabilities from each estimated model’s objects.
+
 * `vuong_opiop`; `vuong_opiopc`: Calculates Vuong test statistic for comparing the performance of the OP with the ZiOP(C) and MiOP(C) models.
+
 * `split_effects`; `ordered_effects`: Estimates marginal effects of covariates in the split-stage and outcome-stage respectively. 
+
 * `imnlmod`: Fits baseline and other lower-category inflated MNL models.
+
 * `imnlresults`: Store are illustrated using the ordered EU membership attitudes outcome variable covariate estimates, VCV matrix, Log-Likelihood and AIC statistics of `imnlmod`.  
 
 The functions in IDCeMPy that fit the (i) ZiOP(C) models are presented using the ordered self-reported 
