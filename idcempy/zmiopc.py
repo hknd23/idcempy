@@ -1179,7 +1179,9 @@ def split_effects(model, inflvar, nsims=10000):
         probs1[i] = norm.cdf(zg1)
         probs2[i] = norm.cdf(zg2)
     name = model.coefs.index[model.ycat - 1 + inflvar]
-    changeprobs = pd.DataFrame({name + " 0": probs1, name + " 1": probs2})
+    changeprobs = pd.DataFrame({name.replace("Inflation: ", "") + "= 0": probs1,
+                                name.replace("Inflation: ", "") + "= 1": probs2}
+                               )
     return changeprobs
 
 
@@ -1241,8 +1243,8 @@ def ordered_effects(model, ordvar, nsims=10000):
     probs2 = pd.DataFrame(index=np.arange(nsims),
                           columns=np.arange(model.ycat))
     name = model.coefs.index[model.ycat - 1 + len(model.inflate) + ordvar]
-    probs1 = probs1.add_suffix(": " + name + " = 0")
-    probs2 = probs2.add_suffix(": " + name + " = 1")
+    probs1 = probs1.add_suffix(": " + name.replace("Ordered: ", "") + " = 0")
+    probs2 = probs2.add_suffix(": " + name.replace("Ordered: ", "") + " = 1")
     for i in range(nsims):
         bsim = np.random.multivariate_normal(estimate, vcov)
         bsim2 = bsim[model.ycat - 1 + len(model.inflate):
@@ -1265,6 +1267,16 @@ def ordered_effects(model, ordvar, nsims=10000):
             )
         probs1.iloc[i:, ] = probsordered1
         probs2.iloc[i:, ] = probsordered2
-
-        changeprobs = probs1.merge(probs2, right_index=True, left_index=True)
+    changeprobs = pd.DataFrame(index=np.arange(nsims),
+                               columns=np.arange(2 * model.ycat))
+    newnames = list(np.repeat("", model.ycat * 2))
+    for j in range(0, 2 * model.ycat, 2):
+        changeprobs.iloc[:, j] = probs1.iloc[:, round(j / 2)]
+    for j in range(1, 2 * model.ycat, 2):
+        changeprobs.iloc[:, j] = probs2.iloc[:, round((j - 1) / 2)]
+    for j in range(0, 2 * model.ycat, 2):
+        newnames[j] = list(probs1.columns)[round(j / 2)]
+    for j in range(1, 2 * model.ycat, 2):
+        newnames[j] = list(probs2.columns)[round((j - 1) / 2)]
+    changeprobs.columns = newnames
     return changeprobs
