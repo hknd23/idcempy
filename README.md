@@ -301,20 +301,20 @@ Print the est
 
 ```python
                        Coef    SE  tscore     p    2.5%  97.5%
-Split-stage
+Logit Split-stage
 ----------------------
 intercept            -4.935 2.777  -1.777 0.076 -10.379  0.508
 educ                  1.886 0.293   6.441 0.000   1.312  2.460
 agegroup2             1.295 0.768   1.685 0.092  -0.211  2.800
 
-Ordered-stage: 1
+Unordered Category 1
 ---------------------
 intercept            -4.180 1.636  -2.556 0.011  -7.387 -0.974
 educ                  0.334 0.185   1.803 0.071  -0.029  0.697
 party7                0.454 0.057   7.994 0.000   0.343  0.566
 agegroup2             0.954 0.248   3.842 0.000   0.467  1.441
 
-Ordered-stage: 2
+Unordered Category 2
 ----------------------
 intercept             0.900 1.564   0.576 0.565  -2.166  3.966
 educ                  0.157 0.203   0.772 0.440  -0.241  0.554
