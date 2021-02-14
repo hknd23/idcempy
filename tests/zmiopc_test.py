@@ -1,8 +1,9 @@
 import numpy as np
 import pandas as pd
 from idcempy import zmiopc
+import os
 
-DAT = pd.read_stata("C:/Users/Nguyen/Box/Summer 20/bp_exact_for_analysis.dta")
+DAT = pd.read_stata(os.getcwd()+"/data/bp_exact_for_analysis.dta")
 X = ['logGDPpc', 'parliament', 'disaster', 'major_oil', 'major_primary']
 Xsmall = ['logGDPpc', 'parliament', 'disaster']
 Z = ['logGDPpc', 'parliament']
@@ -39,17 +40,8 @@ def test_iop_fitted():
     assert len(fitttedziop.responseordered) == len(fitttedziop.responsefull)
 
 
-# OP Model
-pstartop = np.array([-1, 0.3, -0.2, -0.5, 0.2, .9, -.4])
-
-DAT = pd.read_stata("C:/Users/Nguyen/Box/Summer 20/bp_exact_for_analysis.dta")
-X = ['logGDPpc', 'parliament', 'disaster', 'major_oil', 'major_primary']
-Y = ['rep_civwar_DV']
-data = DAT
-JCR_OP = zmiopc.opmod(pstartop, data, X, Y)
-
 # MiOP Examples
-dataeu = pd.read_stata("C:/Users/Nguyen/Box/Summer 20/EUKnowledge.dta")
+dataeu = pd.read_stata(os.getcwd()+"/data/EUKnowledge.dta")
 
 Y = ["EU_support_ET"]
 X = ['Xenophobia', 'discuss_politics']

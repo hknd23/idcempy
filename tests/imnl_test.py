@@ -1,9 +1,9 @@
 import pandas as pd
 from idcempy import imnl
+import os
 
 DAT = pd.read_stata(
-    "C:/Users/Nguyen/Documents/Replication II/Replication "
-    "II/replicationdata.dta", convert_categoricals=False)
+    os.getcwd()+"/data/replicationdata.dta", convert_categoricals=False)
 
 x = ['educ', 'party7', 'agegroup2']
 z = ['educ', 'agegroup2']
