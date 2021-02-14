@@ -44,9 +44,9 @@ Each inflated discrete choice model in this package addresses category inflation
 | ---------------- | -------------------------------------------------------------------------------------------------------------------- |
 | `opmod`; `iopmod`; `iopcmod` |Fits respectively the ordered probit (OP) model, the Zero-Inflated (ZIOP) and Middle-Inflated ordered probit (MIOP) models without correlated errors, and the ZIOPC & MIOPC models that incorporate correlated errors. |
 |`opresults`; `iopresults`; `iopcresults`| Presents covariate estimates, Variance-Covariance matrix, and goodness-of-fit statistics (Log-Likelihood and AIC) of `opmod`, `iopmod`, `iopcmod`. |
-| `iopfit`; `iopcfit`| Computes the fitted probabilities from each estimated model's object.|
+| `iopfit`; `iopcfit`| Computes fitted probabilities from each estimated model's object.|
 | `vuong_opiop`;  `vuong_opiopc` | Calculates Vuong test statistic for comparing the performance of the OP with the ZiOP(C) and MiOP(C) models.|
-|`split_effects`; `ordered_effects`| Estimates marginal effects of covariates in the split-stage and outcome-stage respectively.|
+|`split_effects`; `ordered_effects`| Estimates marginal effects of covariates from the split-stage and outcome-stage respectively.|
 |`imnlmod` | Fits baseline and other lower-category inflated MNL models.|
 |`imnlresults` | Presents covariate estimates, Variance-Covariance matrix, and goodness-of-fit statistics of `imnlmod`.|
 
@@ -77,9 +77,9 @@ all the models.
 
 ### Example 1: Zero-inflated Ordered Probit Model with Correlated Errors (ZIOPC)
 We first illustrate how **IDCeMPy** can be used to estimate the OP and ZIOP(C) models for zero-inflated ordered outcome variables
-We do so by using the CDC's 2018 [National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm) in which the self-reported ordered tobacco consumption outcome variable ranges from 0 for "no smoking" to 2 for "x". The zero (no smoking) category in this ordered measure contains excessive observations that includes nonsmokers who never smoke (non-inflated cases) and those who temporarily stopped smoking because of high cigarette prices.   
+We do so by using the CDC's 2018 [National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm) in which the self-reported ordered tobacco consumption outcome variable ranges from 0 for "no smoking" to 3 for "x". The zero (no smoking) category in this ordered measure contains excessive observations that includes nonsmokers who never smoke (non-inflated cases) and those who temporarily stopped smoking because of high cigarette prices.   
 
-**IDCeMPy** allows users to estimate the Zero-inflated Ordered Probit (ZIOP) model without and with correlated errors (ZIOPC). The application of the standard OP model and ZIOP model without correlated errors to the CDC's 2018 Tobacco Consumption data is provided in the package's documentation. We fit the Zero-Inflated Ordered Probit Model with correlated errors (ZIOPC) to this data below. 
+**IDCeMPy** allows users to estimate the OP and Zero-inflated Ordered Probit (ZIOP) model without and with correlated errors (ZIOPC). The application of the OP model (avaiable from `opmod`) and ZIOP model without correlated errors (available from `iopmod`) to the CDC's 2018 Tobacco Consumption data is provided in the package's documentation. We fit the Zero-Inflated Ordered Probit Model with correlated errors (ZIOPC) to this data below. 
 
 First, import `IDCeMPy`, required packages, and dataset.
 
@@ -156,8 +156,9 @@ print(ziopc_tobb.AIC)
 ```python
 16061.716497590078
 ```
+**Present AIC results from OP and ZIOP model here and compare ZIOPC to ZIOP and OP**
 
-`split_effects` creates a dataframe with values of the change in predicted probabilities of the outome variable when 'gender_dum' equals 0, and when 'gender_dum' equals 1. The box plots below illustrate the change in predicted probablities using the values from the 'ziopc' dataframe.
+`split_effects` creates a dataframe that permits users to obtain and illustrate the marginal effect of the ZIOP(C) model's split-stage covariates on change in the predicted probability that the lowest (zero) category observations are non-inflated (versus inflated). In this example, the `split_effects` dataframe provides values of the change in the predicted probability of zero-category observations being non-inflated when the dummy split-stage covariate 'gender_dum' changes from 0 (female) to 1 (male). These values are used to illustrate via boxplots the change in the aforementioned predicted probablity (with 95% confidence intervals) when 'gender_dum' changes from 0 to 1. 
 
 ```python
 ziopcgender_split = zmiopc.split_effects(ziopc_tob, 1)
@@ -168,7 +169,7 @@ ziopcgender_split.plot.box(grid='False')
    <img src="https://github.com/hknd23/idcempy/blob/main/graphics/ziopc_me.png?raw=true" width="500" height="300" />
 </p>
 
-Similarly `ordered_effects`, calculates the change in predicted probabilities of each outcome in the ordered stage.
+`ordered_effects`creates a dataframe to obtain and illustrate the marginal effect of the ZIOP(C) model's outcome-stage covariates on change in the predicted probability of each ordered outcome category conditional on the lowest (zero) category observations being non-inflated. In the following example, `ordered_effects`allows users to calculate and illustrate via boxplots the change in the predicted probability (with 95% confidence intervals) of each ordered outcome category of the self-reported tobacco consumption outcome measure--that ranges from 0 to 3--when the dummy outcome-stage covariate 'gender_dum' changes from 0 to 1, conditional on zero-category observations being non-inflated.   
 
 ```python
 ziopcgender_ordered = zmiopc.ordered_effects(ziopc_tob, 2)
@@ -179,7 +180,7 @@ ziopcgender_ordered.plot.box(grid='False')
    <img src="https://github.com/hknd23/idcempy/blob/main/graphics/ZiOPC_Order_Gender.png" width="500" height="300" />
 </p>
 
-Module `zmiopc` also provides function `vuong_opiopc` to compare the performace of the ZiOPC model with a standard Ordered Probit model (also available through `opmod`).
+Module `zmiopc` also provides the function `vuong_opiopc` that employs the Vuong test stastic to compare the performace of the standard OP model (also available through `opmod`) versus the ZIOPC model and also the OP versus ZIOP model. The Vuong statistics from comparing the OP versus ZIOP comparison is given by: 
 
 ```python
 op_tob = zmiopc.opmod(data, X, Y)
@@ -189,18 +190,21 @@ zmiopc.vuong_opiopc(op_tob,ziopc_tob)
 ```python
 6.576246015382724
 ```
+Summarize the above result (ZIOPC > OP). Present the Vuong statistic comparing OP to ZIOP and summarize this result.  
 
-### Example 2: "Middle-inflated" Ordered Probit Models with Correlated Errors (MiOPC)
-You can also use **IDCeMPy** to estimate "inflated" Ordered Probit models if your outcome variable presents inflation in the "middle" category. For the sake of consistency, we present below the code needed to estimate a "Middle-inflated" Ordered Probit Model with correlated errors. Data fot this example comes from Elgün and Tillman ([2007](https://journals.sagepub.com/doi/10.1177/1065912907305684)).
+### Example 2: "Middle-inflated" Ordered Probit Models with Correlated Errors (MIOPC)
+We next illustrate how **IDCeMPy** can be employed to fit the OP and MIOP(C) models for inflated middle-category ordered outcome variables. This is done by using Elgün and Tillman's ([2007](https://journals.sagepub.com/doi/10.1177/1065912907305684)) survey-response data in which the ordered outcome measure of support for the European Union (EU) by Europeans is given by 1 for “a bad thing,” 2 for “neither good nor bad,” and 3 for “a good thing.” The middle (neither good nor bad) category in this ordered measure contains excessive observations that includes informed respondents who opt for this category based on their knowledge about the EU and uninformed respondents who choose this category to save face. 
 
-First, load the dataset.
+**IDCeMPy** allows users to estimate the OP and Middle-inflated Ordered Probit (MIOP) model without and with correlated errors (MIOPC). The application of the OP model (available from `opmod`) and MIOP model without correlated errors (available from `iopmod`) to the EU support data is provided in the package's documentation. We fit the Middle-Inflated Ordered Probit Model with correlated errors (ZIOPC) to this data below. 
+
+To this end, first load the dataset.
 
 ```python
 url= 'https://github.com/hknd23/idcempy/raw/main/data/EUKnowledge.dta'
 data= pd.read_stata(url)
 ```
 
-Now, define the lists with names of the covariates you would like to include in the split-stage (Z) and the second-stage (X) as well as the name of your "middle-inflated" outcome variable (Y).
+Now, define the lists with names of the covariates you would like to include in the MIOPC model's split-stage (**Z**) and the second-stage (**X**) as well as the name of the "middle-inflated" outcome variable (**Y**).
 
 ```python
 Y = ["EU_support_ET"]
@@ -218,13 +222,13 @@ miopc_EU = zmiopc.iopcmod('miopc', DAT, X, Y, Z)
 print(miopc_EU.coefs)
 
                               Coef    SE  tscore     p   2.5%  97.5%
-Split-stage
+Probit Split-stage
 ---------------------------
 int                         -0.129 0.021  -6.188 0.000 -0.170 -0.088
 discuss_politics             0.192 0.026   7.459 0.000  0.142  0.243
 EU_Know_obj                  0.194 0.027   7.154 0.000  0.141  0.248
 
-Second-stage
+OP Outcome-stage
 ---------------------------
 Xenophobia                  -0.591 0.045 -13.136 0.000 -0.679 -0.502
 discuss_politics            -0.029 0.021  -1.398 0.162 -0.070  0.012
@@ -233,8 +237,9 @@ cut2                        -0.322 0.103  -3.123 0.002 -0.524 -0.120
 rho                         -0.707 0.106  -6.694 0.000 -0.914 -0.500
 ```
 
+**Present AIC results from the MIOPC model first and then the MIOP and OP model. Compare MIOPC to MIOP and OP**
 
-
+In this EU support example, the `split_effects` dataframe provides values of the change in the predicted probability of middle-category observations being informed respondents (the non-inflated cases) when the dummy split-stage covariate 'EU_know_obj' changes from 0 to 1. These values are used to illustrate via boxplots the change in the predicted probablity (with 95% confidence intervals) mentioned above as, 
 <p align="center">
    <img src="https://github.com/hknd23/idcempy/raw/main/graphics/MiOPC_Split_EUKnow.png" width="500" height="300" />
 </p>
