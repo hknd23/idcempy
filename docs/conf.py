@@ -19,19 +19,16 @@ print(os.listdir())
 # Check if dependencies are there
 try:
     import pandas
-    print "pandas: %s, %s" % (pandas.__version__, pandas.__file__)
 except ImportError:
-    print "no pandas"
+    print("no pandas")
 try:
     import numpy
-    print "numpy: %s, %s" % (numpy.__version__, numpy.__file__)
 except ImportError:
-    print "no numpy"
+    print("no numpy")
 try:
     import scipy
-    print "scipy: %s, %s" % (scipy.__version__, scipy.__file__)
 except ImportError:
-    print "no scipy"
+    print("no scipy")
 # -- Project information -----------------------------------------------------
 
 project = 'IDCeMPy'
