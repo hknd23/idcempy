@@ -265,33 +265,29 @@ zmiopc.vuong_opiopc(op_EU, miopc_EU)
 ```
 **The Vuong test statistics from comparing the OP to the MIOP model (see documentation) is X; overall MIOPC provides best fit.**
 
-### Example 3: Inflated Multinomial Logit Models
-**IDCeMPy** also includes functions that users can employ to fit Inflated Multinomial Logit Models (IMNL) that account for the inflated (and heterogenous) share of observations that exist in the baseline or any other category of unordered polytomous outcome variables.  This example shows how you can estimate iMNL models easily.
-Data comes from Arceneaux and Kolodny ([2009](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1540-5907.2009.00399.x))
+### Example 3: Generalized Inflated Multinomial Logit Models (GIMNL)
+**IDCeMPy** also includes functions to fit Generalized Inflated Multinomial Logit Models that account for the inflated and thus heterogenous share of observations that can exist in the baseline or any other category of unordered polytomous outcome variables. To save space, we focus on just presenting the Baseline Inflated MNL (i.e., BIMNL) model that addresses excessive observations in the baseline category of unordered outcome measures. We fit this BIMNL model to the 2006 Pennsylvania State House elections data from Arceneaux and Kolodny ([2009](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1540-5907.2009.00399.x)). The 0,1,2 unordered individual vote choice outcome measure in their data includes the following options: abstained (their MNL baseline category), Democrat, or Republican/other. The inflated baseline category incorporates excessive observations of abstained nonvoters who did not vote in the said elections owing to temporary factors and routine nonvoters who never vote.   
 
-
-We begin by importing the `imnl` module and the 2004 Presidential Vote dataset.
+We begin by importing the `imnl` module and the Arceneaux and Kolodny (2009) data to illustrate how users can fit the BIMNL model. 
 
 ```python
 from zmiopc import imnl
 url= 'https://github.com/hknd23/idcempy/raw/main/data/replicationdata.dta'
 data= pd.read_stata(url)
 ```
-
-Define the outcome variable (y, whose categories are numerically represented by 0, 1, and 2), covariates in the split-stage (z) and second-stage (x).
+Define the unordered vote choice outcome variable in the BIMNL as **Y**, whose unordered categories are given by 0,1,2. Denote the covariates in this model's logit split-stage as **Z** and **X** for the MNL-outcome stage for each unordered category 1 and 2.  
 
 ```python
 x = ['educ', 'party7', 'agegroup2']
 z = ['educ', 'agegroup2']
 y = ['vote_turn']
 ```
-
+ 
 ```python
 reference = [0, 1, 2]
 inflatecat = "baseline"
 ```
-
-The following line of code estimates the "inflated" Multinomial Logit Model (iMNL). Through the argument `reference`, users can select which category of the dependent variable as the baseline, or 'reference' category by placing it first. `imnlmod` can account for inflation in any of the three catergories. Argument `inflatecat` allows user to specify the inflated category. In this example, '0' is the baseline and inflated category.
+While `imnlmod` can account for category inflation in any unordered outcome category,users can employ the argument `inflatecat` to specify the inflated category. Through the argument `reference`, users can select which category of the unordered outcome variable is the baseline ("reference") category by placing it first. Since the baseline ("0") category in the vote choice outcome measure is inflated, the following code fits the BIMNL Model. 
 
 ```python
 imnl_2004vote = imnl.imnlmod(data, x, y, z, reference, inflatecat)
@@ -307,14 +303,14 @@ intercept            -4.935 2.777  -1.777 0.076 -10.379  0.508
 educ                  1.886 0.293   6.441 0.000   1.312  2.460
 agegroup2             1.295 0.768   1.685 0.092  -0.211  2.800
 
-Unordered Category 1
+MNL Outcome Category 1
 ---------------------
 intercept            -4.180 1.636  -2.556 0.011  -7.387 -0.974
 educ                  0.334 0.185   1.803 0.071  -0.029  0.697
 party7                0.454 0.057   7.994 0.000   0.343  0.566
 agegroup2             0.954 0.248   3.842 0.000   0.467  1.441
 
-Unordered Category 2
+MNL outcome Category 2
 ----------------------
 intercept             0.900 1.564   0.576 0.565  -2.166  3.966
 educ                  0.157 0.203   0.772 0.440  -0.241  0.554
