@@ -155,6 +155,8 @@ print(ziopc_tobb.AIC)
 16061.716497590078
 ```
 **Present AIC results from OP and ZIOP model here and compare ZIOPC to ZIOP and OP**
+ZIOP AIC: ziop_tob.AIC 10138.321796550705
+OP AIC: op_tob.AIC 8837.44315981388
 
 `split_effects` creates a dataframe that provides values to illustrate via boxplots (with 95% Confidence Intervals) the marginal effect of the ZIOP(C) model's split-stage covariates on the first difference in the predicted probability that the zero-category observations are non-inflated. In the self-reported tobacco consumption example,`split_effects` provides and illustrates via boxplots (with 95% CIs) the first difference in the predicted probability of zero-category observations being non-inflated when the dummy split-stage covariate 'gender_dum' changes from 0 (female) to 1 (male).
 
@@ -189,6 +191,7 @@ zmiopc.vuong_opiopc(op_tob,ziopc_tob)
 6.576246015382724
 ```
 **The Vuong test statistics from comparing the OP to the ZIOP model (see documentation) is X; overall ZIOPC provides best fit.** 
+VUONG test OP-ZIOP: 6.622263380909158
 
 ### Example 2: Middle-inflated Ordered Probit Models with Correlated Errors (MIOPC)
 We next illustrate how **IDCeMPy** can be employed to fit the OP and MIOP(C) models for inflated middle-category ordered outcome variables. This is done by using Elgün and Tillman's ([2007](https://journals.sagepub.com/doi/10.1177/1065912907305684)) survey-response data in which the ordered outcome measure of support for the European Union (EU) by Europeans is given by 1 for “a bad thing,” 2 for “neither good nor bad,” and 3 for “a good thing.” The middle (neither good nor bad) category in this ordered measure contains excessive observations that includes informed respondents who opt for this category based on their knowledge about the EU and uninformed respondents who choose this category to save face. 
