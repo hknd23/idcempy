@@ -112,19 +112,12 @@ IDCeMPy contains the functions listed below to estimate the aforementioned infla
 The functions in IDCeMPy that fit the (i) ZiOP(C) models are presented using the ordered self-reported 
 smoking behavior dependent variable from the [2018 National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm), (ii) MiOP(C) models 
 are illustrated using the ordered EU membership attitudes outcome variable 
-in @bagozzi2012mixture's data, and (iii) inflated MNL models are evaluated using the unordered 
+in @elgun2007exposure's data, and (iii) inflated MNL models are evaluated using the unordered 
 polytomous vote choice dependent variable in @arceneaux2009educating's data. 
 These three datasets are described in the package.
 
 # Availability 
 IDCeMPy is an Open-source software made available under the MIT license that can be installed from its [GitHub repository](https://github.com/hknd23/idcempy). 
-
-
-
-
-
-
-
 
 
 
