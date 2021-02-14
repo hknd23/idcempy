@@ -2,8 +2,6 @@ import numpy as np
 import pandas as pd
 # import this after importing all other packages.
 from idcempy import zmiopc
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 DAT = pd.read_stata("C:/Users/Nguyen/Box/Summer 20/bp_exact_for_analysis.dta")
 # Ziop and ziopc examples
@@ -22,9 +20,7 @@ pstartziopc = np.array([-1.31, .32, 2.5, -.21,
                         .2, -0.2, -0.4, 0.2, .9, -.4, .1])
 
 # These are correct pstart
-##Numbers all over the place (copied from R codes)
-pstartx = np.array(
-    [-0.77, 0.90, 18.78, -2, .2, 0.04, -0.09, 0.26, 1.70, -0.42, -.1])
+
 
 ziopc_JCR = zmiopc.iopcmod('ziopc',
                            data, X, Y, Z, pstart=pstartziopc, method='bfgs',
@@ -52,10 +48,8 @@ ziop_JCRsmall = zmiopc.iopmod('ziop', pstartziopsmall,
 fitttedziopc = zmiopc.iopcfit(ziopc_JCR)
 fitttedziop = zmiopc.iopfit(ziop_JCR)
 
-
 print(ziopc_JCR.coefs)
 print(ziop_JCR.coefs)
-
 
 # OP Model
 pstartop = np.array([-1, 0.3, -0.2, -0.5, 0.2, .9, -.4])
@@ -68,22 +62,10 @@ pstartcut = [-1, 0.3]
 pstartx = [-0.2, -0.5, 0.2, .9, -.4]
 
 DAT = pd.read_stata("C:/Users/Nguyen/Box/Summer 20/bp_exact_for_analysis.dta")
-# Ziop and ziopc examples
-# Specifying Xs, Zs, and Y
 X = ['logGDPpc', 'parliament', 'disaster', 'major_oil', 'major_primary']
 Y = ['rep_civwar_DV']
 data = DAT
 JCR_OP = zmiopc.opmod(pstartop, data, X, Y, method='bfgs', weights=1, offsetx=0)
-
-# Plots
-
-sns.set(style="ticks", color_codes=True)
-
-num_bins = 3
-n, bins, patches = plt.hist(yx_, num_bins, facecolor='blue', rwidth=0.9)
-data = data.dropna(how='any')
-data['rep_civwar_DV'] = data['rep_civwar_DV'].astype(int)
-sns.catplot(x='rep_civwar_DV', kind="count", palette="hls", data=data)
 
 # Vuong test
 zmiopc.vuong_opiop(JCR_OP, ziop_JCR)
@@ -127,10 +109,6 @@ miopc_EU_know = zmiopc.split_effects(miopc_EU, 2)
 miopc_EU_diss.plot.box(grid='False')
 miopc_EU_know.plot.box(grid='False')
 
-
-###Tobacco data
-
-
 DAT = pd.read_csv("C:/Users/Nguyen/Google "
                   "Drive/zmiopc/zmiopc/data/tobacco_cons.csv")
 X = ['age', 'grade', 'gender_dum']
@@ -141,16 +119,15 @@ pstart = np.array([.01, .01, .01, .01, .01, .01, .01, .01, .01, .01])
 ziopc_tob = zmiopc.iopcmod('ziopc', DAT, X, Y, Z)
 op_tob = zmiopc.opmod(DAT, X, Y)
 
-zmiopc.vuong_opiopc(op_tob,ziopc_tob)
+zmiopc.vuong_opiopc(op_tob, ziopc_tob)
 
 ziopcage = zmiopc.ordered_effects(ziopc_tob, 0)
 ziopcgrade = zmiopc.ordered_effects(ziopc_tob, 1)
 ziopcgender = zmiopc.ordered_effects(ziopc_tob, 2)
 
 ziopcage.plot.box(grid='False')
-ziopcgrade.plot.box(grid='False',fontsize='small')
-ziopcgender.plot.box(grid='False',fontsize='small')
-
+ziopcgrade.plot.box(grid='False', fontsize='small')
+ziopcgender.plot.box(grid='False', fontsize='small')
 
 ziopcgenders = zmiopc.split_effects(ziopc_tob, 1)
 ziopcgenders.plot.box(grid='False')
