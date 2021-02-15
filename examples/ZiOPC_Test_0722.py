@@ -132,14 +132,9 @@ op_tob = zmiopc.opmod(DAT, X, Y)
 zmiopc.vuong_opiopc(op_tob, ziopc_tob)
 zmiopc.vuong_opiop(op_tob, ziop_tob)
 
-
 ziopcage = zmiopc.ordered_effects(ziopc_tob, 0)
 ziopcgrade = zmiopc.ordered_effects(ziopc_tob, 1)
 ziopcgender = zmiopc.ordered_effects(ziopc_tob, 2)
-
-ziopcage = ordered_effects(ziopc_tob, 0)
-ziopcgrade = ordered_effects(ziopc_tob, 1)
-ziopcgender = ordered_effects(ziopc_tob, 2)
 
 ziopcage.plot.box(grid='False')
 ziopcgrade.plot.box(grid='False')
