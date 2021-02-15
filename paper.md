@@ -98,7 +98,7 @@ outcomes [@fountas2018analysis]. The MiOP(C) models can address middle-category
 inflation in, for example, ordered measures like monetary policy [@brown2020modelling] and attitudes 
 towards European Union (EU) membership [@bagozzi2012mixture]. The inflated MNL models can 
 evaluate inflated unordered polytomous outcome measures such as voter choice 
-[@arceneaux2009educating] and consumer demand [@richards2018new].    
+[@campbell2008religion] and consumer demand [@richards2018new].    
 
 IDCeMPy contains the functions listed below to estimate the aforementioned inflated discrete choice models via MLE using Newton numerical optimization methods: 
 
@@ -120,7 +120,7 @@ The functions in IDCeMPy that fit the (i) ZiOP(C) models are presented using the
 smoking behavior dependent variable from the [2018 National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm), (ii) MiOP(C) models 
 are illustrated using the ordered EU membership attitudes outcome variable 
 in @elgun2007exposure's data, and (iii) inflated MNL models are evaluated using the unordered 
-polytomous vote choice dependent variable in @arceneaux2009educating's data. 
+polytomous vote choice dependent variable in @campbell2008religions's data. 
 These three datasets are described in the package.
 
 # Availability 
