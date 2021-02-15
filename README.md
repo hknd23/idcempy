@@ -239,6 +239,9 @@ rho                         -0.707 0.106  -6.694 0.000 -0.914 -0.500
 ```
 
 **Present AIC results from the MIOPC model first and then the MIOP and OP model. Compare MIOPC to MIOP and OP**
+MIOPC AIC: 21669.96812802041
+MIOP AIC: 21729.390980849847
+OP AIC: 22100.9015396583
 
 In this EU support example, the `split_effects` dataframe provides and illustrates via boxplots (with 95% CI) the first difference in the predicted probability of middle-category observations being informed respondents (the non-inflated cases) when the dummy split-stage covariate 'EU_know_obj' changes from 0 to 1.
 <p align="center">
@@ -267,6 +270,7 @@ zmiopc.vuong_opiopc(op_EU, miopc_EU)
 -10.435718518003675
 ```
 **The Vuong test statistics from comparing the OP to the MIOP model (see documentation) is X; overall MIOPC provides best fit.**
+VUONG TEST OP MIOP: -9.638360843003559
 
 ### Example 3: Generalized Inflated Multinomial Logit Models (GIMNL)
 **IDCeMPy** also includes functions to fit Generalized Inflated Multinomial Logit Models that account for the inflated and thus heterogenous share of observations that can exist in the baseline or any other category of unordered polytomous outcome variables. To save space, we focus on just presenting the Baseline Inflated MNL (i.e., BIMNL) model that addresses excessive observations in the baseline category of unordered outcome measures. We fit this BIMNL model to the 2006 Pennsylvania State House elections data from Arceneaux and Kolodny ([2009](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1540-5907.2009.00399.x)). The 0,1,2 unordered individual vote choice outcome measure in their data includes the following options: abstained (their MNL baseline category), Democrat, or Republican/other. The inflated baseline category incorporates excessive observations of abstained nonvoters who did not vote in the said elections owing to temporary factors and routine nonvoters who never vote.   
