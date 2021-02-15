@@ -178,6 +178,7 @@ ziopcgender_ordered.plot.box(grid='False')
 
 <p align="center">
    <img src="https://github.com/hknd23/idcempy/blob/main/graphics/ziopc_ordered_gender_0214.png" width="500" height="300" />
+   <br>
    <em>Fig. 2: The minimum dominating set of a graph</em>
 </p>
 
