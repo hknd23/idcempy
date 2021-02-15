@@ -167,6 +167,8 @@ ziopcgender_split.plot.box(grid='False')
 
 <p align="center">
    <img src="https://github.com/hknd23/idcempy/blob/main/graphics/ziopc_split_gender.png?raw=true" width="500" height="300" />
+   <br>
+   <em>Fig. 1: Effect of Gender on Probability of Being Non-Inflated</em>
 </p>
 
 `ordered_effects`creates a dataframe that provides values to illustrate the marginal effect of the ZIOP(C) model's outcome-stage covariates on the first difference in the predicted probability of each ordered outcome category conditional on the zero-category observations being non-inflated. In the example below, `ordered_effects`provides and illustrate via boxplots (with 95% CIs) the first difference in the predicted probability (with 95% CIs) of each 0 to 3 ordered category of the tobacco consumption outcome when the dummy outcome-stage covariate 'gender_dum' changes from 0 to 1, conditional on zero-category observations being non-inflated.   
@@ -179,7 +181,7 @@ ziopcgender_ordered.plot.box(grid='False')
 <p align="center">
    <img src="https://github.com/hknd23/idcempy/blob/main/graphics/ziopc_ordered_gender_0214.png" width="500" height="300" />
    <br>
-   <em>Fig. 2: The minimum dominating set of a graph</em>
+   <em>Fig. 2: Effect of Gender on Tobacco Consumption</em>
 </p>
 
 Module `zmiopc` also provides the function `vuong_opiopc` that employs the Vuong test stastic to compare the performace of the standard OP model (also available through `opmod`) versus the ZIOPC model and also the OP versus ZIOP model. The Vuong statistics from comparing the OP and the ZIOPC model is given by 
@@ -248,9 +250,11 @@ OP AIC: 22100.9015396583
 In this EU support example, the `split_effects` dataframe provides and illustrates via boxplots (with 95% CI) the first difference in the predicted probability of middle-category observations being informed respondents (the non-inflated cases) when the dummy split-stage covariate 'EU_know_obj' changes from 0 to 1.
 <p align="center">
    <img src="https://github.com/hknd23/idcempy/raw/main/graphics/MiOPC_Split_EU_Know_0214.png" width="500" height="300" />
+   <br>
+   <em>Fig. 3: Effect of EU Knowledge on Probability of Being Non-Inflated</em>
 </p>
 
-`ordered_effects()` calculates and illustrates via boxplots (with 95% CI) the first difference in predicted probabilities of each ordered outcome category of "EU Support" when the dummy outcome-stage Xenophobia variable changes from 0 to 1, conditional on middle-category observations being informed respondents.
+`ordered_effects()` calculates and illustrates via boxplots (with 95% CI) the first difference in predicted probabilities of each ordered outcome category of "EU Support" when the dummy outcome-stage Xenophobia variable changes one standard deviation from its mean value, conditional on middle-category observations being informed respondents.
 
 ```python
 xeno = zmiopc.ordered_effects(miopc_EU, 2)
@@ -259,6 +263,8 @@ xeno.plot.box(grid='False')
 
 <p align="center">
    <img src="https://github.com/hknd23/idcempy/blob/main/graphics/MiOPC_EU_Xenophobia_0214.png" width="500" height="300" />
+   <br>
+   <em>Fig. 4: Effect of Xenophobia on Support for EU Bid</em>
 </p>
 
 Users can call the function `vuong_opiopc` to employ the Vuong test stastic to compare the OP model to the MIOPC model and also the OP to the MIOP model. The Vuong test statistics from comparing the OP to the MIOPC model is,  
