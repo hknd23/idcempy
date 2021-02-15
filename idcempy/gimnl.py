@@ -5,8 +5,8 @@ from scipy.optimize import minimize
 from scipy.stats import norm
 
 
-class BimnlModel:
-    """Store model results from :py:func:`imnlmod`."""
+class GimnlModel:
+    """Store model results from :py:func:`gimnlmod`."""
 
     def __init__(
             self,
@@ -30,7 +30,7 @@ class BimnlModel:
     ):
         """Store model results, goodness-of-fit tests, and other information.
 
-        :param modeltype: Type of IMNL Model (bimnl3).
+        :param modeltype: Type of GIMNL Model (bimnl3).
         :param reference: Order of categories. The order category will be
         the first element.
         :param llik: Log-Likelihood.
@@ -67,6 +67,89 @@ class BimnlModel:
         self.xstr = xstr
         self.ystr = ystr
         self.zstr = zstr
+
+
+class MnlModel:
+    """Store model results from :py:func:`gimnlmod`."""
+
+    def __init__(
+            self,
+            modeltype,
+            reference,
+            llik,
+            coef,
+            aic,
+            vcov,
+            data,
+            xs,
+            x_,
+            yx_,
+            ycatu,
+            xstr,
+            ystr,
+    ):
+        """Store model results, goodness-of-fit tests, and other information.
+
+        :param modeltype: Type of IMNL Model (bimnl3).
+        :param reference: Order of categories. The order category will be
+        the first element.
+        :param llik: Log-Likelihood.
+        :param coef: Model coefficients.
+        :param aic: Model Akaike information .
+        :param vcov: Variance-Covariance matrix.
+            (optimized as inverted Hessian matrix)
+        :param data: Full dataset.
+        :param zs: Inflation stage estimates (Gammas).
+        :param xs: Ordered probit estimates (Betas).
+        :param ycatu: Number of categories in the Dependent Variable (DV).
+        :param x_: X Data.
+        :param yx_: Y (DV) data.
+        :param z_: Z Data.
+        :param xstr: list of string for x names.
+        :param ystr: list of string for y names.
+        :param zstr: list of string for z names.
+
+        """
+        self.modeltype = modeltype
+        self.reference = reference
+        self.llik = llik
+        self.coefs = coef
+        self.AIC = aic
+        self.vcov = vcov
+        self.data = data
+        self.multinom = xs
+        self.ycat = ycatu
+        self.X = x_
+        self.Y = yx_
+        self.xstr = xstr
+        self.ystr = ystr
+
+
+def mnl3(pstart, x2, x3, y, reference):
+    """
+    Likelihood function for the baseline inflated three-category MNL model.
+
+    :param pstart: starting parameters.
+    :param x2: X covariates.
+    :param x3: X covariates (should be identical to x2.
+    :param y: Dependent Variable (DV).
+    :param z: Inflation stage covariates.
+    :param reference: order of categories (first category/baseline inflated).
+    """
+    b2 = pstart[0: len(x2.columns)]
+    b3 = pstart[len(x2.columns): (len(pstart))]
+    xb2 = x2.dot(b2)
+    xb3 = x3.dot(b3)
+    p1 = 1 / (1 + np.exp(xb2) + np.exp(xb3))
+    p2 = p1 * np.exp(xb2)
+    p3 = p1 * np.exp(xb3)
+    lik = np.sum(
+        np.log(p1) * (y == reference[0])
+        + np.log(p2) * (y == reference[1])
+        + np.log(p3) * (y == reference[2])
+    )
+    llik = -1 * np.sum(lik)
+    return llik
 
 
 def bimnl3(pstart, x2, x3, y, z, reference):
@@ -159,9 +242,9 @@ def timnl3(pstart, x2, x3, y, z, reference):
     return llik
 
 
-def imnlresults(model, data, x, y, z, modeltype, reference, inflatecat):
+def gimnlresults(model, data, x, y, z, modeltype, reference, inflatecat):
     """
-    Produce estimation results, part of :py:func:`imnlmod`.
+    Produce estimation results, part of :py:func:`gimnlmod`.
 
     :param model: object model estimated.
     :param data: dataset.
@@ -213,7 +296,7 @@ def imnlresults(model, data, x, y, z, modeltype, reference, inflatecat):
     )
     aic = -2 * (-model.fun) + 2 * (len(coef))
     llik = -1 * model.fun
-    model = BimnlModel(
+    model = GimnlModel(
         modeltype,
         reference,
         inflatecat,
@@ -235,7 +318,74 @@ def imnlresults(model, data, x, y, z, modeltype, reference, inflatecat):
     return model
 
 
-def imnlmod(data, x, y, z, reference, inflatecat, method="BFGS", pstart=None):
+def mnlresults(model, data, x, y, modeltype, reference):
+    """
+    Produce estimation results, part of :py:func:`gimnlmod`.
+
+    :param model: object model estimated.
+    :param data: dataset.
+    :param x: Multinomial Logit stage covariates.
+    :param y: Dependent Variable (DV).
+    :param z: Spplit-stage covariates.
+    :param modeltype: type of inflated MNL model.
+    :param reference: order of categories.
+    :param inflatecat: inflated category.
+    """
+    varlist = np.unique(y + x)
+    dataset = data[varlist]
+    datasetnew = dataset.dropna(how="any")
+    datasetnew = datasetnew.reset_index(drop=True)
+    x_ = datasetnew[x]
+    y_ = datasetnew[y]
+    yx_ = y_.iloc[:, 0]
+    yncat = len(np.unique(yx_))
+    x_.insert(0, "int", np.repeat(1, len(x_)))
+    names = list()
+    if modeltype == "mnl3":
+        x2 = x_
+        x3 = x_
+        for s in range(x2.shape[1]):
+            names.append(str(reference[1]) + ": " + x2.columns[s])
+        for s in range(x3.shape[1]):
+            names.append(str(reference[2]) + ": " + x3.columns[s])
+        xs = model.x[0: (x2.shape[1] + x3.shape[1])]
+    ses = np.sqrt(np.diag(model.hess_inv))
+    tscore = model.x / ses
+    pval = (1 - (norm.cdf(abs(tscore)))) * 2
+    lci = model.x - 1.96 * ses
+    uci = model.x + 1.96 * ses
+    coef = pd.DataFrame(
+        {
+            "Coef": model.x,
+            "SE": ses,
+            "tscore": tscore,
+            "p": pval,
+            "2.5%": lci,
+            "97.5%": uci,
+        },
+        names,
+    )
+    aic = -2 * (-model.fun) + 2 * (len(coef))
+    llik = -1 * model.fun
+    model = MnlModel(
+        modeltype,
+        reference,
+        llik,
+        coef,
+        aic,
+        model.hess_inv,
+        datasetnew,
+        xs,
+        x_,
+        yx_,
+        yncat,
+        x,
+        y,
+    )
+    return model
+
+
+def gimnlmod(data, x, y, z, reference, inflatecat, method="BFGS", pstart=None):
     """
     Estimate inflated Multinomial Logit model.
 
@@ -297,6 +447,53 @@ def imnlmod(data, x, y, z, reference, inflatecat, method="BFGS", pstart=None):
                 method=method,
                 options={"gtol": 1e-6, "disp": True, "maxiter": 500},
             )
-    results = imnlresults(model, data, x, y, z, modeltype, reference,
-                          inflatecat)
+    results = gimnlresults(model, data, x, y, z, modeltype, reference,
+                           inflatecat)
+    return results
+
+
+def mnlmod(data, x, y, reference, method="BFGS", pstart=None):
+    """
+    Estimate inflated Multinomial Logit model.
+
+    :param data: dataset.
+    :param x: MNL stage covariates.
+    :param y: Dependent Variable. Variable needs to be in factor form,
+    with a number from 0-2 representing each category.
+    :param z: Inflation stage covariates.
+    :param reference: order of categories.
+    :param inflatecat: inflated category.
+    :param method: Optimization method.  Default is 'BFGS'
+    :param pstart: Starting parameters. Number of parameter n =
+    """
+    varlist = np.unique(y + x)
+    dataset = data[varlist]
+    datasetnew = dataset.dropna(how="any")
+    datasetnew = datasetnew.reset_index(drop=True)
+    x_ = datasetnew[x]
+    y_ = datasetnew[y]
+    yx_ = y_.iloc[:, 0]
+    yncat = len(np.unique(yx_))
+    if yncat == 3:
+        modeltype = "mnl3"
+    else:
+        raise Exception(
+            "Function only supports Dependent Variable with 3 " "categories."
+        )
+    x_.insert(0, "int", np.repeat(1, len(x_)))
+    if modeltype == "mnl3":
+        x2 = x_
+        x3 = x_
+        if pstart is None:
+            pstart = np.repeat(
+                0.01, (len(x2.columns) + len(x3.columns))
+            )
+            model = minimize(
+                mnl3,
+                pstart,
+                args=(x2, x3, yx_, reference),
+                method=method,
+                options={"gtol": 1e-6, "disp": True, "maxiter": 500},
+            )
+    results = mnlresults(model, data, x, y, modeltype, reference)
     return results

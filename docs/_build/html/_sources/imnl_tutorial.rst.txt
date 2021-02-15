@@ -31,9 +31,9 @@ The following line of code estimates the iMNL model described above.
 
 .. testcode::
 
-   imnl_2004vote = bimnl.imnlmod(data, x, y, z, order, inflatecat)
+   imnl_2004vote = bimnl.gimnlmod(data, x, y, z, order, inflatecat)
 
-class `imnlModel` stores the results from the regression object `imnl_2004vote` from :py:func:`imnlmod`.
+class `imnlModel` stores the results from the regression object `imnl_2004vote` from :py:func:`gimnlmod`.
 
 The following line of code prints the coefficients of the covariates.
 

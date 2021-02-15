@@ -50,7 +50,7 @@
 
 
 <div class="viewcode-block" id="BimnlModel"><a class="viewcode-back" href="../api.html#imnl.BimnlModel">[docs]</a><span class="k">class</span> <span class="nc">BimnlModel</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Store model results from :py:func:`imnlmod`.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Store model results from :py:func:`gimnlmod`.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modeltype</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">inflatecat</span><span class="p">,</span> <span class="n">llik</span><span class="p">,</span>
                  <span class="n">coef</span><span class="p">,</span> <span class="n">aic</span><span class="p">,</span> <span class="n">vcov</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">zs</span><span class="p">,</span>
@@ -180,9 +180,9 @@
     <span class="k">return</span> <span class="n">llik</span></div>
 
 
-<div class="viewcode-block" id="imnlresults"><a class="viewcode-back" href="../api.html#imnl.imnlresults">[docs]</a><span class="k">def</span> <span class="nf">imnlresults</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">modeltype</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">inflatecat</span><span class="p">):</span>
+<div class="viewcode-block" id="gimnlresults"><a class="viewcode-back" href="../api.html#imnl.gimnlresults">[docs]</a><span class="k">def</span> <span class="nf">gimnlresults</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">modeltype</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">inflatecat</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Produce estimation results, part of :py:func:`imnlmod`</span>
+<span class="sd">    Produce estimation results, part of :py:func:`gimnlmod`</span>
 
 <span class="sd">    :param model:</span>
 <span class="sd">    :param data:</span>
@@ -232,7 +232,7 @@
     <span class="k">return</span> <span class="n">model</span></div>
 
 
-<div class="viewcode-block" id="imnlmod"><a class="viewcode-back" href="../api.html#imnl.imnlmod">[docs]</a><span class="k">def</span> <span class="nf">imnlmod</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">inflatecat</span><span class="p">,</span>
+<div class="viewcode-block" id="gimnlmod"><a class="viewcode-back" href="../api.html#imnl.gimnlmod">[docs]</a><span class="k">def</span> <span class="nf">gimnlmod</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">inflatecat</span><span class="p">,</span>
             <span class="n">method</span><span class="o">=</span><span class="s1">&#39;BFGS&#39;</span><span class="p">,</span> <span class="n">pstart</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Estimate inflatecatd Multinomial Logit model.</span>
@@ -287,7 +287,7 @@
                              <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
                              <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;gtol&#39;</span><span class="p">:</span> <span class="mf">1e-6</span><span class="p">,</span>
                                       <span class="s1">&#39;disp&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;maxiter&#39;</span><span class="p">:</span> <span class="mi">500</span><span class="p">})</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="n">imnlresults</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">modeltype</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">inflatecat</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">gimnlresults</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">modeltype</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">inflatecat</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">results</span></div>
 </pre></div>
 

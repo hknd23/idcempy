@@ -1,5 +1,5 @@
 import pandas as pd
-from idcempy import imnl
+from idcempy import gimnl
 import os
 
 DAT = pd.read_stata(
@@ -18,8 +18,8 @@ sinflatecat = "second"
 tinflatecat = "third"
 
 
-def test_imnls():
-    model = imnl.imnlmod(DAT, x, y, z, order, binflatecat)
-    smodel = imnl.imnlmod(DAT, x, y, z, second_order, sinflatecat)
-    tmodel = imnl.imnlmod(DAT, x, y, z, torder, tinflatecat)
+def test_gimnls():
+    model = gimnl.gimnlmod(DAT, x, y, z, order, binflatecat)
+    smodel = gimnl.gimnlmod(DAT, x, y, z, second_order, sinflatecat)
+    tmodel = gimnl.gimnlmod(DAT, x, y, z, torder, tinflatecat)
     assert model.modeltype == smodel.modeltype == tmodel.modeltype

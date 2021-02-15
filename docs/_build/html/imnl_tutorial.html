@@ -66,10 +66,10 @@
 </pre></div>
 </div>
 <p>The following line of code estimates the iMNL model described above.</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">imnl_2004vote</span> <span class="o">=</span> <span class="n">bimnl</span><span class="o">.</span><span class="n">imnlmod</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">inflatecat</span><span class="p">)</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">imnl_2004vote</span> <span class="o">=</span> <span class="n">bimnl</span><span class="o">.</span><span class="n">gimnlmod</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">inflatecat</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>class <cite>imnlModel</cite> stores the results from the regression object <cite>imnl_2004vote</cite> from <code class="xref py py-func docutils literal notranslate"><span class="pre">imnlmod()</span></code>.</p>
+<p>class <cite>imnlModel</cite> stores the results from the regression object <cite>imnl_2004vote</cite> from <code class="xref py py-func docutils literal notranslate"><span class="pre">gimnlmod()</span></code>.</p>
 <p>The following line of code prints the coefficients of the covariates.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">imnl_2004vote</span><span class="o">.</span><span class="n">coefs</span><span class="p">)</span>
 </pre></div>

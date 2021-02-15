@@ -112,9 +112,9 @@ IDCeMPy contains the functions listed below to estimate the aforementioned infla
 
 * `split_effects`; `ordered_effects`: Estimates marginal effects of covariates in the split-stage and outcome-stage respectively. 
 
-* `imnlmod`: Fits baseline and other lower-category inflated MNL models.
+* `gimnlmod`: Fits baseline and other lower-category inflated MNL models.
 
-* `imnlresults`: Stores covariate estimates, VCV matrix, Log-Likelihood and AIC statistics of `imnlmod`.  
+* `gimnlresults`: Stores covariate estimates, VCV matrix, Log-Likelihood and AIC statistics of `gimnlmod`.  
 
 The functions in IDCeMPy that fit the (i) ZiOP(C) models are presented using the ordered self-reported 
 smoking behavior dependent variable from the [2018 National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm), (ii) MiOP(C) models 

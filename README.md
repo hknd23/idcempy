@@ -47,8 +47,8 @@ Each inflated discrete choice model in this package addresses category inflation
 | `iopfit`; `iopcfit`| Computes fitted probabilities from each estimated model's object.|
 | `vuong_opiop`;  `vuong_opiopc` | Calculates Vuong test statistic for comparing the performance of the OP with the ZiOP(C) and MiOP(C) models.|
 |`split_effects`; `ordered_effects`| Estimates marginal effects of covariates from the split-stage and outcome-stage respectively.|
-|`imnlmod` | Fits baseline and other lower-category inflated MNL models.|
-|`imnlresults` | Presents covariate estimates, Variance-Covariance matrix, and goodness-of-fit statistics of `imnlmod`.|
+|`gimnlmod` | Fits baseline and other lower-category inflated MNL models.|
+|`gimnlresults` | Presents covariate estimates, Variance-Covariance matrix, and goodness-of-fit statistics of `gimnlmod`.|
 
 ## Dependencies
 - scipy
@@ -302,10 +302,10 @@ y = ['vote_turn']
 reference = [0, 1, 2]
 inflatecat = "baseline"
 ```
-While `imnlmod` can account for category inflation in any unordered outcome category,users can employ the argument `inflatecat` to specify the inflated category. Through the argument `reference`, users can select which category of the unordered outcome variable is the baseline ("reference") category by placing it first. Since the baseline ("0") category in the vote choice outcome measure is inflated, the following code fits the BIMNL Model. 
+While `gimnlmod` can account for category inflation in any unordered outcome category,users can employ the argument `inflatecat` to specify the inflated category. Through the argument `reference`, users can select which category of the unordered outcome variable is the baseline ("reference") category by placing it first. Since the baseline ("0") category in the vote choice outcome measure is inflated, the following code fits the BIMNL Model. 
 
 ```python
-imnl_2004vote = imnl.imnlmod(data, x, y, z, reference, inflatecat)
+imnl_2004vote = imnl.gimnlmod(data, x, y, z, reference, inflatecat)
 ```
 
 Print the est

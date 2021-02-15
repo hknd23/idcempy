@@ -451,7 +451,7 @@ versus original values (0).</p>
 <dl class="class">
 <dt id="imnl.BimnlModel">
 <em class="property">class </em><code class="sig-prename descclassname">imnl.</code><code class="sig-name descname">BimnlModel</code><span class="sig-paren">(</span><em class="sig-param">modeltype</em>, <em class="sig-param">reference</em>, <em class="sig-param">inflatecat</em>, <em class="sig-param">llik</em>, <em class="sig-param">coef</em>, <em class="sig-param">aic</em>, <em class="sig-param">vcov</em>, <em class="sig-param">data</em>, <em class="sig-param">xs</em>, <em class="sig-param">zs</em>, <em class="sig-param">x_</em>, <em class="sig-param">yx_</em>, <em class="sig-param">z_</em>, <em class="sig-param">ycatu</em>, <em class="sig-param">xstr</em>, <em class="sig-param">ystr</em>, <em class="sig-param">zstr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imnl.html#BimnlModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imnl.BimnlModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Store model results from <a class="reference internal" href="#imnl.imnlmod" title="imnl.imnlmod"><code class="xref py py-func docutils literal notranslate"><span class="pre">imnlmod()</span></code></a>.</p>
+<dd><p>Store model results from <a class="reference internal" href="#imnl.gimnlmod" title="imnl.gimnlmod"><code class="xref py py-func docutils literal notranslate"><span class="pre">gimnlmod()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="function">
@@ -509,9 +509,9 @@ versus original values (0).</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="imnl.imnlresults">
-<code class="sig-prename descclassname">imnl.</code><code class="sig-name descname">imnlresults</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">data</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">z</em>, <em class="sig-param">modeltype</em>, <em class="sig-param">reference</em>, <em class="sig-param">inflatecat</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imnl.html#imnlresults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imnl.imnlresults" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce estimation results, part of <a class="reference internal" href="#imnl.imnlmod" title="imnl.imnlmod"><code class="xref py py-func docutils literal notranslate"><span class="pre">imnlmod()</span></code></a></p>
+<dt id="imnl.gimnlresults">
+<code class="sig-prename descclassname">imnl.</code><code class="sig-name descname">gimnlresults</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">data</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">z</em>, <em class="sig-param">modeltype</em>, <em class="sig-param">reference</em>, <em class="sig-param">inflatecat</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imnl.html#gimnlresults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imnl.gimnlresults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce estimation results, part of <a class="reference internal" href="#imnl.gimnlmod" title="imnl.gimnlmod"><code class="xref py py-func docutils literal notranslate"><span class="pre">gimnlmod()</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -529,8 +529,8 @@ versus original values (0).</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="imnl.imnlmod">
-<code class="sig-prename descclassname">imnl.</code><code class="sig-name descname">imnlmod</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">z</em>, <em class="sig-param">reference</em>, <em class="sig-param">inflatecat</em>, <em class="sig-param">method='BFGS'</em>, <em class="sig-param">pstart=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imnl.html#imnlmod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imnl.imnlmod" title="Permalink to this definition">¶</a></dt>
+<dt id="imnl.gimnlmod">
+<code class="sig-prename descclassname">imnl.</code><code class="sig-name descname">gimnlmod</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">z</em>, <em class="sig-param">reference</em>, <em class="sig-param">inflatecat</em>, <em class="sig-param">method='BFGS'</em>, <em class="sig-param">pstart=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/imnl.html#gimnlmod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#imnl.gimnlmod" title="Permalink to this definition">¶</a></dt>
 <dd><p>Estimate inflatecatd Multinomial Logit model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
