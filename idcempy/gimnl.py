@@ -58,7 +58,7 @@ class GimnlModel:
         self.AIC = aic
         self.vcov = vcov
         self.data = data
-        self.inflatecat = zs
+        self.split = zs
         self.multinom = xs
         self.ycat = ycatu
         self.X = x_
