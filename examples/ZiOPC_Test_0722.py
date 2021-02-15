@@ -100,6 +100,7 @@ miop_EU = zmiopc.iopmod('miop', DAT, X, Y, Z)
 op_EU = zmiopc.opmod(DAT, X, Y)
 
 zmiopc.vuong_opiopc(op_EU, miopc_EU)
+zmiopc.vuong_opiop(op_EU, miop_EU)
 
 miopc_EU_xeno = zmiopc.ordered_effects(miopc_EU, 0)
 miopc_EU__diss = zmiopc.ordered_effects(miopc_EU, 1)
