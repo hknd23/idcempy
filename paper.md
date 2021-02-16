@@ -1,5 +1,5 @@
 ---
-title: 'IDCeMPy: A Python Package to Estimate "Inflated" Discrete Choice Models'
+title: 'IDCeMPy: Python Package for Inflated Discrete Choice Models'
 
 authors:
 - affiliation: 1
@@ -11,7 +11,7 @@ authors:
   name: Vineeta Yadav
 - affiliation: 1
   name: Bumba Mukherjee
-date: "13 February 2021"
+date: "16 February 2021"
 output:
   html_document:
     df_print: paged
@@ -19,7 +19,7 @@ output:
 bibliography: paper.bib
 
 tags:
-- Python, Inflated Order Probit Models, Inflated Multinomial Models
+- Python, Inflated Ordered Probit Models, Generalized Inflated MNL Models
 
 affiliations:
 - index: 1
@@ -35,14 +35,14 @@ polytomous choice variables [@harris2007zero; @bagozzi2012mixture; @bagozzi2017d
 `IDCeMPy` is a comprehensive Python package that allows users 
 to easily fit three distinct sets of inflated discrete choice 
 models: Zero-Inflated Ordered Probit (ZIOP), Middle-Inflated Ordered Probit (MIOP), 
-and Inflated Multinomial Logit (IMNL) models. While the ZIOP model
+and Generalized Inflated Multinomial Logit (GIMNL) models. While the ZIOP model
 permits careful evaluation of zero-inflated ordered choice outcomes
 that results from two  data generating processes (hereafter, “d.g.p’s”),
 the MIOP model accounts for ordered choice outcomes in which the 
 inflated middle-category emerges from distinct d.g.p’s. 
-The IMNL models account for the large proportion—and heterogeneous 
-mixture—of observations in the baseline and other lower outcome 
-categories within MNL models that are employed to analyze multiple
+The GIMNL models account for the large proportion—and heterogeneous 
+mixture—of observations in the baseline and other unrodered outcome 
+categories within MNL models that evaluate multiple
 unordered polytomous outcomes. `IDCeMPy` thus provides users with 
 versatile tools that provide accurate inferences when working with inflated
 ordered and unordered polytomous outcome variables. It can be 
@@ -65,8 +65,7 @@ who select “indifference” because of social desirability reasons
 [@bagozzi2012mixture; @brown2020modelling]. Further, in unordered polytomous variables of vote choice, 
 for example, the baseline category is frequently inflated as it includes non-voters who abstain from 
 voting in an election owing to temporary factors and routine non-voters who are disengaged from 
-the political process [@arceneaux2009educating; @bagozzi2017distinguishing]. Failing to account for such category inflation in discrete choice measures leads to model misspecification, 
-biased estimates, and incorrect inferences. 
+the political process [@campbell2008religion; @bagozzi2017distinguishing]. Failing to account for such category inflation in discrete choice measures leads to model misspecification, biased estimates, and incorrect inferences. 
 
 @dale2018estimation's ZiOP STATA command fits the Zero-Inflated Ordered Probit without
 correlated errors, while @xia2019gidm's gidm STATA command fits discrete choice models 
@@ -82,9 +81,9 @@ without and with correlated errors (MiOPC). These models account for the inflate
 observations in either the zero or middle-category by combining a single binary “split-stage” 
 probit equation with an ordered probit “outcome-stage” equation. Users can treat the error terms 
 from these two equations as independent or correlated in the package’s estimation routines. 
-`IDCeMPy` also includes functions to fit inflated MNL models—combining a logit split-stage equation,
+`IDCeMPy` also includes functions to fit Generalized Inflated MNL models—combining a logit split-stage equation,
 and a MNL outcome-stage equation—to account for the preponderant and heterogeneous share of 
-observations in the baseline or any lower category in unordered polytomous outcome measures. 
+observations in the baseline or other outcome categories in unordered polytomous outcome measures. 
 Combining two probability distributions by estimating two equations in each aforementioned 
 model statistically addresses the inflated share of observations in an ordered or unordered 
 choice category that results from distinct d.g.p’s. This ensures that each inflated discrete 
@@ -96,7 +95,7 @@ in ordered outcome measures of self-reported smoking behavior [@harris2007zero],
 demand for health treatment [@greene2015inflated], and accident injury-severity 
 outcomes [@fountas2018analysis]. The MiOP(C) models can address middle-category 
 inflation in, for example, ordered measures like monetary policy [@brown2020modelling] and attitudes 
-towards European Union (EU) membership [@bagozzi2012mixture]. The inflated MNL models can 
+towards European Union (EU) membership [@bagozzi2012mixture]. The GIMNL models can 
 evaluate inflated unordered polytomous outcome measures such as voter choice 
 [@campbell2008religion] and consumer demand [@richards2018new].    
 
@@ -112,15 +111,14 @@ IDCeMPy contains the functions listed below to estimate the aforementioned infla
 
 * `split_effects`; `ordered_effects`: Estimates marginal effects of covariates in the split-stage and outcome-stage respectively. 
 
-* `gimnlmod`: Fits baseline and other lower-category inflated MNL models.
+* `mnlmod`;`gimnlmod`: Fits MNL model and Generalized-Inflated MNL models.
 
-* `gimnlresults`: Stores covariate estimates, VCV matrix, Log-Likelihood and AIC statistics of `gimnlmod`.  
+* `mnlresults`;`gimnlresults`; `vuong_gimnl`: Stores covariate estimates, VCV matrix, Log-Likelihood and AIC statistics of `mnlmod`;`gimnlmod`.Vuong test statistic for comparing MNL to GIMNL obtained from `vuong_gimnl`. 
 
 The functions in IDCeMPy that fit the (i) ZiOP(C) models are presented using the ordered self-reported 
-smoking behavior dependent variable from the [2018 National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm), (ii) MiOP(C) models 
-are illustrated using the ordered EU membership attitudes outcome variable 
-in @elgun2007exposure's data, and (iii) inflated MNL models are evaluated using the unordered 
-polytomous vote choice dependent variable in @campbell2008religions's data. 
+tobacco consumption dependent variable from the [2018 National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm), (ii) MiOP(C) models 
+are illustrated using the ordered EU support outcome variable 
+in @elgun2007exposure's data, and (iii) GIMNL models are evaluated using the unordered-polytomous Presidential vote choice dependent variable in @campbell2008religions's data. 
 These three datasets are described in the package.
 
 # Availability 
