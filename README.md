@@ -46,9 +46,9 @@ Each inflated discrete choice model in this package addresses category inflation
 |`opresults`; `iopresults`; `iopcresults`| Presents covariate estimates, Variance-Covariance (VCV) matrix, and goodness-of-fit statistics (Log-Likelihood and AIC) of `opmod`, `iopmod`, `iopcmod`.|
 | `iopfit`; `iopcfit`| Computes fitted probabilities from each estimated model's object.|
 | `vuong_opiop`; `vuong_opiopc` | Calculates Vuong test statistic for comparing the OP model's performance to ZiOP(C) and MiOP(C) models.|
-|`split_effects`; `ordered_effects`| Estimates marginal effects of covariates from the split-stage and outcome-stage respectively.|
-|`mnlmod`;`gimnlmod`| Fits the MNL model and Generalized-Inflated MNL models.|
-|`mnlresults`;`gimnlresults`;`vuong_gimnl`| Presents covariate estimates, VCV matrix, and goodness-of-fit statistics of `mnlmod`,`gimnlmod`. Vuong test statistic for comparing MNL to GIMNL computed from `vuong_gimnl`|
+|`split_effects`; `ordered_effects`| Estimates marginal effects of covariates from the split and outcome-stage respectively.|
+|`mnlmod`;`gimnlmod`| Fits MNL model and Generalized-Inflated MNL models.|
+|`mnlresults`;`gimnlresults`;`vuong_gimnl`| Presents covariate estimates, VCV matrix, and goodness-of-fit statistics of `mnlmod`,`gimnlmod`. Vuong test statistic for comparing MNL to GIMNL obtained from `vuong_gimnl`|
 
 ## Dependencies
 - scipy
@@ -126,7 +126,7 @@ print(ziopc_tobb.coefs)
 ```python
                           Coef        SE     tscore             p       2.5%      97.5%
 
-Probit Inflation-stage
+Probit Split-stage
 -----------------------
 intercept              9.538072  3.470689   2.748178  5.992748e-03   2.735521  16.340623
 gender_dum            -9.165963  3.420056  -2.680062  7.360844e-03 -15.869273  -2.462654
@@ -237,7 +237,7 @@ cut2                        -0.322 0.103  -3.123 0.002 -0.524 -0.120
 rho                         -0.707 0.106  -6.694 0.000 -0.914 -0.500
 ```
 
-**Present AIC code and results from the MIOPC model here**
+The AIC statistics for the MIOPC model is obtained from,
 
 ```python
 print(miopc_EU.AIC)
@@ -247,9 +247,9 @@ print(miopc_EU.AIC)
 21669.96812802041
 ```
 
-The AIC statistics for the MIOP model is 21729.39 and the OP model is 22100.90
+The AIC statistics for the MIOP model is 21729.39 and the OP model is 22100.90 (see documentation). 
 
-In this EU support example, the `split_effects` dataframe provides and illustrates via boxplots (with 95% CI) the first difference in the predicted probability of middle-category observations being informed respondents (non-inflated cases) when the split-stage covariate 'EU_know_obj' increases one standard deviation from its mean value (Note that for non-dummy variables, the "=0" and "=1" box plots represents the mean and one standard deviation above mean value, respectively).
+In this EU support example, the `split_effects` dataframe provides and illustrates via boxplots (with 95% CI) the first difference in the predicted probability of middle-category observations being informed respondents (non-inflated cases) when the split-stage covariate 'EU_know_obj' increases one standard deviation from its mean value (for continuous variables, the "=0" and "=1" box plots represents the mean and one standard deviation above mean value, respectively).
 
 <p align="center">
    <img src="https://github.com/hknd23/idcempy/raw/main/graphics/MiOPC_Split_EU_Know_0214.png" width="500" height="300" />
@@ -304,9 +304,7 @@ y = ['vote_turn']
 reference = [0, 1, 2]
 inflatecat = "baseline"
 ```
-users can employ the argument `inflatecat` to specify any unordered category as the inflated category (dictated by the distribution) in their unordered-polytomous outcome measure. If a higher category (say 1) is inflated in a 0,1,2 unordered outcome measure, then users can specify `inflatecat` as follows
-
-Further, employing the argument `reference`, users can select which category of the unordered outcome variable is the baseline ("reference") category by placing it first. Since the baseline ("0") category in the Presidential vote choice outcome measure is inflated, the following code fits the BIMNL Model.
+The argument `inflatecat` can be used to specify any unordered category as the inflated category in their unordered-polytomous outcome measure. Further, from the argument `reference`, users can select which category of the unordered outcome variable is the baseline ("reference") category by placing it first. Since the baseline ("0") category in the Presidential vote choice outcome measure is inflated, the following code fits the BIMNL Model,
 
 ```python
 gimnl_2004vote = gimnl.gimnlmod(data, x, y, z, reference, inflatecat)
@@ -336,7 +334,7 @@ educ                  0.157 0.203   0.772 0.440  -0.241  0.554
 party7               -0.577 0.058  -9.928 0.000  -0.691 -0.463
 agegroup2             0.916 0.235   3.905 0.000   0.456  1.376
 ```
-The AIC statistics for the BIMNL model is given by
+The AIC statistics for the BIMNL model is given by,
 
 ```python
 print(gimnl_2004vote.AIC)
@@ -344,9 +342,8 @@ print(gimnl_2004vote.AIC)
 ```
 1656.8324085039708
 ```
-**AIC code and results**
 
-The AIC for the standard MNL model (see documentation) is 1657.19. **Vuong statistic for BIMNL vs MNL: code and results**
+The AIC for the standard MNL model (see documentation) is 1657.19. The Vuong statistic for comparing the MNL to the BIMNL model in this case is, 
 
 ```python
 mnl_2004vote = gimnl.mnlmod(data, x, y, reference)
@@ -357,7 +354,7 @@ gimnl.vuong_gimnl(mnl_2004vote, gimnl_2004vote)
 -1.2835338187781173
 ```
 
-**Just code for GIMNL model for any other inflated category**
+Users can employ the argument `inflatecat` to specify any unordered category as the inflated category (dictated by the distribution) in their unordered-polytomous outcome measure. If a higher category (say 1 or 2) is inflated in a 0,1,2 unordered outcome measure, then users can specify `reference` and `inflatecat` as follows,
 ```python
 gimnl.gimnlmod(data, x, y, z, reference, inflatecat="second")
 gimnl.gimnlmod(data, x, y, z, reference, inflatecat="third")
