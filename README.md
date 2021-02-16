@@ -329,8 +329,27 @@ agegroup2             0.916 0.235   3.905 0.000   0.456  1.376
 ```
 The AIC statistics for the BIMNL model is given by
 
+```python
+print(gimnl_2004vote.AIC)
+```
+```
+1656.8324085039708
+```
 **AIC code and results**
 
-The AIC for the standard MNL model (see documentation) is X. **Vuong statistic for BIMNL vs MNL: code and results**
+The AIC for the standard MNL model (see documentation) is 1657.19. **Vuong statistic for BIMNL vs MNL: code and results**
+
+```python
+mnl_2004vote = gimnl.mnlmod(data, x, y, reference)
+gimnl.vuong_gimnl(mnl_2004vote, gimnl_2004vote)
+```
+
+```python
+-1.2835338187781173
+```
 
 **Just code for GIMNL model for any other inflated category**
+```python
+gimnlmod(data, x, y, z, reference, inflatecat="second")
+gimnlmod(data, x, y, z, reference, inflatecat="third")
+```
