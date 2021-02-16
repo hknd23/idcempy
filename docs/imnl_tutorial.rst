@@ -2,7 +2,7 @@
 imnl Module
 ***********
 
-The IDCeMPy package also includes a function that estimates "inflated" Multinomial Logit models (iMNL).  iMNL models minimize issues present when unordered polytomous outcome variables have an excessive share and heterogeneous pool of observations in the lower category.  The application below uses data from Arcenaux and Kolodny (`2018 <https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1540-5907.2009.00399.x>`__) who analyze the effect of economic, social and political variables on *vote choice*.  In this case, the baseline category is frequently inflated as it includes non-voters who abstain from voting in an election owing to temporary factors and “routine” non-voters who are consistently disengaged from the political process.  Faling to account for such inflation could lead to inaccurate inferences.
+The IDCeMPy package also includes a function that estimates "inflated" Multinomial Logit models (iMNL).  iMNL models minimize issues present when unordered polytomous outcome variables have an excessive share and heterogeneous pool of observations in the lower category.  The application below uses data from Campbell and Monson (`2008 <https://academic.oup.com/poq/article-abstract/72/3/399/1836972>`__) who analyze the effect of economic, social and political variables on *vote choice*.  In this case, the baseline category is frequently inflated as it includes non-voters who abstain from voting in an election owing to temporary factors and “routine” non-voters who are consistently disengaged from the political process.  Faling to account for such inflation could lead to inaccurate inferences.
 
 To estimate the iMNL model, we first import the library and the dataset introduced above.
 
