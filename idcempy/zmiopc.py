@@ -1017,7 +1017,6 @@ def iopcfit(model):
 
     probsinfl = np.zeros((n, 1))
     probsinfl[:, 0] = 1 - norm.cdf(zg)
-    # linear
     probslin = pd.DataFrame({"zg": zg, "xb": xb})
     fitted = FittedVals(probs, probsordered, probsinfl, probslin)
     return fitted

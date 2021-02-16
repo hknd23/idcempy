@@ -497,3 +497,62 @@ def mnlmod(data, x, y, reference, method="BFGS", pstart=None):
             )
     results = mnlresults(model, data, x, y, modeltype, reference)
     return results
+
+
+def vuong_mnlgimnl(modelmnl, modelgimnl):
+    xb2_mnl = modelmnl.X.dot(modelmnl.multinom[0: len(modelmnl.X.columns)])
+    xb3_mnl = modelmnl.X.dot(modelmnl.multinom[len(modelmnl.X.columns):
+                                               len(modelmnl.multinom)])
+    xb2_gimnl = modelgimnl.X.dot(
+        modelgimnl.multinom[0: len(modelgimnl.X.columns)])
+    xb3_gimnl = modelgimnl.X.dot(modelgimnl.multinom[len(modelgimnl.X.columns):
+                                                     len(modelgimnl.multinom)])
+    zg_gimnl = modelgimnl.Z.dot(modelgimnl.split)
+    mnldenom = 1 + np.exp(xb2_mnl) + np.exp(xb3_mnl)
+    gimnldenom = 1 + np.exp(xb2_gimnl) + np.exp(xb3_gimnl)
+    p1mnl = 1 / mnldenom
+    p2mnl = np.exp(xb2_mnl) / mnldenom
+    p3mnl = np.exp(xb3_mnl) / mnldenom
+    if modelgimnl.inflatecat == "baseline":
+        p1gimnl = ((1 / gimnldenom)
+                   * (1 / (1 + np.exp(-zg_gimnl)))
+                   + (1 - (1 / (1 + np.exp(-zg_gimnl)))))
+        p2gimnl = (np.exp(xb2_gimnl) / gimnldenom) * (
+                1 / (1 + np.exp(-zg_gimnl)))
+        p3gimnl = (np.exp(xb3_gimnl) / gimnldenom) * (
+                1 / (1 + np.exp(-zg_gimnl)))
+    elif modelgimnl.inflatecat == "second":
+        p1gimnl = ((1 / gimnldenom)
+                   * (1 / (1 + np.exp(-zg_gimnl))))
+        p2gimnl = ((np.exp(xb2_gimnl) / gimnldenom)
+                   * (1 / (1 + np.exp(-zg_gimnl)))
+                   + (1 - (1 / (1 + np.exp(-zg_gimnl)))))
+        p3gimnl = ((np.exp(xb3_gimnl) / gimnldenom)
+                   * (1 / (1 + np.exp(-zg_gimnl))))
+    elif modelgimnl.inflatecat == "third":
+        p1gimnl = ((1 / gimnldenom)
+                   * (1 / (1 + np.exp(-zg_gimnl))))
+        p2gimnl = ((np.exp(xb2_gimnl) / gimnldenom)
+                   * (1 / (1 + np.exp(-zg_gimnl))))
+        p3gimnl = ((np.exp(xb3_gimnl) / gimnldenom)
+                   * (1 / (1 + np.exp(-zg_gimnl)))
+                   + (1 - (1 / (1 + np.exp(-zg_gimnl)))))
+    m = np.zeros(len(modelgimnl.X))
+    reference = modelgimnl.reference
+    lik = np.sum(
+        np.log(pz * p1) * (y == reference[0])
+        + np.log((1 - pz) + pz * p2) * (y == reference[1])
+        + np.log(pz * p3) * (y == reference[2])
+    )
+    for i in range(len(m)):
+        if y[i] == reference[0]:
+            m[i] = np.log(p1mnl[i] / p1gimnl[i])
+        elif y[i] == reference[0]:
+            m[i] = np.log(p2mnl[i] / p2gimnl[i])
+        elif y[i] == reference[2]:
+            m[i] = np.log(p3mnl[i] / p3gimnl[i])
+    diffmsq = (m - np.mean(m)) ** 2
+    sumdms = sum(diffmsq)
+    vuong = (np.sqrt(len(m)) * (1 / len(m)) * sum(m)) / (
+        np.sqrt((1 / len(m)) * sumdms))
+    return vuong
