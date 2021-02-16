@@ -48,7 +48,6 @@ class GimnlModel:
         :param xstr: list of string for x names.
         :param ystr: list of string for y names.
         :param zstr: list of string for z names.
-
         """
         self.modeltype = modeltype
         self.reference = reference
@@ -90,7 +89,7 @@ class MnlModel:
     ):
         """Store model results, goodness-of-fit tests, and other information.
 
-        :param modeltype: Type of IMNL Model (bimnl3).
+        :param modeltype: Type of Model (mnl3).
         :param reference: Order of categories. The order category will be
         the first element.
         :param llik: Log-Likelihood.
@@ -99,16 +98,12 @@ class MnlModel:
         :param vcov: Variance-Covariance matrix.
             (optimized as inverted Hessian matrix)
         :param data: Full dataset.
-        :param zs: Inflation stage estimates (Gammas).
         :param xs: Ordered probit estimates (Betas).
         :param ycatu: Number of categories in the Dependent Variable (DV).
         :param x_: X Data.
         :param yx_: Y (DV) data.
-        :param z_: Z Data.
         :param xstr: list of string for x names.
         :param ystr: list of string for y names.
-        :param zstr: list of string for z names.
-
         """
         self.modeltype = modeltype
         self.reference = reference
@@ -134,7 +129,7 @@ def mnl3(pstart, x2, x3, y, reference):
     :param x3: X covariates (should be identical to x2.
     :param y: Dependent Variable (DV).
     :param z: Inflation stage covariates.
-    :param reference: order of categories (first category/baseline inflated).
+    :param reference: order of categories.
     """
     b2 = pstart[0: len(x2.columns)]
     b3 = pstart[len(x2.columns): (len(pstart))]
@@ -246,6 +241,8 @@ def gimnlresults(model, data, x, y, z, modeltype, reference, inflatecat):
     """
     Produce estimation results, part of :py:func:`gimnlmod`.
 
+    Store estimates, model AIC, and other information to
+    :py:class:`GimnlModel`.
     :param model: object model estimated.
     :param data: dataset.
     :param x: Multinomial Logit stage covariates.
@@ -320,8 +317,9 @@ def gimnlresults(model, data, x, y, z, modeltype, reference, inflatecat):
 
 def mnlresults(model, data, x, y, modeltype, reference):
     """
-    Produce estimation results, part of :py:func:`gimnlmod`.
+    Produce estimation results, part of :py:func:`mnlmod`.
 
+    Store estimates, model AIC, and other information to :py:class:`MnlModel`.
     :param model: object model estimated.
     :param data: dataset.
     :param x: Multinomial Logit stage covariates.
@@ -387,7 +385,7 @@ def mnlresults(model, data, x, y, modeltype, reference):
 
 def gimnlmod(data, x, y, z, reference, inflatecat, method="BFGS", pstart=None):
     """
-    Estimate inflated Multinomial Logit model.
+    Estimate three-category inflated Multinomial Logit model.
 
     :param data: dataset.
     :param x: MNL stage covariates.
@@ -395,9 +393,10 @@ def gimnlmod(data, x, y, z, reference, inflatecat, method="BFGS", pstart=None):
     with a number from 0-2 representing each category.
     :param z: Inflation stage covariates.
     :param reference: order of categories.
-    :param inflatecat: inflated category.
+    :param inflatecat: inflated category. One of "baseline", "second",
+    or "third."
     :param method: Optimization method.  Default is 'BFGS'
-    :param pstart: Starting parameters. Number of parameter n =
+    :param pstart: Starting parameters.
     """
     varlist = np.unique(y + z + x)
     dataset = data[varlist]
@@ -454,17 +453,15 @@ def gimnlmod(data, x, y, z, reference, inflatecat, method="BFGS", pstart=None):
 
 def mnlmod(data, x, y, reference, method="BFGS", pstart=None):
     """
-    Estimate inflated Multinomial Logit model.
+    Estimate three-category Multinomial Logit model.
 
     :param data: dataset.
     :param x: MNL stage covariates.
     :param y: Dependent Variable. Variable needs to be in factor form,
     with a number from 0-2 representing each category.
-    :param z: Inflation stage covariates.
     :param reference: order of categories.
-    :param inflatecat: inflated category.
     :param method: Optimization method.  Default is 'BFGS'
-    :param pstart: Starting parameters. Number of parameter n =
+    :param pstart: Starting parameters.
     """
     varlist = np.unique(y + x)
     dataset = data[varlist]
@@ -500,6 +497,12 @@ def mnlmod(data, x, y, reference, method="BFGS", pstart=None):
 
 
 def vuong_gimnl(modelmnl, modelgimnl):
+    """
+    Run the Vuong test to compare the performance of the MNL and GIMNL model.
+
+    For the function to run properly, the models need to have the same X
+    covariates and same number of observations.
+    """
     xb2_mnl = modelmnl.X.dot(modelmnl.multinom[0: len(modelmnl.X.columns)])
     xb3_mnl = modelmnl.X.dot(modelmnl.multinom[len(modelmnl.X.columns):
                                                len(modelmnl.multinom)])
