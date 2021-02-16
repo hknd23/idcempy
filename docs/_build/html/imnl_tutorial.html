@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>imnl Module &#8212; IDCeMPy  documentation</title>
+    <title>gimnl Module &#8212; IDCeMPy  documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -45,11 +45,11 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="imnl-module">
-<h1>imnl Module<a class="headerlink" href="#imnl-module" title="Permalink to this headline">¶</a></h1>
-<p>The IDCeMPy package also includes a function that estimates “inflated” Multinomial Logit models (iMNL).  iMNL models minimize issues present when unordered polytomous outcome variables have an excessive share and heterogeneous pool of observations in the lower category.  The application below uses data from Arcenaux and Kolodny (<a class="reference external" href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1540-5907.2009.00399.x">2018</a>) who analyze the effect of economic, social and political variables on <em>vote choice</em>.  In this case, the baseline category is frequently inflated as it includes non-voters who abstain from voting in an election owing to temporary factors and “routine” non-voters who are consistently disengaged from the political process.  Faling to account for such inflation could lead to inaccurate inferences.</p>
+  <div class="section" id="gimnl-module">
+<h1>gimnl Module<a class="headerlink" href="#gimnl-module" title="Permalink to this headline">¶</a></h1>
+<p>The IDCeMPy package also includes a function that estimates General “inflated” Multinomial Logit models (GiMNL).  GiMNL models minimize issues present when unordered polytomous outcome variables have an excessive share and heterogeneous pool of observations in the lower category.  The application below uses data from Campbell and Monson (<a class="reference external" href="https://academic.oup.com/poq/article-abstract/72/3/399/1836972">2008</a>) who use ‘vote choice’ as their outcome variable.  The 0,1,2 unordered-polytomous Presidential ‘vote choice’ doutcome variable in their data includes the following options: abstained (their MNL baseline category), Bush, or Kerry. In this case, the baseline category is inflated as it includes non-voters who abstain from voting in an election owing to temporary factors and “routine” non-voters who are consistently disengaged from the political process.  Faling to account for such inflation could lead to inaccurate inferences.</p>
 <p>To estimate the iMNL model, we first import the library and the dataset introduced above.</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">idcempy</span> <span class="kn">import</span> <span class="n">imnl</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">idcempy</span> <span class="kn">import</span> <span class="n">gimnl</span>
 <span class="n">url</span><span class="o">=</span> <span class="s1">&#39;https://github.com/hknd23/zmiopc/raw/main/data/replicationdata.dta&#39;</span>
 <span class="n">data</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_stata</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 </pre></div>
@@ -60,18 +60,18 @@
 <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;vote_turn&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Users must then define the order of the variables and type of “inflation”.  In the example below, we estimate a model with three categories and inflation in the baseline category.</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">order</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<p>Users can employ the argument <cite>inflatecat</cite> to specify any unordered category as the inflated category (dictated by the distribution) in their unordered-polytomous outcome measure. If a higher category (say 1) is inflated in a 0,1,2 unordered outcome measure, then users can specify inflatecat as follows
+.. testcode:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">order</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
 <span class="n">inflatecat</span> <span class="o">=</span> <span class="s2">&quot;baseline&quot;</span>
 </pre></div>
 </div>
-<p>The following line of code estimates the iMNL model described above.</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">imnl_2004vote</span> <span class="o">=</span> <span class="n">bimnl</span><span class="o">.</span><span class="n">gimnlmod</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">inflatecat</span><span class="p">)</span>
+<p>Further, employing the argument <cite>reference</cite>, users can select which category of the unordered outcome variable is the baseline (“reference”) category by placing it first. Since the baseline (“0”) category in the Presidential vote choice outcome measure is inflated, the following code fits the BIMNL Model.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">gimnl_2004vote</span> <span class="o">=</span> <span class="n">gimnl</span><span class="o">.</span><span class="n">gimnlmod</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">inflatecat</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>class <cite>imnlModel</cite> stores the results from the regression object <cite>imnl_2004vote</cite> from <code class="xref py py-func docutils literal notranslate"><span class="pre">gimnlmod()</span></code>.</p>
 <p>The following line of code prints the coefficients of the covariates.</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">imnl_2004vote</span><span class="o">.</span><span class="n">coefs</span><span class="p">)</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">gimnl_2004vote</span><span class="o">.</span><span class="n">coefs</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>                       Coef   SE    tscore   p    2.5%   97.5%
@@ -86,6 +86,20 @@ Inflation: agegroup2  1.295 0.768   1.685 0.092  -0.211  2.800
 2: educ               0.157 0.203   0.772 0.440  -0.241  0.554
 2: party7            -0.577 0.058  -9.928 0.000  -0.691 -0.463
 2: agegroup2          0.916 0.235   3.905 0.000   0.456  1.376
+</pre></div>
+</div>
+<p>The results from the BIMNL model for this application are stored in a class (gimnlModel) with the following attributes:</p>
+<ul class="simple">
+<li><p>coefs: Model coefficients and standard errors</p></li>
+<li><p>llik: Log-likelihood</p></li>
+<li><p>AIC: Akaike information criterion</p></li>
+<li><p>vcov: Variance-covariance matrix</p></li>
+</ul>
+<p>The AIC, for exmaple is given by,</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>
