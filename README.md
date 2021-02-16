@@ -60,7 +60,7 @@ Each inflated discrete choice model in this package addresses category inflation
 From [PyPi](https://pypi.org/project/ziopcpy/0.1.2/):
 
 ```sh
-pip install IDCeMPy
+pip install idcempy
 ```
 
 From [GitHub](https://github.com/)
