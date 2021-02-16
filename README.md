@@ -350,6 +350,6 @@ gimnl.vuong_gimnl(mnl_2004vote, gimnl_2004vote)
 
 **Just code for GIMNL model for any other inflated category**
 ```python
-gimnlmod(data, x, y, z, reference, inflatecat="second")
-gimnlmod(data, x, y, z, reference, inflatecat="third")
+gimnl.gimnlmod(data, x, y, z, reference, inflatecat="second")
+gimnl.gimnlmod(data, x, y, z, reference, inflatecat="third")
 ```
