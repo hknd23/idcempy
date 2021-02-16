@@ -499,7 +499,7 @@ def mnlmod(data, x, y, reference, method="BFGS", pstart=None):
     return results
 
 
-def vuong_mnlgimnl(modelmnl, modelgimnl):
+def vuong_gimnl(modelmnl, modelgimnl):
     xb2_mnl = modelmnl.X.dot(modelmnl.multinom[0: len(modelmnl.X.columns)])
     xb3_mnl = modelmnl.X.dot(modelmnl.multinom[len(modelmnl.X.columns):
                                                len(modelmnl.multinom)])
@@ -539,11 +539,7 @@ def vuong_mnlgimnl(modelmnl, modelgimnl):
                    + (1 - (1 / (1 + np.exp(-zg_gimnl)))))
     m = np.zeros(len(modelgimnl.X))
     reference = modelgimnl.reference
-    lik = np.sum(
-        np.log(pz * p1) * (y == reference[0])
-        + np.log((1 - pz) + pz * p2) * (y == reference[1])
-        + np.log(pz * p3) * (y == reference[2])
-    )
+    y = modelgimnl.Y
     for i in range(len(m)):
         if y[i] == reference[0]:
             m[i] = np.log(p1mnl[i] / p1gimnl[i])
