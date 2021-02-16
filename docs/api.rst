@@ -14,9 +14,9 @@ The zmiopc module
    :members:
    :member-order: bysource
 
-The imnl module
+The gimnl module
 ------------------
 
-.. automodule:: imnl
+.. automodule:: gimnl
   :members:
   :member-order: bysource

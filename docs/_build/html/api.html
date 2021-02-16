@@ -424,8 +424,173 @@ versus original values (0).</p>
 </dd></dl>
 
 </div>
-<div class="section" id="the-imnl-module">
-<h2>The imnl module<a class="headerlink" href="#the-imnl-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-gimnl">
+<span id="the-gimnl-module"></span><h2>The gimnl module<a class="headerlink" href="#module-gimnl" title="Permalink to this headline">¶</a></h2>
+<p>Classes and Functions for the gimnl module.</p>
+<dl class="class">
+<dt id="gimnl.GimnlModel">
+<em class="property">class </em><code class="sig-prename descclassname">gimnl.</code><code class="sig-name descname">GimnlModel</code><span class="sig-paren">(</span><em class="sig-param">modeltype</em>, <em class="sig-param">reference</em>, <em class="sig-param">inflatecat</em>, <em class="sig-param">llik</em>, <em class="sig-param">coef</em>, <em class="sig-param">aic</em>, <em class="sig-param">vcov</em>, <em class="sig-param">data</em>, <em class="sig-param">xs</em>, <em class="sig-param">zs</em>, <em class="sig-param">x_</em>, <em class="sig-param">yx_</em>, <em class="sig-param">z_</em>, <em class="sig-param">ycatu</em>, <em class="sig-param">xstr</em>, <em class="sig-param">ystr</em>, <em class="sig-param">zstr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gimnl.html#GimnlModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gimnl.GimnlModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store model results from <a class="reference internal" href="#gimnl.gimnlmod" title="gimnl.gimnlmod"><code class="xref py py-func docutils literal notranslate"><span class="pre">gimnlmod()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="gimnl.MnlModel">
+<em class="property">class </em><code class="sig-prename descclassname">gimnl.</code><code class="sig-name descname">MnlModel</code><span class="sig-paren">(</span><em class="sig-param">modeltype</em>, <em class="sig-param">reference</em>, <em class="sig-param">llik</em>, <em class="sig-param">coef</em>, <em class="sig-param">aic</em>, <em class="sig-param">vcov</em>, <em class="sig-param">data</em>, <em class="sig-param">xs</em>, <em class="sig-param">x_</em>, <em class="sig-param">yx_</em>, <em class="sig-param">ycatu</em>, <em class="sig-param">xstr</em>, <em class="sig-param">ystr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gimnl.html#MnlModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gimnl.MnlModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store model results from <a class="reference internal" href="#gimnl.gimnlmod" title="gimnl.gimnlmod"><code class="xref py py-func docutils literal notranslate"><span class="pre">gimnlmod()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gimnl.mnl3">
+<code class="sig-prename descclassname">gimnl.</code><code class="sig-name descname">mnl3</code><span class="sig-paren">(</span><em class="sig-param">pstart</em>, <em class="sig-param">x2</em>, <em class="sig-param">x3</em>, <em class="sig-param">y</em>, <em class="sig-param">reference</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gimnl.html#mnl3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gimnl.mnl3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Likelihood function for the baseline inflated three-category MNL model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pstart</strong> – starting parameters.</p></li>
+<li><p><strong>x2</strong> – X covariates.</p></li>
+<li><p><strong>x3</strong> – X covariates (should be identical to x2.</p></li>
+<li><p><strong>y</strong> – Dependent Variable (DV).</p></li>
+<li><p><strong>z</strong> – Inflation stage covariates.</p></li>
+<li><p><strong>reference</strong> – order of categories.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="gimnl.bimnl3">
+<code class="sig-prename descclassname">gimnl.</code><code class="sig-name descname">bimnl3</code><span class="sig-paren">(</span><em class="sig-param">pstart</em>, <em class="sig-param">x2</em>, <em class="sig-param">x3</em>, <em class="sig-param">y</em>, <em class="sig-param">z</em>, <em class="sig-param">reference</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gimnl.html#bimnl3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gimnl.bimnl3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Likelihood function for the baseline inflated three-category MNL model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pstart</strong> – starting parameters.</p></li>
+<li><p><strong>x2</strong> – X covariates.</p></li>
+<li><p><strong>x3</strong> – X covariates (should be identical to x2.</p></li>
+<li><p><strong>y</strong> – Dependent Variable (DV).</p></li>
+<li><p><strong>z</strong> – Inflation stage covariates.</p></li>
+<li><p><strong>reference</strong> – order of categories (first category/baseline inflated).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="gimnl.simnl3">
+<code class="sig-prename descclassname">gimnl.</code><code class="sig-name descname">simnl3</code><span class="sig-paren">(</span><em class="sig-param">pstart</em>, <em class="sig-param">x2</em>, <em class="sig-param">x3</em>, <em class="sig-param">y</em>, <em class="sig-param">z</em>, <em class="sig-param">reference</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gimnl.html#simnl3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gimnl.simnl3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Likelihood function for the second category inflated MNL model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pstart</strong> – starting parameters.</p></li>
+<li><p><strong>x2</strong> – X covariates.</p></li>
+<li><p><strong>x3</strong> – X covariates (should be identical to x2.</p></li>
+<li><p><strong>y</strong> – Dependent Variable.</p></li>
+<li><p><strong>z</strong> – Inflation stage covariates.</p></li>
+<li><p><strong>reference</strong> – order of categories (second category is inflated).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="gimnl.timnl3">
+<code class="sig-prename descclassname">gimnl.</code><code class="sig-name descname">timnl3</code><span class="sig-paren">(</span><em class="sig-param">pstart</em>, <em class="sig-param">x2</em>, <em class="sig-param">x3</em>, <em class="sig-param">y</em>, <em class="sig-param">z</em>, <em class="sig-param">reference</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gimnl.html#timnl3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gimnl.timnl3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Likelihood function for the third category inflated MNL model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pstart</strong> – starting parameters.</p></li>
+<li><p><strong>x2</strong> – X covariates.</p></li>
+<li><p><strong>x3</strong> – X covariates (should be identical to x2.</p></li>
+<li><p><strong>y</strong> – Dependent Variable (DV).</p></li>
+<li><p><strong>z</strong> – Inflation stage covariates.</p></li>
+<li><p><strong>reference</strong> – order of categories (third category is inflated).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="gimnl.gimnlresults">
+<code class="sig-prename descclassname">gimnl.</code><code class="sig-name descname">gimnlresults</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">data</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">z</em>, <em class="sig-param">modeltype</em>, <em class="sig-param">reference</em>, <em class="sig-param">inflatecat</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gimnl.html#gimnlresults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gimnl.gimnlresults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce estimation results, part of <a class="reference internal" href="#gimnl.gimnlmod" title="gimnl.gimnlmod"><code class="xref py py-func docutils literal notranslate"><span class="pre">gimnlmod()</span></code></a>.</p>
+<p>Store estimates, model AIC, and other information to
+<a class="reference internal" href="#gimnl.GimnlModel" title="gimnl.GimnlModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GimnlModel</span></code></a>.
+:param model: object model estimated.
+:param data: dataset.
+:param x: Multinomial Logit stage covariates.
+:param y: Dependent Variable (DV).
+:param z: Spplit-stage covariates.
+:param modeltype: type of inflated MNL model.
+:param reference: order of categories.
+:param inflatecat: inflated category.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gimnl.mnlresults">
+<code class="sig-prename descclassname">gimnl.</code><code class="sig-name descname">mnlresults</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">data</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">modeltype</em>, <em class="sig-param">reference</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gimnl.html#mnlresults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gimnl.mnlresults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce estimation results, part of <a class="reference internal" href="#gimnl.mnlmod" title="gimnl.mnlmod"><code class="xref py py-func docutils literal notranslate"><span class="pre">mnlmod()</span></code></a>.</p>
+<p>Store estimates, model AIC, and other information to <a class="reference internal" href="#gimnl.MnlModel" title="gimnl.MnlModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">MnlModel</span></code></a>.
+:param model: object model estimated.
+:param data: dataset.
+:param x: Multinomial Logit stage covariates.
+:param y: Dependent Variable (DV).
+:param z: Spplit-stage covariates.
+:param modeltype: type of inflated MNL model.
+:param reference: order of categories.
+:param inflatecat: inflated category.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gimnl.gimnlmod">
+<code class="sig-prename descclassname">gimnl.</code><code class="sig-name descname">gimnlmod</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">z</em>, <em class="sig-param">reference</em>, <em class="sig-param">inflatecat</em>, <em class="sig-param">method='BFGS'</em>, <em class="sig-param">pstart=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gimnl.html#gimnlmod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gimnl.gimnlmod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate three-category inflated Multinomial Logit model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – dataset.</p></li>
+<li><p><strong>x</strong> – MNL stage covariates.</p></li>
+<li><p><strong>y</strong> – Dependent Variable. Variable needs to be in factor form,</p></li>
+</ul>
+</dd>
+</dl>
+<p>with a number from 0-2 representing each category.
+:param z: Inflation stage covariates.
+:param reference: order of categories.
+:param inflatecat: inflated category. One of “baseline”, “second”,
+or “third.”
+:param method: Optimization method.  Default is ‘BFGS’
+:param pstart: Starting parameters.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gimnl.mnlmod">
+<code class="sig-prename descclassname">gimnl.</code><code class="sig-name descname">mnlmod</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">reference</em>, <em class="sig-param">method='BFGS'</em>, <em class="sig-param">pstart=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gimnl.html#mnlmod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gimnl.mnlmod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate three-category Multinomial Logit model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – dataset.</p></li>
+<li><p><strong>x</strong> – MNL stage covariates.</p></li>
+<li><p><strong>y</strong> – Dependent Variable. Variable needs to be in factor form,</p></li>
+</ul>
+</dd>
+</dl>
+<p>with a number from 0-2 representing each category.
+:param reference: order of categories.
+:param method: Optimization method.  Default is ‘BFGS’
+:param pstart: Starting parameters.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gimnl.vuong_gimnl">
+<code class="sig-prename descclassname">gimnl.</code><code class="sig-name descname">vuong_gimnl</code><span class="sig-paren">(</span><em class="sig-param">modelmnl</em>, <em class="sig-param">modelgimnl</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gimnl.html#vuong_gimnl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gimnl.vuong_gimnl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the Vuong test to compare the performance of the MNL and GIMNL model.</p>
+<p>For the function to run properly, the models need to have the same X
+covariates and same number of observations.</p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -439,7 +604,7 @@ versus original values (0).</p>
   <ul>
 <li><a class="reference internal" href="#">API Reference</a><ul>
 <li><a class="reference internal" href="#module-zmiopc">The zmiopc module</a></li>
-<li><a class="reference internal" href="#the-imnl-module">The imnl module</a></li>
+<li><a class="reference internal" href="#module-gimnl">The gimnl module</a></li>
 </ul>
 </li>
 </ul>
