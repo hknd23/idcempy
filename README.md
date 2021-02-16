@@ -177,7 +177,7 @@ ziopcgender_ordered.plot.box(grid='False')
 <p align="center">
    <img src="https://github.com/hknd23/idcempy/blob/main/graphics/ziopc_ordered_gender_0214.png" width="500" height="300" />
    <br>
-   <em>Fig. 2: Margina Effect of Gender on Self-Reported Tobacco Consumption</em>
+   <em>Fig. 2: Marginal Effect of Gender on Self-Reported Tobacco Consumption</em>
 </p>
 
 Module `zmiopc` also provides the function `vuong_opiopc` that employs the Vuong test stastic to compare the performace of the standard OP model (also available through `opmod`) versus the ZIOPC model and also the OP versus ZIOP model. The Vuong statistics from comparing the OP and the ZIOPC model is given by,
