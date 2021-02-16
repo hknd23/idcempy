@@ -239,6 +239,14 @@ rho                         -0.707 0.106  -6.694 0.000 -0.914 -0.500
 
 **Present AIC code and results from the MIOPC model here**
 
+```python
+print(miopc_EU.AIC)
+```
+
+```python
+21669.96812802041
+```
+
 The AIC statistics for the MIOP model is 21729.39 and the OP model is 22100.90
 
 In this EU support example, the `split_effects` dataframe provides and illustrates via boxplots (with 95% CI) the first difference in the predicted probability of middle-category observations being informed respondents (non-inflated cases) when the dummy split-stage covariate 'EU_know_obj' changes from 0 to 1.
