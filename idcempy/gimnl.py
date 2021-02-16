@@ -243,6 +243,7 @@ def gimnlresults(model, data, x, y, z, modeltype, reference, inflatecat):
 
     Store estimates, model AIC, and other information to
     :py:class:`GimnlModel`.
+
     :param model: object model estimated.
     :param data: dataset.
     :param x: Multinomial Logit stage covariates.
@@ -320,6 +321,7 @@ def mnlresults(model, data, x, y, modeltype, reference):
     Produce estimation results, part of :py:func:`mnlmod`.
 
     Store estimates, model AIC, and other information to :py:class:`MnlModel`.
+
     :param model: object model estimated.
     :param data: dataset.
     :param x: Multinomial Logit stage covariates.
@@ -390,11 +392,11 @@ def gimnlmod(data, x, y, z, reference, inflatecat, method="BFGS", pstart=None):
     :param data: dataset.
     :param x: MNL stage covariates.
     :param y: Dependent Variable. Variable needs to be in factor form,
-    with a number from 0-2 representing each category.
+            with a number from 0-2 representing each category.
     :param z: Inflation stage covariates.
     :param reference: order of categories.
     :param inflatecat: inflated category. One of "baseline", "second",
-    or "third."
+         or "third."
     :param method: Optimization method.  Default is 'BFGS'
     :param pstart: Starting parameters.
     """
@@ -458,7 +460,7 @@ def mnlmod(data, x, y, reference, method="BFGS", pstart=None):
     :param data: dataset.
     :param x: MNL stage covariates.
     :param y: Dependent Variable. Variable needs to be in factor form,
-    with a number from 0-2 representing each category.
+         with a number from 0-2 representing each category.
     :param reference: order of categories.
     :param method: Optimization method.  Default is 'BFGS'
     :param pstart: Starting parameters.
@@ -502,6 +504,9 @@ def vuong_gimnl(modelmnl, modelgimnl):
 
     For the function to run properly, the models need to have the same X
     covariates and same number of observations.
+
+    :param modelmnl: A :class:`MnlModel` object.
+    :param modelgimnl: A :class:`GimnlModel` object.
     """
     xb2_mnl = modelmnl.X.dot(modelmnl.multinom[0: len(modelmnl.X.columns)])
     xb3_mnl = modelmnl.X.dot(modelmnl.multinom[len(modelmnl.X.columns):

@@ -284,6 +284,7 @@
 
 <span class="sd">    Store estimates, model AIC, and other information to</span>
 <span class="sd">    :py:class:`GimnlModel`.</span>
+
 <span class="sd">    :param model: object model estimated.</span>
 <span class="sd">    :param data: dataset.</span>
 <span class="sd">    :param x: Multinomial Logit stage covariates.</span>
@@ -361,6 +362,7 @@
 <span class="sd">    Produce estimation results, part of :py:func:`mnlmod`.</span>
 
 <span class="sd">    Store estimates, model AIC, and other information to :py:class:`MnlModel`.</span>
+
 <span class="sd">    :param model: object model estimated.</span>
 <span class="sd">    :param data: dataset.</span>
 <span class="sd">    :param x: Multinomial Logit stage covariates.</span>
@@ -431,11 +433,11 @@
 <span class="sd">    :param data: dataset.</span>
 <span class="sd">    :param x: MNL stage covariates.</span>
 <span class="sd">    :param y: Dependent Variable. Variable needs to be in factor form,</span>
-<span class="sd">    with a number from 0-2 representing each category.</span>
+<span class="sd">            with a number from 0-2 representing each category.</span>
 <span class="sd">    :param z: Inflation stage covariates.</span>
 <span class="sd">    :param reference: order of categories.</span>
 <span class="sd">    :param inflatecat: inflated category. One of &quot;baseline&quot;, &quot;second&quot;,</span>
-<span class="sd">    or &quot;third.&quot;</span>
+<span class="sd">         or &quot;third.&quot;</span>
 <span class="sd">    :param method: Optimization method.  Default is &#39;BFGS&#39;</span>
 <span class="sd">    :param pstart: Starting parameters.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -499,7 +501,7 @@
 <span class="sd">    :param data: dataset.</span>
 <span class="sd">    :param x: MNL stage covariates.</span>
 <span class="sd">    :param y: Dependent Variable. Variable needs to be in factor form,</span>
-<span class="sd">    with a number from 0-2 representing each category.</span>
+<span class="sd">         with a number from 0-2 representing each category.</span>
 <span class="sd">    :param reference: order of categories.</span>
 <span class="sd">    :param method: Optimization method.  Default is &#39;BFGS&#39;</span>
 <span class="sd">    :param pstart: Starting parameters.</span>
@@ -543,6 +545,9 @@
 
 <span class="sd">    For the function to run properly, the models need to have the same X</span>
 <span class="sd">    covariates and same number of observations.</span>
+
+<span class="sd">    :param modelmnl: A :class:`MnlModel` object.</span>
+<span class="sd">    :param modelgimnl: A :class:`GimnlModel` object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">xb2_mnl</span> <span class="o">=</span> <span class="n">modelmnl</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">modelmnl</span><span class="o">.</span><span class="n">multinom</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">modelmnl</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)])</span>
     <span class="n">xb3_mnl</span> <span class="o">=</span> <span class="n">modelmnl</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">modelmnl</span><span class="o">.</span><span class="n">multinom</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">modelmnl</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>

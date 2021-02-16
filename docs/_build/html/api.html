@@ -516,30 +516,42 @@ versus original values (0).</p>
 <code class="sig-prename descclassname">gimnl.</code><code class="sig-name descname">gimnlresults</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">data</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">z</em>, <em class="sig-param">modeltype</em>, <em class="sig-param">reference</em>, <em class="sig-param">inflatecat</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gimnl.html#gimnlresults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gimnl.gimnlresults" title="Permalink to this definition">¶</a></dt>
 <dd><p>Produce estimation results, part of <a class="reference internal" href="#gimnl.gimnlmod" title="gimnl.gimnlmod"><code class="xref py py-func docutils literal notranslate"><span class="pre">gimnlmod()</span></code></a>.</p>
 <p>Store estimates, model AIC, and other information to
-<a class="reference internal" href="#gimnl.GimnlModel" title="gimnl.GimnlModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GimnlModel</span></code></a>.
-:param model: object model estimated.
-:param data: dataset.
-:param x: Multinomial Logit stage covariates.
-:param y: Dependent Variable (DV).
-:param z: Spplit-stage covariates.
-:param modeltype: type of inflated MNL model.
-:param reference: order of categories.
-:param inflatecat: inflated category.</p>
+<a class="reference internal" href="#gimnl.GimnlModel" title="gimnl.GimnlModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GimnlModel</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – object model estimated.</p></li>
+<li><p><strong>data</strong> – dataset.</p></li>
+<li><p><strong>x</strong> – Multinomial Logit stage covariates.</p></li>
+<li><p><strong>y</strong> – Dependent Variable (DV).</p></li>
+<li><p><strong>z</strong> – Spplit-stage covariates.</p></li>
+<li><p><strong>modeltype</strong> – type of inflated MNL model.</p></li>
+<li><p><strong>reference</strong> – order of categories.</p></li>
+<li><p><strong>inflatecat</strong> – inflated category.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="gimnl.mnlresults">
 <code class="sig-prename descclassname">gimnl.</code><code class="sig-name descname">mnlresults</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">data</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">modeltype</em>, <em class="sig-param">reference</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gimnl.html#mnlresults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gimnl.mnlresults" title="Permalink to this definition">¶</a></dt>
 <dd><p>Produce estimation results, part of <a class="reference internal" href="#gimnl.mnlmod" title="gimnl.mnlmod"><code class="xref py py-func docutils literal notranslate"><span class="pre">mnlmod()</span></code></a>.</p>
-<p>Store estimates, model AIC, and other information to <a class="reference internal" href="#gimnl.MnlModel" title="gimnl.MnlModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">MnlModel</span></code></a>.
-:param model: object model estimated.
-:param data: dataset.
-:param x: Multinomial Logit stage covariates.
-:param y: Dependent Variable (DV).
-:param z: Spplit-stage covariates.
-:param modeltype: type of inflated MNL model.
-:param reference: order of categories.
-:param inflatecat: inflated category.</p>
+<p>Store estimates, model AIC, and other information to <a class="reference internal" href="#gimnl.MnlModel" title="gimnl.MnlModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">MnlModel</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – object model estimated.</p></li>
+<li><p><strong>data</strong> – dataset.</p></li>
+<li><p><strong>x</strong> – Multinomial Logit stage covariates.</p></li>
+<li><p><strong>y</strong> – Dependent Variable (DV).</p></li>
+<li><p><strong>z</strong> – Spplit-stage covariates.</p></li>
+<li><p><strong>modeltype</strong> – type of inflated MNL model.</p></li>
+<li><p><strong>reference</strong> – order of categories.</p></li>
+<li><p><strong>inflatecat</strong> – inflated category.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -551,17 +563,17 @@ versus original values (0).</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> – dataset.</p></li>
 <li><p><strong>x</strong> – MNL stage covariates.</p></li>
-<li><p><strong>y</strong> – Dependent Variable. Variable needs to be in factor form,</p></li>
+<li><p><strong>y</strong> – Dependent Variable. Variable needs to be in factor form,
+with a number from 0-2 representing each category.</p></li>
+<li><p><strong>z</strong> – Inflation stage covariates.</p></li>
+<li><p><strong>reference</strong> – order of categories.</p></li>
+<li><p><strong>inflatecat</strong> – inflated category. One of “baseline”, “second”,
+or “third.”</p></li>
+<li><p><strong>method</strong> – Optimization method.  Default is ‘BFGS’</p></li>
+<li><p><strong>pstart</strong> – Starting parameters.</p></li>
 </ul>
 </dd>
 </dl>
-<p>with a number from 0-2 representing each category.
-:param z: Inflation stage covariates.
-:param reference: order of categories.
-:param inflatecat: inflated category. One of “baseline”, “second”,
-or “third.”
-:param method: Optimization method.  Default is ‘BFGS’
-:param pstart: Starting parameters.</p>
 </dd></dl>
 
 <dl class="function">
@@ -573,14 +585,14 @@ or “third.”
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> – dataset.</p></li>
 <li><p><strong>x</strong> – MNL stage covariates.</p></li>
-<li><p><strong>y</strong> – Dependent Variable. Variable needs to be in factor form,</p></li>
+<li><p><strong>y</strong> – Dependent Variable. Variable needs to be in factor form,
+with a number from 0-2 representing each category.</p></li>
+<li><p><strong>reference</strong> – order of categories.</p></li>
+<li><p><strong>method</strong> – Optimization method.  Default is ‘BFGS’</p></li>
+<li><p><strong>pstart</strong> – Starting parameters.</p></li>
 </ul>
 </dd>
 </dl>
-<p>with a number from 0-2 representing each category.
-:param reference: order of categories.
-:param method: Optimization method.  Default is ‘BFGS’
-:param pstart: Starting parameters.</p>
 </dd></dl>
 
 <dl class="function">
@@ -589,6 +601,14 @@ or “third.”
 <dd><p>Run the Vuong test to compare the performance of the MNL and GIMNL model.</p>
 <p>For the function to run properly, the models need to have the same X
 covariates and same number of observations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>modelmnl</strong> – A <a class="reference internal" href="#gimnl.MnlModel" title="gimnl.MnlModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">MnlModel</span></code></a> object.</p></li>
+<li><p><strong>modelgimnl</strong> – A <a class="reference internal" href="#gimnl.GimnlModel" title="gimnl.GimnlModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">GimnlModel</span></code></a> object.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
