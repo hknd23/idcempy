@@ -122,7 +122,7 @@ in @elgun2007exposure's data, and (iii) GIMNL models are evaluated using the uno
 These three datasets are described in the package.
 
 # Availability 
-`IDCeMPy` is an Open-source software made available under the MIT license that can be installed from its [GitHub repository](https://github.com/hknd23/idcempy). 
+`IDCeMPy` is an Open-source software made available under the MIT license that can be installed from [PyPi](https://pypi.org/) or its [GitHub repository](https://github.com/hknd23/idcempy). 
 
 
 
