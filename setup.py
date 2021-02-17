@@ -18,7 +18,7 @@ setup(
     author_email="nguyenhuynh831@gmail.com",
     url="https://github.com/hknd23/idcempy",
     keywords=["Inflated", "Mixture", "Ordered Probit", "Multinomial Logit"],
-    install_requires=["scipy", "numpy", "pandas"],
+    install_requires=["scipy>=1.4.1", "numpy", "pandas"],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "License :: OSI Approved :: MIT License",
