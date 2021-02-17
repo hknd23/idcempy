@@ -96,16 +96,12 @@ Y = ['cig_count']
 Z = ['gender_dum']
 ```
 
-In addition, we define an array of starting parameters before estimating the `ziopc` model. If the starting parameters are not specified, the default value is .01 for each of them.
-
-```python
-pstart = np.array([.01, .01, .01, .01, .01, .01, .01, .01, .01, .01])
-```
+The default value of the starting parameters is set to .01. Users can, however, define an array of starting parameters before estimating the `ziopc` model and add it as an argument in the `iopcmod` function. 
 
 The following line of code creates a ziopc regression object model.
 
 ```python
-ziopc_tob = zmiopc.iopcmod('ziopc', pstart, data, X, Y, Z, method='bfgs',
+ziopc_tob = zmiopc.iopcmod('ziopc', data, X, Y, Z, method='bfgs',
                     weights=1, offsetx=0, offsetz=0)
 ```
 Users can estimate the ZIOP model without correlated errors by simply substituting the parameter 'ziop' for 'ziopc'.
