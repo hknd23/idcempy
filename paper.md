@@ -75,13 +75,13 @@ estimate and assess the performance of inflated ordered probit models with corre
 the Middle-Inflated Ordered Probit, and inflated MNL models. 
 
 # Package Architecture
-`IDCeMPy` provides functions to fit the Zero-Inflated Ordered Probit (ZiOP) model without 
-and with correlated errors (ZiOPC model), and the Middle-Inflated Ordered Probit (MiOP) model
-without and with correlated errors (MiOPC). These models account for the inflated share of 
+`IDCeMPy` provides functions to fit the Zero-Inflated Ordered Probit (ZIOP) model without 
+and with correlated errors (ZIOPC model), and the Middle-Inflated Ordered Probit (MIOP) model
+without and with correlated errors (MIOPC). These models account for the inflated share of 
 observations in either the zero or middle-category by combining a single binary “split-stage” 
 probit equation with an ordered probit “outcome-stage” equation. Users can treat the error terms 
 from these two equations as independent or correlated in the package’s estimation routines. 
-`IDCeMPy` also includes functions to fit Generalized Inflated MNL models—combining a logit split-stage equation,
+`IDCeMPy` also includes functions to fit Generalized Inflated MNL models (GIMNL)—combining a logit split-stage equation,
 and a MNL outcome-stage equation—to account for the preponderant and heterogeneous share of 
 observations in the baseline or other outcome categories in unordered polytomous outcome measures. 
 Combining two probability distributions by estimating two equations in each aforementioned 
@@ -90,10 +90,10 @@ choice category that results from distinct d.g.p’s. This ensures that each inf
 choice model in `IDCeMPy` avoids model misspecification and provides accurate estimates when 
 evaluating inflated ordered and unordered polytomous dependent variables. `IDCeMPy`
 also provides functions to assess each included model’s goodness-of-fit, extract marginal effects, 
-and conduct tests for model comparison. The ZiOP(C) models can assess, for instance, zero-inflation 
+and conduct tests for model comparison. The ZIOP(C) models can assess, for instance, zero-inflation 
 in ordered outcome measures of self-reported smoking behavior [@harris2007zero], 
 demand for health treatment [@greene2015inflated], and accident injury-severity 
-outcomes [@fountas2018analysis]. The MiOP(C) models can address middle-category 
+outcomes [@fountas2018analysis]. The MIOP(C) models can address middle-category 
 inflation in, for example, ordered measures like monetary policy [@brown2020modelling] and attitudes 
 towards European Union (EU) membership [@bagozzi2012mixture]. The GIMNL models can 
 evaluate inflated unordered polytomous outcome measures such as voter choice 
@@ -113,10 +113,10 @@ IDCeMPy contains the functions listed below to estimate the aforementioned infla
 
 * `mnlmod`;`gimnlmod`: Fits MNL model and Generalized-Inflated MNL models.
 
-* `mnlresults`;`gimnlresults`; `vuong_gimnl`: Presents covariate estimates, VCV matrix, Log-Likelihood and AIC statistics of `mnlmod`;`gimnlmod`.Vuong test statistic for comparing MNL to GIMNL models obtained from `vuong_gimnl`. 
+* `mnlresults`;`gimnlresults`; `vuong_gimnl`: Presents covariate estimates, VCV matrix, Log-Likelihood and AIC statistics of `mnlmod`;`gimnlmod`. Vuong test statistic for comparing MNL to GIMNL models obtained from `vuong_gimnl`. 
 
-The functions in IDCeMPy that fit the (i) ZiOP(C) models are presented using the ordered self-reported 
-tobacco consumption dependent variable from the [2018 National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm), (ii) MiOP(C) models 
+The functions in IDCeMPy that fit the (i) ZIOP(C) models are presented using the ordered self-reported 
+tobacco consumption dependent variable from the [2018 National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm), (ii) MIOP(C) models 
 are illustrated using the ordered EU support outcome variable 
 in @elgun2007exposure's data, and (iii) GIMNL models are evaluated using the unordered-polytomous Presidential vote choice dependent variable in @campbell2008religions's data. 
 These three datasets are described in the package.
