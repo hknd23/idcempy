@@ -67,17 +67,14 @@ Z is the list of variables in the split-probit equation (first-stage).
 Y is the outcome variable.
 
 
-Users must set up an array of starting parameters (one for each covariate) before estimating the model.
+The package sets a default start value of .01 for all parameters.  Users can modify it by creating an array with their desired values, define such array as `pstart` and add it to as an argument in the model function.  
 
 :func:`zmiopc.iopmod` estimates the ZiOP model and returns :class:`zmiopc.IopModel`.
 
 .. testcode::
 
-  # Starting parameters for optimization:
-  pstartziop = np.array([.01, .01, .01, .01, .01, .01, .01 , .01, .01])
-
-  # Model estimation:
-  ziop_tob= zmiopc.iopmod('ziop', pstartziop, data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
+   # Model estimation:
+  ziop_tob= zmiopc.iopmod('ziop', data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
 
   # See estimates:
   print(ziop_tob.coefs)
@@ -175,17 +172,14 @@ X is the list of variables in the Ordered Probit equation (second-stage).
 Z is the list of variables in the split-probit equation (first-stage).
 Y is the outcome variable.
 
-Users must then set up an array of starting parameters (one for each covariate) before estimating the model.
 
 :func:`zmiopc.iopmod` estimates the MiOP model and returns :class:`zmiopc.IopModel`.
 
 .. testcode::
 
-  # Starting parameters for optimization:
-  pstartziop = np.array([.01, .01, .01, .01, .01, .01, .01 , .01, .01])
 
   # Model estimation:
-  miop_EU = zmiopc.iopmod('miop', pstartziop, data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
+  miop_EU = zmiopc.iopmod('miop', data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
 
 .. testoutput::
 
@@ -237,16 +231,11 @@ Estimation of Zero-inflated and Middle-inflated Ordered Probit Models "With" Cor
 
 The package also includes the function `iopcmod` which fits "zero-inflated" ordered probit models (ZiOPC) and "middle-inflated" ordered probit models (MiOP) under the assumption that the two errors are correlated with each other (i.e. correlated errors). Both models include the estimate of'rho'. The models in this section use the same specification as the models estimated without correlated errors presented above.
 
-**1. Define an array with values of starting parameters**
 
+**1. Estimate the ZiOPC model**
 .. testcode::
 
-    pstart = np.array([.01, .01, .01, .01, .01, .01, .01 , .01, .01, .01])
-
-**2. Estimate the ZiOPC model**
-.. testcode::
-
-    ziopc_tob = zmiopc.iopcmod('ziopc', pstart, data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
+    ziopc_tob = zmiopc.iopcmod('ziopc', data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
 
 Similar to ZiOP, the results are stored in the attributes of :class:`zmiopc.IopCModel`.
 
@@ -257,7 +246,7 @@ Similar to ZiOP, the results are stored in the attributes of :class:`zmiopc.IopC
          Function evaluations: 1562
          Gradient evaluations: 142
 
-**2.1 Print the results**
+**2. Print the results**
 
 .. testcode::
 
@@ -291,7 +280,7 @@ The AIC of the ziopc_tob model, for example, is:
 
   10140.103819465658
 
-**2.2. Obtain predicted probabilities from the ziopc_tob model:**
+**2.1 Obtain predicted probabilities from the ziopc_tob model:**
 :func:`zmiopc.iopcfit` returns :class:`zmiopc.FittedVals` containing fitted probablities.
 
 .. testcode::
@@ -330,14 +319,10 @@ X is the list of variables in the Ordered Probit equation (second-stage).
 Z is the list of variables in the split-probit equation (first-stage).
 Y is the outcome variable.
 
-Users must then set up an array of starting parameters (one for each covariate) before estimating the model.
 
 :func:`zmiopc.iopmod` estimates the MiOP model and returns :class:`zmiopc.IopModel`.
 
 .. testcode::
-
-  # Starting parameters for optimization:
-  pstartziop = np.array([.01, .01, .01, .01, .01, .01, .01 , .01, .01, .01])
 
   # Model estimation:
   miopc_EU = zmiopc.iopcmod('miopc', pstartziop, data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
