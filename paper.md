@@ -116,13 +116,13 @@ IDCeMPy contains the functions listed below to estimate the aforementioned infla
 * `mnlresults`;`gimnlresults`; `vuong_gimnl`: Presents covariate estimates, VCV matrix, Log-Likelihood and AIC statistics of `mnlmod`;`gimnlmod`. Vuong test statistic for comparing MNL to GIMNL models obtained from `vuong_gimnl`. 
 
 The functions in IDCeMPy that fit the (i) ZIOP(C) models are presented using the ordered self-reported 
-tobacco consumption dependent variable from the [2018 National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm), (ii) MIOP(C) models 
+tobacco consumption dependent variable from the [National Youth Tobacco Dataset, 2018](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm), (ii) MIOP(C) models 
 are illustrated using the ordered EU support outcome variable 
 in @elgun2007exposure's data, and (iii) GIMNL models are evaluated using the unordered-polytomous Presidential vote choice dependent variable in @campbell2008religion's data. 
 These three datasets are described in the package.
 
 # Availability 
-IDCeMPy is an Open-source software made available under the MIT license that can be installed from its [GitHub repository](https://github.com/hknd23/idcempy). 
+`IDCeMPy` is an Open-source software made available under the MIT license that can be installed from its [GitHub repository](https://github.com/hknd23/idcempy). 
 
 
 
