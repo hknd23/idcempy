@@ -18,7 +18,7 @@ sets of “inflated” discrete choice models.
 model) to evaluate zero-inflated ordered choice outcomes that results from a dual data generating
 process (d.g.p.).
 * Fit the Middle-Inflated Ordered Probit (MIOP) model without and with correlated errors (MIOPC) to account for the inflated middle-category in ordered choice measures that relates to a dual d.g.p.
-* Fit Inflated Multinomial Logit (IMNL) models that account for the preponderant and heterogeneous share of observations in the baseline or any lower category in unordered polytomous choice outcomes.
+* Fit Generalized Inflated Multinomial Logit (GIMNL) models that account for the preponderant and heterogeneous share of observations in the baseline or any lower category in unordered polytomous choice outcomes.
 * Compute AIC and Log-likelihood statistics and the Vuong Test statistic to assess the performance of each inflated discrete choice model in the package.
 
 **IDCeMPy** uses Newton numerical optimization methods to estimate the inflated discrete choice models listed above via Maximum Likelihood Estimation (MLE).  
@@ -34,7 +34,7 @@ An excessive (“inflated”) share of observations—stemming from two distinct
 
 *	The inflated baseline or other lower outcome categories of unordered polytomous outcome measures of vote choice include nonvoters who temporarily abstain from voting and routine nonvoters who always abstain.
 
-**IDCeMPy** includes the ZIOP(C) models for evaluating zero-inflated ordered choice outcomes stemming from a dual d.g.p, the MIOP(C) models that address inflated middle-category ordered outcome measures arising from distinct d.g.p’s, and IMNL models that account for inflated baseline or other lower categories for unordered polytomous outcomes.
+**IDCeMPy** includes the ZIOP(C) models for evaluating zero-inflated ordered choice outcomes stemming from a dual d.g.p, the MIOP(C) models that address inflated middle-category ordered outcome measures arising from distinct d.g.p’s, and GIMNL models that account for inflated baseline or other categories for unordered polytomous outcomes.
 
 Each inflated discrete choice model in this package addresses category inflation in one’s discrete outcome—unordered or unordered polytomous—of interest by jointly estimating a binary split-stage equation and an ordered or multinomial discrete choice outcome equation.   
 
@@ -48,7 +48,7 @@ Each inflated discrete choice model in this package addresses category inflation
 | `vuong_opiop`; `vuong_opiopc` | Calculates Vuong test statistic for comparing the OP model's performance to ZiOP(C) and MiOP(C) models.|
 |`split_effects`; `ordered_effects`| Estimates marginal effects of covariates from the split and outcome-stage respectively.|
 |`mnlmod`;`gimnlmod`| Fits MNL model and Generalized-Inflated MNL models.|
-|`mnlresults`;`gimnlresults`;`vuong_gimnl`| Presents covariate estimates, VCV matrix, and goodness-of-fit statistics of `mnlmod`,`gimnlmod`. Vuong test statistic for comparing MNL to GIMNL obtained from `vuong_gimnl`|
+|`mnlresults`;`gimnlresults`;`vuong_gimnl`| Presents covariate estimates, VCV matrix, and goodness-of-fit statistics of `mnlmod`,`gimnlmod`. Vuong test statistic for comparing MNL to GIMNL model obtained from `vuong_gimnl`|
 
 ## Dependencies
 - scipy
@@ -167,7 +167,7 @@ ziopcgender_split.plot.box(grid='False')
    <em>Fig. 1: Marginal Effect of Gender on Probability of Permanent Nonsmoker</em>
 </p>
 
-`ordered_effects`creates a dataframe that provides values to illustrate the marginal effect of the ZIOP(C) model's outcome-stage covariates on the first difference in the predicted probability of each ordered outcome category conditional on the zero-category observations being non-inflated. In the example below, `ordered_effects`provides and illustrate via boxplots (with 95% CIs) the first difference in the predicted probability (with 95% CIs) of each 0 to 3 ordered category of the tobacco consumption outcome when the dummy outcome-stage covariate 'gender_dum' changes from 0 to 1, conditional on zero-category observations being non-inflated.   
+`ordered_effects`creates a dataframe that provides values to illustrate the marginal effect of the ZIOP(C) model's outcome-stage covariates on the first difference in the predicted probability of each ordered outcome category conditional on the zero-category observations being non-inflated. In the example below, `ordered_effects`provides and illustrate via boxplots (with 95% CIs) the first difference in the predicted probability (with 95% CIs) of each 0 to 4 ordered category of the tobacco consumption outcome when the dummy outcome-stage covariate 'gender_dum' changes from 0 to 1, conditional on zero-category observations being non-inflated.   
 
 ```python
 ziopcgender_ordered = zmiopc.ordered_effects(ziopc_tob, 2)
@@ -204,7 +204,7 @@ url= 'https://github.com/hknd23/idcempy/raw/main/data/EUKnowledge.dta'
 data= pd.read_stata(url)
 ```
 
-Now, define the lists with names of the covariates you would like to include in the MIOPC model's split-stage (**Z**) and the second-stage (**X**) as well as the name of the "middle-inflated" outcome variable (**Y**).
+Users can define the lists with names of the covariates they would like to include in the MIOPC model's split-stage (**Z**) and the second-stage (**X**) as well as the name of the ordered "middle-inflated" outcome variable (**Y**).
 
 ```python
 Y = ["EU_support_ET"]
@@ -249,7 +249,7 @@ print(miopc_EU.AIC)
 
 The AIC statistics for the MIOP model is 21729.39 and the OP model is 22100.90 (see documentation). 
 
-In this EU support example, the `split_effects` dataframe provides and illustrates via boxplots (with 95% CI) the first difference in the predicted probability of middle-category observations being informed respondents (non-inflated cases) when the split-stage covariate 'EU_know_obj' increases one standard deviation from its mean value (for continuous variables, the "=0" and "=1" box plots represents the mean and one standard deviation above mean value, respectively).
+In this EU support example, the `split_effects` dataframe provides and illustrates via boxplots (with 95% CI) the first difference in the predicted probability of middle-category observations being informed respondents (non-inflated cases) when the split-stage covariate 'EU_know_obj' is increased by one standard deviation from its mean value (for continuous variables, the "=0" and "=1" box plots represents the mean and one standard deviation above mean value, respectively).
 
 <p align="center">
    <img src="https://github.com/hknd23/idcempy/raw/main/graphics/MiOPC_Split_EU_Know_0214.png" width="500" height="300" />
@@ -257,7 +257,7 @@ In this EU support example, the `split_effects` dataframe provides and illustrat
    <em>Fig. 3: Marginal Effect of EU Knowledge on Probability of Informed Respondents</em>
 </p>
 
-`ordered_effects()` calculates and illustrates via boxplots (with 95% CI) the first difference in predicted probabilities of each ordered outcome category of "EU Support" when the  outcome-stage Xenophobia increases 1 standard deviation from its mean value, conditional on middle-category observations being informed respondents.
+`ordered_effects()` calculates and illustrates via boxplots (with 95% CI) the first difference in predicted probabilities of each ordered outcome category of "EU Support" when the  outcome-stage Xenophobia covariate is increased by 1 standard deviation from its mean value, conditional on middle-category observations being informed respondents.
 
 ```python
 xeno = zmiopc.ordered_effects(miopc_EU, 2)
@@ -354,7 +354,7 @@ gimnl.vuong_gimnl(mnl_2004vote, gimnl_2004vote)
 -1.2835338187781173
 ```
 
-Users can employ the argument `inflatecat` to specify any unordered category as the inflated category (dictated by the distribution) in their unordered-polytomous outcome measure. If a higher category (say 1 or 2) is inflated in a 0,1,2 unordered outcome measure, then users can specify `reference` and `inflatecat` as follows,
+Users can employ the argument `inflatecat` to specify any unordered category as the inflated category (dictated by the distribution) in their unordered-polytomous outcome measure. If a higher category (say 1 or 2) is inflated in the 0,1,2 unordered-polytomous outcome measure, then users can specify `reference` and `inflatecat` as follows,
 ```python
 gimnl.gimnlmod(data, x, y, z, reference, inflatecat="second")
 gimnl.gimnlmod(data, x, y, z, reference, inflatecat="third")
