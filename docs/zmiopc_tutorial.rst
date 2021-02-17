@@ -434,6 +434,25 @@ Log-likelihood, AIC, and Variance-Covariance matrix can be extracted with:
   print(op_tob.AIC)
   print(op_tob.vcov)
 
+Similarly, the OP model with the EU data can also be fitted with the following:
+
+.. testoutput::
+
+  url = 'https://github.com/hknd23/zmiopc/blob/main/data/'
+  data2 = pd_read.stata(url)
+  X = ['Xenophobia', 'discuss_politics']
+  Y = ['EU_support_ET']
+
+  op_EU = zmiopc.opmod(data2, X, Y)
+
+The OP model also stores information on Log-likelihood, AIC, and and Variance-Covariance matrix.
+
+.. testcode::
+
+  print(op_EU.llik)
+  print(op_EU.AIC)
+  print(op_EU.vcov)
+
 The Vuong Test
 ==============
 
@@ -447,7 +466,7 @@ via a bidirectional test statistic of:
 
 where v < -1.96 favors the more general (ZiOP/ZiOPC) model, -1.96 < v < 1.96 lends no support to either model, and v > 1.96 supports the simpler (OP) model.
 
-The OP and ZiOP models must have the same number of observations, and the OP must have the same number of covariates as ZiOP's OP stage.
+The OP and ZiOP models must have the same number of observations, and the OP must have the same number of covariates as ZiOP's OP stage. The statistic reveals that the OP model is preferred over the ZiOP model.
 
 .. testcode::
 
@@ -457,7 +476,15 @@ The OP and ZiOP models must have the same number of observations, and the OP mus
 
    6.624742132792222
 
-The Vuong test can also be implemented to compare the ZiOPC, MiOP and MiOPC models and the OP model.
+The Vuong test can also be implemented to compare the ZiOPC, MiOP and MiOPC models and the OP model. For the case of the MiOP model, the test statistic favors the MiOP model.
+
+.. testcode::
+
+  zmiopc.vuong_opiop(op_EU, miop_EU)
+
+.. testoutput::
+
+   -9.638360843003559
 
 Split Equtation Predicted Probablities
 ======================================

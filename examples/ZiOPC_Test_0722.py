@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
-from scipy.optimize import minimize
-from scipy.stats import mvn, norm
+
 # import this after importing all other packages.
 from idcempy import zmiopc
 
@@ -118,7 +117,7 @@ miopc_EU_know.plot.box(grid='False')
 
 
 DAT = pd.read_csv("C:/Users/Nguyen/Google "
-                  "Drive/zmiopc/zmiopc/data/tobacco_cons.csv")
+                  "Drive/zmiopc/idcempy/data/tobacco_cons.csv")
 X = ['age', 'grade', 'gender_dum']
 Y = ['cig_count']
 Z = ['gender_dum']
