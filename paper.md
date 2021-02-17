@@ -44,7 +44,7 @@ The GIMNL models account for the large proportion—and heterogeneous
 mixture—of observations in the baseline and other unrodered outcome 
 categories within MNL models that evaluate multiple
 unordered polytomous outcomes. `IDCeMPy` thus provides users with 
-versatile tools that provide accurate inferences when working with inflated
+versatile tools that can help them make more accurate inferences when working with inflated
 ordered and unordered polytomous outcome variables. It can be 
 applied to data in Economics, Engineering, Political Science, Psychology, and Public Health. 
 
