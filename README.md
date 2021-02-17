@@ -48,7 +48,7 @@ Each inflated discrete choice model in this package addresses category inflation
 | `vuong_opiop`; `vuong_opiopc` | Calculates Vuong test statistic for comparing the OP model's performance to ZiOP(C) and MiOP(C) models.|
 |`split_effects`; `ordered_effects`| Estimates marginal effects of covariates from the split and outcome-stage respectively.|
 |`mnlmod`;`gimnlmod`| Fits MNL model and Generalized-Inflated MNL models.|
-|`mnlresults`;`gimnlresults`;`vuong_gimnl`| Presents covariate estimates, VCV matrix, and goodness-of-fit statistics of `mnlmod`,`gimnlmod`. Vuong test statistic for comparing MNL to GIMNL model obtained from `vuong_gimnl`|
+|`mnlresults`;`gimnlresults`;`vuong_gimnl`| Presents covariate estimates, VCV matrix, and goodness-of-fit statistics of `mnlmod`,`gimnlmod`. Vuong test statistic for comparing MNL to GIMNL models obtained from `vuong_gimnl`|
 
 ## Dependencies
 - scipy
