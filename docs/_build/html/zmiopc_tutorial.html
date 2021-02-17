@@ -18,7 +18,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="gimnl Module" href="imnl_tutorial.html" />
+    <link rel="next" title="gimnl Module" href="gimnl_tutorial.html" />
     <link rel="prev" title="Package Documentation: IDCeMPy" href="index.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -31,7 +31,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="imnl_tutorial.html" title="gimnl Module"
+          <a href="gimnl_tutorial.html" title="gimnl Module"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Package Documentation: IDCeMPy"
@@ -54,9 +54,21 @@
 <p><strong>Data Source for “Zero-inflated” Ordered Probit Models (ZiOP/ZiOPC)</strong></p>
 <p>We use data from the National Youth Tobacco Survey (<a class="reference external" href="https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm">2018</a>) to illustrate the use of ordered probit models with a “zero-inflated” outcome variable. This survey allows us to measure self-reported <em>Tobacco Consumption</em> among youngsters. Specifically, respondents of the survey answered the following question [Q9]: About how many cigarretes have you smoked in your entire life, and their responses are coded as 0 for “never smoked cigarettes”, 1 for “1 cigarette”, 2 for “2 to 5 cigarettes”, 3 for “6 to 15 cigarettes,” and 4 for “more than 15 cigarettes.”</p>
 <p>82% of the observations are in the first category (i.e. “never smoked cigarettes) of outcome variable <em>tobacco consumption</em>. So, there is an excessive number of “0” -zero- observations thus making the aforementioned dataset appropriate for the estimation of ZiOP and ZiOPC models.</p>
+<p>The covariates used to estimate the ZiOP/ZiOPC models are:</p>
+<ul class="simple">
+<li><p>age: Respondent’s age</p></li>
+<li><p>grade: Respondent’s age</p></li>
+<li><p>gender_dum: Respondent’s gender</p></li>
+</ul>
 <p><strong>Data Source for “Middle-inflated” Ordered Probit Models (MiOP/MiOPC)</strong></p>
 <p>Data for the “Middle-inflated” Ordered Probit Models (MiOP and MiOPC) comes from Elgun and Tillman(<a class="reference external" href="https://journals.sagepub.com/doi/10.1177/1065912907305684">2007</a>) who use ordered categorical responses to the following question in the Candidate Countries Eurobarometer 2002.2 survey to evaluate public attitudes toward European Union membership in 13 CEE candidate countries: “Generally speaking, do you think that (your country’s) membership of the European Union would be a good thing, a bad thing, or neither good nor bad?” Based on responses to this question, the discrete ordered-dependent variable—usually labeled as EU support—in Elgun and Tillman’s (<a class="reference external" href="https://journals.sagepub.com/doi/10.1177/1065912907305684">2007</a>) study and in similar related studies is coded as 1 for “a bad thing,” 2 for “neither good nor bad,” and 3 for “a good thing.” A close examination of the ordered <em>EU support</em> variable indicates that 39% of all respondents tothe survey question mentioned above opted for the middle category
 response, which is indeed high. Therefore, this dataset is useful to illustrate some important features of our package.</p>
+<p>The covariates used to estimate the MiOP/MiOPC models are:</p>
+<ul class="simple">
+<li><p>discuss_politics: Respondent’s frequency of discussing politics.</p></li>
+<li><p>Xenophobia: Index for Respondent’s level of xenophobia.</p></li>
+<li><p>EU_Know_obj: Number of correct answers to a quiz about the EU.</p></li>
+</ul>
 </div>
 <div class="section" id="estimation-of-zero-inflated-and-middle-inflated-ordered-probit-models-without-correlated-errors">
 <h2>Estimation of Zero-inflated and Middle-inflated Ordered Probit Models Without Correlated Errors<a class="headerlink" href="#estimation-of-zero-inflated-and-middle-inflated-ordered-probit-models-without-correlated-errors" title="Permalink to this headline">¶</a></h2>
@@ -370,6 +382,21 @@ gender_dum  0.020245  0.032263   0.627501  0.530331 -0.042991  0.083482
 <span class="nb">print</span><span class="p">(</span><span class="n">op_tob</span><span class="o">.</span><span class="n">vcov</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Similarly, the OP model with the EU data can also be fitted with the following:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>url = &#39;https://github.com/hknd23/zmiopc/blob/main/data/&#39;
+data2 = pd_read.stata(url)
+X = [&#39;Xenophobia&#39;, &#39;discuss_politics&#39;]
+Y = [&#39;EU_support_ET&#39;]
+
+op_EU = zmiopc.opmod(data2, X, Y)
+</pre></div>
+</div>
+<p>The OP model also stores information on Log-likelihood, AIC, and and Variance-Covariance matrix.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">op_EU</span><span class="o">.</span><span class="n">llik</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">op_EU</span><span class="o">.</span><span class="n">AIC</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">op_EU</span><span class="o">.</span><span class="n">vcov</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="the-vuong-test">
 <h2>The Vuong Test<a class="headerlink" href="#the-vuong-test" title="Permalink to this headline">¶</a></h2>
@@ -378,14 +405,20 @@ The Vuong test denotes m<sub>i</sub>as the natural logarithm of the ratio of the
 <div class="math notranslate nohighlight">
 \[v = \frac{\sqrt{N}(\frac{1}{N}\sum_{i}^{N}m_{i})}{\sqrt{\frac{1}{N}\sum_{i}^{N}(m_{i}-\bar{m})^{2}}}\]</div>
 <p>where v &lt; -1.96 favors the more general (ZiOP/ZiOPC) model, -1.96 &lt; v &lt; 1.96 lends no support to either model, and v &gt; 1.96 supports the simpler (OP) model.</p>
-<p>The OP and ZiOP models must have the same number of observations, and the OP must have the same number of covariates as ZiOP’s OP stage.</p>
+<p>The OP and ZiOP models must have the same number of observations, and the OP must have the same number of covariates as ZiOP’s OP stage. The statistic reveals that the OP model is preferred over the ZiOP model.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">zmiopc</span><span class="o">.</span><span class="n">vuong_opiop</span><span class="p">(</span><span class="n">op_tob</span><span class="p">,</span> <span class="n">ziop_tob</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>6.624742132792222
 </pre></div>
 </div>
-<p>The Vuong test can also be implemented to compare the ZiOPC, MiOP and MiOPC models and the OP model.</p>
+<p>The Vuong test can also be implemented to compare the ZiOPC, MiOP and MiOPC models and the OP model. For the case of the MiOP model, the test statistic favors the MiOP model.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">zmiopc</span><span class="o">.</span><span class="n">vuong_opiop</span><span class="p">(</span><span class="n">op_EU</span><span class="p">,</span> <span class="n">miop_EU</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-9.638360843003559
+</pre></div>
+</div>
 </div>
 <div class="section" id="split-equtation-predicted-probablities">
 <h2>Split Equtation Predicted Probablities<a class="headerlink" href="#split-equtation-predicted-probablities" title="Permalink to this headline">¶</a></h2>
@@ -440,12 +473,12 @@ The box plots below illustrate the change in predicted probablities using the va
   <p class="topless"><a href="index.html"
                         title="previous chapter">Package Documentation: IDCeMPy</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="imnl_tutorial.html"
+  <p class="topless"><a href="gimnl_tutorial.html"
                         title="next chapter">gimnl Module</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/ziopcpy_tutorial.rst.txt"
+      <li><a href="_sources/zmiopc_tutorial.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -473,7 +506,7 @@ The box plots below illustrate the change in predicted probablities using the va
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="imnl_tutorial.html" title="gimnl Module"
+          <a href="gimnl_tutorial.html" title="gimnl Module"
              >next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Package Documentation: IDCeMPy"

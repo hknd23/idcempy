@@ -1,6 +1,6 @@
-***********
+************
 gimnl Module
-***********
+************
 
 The IDCeMPy package also includes a function that estimates General "inflated" Multinomial Logit models (GiMNL).  GiMNL models minimize issues present when unordered polytomous outcome variables have an excessive share and heterogeneous pool of observations in the lower category.  The application below uses data from Campbell and Monson (`2008 <https://academic.oup.com/poq/article-abstract/72/3/399/1836972>`__) who use 'vote choice' as their outcome variable.  The 0,1,2 unordered-polytomous Presidential 'vote choice' doutcome variable in their data includes the following options: abstained (their MNL baseline category), Bush, or Kerry. In this case, the baseline category is inflated as it includes non-voters who abstain from voting in an election owing to temporary factors and “routine” non-voters who are consistently disengaged from the political process.  Faling to account for such inflation could lead to inaccurate inferences.
 
@@ -76,7 +76,7 @@ The AIC, for exmaple is given by,
 .. testoutput::
     1656.8324085039708
 
-Using the function :py:func:`mnlmod`, users can fit a standard Multinomial Logit Model (MNL) by specifying the list of **X**, **Y**, and baseline (using `reference`).
+Using the function :py:func:`gimnl.mnlmod`, users can fit a standard Multinomial Logit Model (MNL) by specifying the list of **X**, **Y**, and baseline (using `reference`).
 
 .. testcode::
 
@@ -95,9 +95,7 @@ Using the function :py:func:`mnlmod`, users can fit a standard Multinomial Logit
   2: party7    -0.567 0.085  -6.641 0.000 -0.734 -0.399
   2: agegroup2  0.899 0.138   6.514 0.000  0.629  1.170
 
-Similar to the BiMNL model, the AIC for the MNL model can also be given by:
-
-The AIC, for exmaple is given by,
+Similar to the GiMNL model, the AIC for the MNL model can also be given by:
 
 .. testcode::
     print(mnl_2004vote.AIC)
