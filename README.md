@@ -96,7 +96,7 @@ Y = ['cig_count']
 Z = ['gender_dum']
 ```
 
-In addition, we define an array of starting parameters before estimating the `ziopc` model. If the starting parameters are not specified, the function automatically generates them.
+In addition, we define an array of starting parameters before estimating the `ziopc` model. If the starting parameters are not specified, the default value is .01 for each of them.
 
 ```python
 pstart = np.array([.01, .01, .01, .01, .01, .01, .01, .01, .01, .01])
@@ -180,7 +180,7 @@ ziopcgender_ordered.plot.box(grid='False')
    <em>Fig. 2: Marginal Effect of Gender on Self-Reported Tobacco Consumption</em>
 </p>
 
-Module `zmiopc` also provides the function `vuong_opiopc` that employs the Vuong test stastic to compare the performace of the standard OP model (also available through `opmod`) versus the ZIOPC model and also the OP versus ZIOP model. The Vuong statistics from comparing the OP and the ZIOPC model is given by,
+Module `zmiopc` also provides the function `vuong_opiopc` that employs the Vuong test statistic to compare the performace of the standard OP model (also available through `opmod`) versus the ZIOPC model and also the OP versus ZIOP model. The Vuong statistics from comparing the OP and the ZIOPC model is given by,
 
 ```python
 op_tob = zmiopc.opmod(data, X, Y)
@@ -237,7 +237,7 @@ cut2                        -0.322 0.103  -3.123 0.002 -0.524 -0.120
 rho                         -0.707 0.106  -6.694 0.000 -0.914 -0.500
 ```
 
-The AIC statistics for the MIOPC model is obtained from,
+The AIC statistic for the MIOPC model is obtained from,
 
 ```python
 print(miopc_EU.AIC)
@@ -334,7 +334,7 @@ educ                  0.157 0.203   0.772 0.440  -0.241  0.554
 party7               -0.577 0.058  -9.928 0.000  -0.691 -0.463
 agegroup2             0.916 0.235   3.905 0.000   0.456  1.376
 ```
-The AIC statistics for the BIMNL model is given by,
+The AIC statistic for the BIMNL model is given by,
 
 ```python
 print(gimnl_2004vote.AIC)
