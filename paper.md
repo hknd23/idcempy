@@ -101,9 +101,9 @@ evaluate inflated unordered polytomous outcome measures such as voter choice
 
 IDCeMPy contains the functions listed below to estimate the aforementioned inflated discrete choice models via MLE using Newton numerical optimization methods: 
 
-* `opmod`; `iopmod`; `iopcmod`: Fits respectively the ordered probit (OP) model, the Zero-Inflated (ZIOP) and Middle-Inflated ordered probit (MIOP) models without correlated errors, and the ZIOPC and MIOPC models with correlated errors.
+* `opmod`; `iopmod`; `iopcmod`: Fits the ordered probit model, the Zero-Inflated (ZIOP) and Middle-Inflated ordered probit (MIOP) models without correlated errors, and the ZIOPC and MIOPC models that incorporate correlated errors.
 
-* `opresults`; `iopresults`; `iopcresults`: Stores covariate estimates, Variance-Covariance (VCV) matrix, Log-Likelihood and AIC statistics of the object models.
+* `opresults`; `iopresults`; `iopcresults`: Presents covariate estimates, Variance-Covariance (VCV) matrix, Log-Likelihood and AIC statistics of the object models.
 
 * `iopfit`; `iopcfit`: Computes fitted probabilities from each estimated model’s objects.
 
@@ -113,7 +113,7 @@ IDCeMPy contains the functions listed below to estimate the aforementioned infla
 
 * `mnlmod`;`gimnlmod`: Fits MNL model and Generalized-Inflated MNL models.
 
-* `mnlresults`;`gimnlresults`; `vuong_gimnl`: Stores covariate estimates, VCV matrix, Log-Likelihood and AIC statistics of `mnlmod`;`gimnlmod`.Vuong test statistic for comparing MNL to GIMNL obtained from `vuong_gimnl`. 
+* `mnlresults`;`gimnlresults`; `vuong_gimnl`: Presents covariate estimates, VCV matrix, Log-Likelihood and AIC statistics of `mnlmod`;`gimnlmod`.Vuong test statistic for comparing MNL to GIMNL models obtained from `vuong_gimnl`. 
 
 The functions in IDCeMPy that fit the (i) ZiOP(C) models are presented using the ordered self-reported 
 tobacco consumption dependent variable from the [2018 National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm), (ii) MiOP(C) models 
