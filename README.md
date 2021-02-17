@@ -70,7 +70,7 @@ git clone https://github.com/hknd23/idcempy.git
 cd idcempy
 python setup.py install
 ```
-On readthedocs you will find the installation guide, a complete overview of each feature included in **IDCeMPy**, and example scripts of all the models.
+On [readthedocs](https://idcempy.readthedocs.io/en/latest/) you will find the installation guide, a complete overview of each feature included in **IDCeMPy**, and example scripts of all the models.
 
 ## Using the Package
 
