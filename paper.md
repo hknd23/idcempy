@@ -4,6 +4,7 @@ title: 'IDCeMPy: Python Package for Inflated Discrete Choice Models'
 authors:
 - affiliation: 1
   name: Nguyen K. Huynh
+  orcid: 0000-0002-6234-7232
 - affiliation: 2
   name: Sergio Béjar
   orcid: 0000-0002-9352-3892
