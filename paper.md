@@ -35,7 +35,7 @@ researchers to easily fit three distinct sets of inflated discrete choice models
 are often used in a variety of disciplines including Economics, Business, Engineering, Political
 Science, Psychology, and Public Health: (i) Zero-Inflated Ordered Probit (ZIOP),(ii)
 Middle-Inflated Ordered Probit (MIOP), and (iii) Generalized Inflated Multinomial
-Logit (GIMNL) models. While the ZIOP model [@harris2007zero] permits careful evaluation 
+Logit (GIMNL) models. While the ZIOP model [@harris2007zero; @greene2010modeling] permits careful evaluation 
 of zero-inflated ordered choice outcomes that results from two data generating
 processes (hereafter, “d.g.p’s”), the MIOP model [@bagozzi2012mixture]
 accounts for ordered choice outcomes in which the inflated middle-category emerges 
@@ -81,9 +81,9 @@ fits discrete choice models without correlated errors for inflated zero and othe
 lower-category discrete outcomes. In contrast, `IDCeMPy` is a comprehensive
 Python package that offers researchers the possibility of estimating and
 assessing the performance of inflated ordered probit models with and without
-correlated errors, the Middle-Inflated Ordered Probit, and inflated MNL models.
-Its main forte is that it entirely depends on Python standard libraries such as 
-NumPy, pandas, and SciPy, allowing it to be easily extensible and more efficient 
+correlated errors, the Middle-Inflated Ordered Probit with and without correlated errors,
+and inflated MNL models. Its main forte is that it entirely depends on Python standard libraries such as 
+`NumPy`, `pandas`, and `SciPy`, allowing it to be easily extensible and more efficient 
 than the STATA packages mentioned above.
 
 # Package Architecture
