@@ -30,24 +30,25 @@ affiliations:
   
 ---
 # Summary
-Inflated discrete choice models have been recently developed to
-address category inflation in ordered and unordered 
-polytomous choice variables [@harris2007zero; @bagozzi2012mixture; @bagozzi2017distinguishing].
-`IDCeMPy` is a comprehensive Python package that allows users 
-to easily fit three distinct sets of inflated discrete choice 
-models: Zero-Inflated Ordered Probit (ZIOP), Middle-Inflated Ordered Probit (MIOP), 
-and Generalized Inflated Multinomial Logit (GIMNL) models. While the ZIOP model
-permits careful evaluation of zero-inflated ordered choice outcomes
-that results from two  data generating processes (hereafter, “d.g.p’s”),
-the MIOP model accounts for ordered choice outcomes in which the 
-inflated middle-category emerges from distinct d.g.p’s. 
-The GIMNL models account for the large proportion—and heterogeneous 
-mixture—of observations in the baseline and other unrodered outcome 
-categories within MNL models that evaluate multiple
-unordered polytomous outcomes. `IDCeMPy` thus provides users with 
-versatile tools that can help them make more accurate inferences when working with inflated
-ordered and unordered polytomous outcome variables. It can be 
-applied to data in Economics, Engineering, Political Science, Psychology, and Public Health. 
+`IDCeMPy` is a free, open-source and versatile Python package that enables
+researchers to easily fit three distinct sets of inflated discrete choice models that
+are often used in a variety of disciplines including Economics, Business, Engineering, Political
+Ccience, Psychology, and Public Health: (i)Zero-Inflated Ordered Probit (ZIOP),(ii)
+Middle-Inflated Ordered Probit (MIOP), and (iii)Generalized Inflated Multinomial
+Logit (GIMNL) models. While the ZIOP model permits careful evaluation of zero-
+inflated ordered choice outcomes that results from two data generating
+processes (hereafter, “d.g.p’s”), the MIOP model accounts for ordered choice
+outcomes in which the inflated middle-category emerges from distinct d.g.p’s.
+The GIMNL models account for the large proportion—and heterogeneous
+mixture—of observations in the baseline and other unordered outcome
+categories within MNL models that evaluate multiple unordered polytomous
+outcomes.
+
+`IDCeMPy` is currently intended to be used by researchers in social, behavioral,
+and natural sciences, and by data scientists working with inflated discrete choice
+outcome variables. Its clean, easy to use Python code is well-tested and well-
+documented. For further details, the reader is referred to the official `IDCeMPy`
+repository.
 
 # Statement of Need
 Scholars and Data Scientists often use discrete choice models to evaluate ordered outcomes using the ordered 
