@@ -75,8 +75,8 @@ Failing to account for such category inflation in
 discrete choice measures leads to model misspecification, biased estimates, and
 incorrect inferences.
 
-[@dale2018estimation]'s `ZiOP` STATA command fits the Zero-Inflated Ordered
-Probit without correlated errors, while [@xia2019gidm]'s `digm` STATA command
+@dale2018estimation's `ZiOP` STATA command fits the Zero-Inflated Ordered
+Probit without correlated errors, while @xia2019gidm's `digm` STATA command
 fits discrete choice models without correlated errors for inflated zero and other
 lower-category discrete outcomes. In contrast, `IDCeMPy` is a comprehensive
 Python package that offers researchers the possibility of estimating and
