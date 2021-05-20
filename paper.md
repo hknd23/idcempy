@@ -108,8 +108,8 @@ variables. `IDCeMPy` also provides functions to assess each included model’s
 goodness-of-fit, extract marginal effects, and conduct tests for model
 comparison. 
 
-The ZIOP(C) models developed by [@harris2007zero] and
-[@Greene2010modeling] can assess, for instance, zero-inflation in ordered outcome
+The ZIOP(C) models developed by @harris2007zero and
+@greene2010modeling can assess, for instance, zero-inflation in ordered outcome
 measures of self-reported smoking behavior and accident injury-severity
 outcomes [@fountas2018analysis]. In Public Health, Psychology and Biomedical
 research, survey response outcomes including disease severity, perceived
@@ -123,13 +123,13 @@ assessed time-period analyzed in the survey questionnaire. The Zero-Inflated Ord
 Probit model incorporated in the `iopmod` and `iopcmod`functions in `IDCeMPy`
 permits researchers to account for excessive zeros stemming from two
 populations in ordered measures such as perceived levels of depression, 
-which leads to more accurate estimates.T he MIOP(C) models also estimated using the `iopmod` and `iopcmod` functions
-can address middle-category inflation in, for example,
+which leads to more accurate estimates.T he MIOP(C) models also estimated 
+using the `iopmod` and `iopcmod` functions can address middle-category inflation in, for example,
 ordered measures like monetary policy [@brown2020modelling] and attitudes
 towards European Union (EU) membership [@bagozzi2012mixture].
 
 Further, Multinomial Logit (MNL) models are applied to not just study vote choice
-[[@campbell2008religion; @bagozzi2017distinguishing], but to also assess
+[@campbell2008religion; @bagozzi2017distinguishing], but to also assess
 transportation choice, environmental policy, and consumer demand in health and
 urban economics [@richards2018new]. For instance, transportation choice for
 traveling to work by residents in large cities are often measured along the
@@ -145,8 +145,8 @@ polytomous measures which leads to accurate inferences.
 
 A full discussion of the package’s functionality is available on the [documentation
 website](https://idcempy.readthedocs.io/en/latest/). The documentation is open-
-source and hosted by ReadTheDocs. Yet we provide below a brief survey of the
-main functions included in IDCeMPy, which are estimated via MLE using Newton
+source and hosted by [ReadTheDocs](https://readthedocs.org/). Yet we provide below a brief survey of the
+main functions included in `IDCeMPy`, which are estimated via MLE using Newton
 numerical optimization methods.
 
 * `opmod`; `iopmod`; `iopcmod`: Fits the ordered probit model, the Zero-Inflated (ZIOP) and Middle-Inflated ordered probit (MIOP) models without correlated errors, and the ZIOPC and MIOPC models that incorporate correlated errors.
@@ -159,9 +159,9 @@ numerical optimization methods.
 
 * `split_effects`; `ordered_effects`: Estimates marginal effects of covariates in the split-stage and outcome-stage respectively. 
 
-* `mnlmod`;`gimnlmod`: Fits MNL model and Generalized-Inflated MNL models.
+* `mnlmod`; `gimnlmod`: Fits MNL model and Generalized-Inflated MNL models.
 
-* `mnlresults`;`gimnlresults`; `vuong_gimnl`: Presents covariate estimates, VCV matrix, Log-Likelihood and AIC statistics of `mnlmod`;`gimnlmod`. Vuong test statistic for comparing MNL to GIMNL models obtained from `vuong_gimnl`. 
+* `mnlresults`; `gimnlresults`; `vuong_gimnl`: Presents covariate estimates, VCV matrix, Log-Likelihood and AIC statistics of `mnlmod`;`gimnlmod`. Vuong test statistic for comparing MNL to GIMNL models obtained from `vuong_gimnl`. 
 
 # Application
 
@@ -173,16 +173,16 @@ tobacco consumption dependent variable from the [2018 National
 Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm),
 
 (ii) MIOP(C) models are illustrated using the ordered EU support
-outcome variable in [@elgun2007exposure]'s data, and
+outcome variable in @elgun2007exposure's data, and
 
 (iii) GIMNL models are evaluated using the unordered-polytomous Presidential vote choice 
-dependent variable in [@campbell2008religion]'s data.
+dependent variable in @campbell2008religion's data.
 
 # Availability 
 `IDCeMPy` is an Open-source software made available under the [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0). 
 It can be installed from [PyPi](https://pypi.org/) or its [GitHub repository](https://github.com/hknd23/idcempy). 
 
-
+# References
 
 
 
