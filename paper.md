@@ -85,8 +85,7 @@ assessing the performance of inflated ordered probit models with and without
 correlated errors, the Middle-Inflated Ordered Probit with and without correlated errors,
 and inflated MNL models. `IDCeMPy` entirely depends on [Python](https://www.python.org/) standard libraries such as 
 `NumPy`, `pandas`, and `SciPy`, allowing it to be easily extensible, flexible and efficient time-wise which  
-facilitates efficient handling of large datasets.  It is compatible with
-[Python](https://www.python.org/) 3.7+.
+facilitates efficient handling of large datasets.  It is compatible with [Python](https://www.python.org/) 3.7+.
 
 # Package Architecture
 `IDCeMPy` provides functions to fit the Zero-Inflated Ordered Probit (ZIOP) model
