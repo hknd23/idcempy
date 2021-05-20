@@ -63,6 +63,7 @@ observations in the zero (no smoking) category that includes two types of non-
 smokers: individuals who never smoke cigarettes, and those who smoked
 previously but temporarily stopped smoking because of their high price
 [@harris2007zero; @greene2015inflated].
+
 In ordered choice measures such as immigration attitudes, it is the middle-
 category of “indifference” that is inflated since it includes respondents who are
 truly indifferent about immigration and those who select “indifference” because of
@@ -82,9 +83,10 @@ lower-category discrete outcomes. In contrast, `IDCeMPy` is a comprehensive
 Python package that offers researchers the possibility of estimating and
 assessing the performance of inflated ordered probit models with and without
 correlated errors, the Middle-Inflated Ordered Probit with and without correlated errors,
-and inflated MNL models. Its main forte is that it entirely depends on Python standard libraries such as 
-`NumPy`, `pandas`, and `SciPy`, allowing it to be easily extensible and more efficient 
-than the STATA packages mentioned above.
+and inflated MNL models. `IDCeMPy` entirely depends on [Python](https://www.python.org/) standard libraries such as 
+`NumPy`, `pandas`, and `SciPy`, allowing it to be easily extensible, flexible and efficient time-wise which  
+facilitates efficient handling of large datasets.  It is compatible with
+[Python](https://www.python.org/) 3.7+.
 
 # Package Architecture
 `IDCeMPy` provides functions to fit the Zero-Inflated Ordered Probit (ZIOP) model
