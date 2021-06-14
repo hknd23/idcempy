@@ -4,6 +4,26 @@ IDCeMPy Package
 
 The IDCeMPy package contains a number of functions that allow users to estimate "inflated" ordered probit (OP) models when the outcome variable has an excess number of observations in either the "zero" or the "middle" categories.  The models can be estimated without (ZiOP and MiOP) and with (ZiOPC and MiOPC) correlated errors.  In addition, IDCeMPy allows users to easily obtain fitted values, calculate goodness-of-fit and diagnostic tests, and marginal effects.  This tutorial introduces all the aforementioned features of the package.
 
+Installation
+=============
+The package can be installed in two different ways.
+
+**1. From (`PyPi <https://pypi.org/>`__):
+
+.. testcode::
+  # Import the package
+
+  pip install idcempy
+
+**2. From its (`GitHub Repository <https://github.com/hknd23/idcempy/>`__):
+
+.. testcode::
+  # Import the package
+
+  git clone https://github.com/hknd23/idcempy.git
+cd idcempy
+python setup.py install
+
 Data Description
 ================
 
