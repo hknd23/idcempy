@@ -21,8 +21,8 @@ The package can be installed in two different ways.
   # Import the package
 
   git clone https://github.com/hknd23/idcempy.git
-cd idcempy
-python setup.py install
+  cd idcempy
+  python setup.py install
 
 Data Description
 ================
