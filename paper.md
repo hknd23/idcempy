@@ -33,7 +33,7 @@ affiliations:
 `IDCeMPy` is a free, open-source and versatile Python package that enables
 researchers to easily fit three distinct sets of inflated discrete choice models that
 are often used in a variety of disciplines including Economics, Business, Engineering, Political
-Science, Psychology, and Public Health: (i) Zero-Inflated Ordered Probit (ZIOP),(ii)
+Science, Psychology, and Public Health: (i) Zero-Inflated Ordered Probit (ZIOP), (ii)
 Middle-Inflated Ordered Probit (MIOP), and (iii) Generalized Inflated Multinomial
 Logit (GIMNL) models. While the ZIOP model [@harris2007zero] permits careful evaluation 
 of zero-inflated ordered choice outcomes that results from two data generating

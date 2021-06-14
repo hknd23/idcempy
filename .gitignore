@@ -1,2 +1,9 @@
-idcempy-0.0.1.tar
-idcempy-0.0.1-py3-none-any.whl
+*.pyc
+__pycache__/
+idcempy-0.0.4.tar
+idcempy-0.0.4-py3-none-any.whl
+
+.Python
+build/
+dist/
+*.egg-info/
