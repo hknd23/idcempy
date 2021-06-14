@@ -84,7 +84,7 @@ Python package that offers researchers the possibility of estimating and
 assessing the performance of inflated ordered probit models with and without
 correlated errors, the Middle-Inflated Ordered Probit with and without correlated errors,
 and inflated MNL models. `IDCeMPy` entirely depends on [Python](https://www.python.org/) standard libraries such as 
-`NumPy`, `pandas`, and `SciPy`, allowing it to be easily extensible, flexible and efficient time-wise which facilitates efficient handling of large datasets.  It is compatible with [Python](https://www.python.org/) 3.7+. An easy to follow [instalation guide](https://idcempy.readthedocs.io/en/latest/zmiopc_tutorial.html#installation) is availabe in the package's documentation website hosted by [ReadTheDocs](https://readthedocs.org/).
+`NumPy`, `pandas`, and `SciPy`, allowing it to be easily extensible, flexible and efficient time-wise which facilitates efficient handling of large datasets.  It is compatible with [Python](https://www.python.org/) 3.7+. 
 
 # Package Architecture
 `IDCeMPy` provides functions to fit the Zero-Inflated Ordered Probit (ZIOP) model
@@ -178,9 +178,9 @@ outcome variable in @elgun2007exposure's data, and
 (iii) GIMNL models are evaluated using the unordered-polytomous Presidential vote choice 
 dependent variable in @campbell2008religion's data.
 
-# Availability 
+# Availability and Installation
 `IDCeMPy` is an Open-source software made available under the [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0). 
-It can be installed from [PyPi](https://pypi.org/) or its [GitHub repository](https://github.com/hknd23/idcempy). 
+An easy to follow [instalation guide](https://idcempy.readthedocs.io/en/latest/zmiopc_tutorial.html#installation) is availabe in the package's documentation website hosted by [ReadTheDocs](https://readthedocs.org/) or its [GitHub repository](https://github.com/hknd23/idcempy). 
 
 # References
 
