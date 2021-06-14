@@ -1,4 +1,4 @@
 *.pyc
-__pycache__
+__pycache__/
 idcempy-0.0.4.tar
 idcempy-0.0.4-py3-none-any.whl
