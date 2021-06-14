@@ -8,14 +8,14 @@ Installation
 =============
 The package can be installed in two different ways.
 
-**1. From (`PyPi <https://pypi.org/>`__):
+**1. From `PyPi <https://pypi.org/>`__:
 
 .. testcode::
   # Import the package
 
   pip install idcempy
 
-**2. From its (`GitHub Repository <https://github.com/hknd23/idcempy/>`__):
+**2. From its `GitHub Repository <https://github.com/hknd23/idcempy/>`__:
 
 .. testcode::
   # Import the package
