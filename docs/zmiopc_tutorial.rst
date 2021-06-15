@@ -10,8 +10,11 @@ sets of “inflated” discrete choice models.
 * Fit the Zero-Inflated Ordered Probit (ZIOP) model without and with correlated errors (ZIOPC
 model) to evaluate zero-inflated ordered choice outcomes that results from a dual data generating
 process (d.g.p.).
+
 * Fit the Middle-Inflated Ordered Probit (MIOP) model without and with correlated errors (MIOPC) to account for the inflated middle-category in ordered choice measures that relates to a dual d.g.p.
+
 * Fit Generalized Inflated Multinomial Logit (GIMNL) models that account for the preponderant and heterogeneous share of observations in the baseline or any lower category in unordered polytomous choice outcomes.
+
 * Compute AIC and Log-likelihood statistics and the Vuong Test statistic to assess the performance of each inflated discrete choice model in the package.
 
 `IDCeMPy` uses Newton numerical optimization methods to estimate the models listed above via Maximum Likelihood Estimation (MLE).
