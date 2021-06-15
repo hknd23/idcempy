@@ -101,9 +101,6 @@ The package sets a default start value of .01 for all parameters.  Users can mod
    # Model estimation:
   ziop_tob= zmiopc.iopmod('ziop', data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
 
-  # See estimates:
-  print(ziop_tob.coefs)
-
 Results from the model:
 
 The following message will appear when the model has converged:
