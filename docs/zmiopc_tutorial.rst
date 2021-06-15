@@ -33,10 +33,6 @@ An excessive (“inflated”) share of observations—stemming from two distinct
 
 Each inflated discrete choice model in this package addresses category inflation in one’s discrete outcome—unordered or unordered polytomous—of interest by jointly estimating a binary split-stage equation and an ordered or multinomial discrete choice outcome equation.
 
-How does it work?
-=================
-
-
 Installation
 =============
 The package can be installed in two different ways.
@@ -72,7 +68,7 @@ We first import the required libraries, set up the package and import the datase
   import numpy as np
   import pandas as pd
   import urllib
-  from zmiopc import zmiopc
+  from idcempy import zmiopc
 
   # Import the "Youth Tobacco Consumption" dataset.
 
@@ -161,8 +157,8 @@ You can also extract predicted probabilities from the model:
 
 .. testcode::
 
-  fitttedziop = ziopc.iopfit(ziop_tob)
-  print(fitttedziopc.responsefull)
+  fittedziop = ziopc.iopfit(ziop_tob)
+  print(fittedziopc.responsefull)
 
 .. testoutput::
 
@@ -173,6 +169,23 @@ You can also extract predicted probabilities from the model:
  [0.73347708 0.1291157  0.03295816 0.06500889 0.03944016]
  [0.87603805 0.06808193 0.01543795 0.02735256 0.01308951]
  [0.82681957 0.08778215 0.02153509 0.04095753 0.02290566]]
+
+:func:`zmiopc.split_effects` simulates data from ZiOP results and computes changes in predicted probabilities when the value of a variable changes.
+This allows you to illustrate how the changes in the split-probit covariates affect the probabilities of being in one population versus another. The example below illustrates the marginal effects of the variable 'gender_dum' on the outcome variable in the ZiOPC model estimated in ths documentation.
+
+.. testcode::
+
+    ziopcgender = idcempy.split_effects(ziop_tob, 1, nsims = 10000)
+
+The returned dataframe contains predicted probabilities when 'gender_dum' equals 0, and when 'gender_dum' equals 1.
+The box plots below illustrate the change in predicted probabilities using the values from the 'ziopparl' dataframe.
+
+:func:: `zmiopc.ordered_effects` calculates the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities of the outcome variable in the ZiOP model.
+
+.. testcode::
+
+    gender = zmiopc.ordered_effects(ziop_tob, 2, nsims = 10000)
+    gender.plot.box(grid='False')
 
 Zero-inflated Ordered Probit (ZiOPC) with Correlated Errors
 -----------------------------------------------------------
@@ -186,7 +199,7 @@ We first import the required libraries, set up the package and import the datase
   import numpy as np
   import pandas as pd
   import urllib
-  from zmiopc import zmiopc
+  from idcempy import zmiopc
 
   # Import the "Youth Tobacco Consumption" dataset.
 
@@ -263,8 +276,8 @@ The predicted probabilities from the `ziopc_tob` model can ve obtained as follow
 
 .. testcode::
 
-  fitttedziopc = zmiopc.iopcfit(ziopc_tob)
-  print(fitttedziopc.responsefull)
+  fittedziopc = zmiopc.iopcfit(ziopc_tob)
+  print(fittedziopc.responsefull)
 
 .. testoutput::
 
@@ -276,13 +289,34 @@ The predicted probabilities from the `ziopc_tob` model can ve obtained as follow
  [0.87523652 0.06888286 0.01564958 0.0275354  0.01269564]
  [0.82678185 0.0875059  0.02171135 0.04135142 0.02264948]]
 
-Middle-inflated Ordered Probit without Correlated Errors (MiOP)
+:func:`zmiopc.split_effects` simulates data from ZiOP/ZiOPC and MiOP/MiOPC model results and computes changes in predicted probabilities when the value of a variable changes.
+This allows you to illustrate how the changes in the split-probit covariates affect the probablilities of being in one population versus another. The example below illustrates the marginal effects of the variable 'gender_dum' on the outcome variable in the ZiOPC model estimated in ths documentation.
+
+.. testcode::
+
+    ziopcgender = idcempy.split_effects(ziopc_tob, 1, nsims = 10000)
+
+The returned dataframe contains predicted probabilities when 'gender_dum' equals 0, and when 'gender_dum' equals 1.
+The box plots below illustrate the change in predicted probabilities using the values from the 'ziopparl' dataframe.
+
+.. testcode::
+
+     ziopcgender.plot.box(grid='False')
+
+:func:: `zmiopc.ordered_effects` calculates the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities of the outcome variable in the ZiOPC model.
+
+.. testcode::
+
+    gender = zmiopc.ordered_effects(ziop_tob, 2, nsims = 10000)
+    gender.plot.box(grid='False')
+
+Middle-inflated Ordered Probit (MiOP) without Correlated Errors
 ---------------------------------------------------------------
 If your ordered outcome variable is inflated in the middle category, you should estimate a  Middle-inflated Ordered Probit (MiOP) model.
 
 The following example uses data from Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_).
 
-We begin by loading the required libraries and `IDCeMPy`
+We begin by loading the required libraries and IDCeMPy
 
 .. testcode::
   # Import the necessary libraries and IDCeMPy.
@@ -290,7 +324,7 @@ We begin by loading the required libraries and `IDCeMPy`
   import numpy as np
   import pandas as pd
   import urllib
-  from zmiopc import zmiopc
+  from idcempy import zmiopc
 
 Next, we load the dataset.
 
@@ -364,30 +398,70 @@ For example, the AIC in this case is:
 
    21729.390980849777
 
-Middle-inflated Ordered Probit (MiOPC) Model with Correlated Errors
---------------------------------------------------------------------
-
-This example uses the the Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) data on European Integration described above. Recall that our outcome variable is "inflated" in the middle category.
+To estimate the predicted probabilities:
 
 .. testcode::
 
+  fittedmiop = zmiopc.iopcfit(miop_EU)
+  print(fittedziopc.responsefull)
+
+:func:`zmiopc.split_effects` simulates data from MiOP model results and computes changes in predicted probabilities when the value of a variable changes.
+This allows you to illustrate how the changes in the split-probit covariates affect the probablilities of being in one population versus another. The example below illustrates the marginal effects of the variable 'gender_dum' on the outcome variable in the ZiOPC model estimated in ths documentation.
+
+.. testcode::
+
+    miopxeno = idcempy.split_effects(miop_EU, 1, nsims = 10000)
+
+The returned dataframe contains predicted probabilities when 'gender_dum' equals 0, and when 'gender_dum' equals 1.
+The box plots below illustrate the change in predicted probablities using the values from the 'ziopparl' dataframe.
+
+.. testcode::
+
+     miopxeno.plot.box(grid='False')
+
+
+:func:: `zmiopc.ordered_effects` calculates the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities of the outcome variable in the MiOPC model estimated above when Xenophobia increases one standard deviation from its mean value.
+
+.. testcode::
+
+    xeno = zmiopc.ordered_effects(miop_EU, 2, nsims = 10000)
+    xeno.plot.box(grid='False')
+
+Middle-inflated Ordered Probit (MiOPC) Model with Correlated Errors
+--------------------------------------------------------------------
+You can estimate a Middle-inflated Ordered Probit (MiOPC) with correlated errors as follows.
+
+We begin by loading the required libraries and IDCeMPy
+
+.. testcode::
+  # Import the necessary libraries and IDCeMPy.
+
+  import numpy as np
+  import pandas as pd
+  import urllib
+  from idcempy import zmiopc
+
+Next, we load the dataset.
+
+.. testcode::
+    # Import and read the dataset
     url = 'https://github.com/hknd23/zmiopc/blob/main/data/'
     data2 = pd_read.stata(url)
 
 We then define the lists with the names of the variables used in the model
 
 .. testcode::
+  # X = The covariates of the ordered probit stage.
+  # Z = The covariates of the inflation (split-population) stage.
+  # Y = The ordinal outcome variable.
 
   X = ['Xenophobia', 'discuss_politics']
   Z = ['discuss_politics', EU_Know_ob]
   Y = ['EU_support_ET']
 
-X is the list of variables in the Ordered Probit equation (second-stage).
-Z is the list of variables in the split-probit equation (first-stage).
-Y is the outcome variable.
+The model can be estimated as follows.
 
-
-:func:`zmiopc.iopmod` estimates the MiOP model and returns :class:`zmiopc.IopModel`.
+:func:`zmiopc.iopcmod` estimates the MiOPC model and returns :class:`zmiopc.IopcModel`.
 
 .. testcode::
 
@@ -396,7 +470,7 @@ Y is the outcome variable.
 
 .. testcode::
 
-         print(miopc_EU.coefs)
+Now print(miopc_EU.coefs).
 
 .. testoutput::
 
@@ -416,11 +490,39 @@ The model object also stores three (3) different diagnostic tests: (1) Log-likel
 
 .. testcode::
 
-  print(miop_EU.llik)
-  print(miop_EU.AIC)
-  print(miop_EU.vcov)
+  print(miopc_EU.llik)
+  print(miopc_EU.AIC)
+  print(miopc_EU.vcov)
 
-Above you can read the instructions on how to calculate and print the fitted values.
+To estimate the predicted probabilities:
+
+.. testcode::
+
+  fittedmiopc = zmiopc.iopcfit(miopc_EU)
+  print(fittedziopc.responsefull)
+
+:func:`zmiopc.split_effects` simulates data from MiOP model results and computes changes in predicted probabilities when the value of a variable changes.
+This allows you to illustrate how the changes in the split-probit covariates affect the probablilities of being in one population versus another. The example below illustrates the marginal effects of the variable 'gender_dum' on the outcome variable in the ZiOPC model estimated in ths documentation.
+
+.. testcode::
+
+    miopcxeno = idcempy.split_effects(miopc_EU, 1, nsims = 10000)
+
+The returned dataframe contains predicted probabilities when 'gender_dum' equals 0, and when 'gender_dum' equals 1.
+The box plots below illustrate the change in predicted probablities using the values from the 'ziopparl' dataframe.
+
+.. testcode::
+
+     miopcxeno.plot.box(grid='False')
+
+
+:func:: `zmiopc.ordered_effects` calculates the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities of the outcome variable in the MiOPC model estimated above when Xenophobia increases one standard deviation from its mean value.
+
+.. testcode::
+
+    xeno = zmiopc.ordered_effects(miopc_EU, 2, nsims = 10000)
+    xeno.plot.box(grid='False')
+
 
 The Standard Ordered Probit (OP) model
 --------------------------------------
