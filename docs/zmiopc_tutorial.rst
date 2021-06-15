@@ -62,9 +62,9 @@ Examples
 
 Zero-inflated Ordered Probit (ZiOP) Model without Correlated Errors
 --------------------------------------------------------------------
-The `iopmod` function estimates regression objects for "zero-inflated" and "middle-inflated" ordered probit models without correlated errors.  Below you will find instructions to estimate a ZiOP model.  The estimation of MiOP models is also illustrated.
+The `iopcmod` function estimates regression objects for "zero-inflated" and "middle-inflated" ordered probit models without correlated errors.  Below you will find instructions to estimate a ZiOP model.
 
-First, we import the required libraries, set up the package and import the dataset:
+We first import the required libraries, set up the package and import the dataset:
 
 .. testcode::
   # Import the necessary libraries and package
@@ -177,15 +177,43 @@ You can also extract predicted probabilities from the model:
 
 Zero-inflated Ordered Probit (ZiOPC) with Correlated Errors
 -----------------------------------------------------------
-The package also includes the function `iopcmod` which fits "zero-inflated" ordered probit models (ZiOPC) and "middle-inflated" ordered probit models (MiOP) under the assumption that the two errors are correlated with each other (i.e. correlated errors). Both models include the estimate of'rho'. The models in this section use the same specification as the models estimated without correlated errors presented above.
+The package also includes the function `iopcmod` which fits "zero-inflated" ordered probit models (ZiOPC) under the assumption that the two errors are correlated with each other (i.e. correlated errors).
 
+We first import the required libraries, set up the package and import the dataset:
 
-**1. Estimate the ZiOPC model**
+.. testcode::
+  # Import the necessary libraries and package
+
+  import numpy as np
+  import pandas as pd
+  import urllib
+  from zmiopc import zmiopc
+
+  # Import the "Youth Tobacco Consumption" dataset.
+
+  url='https://github.com/hknd23/zmiopc/blob/main/data/tobacco_cons.csv'
+  data=pd.read_stata(url)
+
+.. testcode::
+
+  # First, you should define a list of variable names of X, Z, and Y.
+  # X = The covariates of the ordered probit stage.
+  # Z = The covariates of the inflation (split-population) stage.
+  # Y = The ordinal outcome variable.
+
+  X = ['age', 'grade', 'gender_dum']
+  Z = ['gender_dum']
+  Y = ['cig_count']
+
+Our data is now a `pandas` DataFrame, and we can proceed to estimate the ZiOP model as follows.
+
 .. testcode::
 
     ziopc_tob = zmiopc.iopcmod('ziopc', data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
 
-Similar to ZiOP, the results are stored in the attributes of :class:`zmiopc.IopCModel`.
+The package sets a default start value of .01 for all parameters.  Users can modify it by creating an array with their desired values, define such array as `pstart` and add it to as an argument in the model function.
+
+The results are stored in the attributes of :class:`zmiopc.IopCModel`.
 
 .. testoutput::
 
@@ -194,7 +222,7 @@ Similar to ZiOP, the results are stored in the attributes of :class:`zmiopc.IopC
          Function evaluations: 1562
          Gradient evaluations: 142
 
-**2. Print the results**
+The following line of code prints the results
 
 .. testcode::
 
@@ -228,7 +256,8 @@ The AIC of the ziopc_tob model, for example, is:
 
   10140.103819465658
 
-**2.1 Obtain predicted probabilities from the ziopc_tob model:**
+The predicted probabilities from the `ziopc_tob` model can ve obtained as follows.
+
 :func:`zmiopc.iopcfit` returns :class:`zmiopc.FittedVals` containing fitted probablities.
 
 .. testcode::
