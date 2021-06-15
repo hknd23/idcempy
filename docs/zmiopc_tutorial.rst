@@ -61,7 +61,7 @@ The package can be installed in two different ways.
 Examples
 ========
 
-Zero-inflated Ordered Probit without Correlated Errors (ZiOP)
+Zero-inflated Ordered Probit (ZiOP) Model without Correlated Errors
 --------------------------------------------------------------------
 The `iopmod` function estimates regression objects for "zero-inflated" and "middle-inflated" ordered probit models without correlated errors.  Below you will find instructions to estimate a ZiOP model.  The estimation of MiOP models is also illustrated.
 
