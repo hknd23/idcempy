@@ -553,6 +553,7 @@ Outcome Equation Predicted Probabilities
 
 .. image:: ../graphics/MiOPC_Xenophobia.png
 
+
 GiMNL Model
 ===========
 
