@@ -157,7 +157,7 @@ An example for the AIC:
 
   10138.321806674261
 
-**2.1 To extract predicted probabilities from the model:**
+You can also extract predicted probabilities from the model:
 :func:`zmiopc.iopfit` returns :class:`zmiopc.FittedVals` containing fitted probablities.
 
 .. testcode::
@@ -175,8 +175,8 @@ An example for the AIC:
  [0.87603805 0.06808193 0.01543795 0.02735256 0.01308951]
  [0.82681957 0.08778215 0.02153509 0.04095753 0.02290566]]
 
-Zero-inflated Ordered Probit With Correlated Errors (ZiOPC)
-
+Zero-inflated Ordered Probit (ZiOPC) with Correlated Errors
+-----------------------------------------------------------
 The package also includes the function `iopcmod` which fits "zero-inflated" ordered probit models (ZiOPC) and "middle-inflated" ordered probit models (MiOP) under the assumption that the two errors are correlated with each other (i.e. correlated errors). Both models include the estimate of'rho'. The models in this section use the same specification as the models estimated without correlated errors presented above.
 
 
