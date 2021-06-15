@@ -7,8 +7,7 @@ Description
 `IDCeMPy` is a Python package that provides functions to fit and assess the performance of the following distinct
 sets of “inflated” discrete choice models.
 
-* Fit the Zero-Inflated Ordered Probit (ZIOP) model without and with correlated errors (ZIOPC
-model) to evaluate zero-inflated ordered choice outcomes that results from a dual data generating
+* Fit the Zero-Inflated Ordered Probit (ZIOP) model without and with correlated errors (ZIOPC model) to evaluate zero-inflated ordered choice outcomes that results from a dual data generating
 process (d.g.p.).
 
 * Fit the Middle-Inflated Ordered Probit (MIOP) model without and with correlated errors (MIOPC) to account for the inflated middle-category in ordered choice measures that relates to a dual d.g.p.
