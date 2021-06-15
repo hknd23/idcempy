@@ -77,7 +77,9 @@ We first import the required libraries, set up the package and import the datase
   # Import the "Youth Tobacco Consumption" dataset.
 
   url='https://github.com/hknd23/zmiopc/blob/main/data/tobacco_cons.csv'
-  data=pd.read_stata(url)
+
+  # Read the dataset
+  data=pd.read_csv(url)
 
 Our data is now a `pandas` DataFrame, and we can proceed to estimate the ZiOP model as follows.
 
@@ -179,7 +181,7 @@ The package also includes the function `iopcmod` which fits "zero-inflated" orde
 We first import the required libraries, set up the package and import the dataset:
 
 .. testcode::
-  # Import the necessary libraries and package
+  # Import the necessary libraries and IDCeMPy.
 
   import numpy as np
   import pandas as pd
@@ -189,6 +191,8 @@ We first import the required libraries, set up the package and import the datase
   # Import the "Youth Tobacco Consumption" dataset.
 
   url='https://github.com/hknd23/zmiopc/blob/main/data/tobacco_cons.csv'
+
+  # Read the imported dataset.
   data=pd.read_stata(url)
 
 .. testcode::
@@ -274,34 +278,48 @@ The predicted probabilities from the `ziopc_tob` model can ve obtained as follow
 
 Middle-inflated Ordered Probit without Correlated Errors (MiOP)
 ---------------------------------------------------------------
-We begin by importing the Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) data on European Integration described above.  Recall that our outcome variable is "inflated" in the middle category.
+If your ordered outcome variable is inflated in the middle category, you should estimate a  Middle-inflated Ordered Probit (MiOP) model.
+
+The following example uses data from Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_).
+
+We begin by loading the required libraries and `IDCeMPy`
 
 .. testcode::
+  # Import the necessary libraries and IDCeMPy.
 
+  import numpy as np
+  import pandas as pd
+  import urllib
+  from zmiopc import zmiopc
+
+Next, we load the dataset.
+
+.. testcode::
+    # Import and read the dataset
     url = 'https://github.com/hknd23/zmiopc/blob/main/data/'
     data2 = pd_read.stata(url)
 
 We then define the lists with the names of the variables used in the model
 
 .. testcode::
+  # X = The covariates of the ordered probit stage.
+  # Z = The covariates of the inflation (split-population) stage.
+  # Y = The ordinal outcome variable.
 
   X = ['Xenophobia', 'discuss_politics']
   Z = ['discuss_politics', EU_Know_ob]
   Y = ['EU_support_ET']
 
-X is the list of variables in the Ordered Probit equation (second-stage).
-Z is the list of variables in the split-probit equation (first-stage).
-Y is the outcome variable.
-
+Your data is now ready, and you can begin the estimation process.
 
 :func:`zmiopc.iopmod` estimates the MiOP model and returns :class:`zmiopc.IopModel`.
 
 .. testcode::
 
-
   # Model estimation:
   miop_EU = zmiopc.iopmod('miop', data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
 
+The following message will appear when the model finishes converging.
 .. testoutput::
 
          Warning: Desired error not necessarily achieved due to precision loss.
@@ -310,9 +328,10 @@ Y is the outcome variable.
          Function evaluations: 488
          Gradient evaluations: 61  # See estimates:
 
+Print the results.
 .. testcode::
 
-         print(miop_EU.coefs)
+   print(miop_EU.coefs)
 
 .. testoutput::
 
@@ -330,12 +349,12 @@ In addition to coefficient estimates, the table also presents the standard error
 The model object also stores three (3) different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
 
 .. testcode::
-
+  # Print estiimates of LL, AIC and VCOV
   print(miop_EU.llik)
   print(miop_EU.AIC)
   print(miop_EU.vcov)
 
-An example for the AIC:
+For example, the AIC in this case is:
 
 .. testcode::
 
@@ -345,11 +364,8 @@ An example for the AIC:
 
    21729.390980849777
 
-Please see **Section 2.1** for instructions on how to calculate and print the fitted values.
-
-
-
- **3. Estimation of MiOPC**
+Middle-inflated Ordered Probit (MiOPC) Model with Correlated Errors
+--------------------------------------------------------------------
 
 This example uses the the Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) data on European Integration described above. Recall that our outcome variable is "inflated" in the middle category.
 
@@ -406,10 +422,10 @@ The model object also stores three (3) different diagnostic tests: (1) Log-likel
 
 Above you can read the instructions on how to calculate and print the fitted values.
 
-Estimating the OP Model
-=======================
+The Standard Ordered Probit (OP) model
+--------------------------------------
 
-The package also includes a fucntion that estimates a standard Ordered Probit (OP) model.
+The package also includes a function that estimates a standard Ordered Probit (OP) model.
 The OP model does not account for the "zero inflation", so it does not have a split-probit stage.
 
 .. testcode::
@@ -554,8 +570,8 @@ Outcome Equation Predicted Probabilities
 .. image:: ../graphics/MiOPC_Xenophobia.png
 
 
-GiMNL Model
-===========
+Generalized Inflated Multinomial logit LGiMNL) Model
+----------------------------------------------------
 
 The IDCeMPy package also includes a function that estimates General "inflated" Multinomial Logit models (GiMNL).  GiMNL models minimize issues present when unordered polytomous outcome variables have an excessive share and heterogeneous pool of observations in the lower category.  The application below uses data from Campbell and Monson (`2008 <https://academic.oup.com/poq/article-abstract/72/3/399/1836972>`__) who use 'vote choice' as their outcome variable.  The 0,1,2 unordered-polytomous Presidential 'vote choice' doutcome variable in their data includes the following options: abstained (their MNL baseline category), Bush, or Kerry. In this case, the baseline category is inflated as it includes non-voters who abstain from voting in an election owing to temporary factors and “routine” non-voters who are consistently disengaged from the political process.  Faling to account for such inflation could lead to inaccurate inferences.
 
