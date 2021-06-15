@@ -55,37 +55,11 @@ The package can be installed in two different ways.
   cd idcempy
   python setup.py install
 
-Data Description
-================
+Examples
+========
 
-Data for the applications below come from two different sources.
-
-**Data Source for "Zero-inflated" Ordered Probit Models (ZiOP/ZiOPC)**
-
-We use data from the National Youth Tobacco Survey (`2018 <https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm>`__) to illustrate the use of ordered probit models with a "zero-inflated" outcome variable. This survey allows us to measure self-reported *Tobacco Consumption* among youngsters. Specifically, respondents of the survey answered the following question [Q9]: About how many cigarretes have you smoked in your entire life, and their responses are coded as 0 for "never smoked cigarettes", 1 for "1 cigarette", 2 for "2 to 5 cigarettes", 3 for "6 to 15 cigarettes," and 4 for "more than 15 cigarettes."
-
-82% of the observations are in the first category (i.e. "never smoked cigarettes) of outcome variable *tobacco consumption*. So, there is an excessive number of "0" -zero- observations thus making the aforementioned dataset appropriate for the estimation of ZiOP and ZiOPC models.
-
-The covariates used to estimate the ZiOP/ZiOPC models are:
-
-- age: Respondent's age
-- grade: Respondent's age
-- gender_dum: Respondent's gender
-
-**Data Source for "Middle-inflated" Ordered Probit Models (MiOP/MiOPC)**
-
-Data for the "Middle-inflated" Ordered Probit Models (MiOP and MiOPC) comes from Elgun and Tillman(`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) who use ordered categorical responses to the following question in the Candidate Countries Eurobarometer 2002.2 survey to evaluate public attitudes toward European Union membership in 13 CEE candidate countries: “Generally speaking, do you think that (your country’s) membership of the European Union would be a good thing, a bad thing, or neither good nor bad?” Based on responses to this question, the discrete ordered-dependent variable—usually labeled as EU support—in Elgun and Tillman’s (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_) study and in similar related studies is coded as 1 for “a bad thing,” 2 for “neither good nor bad,” and 3 for “a good thing.” A close examination of the ordered *EU support* variable indicates that 39% of all respondents tothe survey question mentioned above opted for the middle category
-response, which is indeed high. Therefore, this dataset is useful to illustrate some important features of our package.
-
-The covariates used to estimate the MiOP/MiOPC models are:
-
-- discuss_politics: Respondent's frequency of discussing politics.
-- Xenophobia: Index for Respondent's level of xenophobia.
-- EU_Know_obj: Number of correct answers to a quiz about the EU.
-
-Estimation of Zero-inflated and Middle-inflated Ordered Probit Models Without Correlated Errors
-===============================================================================================
-
+Zero-inflated Ordered Probit Models without Correlated Errors (ZiOP)
+--------------------------------------------------------------------
 The `iopmod` function estimates regression objects for "zero-inflated" and "middle-inflated" ordered probit models without correlated errors.  Below you will find instructions to estimate a ZiOP model.  The estimation of MiOP models is also illustrated.
 
 
