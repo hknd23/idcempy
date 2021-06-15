@@ -2,7 +2,38 @@
 IDCeMPy Package
 ***************
 
-The IDCeMPy package contains a number of functions that allow users to estimate "inflated" ordered probit (OP) models when the outcome variable has an excess number of observations in either the "zero" or the "middle" categories.  The models can be estimated without (ZiOP and MiOP) and with (ZiOPC and MiOPC) correlated errors.  In addition, IDCeMPy allows users to easily obtain fitted values, calculate goodness-of-fit and diagnostic tests, and marginal effects.  This tutorial introduces all the aforementioned features of the package.
+Description
+===========
+`IDCeMPy` is a Python package that provides functions to fit and assess the performance of the following distinct
+sets of “inflated” discrete choice models.
+
+* Fit the Zero-Inflated Ordered Probit (ZIOP) model without and with correlated errors (ZIOPC
+model) to evaluate zero-inflated ordered choice outcomes that results from a dual data generating
+process (d.g.p.).
+* Fit the Middle-Inflated Ordered Probit (MIOP) model without and with correlated errors (MIOPC) to account for the inflated middle-category in ordered choice measures that relates to a dual d.g.p.
+* Fit Generalized Inflated Multinomial Logit (GIMNL) models that account for the preponderant and heterogeneous share of observations in the baseline or any lower category in unordered polytomous choice outcomes.
+* Compute AIC and Log-likelihood statistics and the Vuong Test statistic to assess the performance of each inflated discrete choice model in the package.
+
+`IDCeMPy` uses Newton numerical optimization methods to estimate the models listed above via Maximum Likelihood Estimation (MLE).
+
+When should you use `IDCeMPy`?
+==============================
+
+An excessive (“inflated”) share of observations—stemming from two distinct d.g.p’s—fall into a single choice category in many ordered and unordered polytomous outcome variables. Standard Ordered Probit and Multinomial Logit models cannot account for such category inflation which leads to biased inferences. Examples include,
+
+* The inflated zero-category of "no smoking" in ordered measures of self-reported smoking behavior is generated from nonsmokers who never smoke cigarettes and those who smoked previously but temporarily stopped smoking because of high cigarette prices.
+
+* The inflated "indifference" middle-category in ordered measures of immigration attitudes includes respondents truly indifferent to immigration and those that choose indifference for social desirability reasons.
+
+* The inflated baseline or other lower outcome categories of unordered polytomous outcome measures of vote choice include nonvoters who temporarily abstain from voting and routine nonvoters who always abstain.
+
+`IDCeMPy` includes the ZIOP(C) models for evaluating zero-inflated ordered choice outcomes that results from a dual d.g.p, the MIOP(C) models that address inflated middle-category ordered outcome measures arising from distinct d.g.p’s, and GIMNL models that account for inflated baseline or other categories for unordered polytomous outcomes.
+
+Each inflated discrete choice model in this package addresses category inflation in one’s discrete outcome—unordered or unordered polytomous—of interest by jointly estimating a binary split-stage equation and an ordered or multinomial discrete choice outcome equation.
+
+How does it work?
+=================
+
 
 Installation
 =============
