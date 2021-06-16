@@ -323,14 +323,12 @@ We begin by loading the required libraries and IDCeMPy
   from idcempy import zmiopc
 
 Next, we load the dataset.
-
 .. testcode::
     # Import and read the dataset
     url = 'https://github.com/hknd23/zmiopc/blob/main/data/'
     data2 = pd_read.stata(url)
 
 We then define the lists with the names of the variables used in the model
-
 .. testcode::
   # X = The covariates of the ordered probit stage.
   # Z = The covariates of the inflation (split-population) stage.
