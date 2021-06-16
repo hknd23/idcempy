@@ -296,18 +296,12 @@ This allows you to illustrate how the changes in the split-probit covariates aff
 
     ziopcgender = idcempy.split_effects(ziopc_tob, 1, nsims = 10000)
 
-The returned dataframe contains predicted probabilities when 'gender_dum' equals 0, and when 'gender_dum' equals 1.
-
-.. testcode::
-
-     ziopcgender.plot.box(grid='False')
-
 You can calculate the change in predicted probabilities of the outcome variable when the value of a covarariate changes.
 In addition, a you can obtain a box plot that displays the change in predicted probabilities of the outcome variable in the ZiOPC model.
 
 .. testcode::
    # Calculate change in predicted probabilities
-   gender = zmiopc.ordered_effects(ziop_tob, 2, nsims = 10000)
+   gender = zmiopc.ordered_effects(ziopc_tob, 1, nsims = 10000)
 
    # Box-plot of precicted probablilites
    gender.plot.box(grid='False')
