@@ -746,3 +746,4 @@ Similar to the GiMNL model, the AIC for the MNL model can also be given by:
 .. testoutput::
 
     1657.192925769978
+
