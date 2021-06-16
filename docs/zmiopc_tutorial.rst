@@ -627,7 +627,8 @@ The Vuong test can also be implemented to compare the ZiOPC, MiOP and MiOPC mode
 Generalized Inflated Multinomial Logit (GiMNL) Model
 ----------------------------------------------------
 
-The IDCeMPy package also includes a function that estimates General "inflated" Multinomial Logit models (GiMNL).  GiMNL models minimize issues present when unordered polytomous outcome variables have an excessive share and heterogeneous pool of observations in the lower category.  The application below uses data from Campbell and Monson (`2008 <https://academic.oup.com/poq/article-abstract/72/3/399/1836972>`__) who use 'vote choice' as their outcome variable.  The 0,1,2 unordered-polytomous Presidential 'vote choice' doutcome variable in their data includes the following options: abstained (their MNL baseline category), Bush, or Kerry. In this case, the baseline category is inflated as it includes non-voters who abstain from voting in an election owing to temporary factors and “routine” non-voters who are consistently disengaged from the political process.  Faling to account for such inflation could lead to inaccurate inferences.
+The IDCeMPy package also includes a function that estimates General "inflated" Multinomial Logit models (GiMNL). GiMNL models minimize issues present when unordered polytomous outcome variables have an excessive share and heterogeneous pool of observations in the lower category.
+Failing to account for such inflation could lead to inaccurate inferences.
 
 To estimate the GiMNL model, we first import the library and the dataset introduced above.
 
@@ -692,11 +693,9 @@ The results from the model are stored in a :class:`gimnlModel` with the followin
 - AIC: Akaike information criterion
 - vcov: Variance-covariance matrix
 
-The AIC, for example is given by,
-
+You can, for example, print the AIC as follows.
 .. testcode::
     print(gimnl_2004vote.AIC)
-
 .. testoutput::
     1656.8324085039708
 
@@ -709,7 +708,7 @@ Using the function :py:func:`gimnl.mnlmod`, users can fit a standard Multinomial
 
 .. testoutput::
 
-  Coef    SE  tscore     p   2.5%  97.5%
+     Coef        SE  tscore     p   2.5%  97.5%
   1: int       -4.914 0.164 -29.980 0.000 -5.235 -4.593
   1: educ       0.455 0.043  10.542 0.000  0.371  0.540
   1: party7     0.462 0.083   5.571 0.000  0.300  0.625
