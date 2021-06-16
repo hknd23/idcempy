@@ -342,7 +342,7 @@ We then define the lists with the names of the variables used in the model
   # Y = The ordinal outcome variable.
 
   X = ['Xenophobia', 'discuss_politics']
-  Z = ['discuss_politics', EU_Know_ob]
+  Z = ['discuss_politics', 'EU_Know_ob']
   Y = ['EU_support_ET']
 
 Your data is now ready, and you can begin the estimation process.
@@ -355,6 +355,7 @@ Your data is now ready, and you can begin the estimation process.
   miop_EU = zmiopc.iopmod('miop', data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
 
 The following message will appear when the model finishes converging.
+
 .. testoutput::
 
          Warning: Desired error not necessarily achieved due to precision loss.
@@ -407,7 +408,7 @@ To estimate the predicted probabilities:
   print(fittedziopc.responsefull)
 
 The package also allows you to simulates data from MiOP model results and compute changes in predicted probabilities when the value of a variable changes.
-This allows you to illustrate how the changes in the split-probit covariates affect the probablilities of being in one population versus another. The example below illustrates the marginal effects of the variable 'gender_dum' on the outcome variable in the ZiOPC model estimated in ths documentation.
+This allows you to illustrate how the changes in the split-probit covariates affect the probablilities of being in one population versus another.
 
 .. testcode::
 
@@ -420,7 +421,7 @@ To plot the predicted probabilities.
      miopxeno.plot.box(grid='False')
 
 
-You can calculate the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities of the outcome variable in the MiOPC model estimated above when Xenophobia increases one standard deviation from its mean value.
+You can calculate the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities of the outcome variable in the MiOP model estimated above when Xenophobia increases one standard deviation from its mean value.
 
 .. testcode::
 
@@ -486,7 +487,7 @@ Now print(miopc_EU.coefs).
 
 In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals.
 
-The model object also stores three (3) different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
+The model object also stores three different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
 
 .. testcode::
 
