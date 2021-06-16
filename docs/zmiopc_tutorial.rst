@@ -303,10 +303,11 @@ The returned dataframe contains predicted probabilities when 'gender_dum' equals
 
      ziopcgender.plot.box(grid='False')
 
-:func:: `zmiopc.ordered_effects` calculates the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities of the outcome variable in the ZiOPC model.
+You can calculate the change in predicted probabilities of the outcome variable when the value of a covarariate changes.
+
+A box plot below display the change in predicted probabilities of the outcome variable in the ZiOPC model.
 
 .. testcode::
-
     gender = zmiopc.ordered_effects(ziop_tob, 2, nsims = 10000)
     gender.plot.box(grid='False')
 
@@ -380,7 +381,7 @@ Print the results.
 
 In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals.
 
-The model object also stores three (3) different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
+The model object also stores three different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
 
 .. testcode::
   # Print estiimates of LL, AIC and VCOV
@@ -528,14 +529,32 @@ The Standard Ordered Probit (OP) model
 The package also includes a function that estimates a standard Ordered Probit (OP) model.
 The OP model does not account for the "zero inflation", so it does not have a split-probit stage.
 
+We first import the required libraries, set up the package and import the dataset:
+
+.. testcode::
+  # Import the necessary libraries and package
+
+  import numpy as np
+  import pandas as pd
+  import urllib
+  from idcempy import zmiopc
+
+  # Import the "Youth Tobacco Consumption" dataset.
+
+  url='https://github.com/hknd23/zmiopc/blob/main/data/tobacco_cons.csv'
+
+  # Read the dataset
+  data=pd.read_csv(url)
+
 .. testcode::
 
-     # Define a list of variable names (strings) X,Y,Z:
+     # Define a list of variable names (strings) X,Y:
+     # X = list of covariates in the OP equation
+     # Y = Outcome vriable
      X = ['age', 'grade', 'gender_dum']
      Y = ['cig_count']
 
-X is the list of variables in the Ordered Probit equation.
-Y is the outcome variable.
+Your data is not ready for estimation.
 
 .. testcode::
 
@@ -586,27 +605,8 @@ Log-likelihood, AIC, and Variance-Covariance matrix can be extracted with:
   print(op_tob.AIC)
   print(op_tob.vcov)
 
-Similarly, the OP model with the EU data can also be fitted with the following:
-
-.. testoutput::
-
-  url = 'https://github.com/hknd23/zmiopc/blob/main/data/'
-  data2 = pd_read.stata(url)
-  X = ['Xenophobia', 'discuss_politics']
-  Y = ['EU_support_ET']
-
-  op_EU = zmiopc.opmod(data2, X, Y)
-
-The OP model also stores information on Log-likelihood, AIC, and and Variance-Covariance matrix.
-
-.. testcode::
-
-  print(op_EU.llik)
-  print(op_EU.AIC)
-  print(op_EU.vcov)
-
 The Vuong Test
-==============
+--------------
 
 Harris and Zhao (`2007 <https://doi.org/10.1016/j.jeconom.2007.01.002>`__) suggest that a variant of the Vuong (`1989 <https://www.jstor.org/stable/1912557>`__) Test (with a v statistic) can be used to compare the performance of the ZiOP versus the standard Ordered Probit (OP) model using :func:`zmiopc.vuong_opiop`.
 The Vuong test denotes m\ :sub:`i`\ as the natural logarithm of the ratio of the predicted probablity that i\ :sub:`j`\ of the simpler OP model (in the numerator) and the more general (ZiOP/ZiOPC) model (in the denominaor) and evaluates m\ :sub:`i`\
@@ -628,15 +628,7 @@ The OP and ZiOP models must have the same number of observations, and the OP mus
 
    6.624742132792222
 
-The Vuong test can also be implemented to compare the ZiOPC, MiOP and MiOPC models and the OP model. For the case of the MiOP model, the test statistic favors the MiOP model.
-
-.. testcode::
-
-  zmiopc.vuong_opiop(op_EU, miop_EU)
-
-.. testoutput::
-
-   -9.638360843003559
+The Vuong test can also be implemented to compare the ZiOPC, MiOP and MiOPC models and the OP model.
 
 Generalized Inflated Multinomial logit LGiMNL) Model
 ----------------------------------------------------
