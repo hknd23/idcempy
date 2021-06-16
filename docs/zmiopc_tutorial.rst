@@ -300,6 +300,7 @@ You can calculate the change in predicted probabilities of the outcome variable 
 In addition, a you can obtain a box plot that displays the change in predicted probabilities of the outcome variable in the ZiOPC model.
 
 .. testcode::
+
    # Calculate change in predicted probabilities
    gender = zmiopc.ordered_effects(ziopc_tob, 1, nsims = 10000)
 
@@ -315,6 +316,7 @@ The following example uses data from Elgun and Tilam (`2007 <https://journals.sa
 We begin by loading the required libraries and IDCeMPy
 
 .. testcode::
+
   # Import the necessary libraries and IDCeMPy.
 
   import numpy as np
@@ -324,12 +326,14 @@ We begin by loading the required libraries and IDCeMPy
 
 Next, we load the dataset.
 .. testcode::
+
     # Import and read the dataset
     url = 'https://github.com/hknd23/zmiopc/blob/main/data/'
     data2 = pd_read.stata(url)
 
 We then define the lists with the names of the variables used in the model
 .. testcode::
+
   # First, you should define a list of variable names of X, Z, and Y.
   # X = Column names of covariates (from `Data.Frame) used in ordered probit stage.
   # Z = Column names of covariates (from `Data.Frame`) used in split-population stage.
@@ -359,6 +363,7 @@ The following message will appear when the model finishes converging.
          Gradient evaluations: 61  # See estimates:
 
 Print the results.
+
 .. testcode::
 
    print(miop_EU.coefs)
@@ -430,6 +435,7 @@ You can estimate a Middle-inflated Ordered Probit (MiOPC) with correlated errors
 We begin by loading the required libraries and IDCeMPy
 
 .. testcode::
+
   # Import the necessary libraries and IDCeMPy.
 
   import numpy as np
@@ -448,6 +454,7 @@ Next, we load the dataset.
 We then define the lists with the names of the variables used in the model
 
 .. testcode::
+
    # First, you should define a list of variable names of X, Z, and Y.
    # X = Column names of covariates (from `Data.Frame) used in ordered probit stage.
    # Z = Column names of covariates (from `Data.Frame`) used in split-population stage.
@@ -528,6 +535,7 @@ The OP model does not account for the "zero inflation", so it does not have a sp
 We first import the required libraries, set up the package and import the dataset:
 
 .. testcode::
+
    # Import the necessary libraries and package
 
    import numpy as np
@@ -644,6 +652,7 @@ To estimate the GiMNL model, we first import the library and the dataset introdu
 We the define the list of covariates in the split-stage (z), the second-stage (x) and the outcome variable (y).
 
 .. testcode::
+
    # Define the variable list for x, y and z.
    # x = Column names of covariates (from `Data.Frame`) in the outcome-stage.
    # z = Column names of covariates (from `Data.Frame`) in the split-stage.
@@ -658,17 +667,20 @@ Users can employ the argument `inflatecat` to specify any unordered category as 
 We first need to specify the order of the outcome variable. Then, you need to define which category is "inflated."
 
 .. testcode::
+
    order = [0, 1, 2]
    inflatecat = "baseline"
 
 Further, employing the argument `reference`, users can select which category of the unordered outcome variable is the baseline ("reference") category by placing it first. Since the baseline ("0") category in the Presidential vote choice outcome measure is inflated, the following code fits the BIMNL Model.
 
 .. testcode::
+
    gimnl_2004vote = gimnl.gimnlmod(data, x, y, z, order, inflatecat)
 
 The following line of code prints the coefficients of the covariates.
 
 .. testcode::
+
    print(gimnl_2004vote.coefs)
 
 .. testoutput::
@@ -694,14 +706,19 @@ The results from the model are stored in a :class:`gimnlModel` with the followin
 - vcov: Variance-covariance matrix
 
 You can, for example, print the AIC as follows.
+
 .. testcode::
+
     print(gimnl_2004vote.AIC)
+    
 .. testoutput::
+
     1656.8324085039708
 
 Using the function :py:func:`gimnl.mnlmod`, users can fit a standard Multinomial Logit Model (MNL) by specifying the list of **X**, **Y**, and baseline (using `reference`).
 
 .. testcode::
+
    mnl_2004vote = gimnl.mnlmod(data, x, y, z, order)
    print(mnl_2004vote.coefs)
 
@@ -720,7 +737,9 @@ Using the function :py:func:`gimnl.mnlmod`, users can fit a standard Multinomial
 Similar to the GiMNL model, the AIC for the MNL model can also be given by:
 
 .. testcode::
+
     print(mnl_2004vote.AIC)
 
 .. testoutput::
+
     1657.192925769978
