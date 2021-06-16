@@ -544,7 +544,7 @@ We first import the required libraries, set up the package and import the datase
 
 .. testcode::
 
-     # Define a list of variable names (strings) X,Y:
+     # Define a list of variable names X,Y:
      # X = Column names of covariates (from `Data.Frame`) in the OP equation
      # Y = Column name of outcome variable (from `Data.Frame`).
 
@@ -606,8 +606,7 @@ The Vuong Test
 --------------
 
 Harris and Zhao (`2007 <https://doi.org/10.1016/j.jeconom.2007.01.002>`__) suggest that a variant of the Vuong (`1989 <https://www.jstor.org/stable/1912557>`__) Test (with a v statistic) can be used to compare the performance of the ZiOP versus the standard Ordered Probit (OP) model using :func:`zmiopc.vuong_opiop`.
-The Vuong test denotes m\ :sub:`i`\ as the natural logarithm of the ratio of the predicted probablity that i\ :sub:`j`\ of the simpler OP model (in the numerator) and the more general (ZiOP/ZiOPC) model (in the denominaor) and evaluates m\ :sub:`i`\
-via a bidirectional test statistic of:
+The Vuong test denotes m\:sub:`i`\ as the natural logarithm of the ratio of the predicted probablity that i\:sub:`j`\  of the simpler OP model (in the numerator) and the more general (ZiOP/ZiOPC) model (in the denominaor) and evaluates m\:sub:`i`\  via a bidirectional test statistic of:
 
 .. math::
 
@@ -644,6 +643,7 @@ To estimate the GiMNL model, we first import the library and the dataset introdu
 We the define the list of covariates in the split-stage (z), the second-stage (x) and the outcome variable (y).
 
 .. testcode::
+   # Define the variable list for x, y and z.
    # x = Column names of covariates (from `Data.Frame`) in the outcome-stage.
    # z = Column names of covariates (from `Data.Frame`) in the split-stage.
    # y = Column names of outcome variable (from `Data.Frame`).
@@ -653,6 +653,7 @@ We the define the list of covariates in the split-stage (z), the second-stage (x
    y = ['vote_turn']
 
 Users can employ the argument `inflatecat` to specify any unordered category as the inflated category (dictated by the distribution) in their unordered-polytomous outcome measure. If a higher category (say 1) is inflated in a 0,1,2 unordered outcome measure.
+
 We first need to specify the order of the outcome variable. Then, you need to define which category is "inflated."
 
 .. testcode::
@@ -660,6 +661,7 @@ We first need to specify the order of the outcome variable. Then, you need to de
    inflatecat = "baseline"
 
 Further, employing the argument `reference`, users can select which category of the unordered outcome variable is the baseline ("reference") category by placing it first. Since the baseline ("0") category in the Presidential vote choice outcome measure is inflated, the following code fits the BIMNL Model.
+
 .. testcode::
    gimnl_2004vote = gimnl.gimnlmod(data, x, y, z, order, inflatecat)
 
