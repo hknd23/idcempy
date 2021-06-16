@@ -837,11 +837,16 @@ def iopcmod(
 
     :param pstart: A list of starting parameters.
     :type pstart: list
-    :param data: dataset.
+    :param data: Model data used for estimation, subsetted to selected
+        variables and missing values listwise deleted.
+    :param x: Ordered Probit stage variables. The elements must match column
+    names of ``data``.
     :type x: list of str
-    :param y: Dependent Variable (DV).
+    :param y: Dependent variable (DV). The element must match column
+    names of ``data``.
     :type y: list of str
-    :param z: Inflation stage variables.
+    :param z: Inflation stage variables. The elements must match column
+    names of ``data``.
     :type z: list of str
     :param modeltype: Type of model to be estimated ("ziopc" or 'miopc').
     :param method: method for optimization, default 'BFGS'.  For other
