@@ -645,7 +645,7 @@ We the define the list of covariates in the split-stage (z), the second-stage (x
 
 .. testcode::
    # x = Column names of covariates (from `Data.Frame`) in the outcome-stage.
-   # z = Column names of covariates (from `Data.Frame) in the split-stage.
+   # z = Column names of covariates (from `Data.Frame`) in the split-stage.
    # y = Column names of outcome variable (from `Data.Frame`).
 
    x = ['educ', 'party7', 'agegroup2']
