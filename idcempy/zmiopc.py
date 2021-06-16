@@ -189,14 +189,14 @@ class FittedVals:
 def op(pstart, x, y, data, weights, offsetx):
     """Calculate likelihood function for Ordered Probit Model.
 
-    :param pstart: starting parameters.
-    :type pstart: numpy.ndarray or list.
+    :param pstart: A list of starting parameters.
+    :type pstart: list
     :param x: Ordered stage variables.
-    :type x: pandas.core.frame.DataFrame
+    :type x: pandas dataframe
     :param y: DV.
-    :type y: pandas.core.frame.DataFrame
+    :type y: pandas dataframe
     :param data: dataset.
-    :type data: pandas.core.frame.DataFrame
+    :type data: pandas dataframe
     :param weights: weights.
     :type weights: int
     :param offsetx: offset for X.
@@ -238,16 +238,16 @@ def op(pstart, x, y, data, weights, offsetx):
 def ziop(pstart, x, y, z, data, weights, offsetx, offsetz):
     """Calculate likelihood function for Zero-inflated Model.
 
-    :param pstart: starting parameters.
-    :type pstart: numpy.ndarray or list
+    :param pstart: A list of starting parameters.
+    :type pstart: list
     :param x: Ordered stage variables.
-    :type x: pandas.core.frame.DataFrame
+    :type x: pandas dataframe
     :param y: Dependent Variable (DV).
-    :type y: pandas.core.frame.DataFrame
+    :type y: pandas dataframe
     :param z: Inflation stage variables.
-    :type z: pandas.core.frame.DataFrame
+    :type z: pandas dataframe
     :param data: dataset.
-    :type data: pandas.core.frame.DataFrame
+    :type data: pandas dataframe
     :param weights: weights.
     :type weights: int
     :param offsetx: offset for X.
@@ -293,16 +293,16 @@ def ziop(pstart, x, y, z, data, weights, offsetx, offsetz):
 def ziopc(pstart, x, y, z, data, weights, offsetx, offsetz):
     """Calculate likelihood function for Zero-inflated Correlated-Errors Model.
 
-    :param pstart: starting parameters.
-    :type pstart: numpy.ndarray or list
+    :param pstart: A list of starting parameters.
+    :type pstart: list
     :param x: Ordered stage variables.
-    :type x: pandas.core.frame.DataFrame
+    :type x: pandas dataframe
     :param y: Dependent Variable (DV)
-    :type y: pandas.core.frame.DataFrame
+    :type y: pandas dataframe
     :param z: Inflation stage variables.
-    :type z: pandas.core.frame.DataFrame
+    :type z: pandas dataframe
     :param data: dataset.
-    :type data: pandas.core.frame.DataFrame
+    :type data: pandas dataframe
     :param weights: weights.
     :type weights: int
     :param offsetx: offset for X.
@@ -373,16 +373,16 @@ def miop(pstart, x, y, z, data, weights, offsetx, offsetz):
     "without" correlated errors.
     Number of outcomes must be odd.
 
-    :param pstart: starting parameters.
-    :type pstart: numpy.ndarray or list
+    :param pstart: A list of starting parameters.
+    :type pstart: list
     :param x: Ordered stage variables.
-    :type x: pandas.core.frame.DataFrame
+    :type x: pandas dataframe
     :param y: Dependent Variable (DV)
-    :type y: pandas.core.frame.DataFrame
+    :type y: pandas dataframe
     :param z: Inflation stage variables.
-    :type z: pandas.core.frame.DataFrame
+    :type z: pandas dataframe
     :param data: dataset.
-    :type data: pandas.core.frame.DataFrame
+    :type data: pandas dataframe
     :param weights: weights.
     :type weights: int
     :param offsetx: offset for X.
@@ -435,16 +435,16 @@ def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
     Likelihood function for Middle-inflated Correlated-Errors Model.
     Number of outcomes must be odd.
 
-    :param pstart: starting parameters.
-    :type pstart: numpy.ndarray or list
+    :param pstart: A list of starting parameters.
+    :type pstart: list
     :param x: Ordered stage variables.
-    :type x: pandas.core.frame.DataFrame
+    :type x: pandas dataframe
     :param y: Dependent Variable (DV).
-    :type y: pandas.core.frame.DataFrame
+    :type y: pandas dataframe
     :param z: Inflation stage variables.
-    :type z: pandas.core.frame.DataFrame
+    :type z: pandas dataframe
     :param data: dataset.
-    :type data: pandas.core.frame.DataFrame
+    :type data: pandas dataframe
     :param weights: weights.
     :type weights: int
     :param offsetx: offset for X.
@@ -567,7 +567,8 @@ def opresults(model, data, x, y):
 def opmod(data, x, y, pstart=None, method="BFGS", weights=1, offsetx=0):
     """Estimate Ordered Probit model and return :class:`OpModel` class object.
 
-    :param pstart: starting parameters.
+    :param pstart: A list of starting parameters.
+    :type pstart: list
     :param data: full dataset.
     :type x: list of str
     :param y: Dependent Variable (DV).
@@ -753,7 +754,8 @@ def iopmod(
 ):
     """Estimate ZiOP model and return :class:`IopModel` class object as output.
 
-    :param pstart: starting parameters.
+    :param pstart: A list of starting parameters.
+    :type pstart: list
     :param data: full dataset.
     :type x: list of str.
     :param y: Dependent Variable (DV).
@@ -821,7 +823,8 @@ def iopcmod(
 ):
     """Estimate an iOP model (ZiOP or MiOP) and return :class:`IopcModel`.
 
-    :param pstart: starting parameters.
+    :param pstart: A list of starting parameters.
+    :type pstart: list
     :param data: dataset.
     :type x: list of str
     :param y: Dependent Variable (DV).
@@ -881,8 +884,8 @@ def iopcmod(
 def iopfit(model):
     """Calculate probabilities from :py:func:`iopmod`.
 
-    :param model: :class:IopModel object from :py:func:`iopmod`
-    :return: :class:FittedVals object with fitted values
+    :param model: :class:IopModel object from :py:func:`iopmod`.
+    :return: :class:FittedVals object with fitted values.
     """
     zg = model.Z.dot(model.inflate)
     xb = model.X.dot(model.ordered)
@@ -939,8 +942,8 @@ def iopfit(model):
 def iopcfit(model):
     """Calculate fitted probabilities from :py:func:`iopcmod`.
 
-    :param model: :class:`IopCModel` object from :py:func:`iopcmod`
-    :return: :class:`FittedVals` object with fitted values
+    :param model: :class:`IopCModel` object from :py:func:`iopcmod`.
+    :return: :class:`FittedVals` object with fitted values.
     """
     zg = model.Z.dot(model.inflate)
     xb = model.X.dot(model.ordered)
@@ -1135,10 +1138,12 @@ def split_effects(model, inflvar, nsims=10000):
     recognize ordinal variables as numerical).
 
     :param model: :class:`IopModel` or :class:`IopCModel`.
-    :param inflvar: int representing the location of variable
+    :param inflvar: Number representing the location of variable
         in the split-probit equation.
         (attribute .inflate of :class:`IopModel` or :class:`IopCModel`)
-    :param nsims: number of simulated observations, default to 10000.
+    :type inflvar: int
+    :param nsims: number of simulated observations, default is 10000.
+    :type nsims: int
     :return: changeprobs: a dataframe of the predicted
         probabilities when there is change in the variable (1)
         versus original values (0).
@@ -1200,10 +1205,12 @@ def ordered_effects(model, ordvar, nsims=10000):
     recognize ordinal variables as numerical).
 
     :param model: :class:`IopModel` or :class:`IopCModel`.
-    :param ordvar: int representing the location of variable
+    :param ordvar: Number representing the location of variable
         in the ordered probit equation.
         (attribute .ordered of :class:`IopModel` or :class:`IopCModel`)
-    :param nsims: number of simulated observations, default to 10000.
+    :type ordvar: int
+    :param nsims: number of simulated observations, default is 10000.
+    :type nsims: int
     :return: changeprobs: a dataframe of the predicted
         probabilities when there is change in the variable for each outcome (1)
         versus original values (0).
