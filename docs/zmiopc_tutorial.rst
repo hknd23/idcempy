@@ -656,22 +656,16 @@ Users can employ the argument `inflatecat` to specify any unordered category as 
 We first need to specify the order of the outcome variable. Then, you need to define which category is "inflated."
 
 .. testcode::
-
    order = [0, 1, 2]
    inflatecat = "baseline"
 
-
 Further, employing the argument `reference`, users can select which category of the unordered outcome variable is the baseline ("reference") category by placing it first. Since the baseline ("0") category in the Presidential vote choice outcome measure is inflated, the following code fits the BIMNL Model.
-
 .. testcode::
-
    gimnl_2004vote = gimnl.gimnlmod(data, x, y, z, order, inflatecat)
-
 
 The following line of code prints the coefficients of the covariates.
 
 .. testcode::
-
    print(gimnl_2004vote.coefs)
 
 .. testoutput::
@@ -705,7 +699,6 @@ You can, for example, print the AIC as follows.
 Using the function :py:func:`gimnl.mnlmod`, users can fit a standard Multinomial Logit Model (MNL) by specifying the list of **X**, **Y**, and baseline (using `reference`).
 
 .. testcode::
-
    mnl_2004vote = gimnl.mnlmod(data, x, y, z, order)
    print(mnl_2004vote.coefs)
 
