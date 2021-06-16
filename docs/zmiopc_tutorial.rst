@@ -382,13 +382,14 @@ Print the results.
 
 In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals.
 
-The model object also stores three different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
+The model object also stores three different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).
 
 .. testcode::
-  # Print estiimates of LL, AIC and VCOV
-  print(miop_EU.llik)
-  print(miop_EU.AIC)
-  print(miop_EU.vcov)
+
+   # Print estimates of LL, AIC and VCOV
+   print(miop_EU.llik)
+   print(miop_EU.AIC)
+   print(miop_EU.vcov)
 
 For example, the AIC in this case is:
 
@@ -404,8 +405,8 @@ To estimate the predicted probabilities:
 
 .. testcode::
 
-  fittedmiop = zmiopc.iopcfit(miop_EU)
-  print(fittedziopc.responsefull)
+   fittedmiop = zmiopc.iopcfit(miop_EU)
+   print(fittedziopc.responsefull)
 
 The package also allows you to simulates data from MiOP model results and compute changes in predicted probabilities when the value of a variable changes.
 This allows you to illustrate how the changes in the split-probit covariates affect the probablilities of being in one population versus another.
@@ -445,6 +446,7 @@ We begin by loading the required libraries and IDCeMPy
 Next, we load the dataset.
 
 .. testcode::
+
     # Import and read the dataset
     url = 'https://github.com/hknd23/zmiopc/blob/main/data/'
     data2 = pd_read.stata(url)
@@ -452,13 +454,13 @@ Next, we load the dataset.
 We then define the lists with the names of the variables used in the model
 
 .. testcode::
-  # X = The covariates of the ordered probit stage.
-  # Z = The covariates of the inflation (split-population) stage.
-  # Y = The ordinal outcome variable.
 
-  X = ['Xenophobia', 'discuss_politics']
-  Z = ['discuss_politics', EU_Know_ob]
-  Y = ['EU_support_ET']
+   # X = The covariates of the ordered probit stage.
+   # Z = The covariates of the inflation (split-population) stage.
+   # Y = The ordinal outcome variable.
+   X = ['Xenophobia', 'discuss_politics']
+   Z = ['discuss_politics', EU_Know_ob]
+   Y = ['EU_support_ET']
 
 The model can be estimated as follows.
 
@@ -466,10 +468,8 @@ The model can be estimated as follows.
 
 .. testcode::
 
-  # Model estimation:
-  miopc_EU = zmiopc.iopcmod('miopc', pstartziop, data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
-
-.. testcode::
+   # Model estimation:
+   miopc_EU = zmiopc.iopcmod('miopc', pstartziop, data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
 
 Now print(miopc_EU.coefs).
 
@@ -491,16 +491,16 @@ The model object also stores three different diagnostic tests: (1) Log-likelihoo
 
 .. testcode::
 
-  print(miopc_EU.llik)
-  print(miopc_EU.AIC)
-  print(miopc_EU.vcov)
+   print(miopc_EU.llik)
+   print(miopc_EU.AIC)
+   print(miopc_EU.vcov)
 
 To estimate the predicted probabilities:
 
 .. testcode::
 
-  fittedmiopc = zmiopc.iopcfit(miopc_EU)
-  print(fittedziopc.responsefull)
+   fittedmiopc = zmiopc.iopcfit(miopc_EU)
+   print(fittedziopc.responsefull)
 
 The following line of code allows you to compute changes in predicted probabilities when the value of a variable changes.
 This allows you to illustrate how the changes in the split-probit covariates affect the probablilities of being in one population versus another.
@@ -533,12 +533,12 @@ The OP model does not account for the "zero inflation", so it does not have a sp
 We first import the required libraries, set up the package and import the dataset:
 
 .. testcode::
-  # Import the necessary libraries and package
+   # Import the necessary libraries and package
 
-  import numpy as np
-  import pandas as pd
-  import urllib
-  from idcempy import zmiopc
+   import numpy as np
+   import pandas as pd
+   import urllib
+   from idcempy import zmiopc
 
   # Import the "Youth Tobacco Consumption" dataset.
 
@@ -623,7 +623,7 @@ The OP and ZiOP models must have the same number of observations, and the OP mus
 
 .. testcode::
 
-  zmiopc.vuong_opiop(op_tob, ziop_tob)
+   zmiopc.vuong_opiop(op_tob, ziop_tob)
 
 .. testoutput::
 
@@ -631,16 +631,10 @@ The OP and ZiOP models must have the same number of observations, and the OP mus
 
 The Vuong test can also be implemented to compare the ZiOPC, MiOP and MiOPC models and the OP model.
 
-Generalized Inflated Multinomial logit LGiMNL) Model
+Generalized Inflated Multinomial Logit (GiMNL) Model
 ----------------------------------------------------
 
 The IDCeMPy package also includes a function that estimates General "inflated" Multinomial Logit models (GiMNL).  GiMNL models minimize issues present when unordered polytomous outcome variables have an excessive share and heterogeneous pool of observations in the lower category.  The application below uses data from Campbell and Monson (`2008 <https://academic.oup.com/poq/article-abstract/72/3/399/1836972>`__) who use 'vote choice' as their outcome variable.  The 0,1,2 unordered-polytomous Presidential 'vote choice' doutcome variable in their data includes the following options: abstained (their MNL baseline category), Bush, or Kerry. In this case, the baseline category is inflated as it includes non-voters who abstain from voting in an election owing to temporary factors and “routine” non-voters who are consistently disengaged from the political process.  Faling to account for such inflation could lead to inaccurate inferences.
-
-The covariates used to estimate the GiMNL model are:
-
-- educ: Highest level of education completed.
-- agegroup2: Indicator of age cohort.
-- party7: Party identification.
 
 To estimate the GiMNL model, we first import the library and the dataset introduced above.
 
@@ -653,12 +647,17 @@ To estimate the GiMNL model, we first import the library and the dataset introdu
 We the define the list of covariates in the split-stage (z), the second-stage (x) and the outcome variable (y).
 
 .. testcode::
+   # x = covariates in the outcome-stage.
+   # z = covariates in the split-stage.
+   # y = outcome variable.
 
    x = ['educ', 'party7', 'agegroup2']
    z = ['educ', 'agegroup2']
    y = ['vote_turn']
 
-Users can employ the argument `inflatecat` to specify any unordered category as the inflated category (dictated by the distribution) in their unordered-polytomous outcome measure. If a higher category (say 1) is inflated in a 0,1,2 unordered outcome measure, then users can specify inflatecat as follows
+Users can employ the argument `inflatecat` to specify any unordered category as the inflated category (dictated by the distribution) in their unordered-polytomous outcome measure. If a higher category (say 1) is inflated in a 0,1,2 unordered outcome measure.
+We first need to specify the order of the outcome variable. Then, you need to define which category is "inflated."
+
 .. testcode::
 
    order = [0, 1, 2]
@@ -693,14 +692,14 @@ The following line of code prints the coefficients of the covariates.
    2: party7            -0.577 0.058  -9.928 0.000  -0.691 -0.463
    2: agegroup2          0.916 0.235   3.905 0.000   0.456  1.376
 
-The results from the BIMNL model for this application are stored in a class (gimnlModel) with the following attributes:
+The results from the model are stored in a :class:`gimnlModel` with the following attributes:
 
 - coefs: Model coefficients and standard errors
 - llik: Log-likelihood
 - AIC: Akaike information criterion
 - vcov: Variance-covariance matrix
 
-The AIC, for exmaple is given by,
+The AIC, for example is given by,
 
 .. testcode::
     print(gimnl_2004vote.AIC)
