@@ -768,14 +768,19 @@ def iopmod(
 
     :param pstart: A list of starting parameters.
     :type pstart: list
-    :param data: full dataset.
-    :type x: list of str.
-    :param y: Dependent Variable (DV).
-    :type y: list of str.
-    :param z: Inflation stage variables.
-    :type z: list of str.
-    :param modeltype: must be one of "ziop" or 'miop'.
-    :param method: method for optimization, default 'BFGS'. For other
+    :param data: Model data used for estimation, subsetted to selected
+        variables and missing values listwise deleted.
+    :param x: Ordered Probit stage variables. The elements must match column
+    names of ``data``.
+    :type x: list of str
+    :param y: Dependent variable (DV). The element must match column
+    names of ``data``.
+    :type y: list of str
+    :param z: Inflation stage variables. The elements must match column
+    names of ``data``.
+    :type z: list of str
+    :param modeltype: Type of model to be estimated ("ziop" or 'miop').
+    :param method: method for optimization, default 'BFGS'.  For other
         available methods, see scipy.optimize.minimize documentation.
     :param weights: weights.
     :param offsetx: offset for X.
