@@ -81,9 +81,9 @@ Our data is now a `pandas` DataFrame, and we can proceed to estimate the ZiOP mo
 .. testcode::
 
   # First, you should define a list of variable names of X, Z, and Y.
-  # X = The covariates of the ordered probit stage.
-  # Z = The covariates of the inflation (split-population) stage.
-  # Y = The ordinal outcome variable.
+  # X = Column names of covariates (from `Data.Frame) used in ordered probit stage.
+  # Z = Column names of covariates (from `Data.Frame`) used in split-population stage.
+  # Y = Column name of ordinal outcome variable (from `Data.Frame`).
 
   X = ['age', 'grade', 'gender_dum']
   Z = ['gender_dum']
@@ -211,9 +211,9 @@ We first import the required libraries, set up the package and import the datase
 .. testcode::
 
   # First, you should define a list of variable names of X, Z, and Y.
-  # X = The covariates of the ordered probit stage.
-  # Z = The covariates of the inflation (split-population) stage.
-  # Y = The ordinal outcome variable.
+  # X = Column names of covariates (from `Data.Frame) used in ordered probit stage.
+  # Z = Column names of covariates (from `Data.Frame`) used in split-population stage.
+  # Y = Column name of ordinal outcome variable (from `Data.Frame`).
 
   X = ['age', 'grade', 'gender_dum']
   Z = ['gender_dum']
@@ -330,9 +330,10 @@ Next, we load the dataset.
 
 We then define the lists with the names of the variables used in the model
 .. testcode::
-  # X = The covariates of the ordered probit stage.
-  # Z = The covariates of the inflation (split-population) stage.
-  # Y = The ordinal outcome variable.
+  # First, you should define a list of variable names of X, Z, and Y.
+  # X = Column names of covariates (from `Data.Frame) used in ordered probit stage.
+  # Z = Column names of covariates (from `Data.Frame`) used in split-population stage.
+  # Y = Column name of ordinal outcome variable (from `Data.Frame`).
 
   X = ['Xenophobia', 'discuss_politics']
   Z = ['discuss_politics', 'EU_Know_ob']
@@ -447,10 +448,11 @@ Next, we load the dataset.
 We then define the lists with the names of the variables used in the model
 
 .. testcode::
+   # First, you should define a list of variable names of X, Z, and Y.
+   # X = Column names of covariates (from `Data.Frame) used in ordered probit stage.
+   # Z = Column names of covariates (from `Data.Frame`) used in split-population stage.
+   # Y = Column name of ordinal outcome variable (from `Data.Frame`).
 
-   # X = The covariates of the ordered probit stage.
-   # Z = The covariates of the inflation (split-population) stage.
-   # Y = The ordinal outcome variable.
    X = ['Xenophobia', 'discuss_politics']
    Z = ['discuss_politics', EU_Know_ob]
    Y = ['EU_support_ET']
@@ -543,8 +545,9 @@ We first import the required libraries, set up the package and import the datase
 .. testcode::
 
      # Define a list of variable names (strings) X,Y:
-     # X = list of covariates in the OP equation
-     # Y = Outcome vriable
+     # X = Column names of covariates (from `Data.Frame`) in the OP equation
+     # Y = Column name of outcome variable (from `Data.Frame`).
+
      X = ['age', 'grade', 'gender_dum']
      Y = ['cig_count']
 
@@ -641,9 +644,9 @@ To estimate the GiMNL model, we first import the library and the dataset introdu
 We the define the list of covariates in the split-stage (z), the second-stage (x) and the outcome variable (y).
 
 .. testcode::
-   # x = covariates in the outcome-stage.
-   # z = covariates in the split-stage.
-   # y = outcome variable.
+   # x = Column names of covariates (from `Data.Frame`) in the outcome-stage.
+   # z = Column names of covariates (from `Data.Frame) in the split-stage.
+   # y = Column names of outcome variable (from `Data.Frame`).
 
    x = ['educ', 'party7', 'agegroup2']
    z = ['educ', 'agegroup2']
