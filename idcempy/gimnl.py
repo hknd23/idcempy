@@ -286,7 +286,7 @@ def gimnlresults(model, data, x, y, z, modeltype, reference, inflatecat):
     Store estimates, model AIC, and other information to
     :py:class:`GimnlModel`.
 
-    :param model: object model estimated.
+    :param model: Estimation results.
     :param data: Model data used for estimation, subsetted to selected
         variables and missing values listwise deleted.
     :param x: Multinomial Logit stage variables.
