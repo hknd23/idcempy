@@ -134,7 +134,7 @@ Use the following line of code to see the estimates of coefficients:
 
 In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals.
 
-The model object also stores three (3) different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
+The model object also stores three different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
 
 .. testcode::
 
@@ -170,17 +170,18 @@ You can also extract predicted probabilities from the model:
  [0.87603805 0.06808193 0.01543795 0.02735256 0.01308951]
  [0.82681957 0.08778215 0.02153509 0.04095753 0.02290566]]
 
-:func:`zmiopc.split_effects` simulates data from ZiOP results and computes changes in predicted probabilities when the value of a variable changes.
-This allows you to illustrate how the changes in the split-probit covariates affect the probabilities of being in one population versus another. The example below illustrates the marginal effects of the variable 'gender_dum' on the outcome variable in the ZiOPC model estimated in ths documentation.
+You can compute changes in predicted probabilities when the value of a variable changes.
+This allows you to illustrate how changes in the split-probit covariates affect the probabilities of
+being in one population versus another. The example below illustrates the marginal effects of the variable
+'gender_dum' on the outcome variable in the ZiOP model estimated above.
 
 .. testcode::
 
     ziopcgender = idcempy.split_effects(ziop_tob, 1, nsims = 10000)
 
 The returned dataframe contains predicted probabilities when 'gender_dum' equals 0, and when 'gender_dum' equals 1.
-The box plots below illustrate the change in predicted probabilities using the values from the 'ziopparl' dataframe.
 
-:func:: `zmiopc.ordered_effects` calculates the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities of the outcome variable in the ZiOP model.
+You can also calculate the change in predicted probabilities of the outcome variable when the value of a covarariate changes.
 
 .. testcode::
 
@@ -289,15 +290,14 @@ The predicted probabilities from the `ziopc_tob` model can ve obtained as follow
  [0.87523652 0.06888286 0.01564958 0.0275354  0.01269564]
  [0.82678185 0.0875059  0.02171135 0.04135142 0.02264948]]
 
-:func:`zmiopc.split_effects` simulates data from ZiOP/ZiOPC and MiOP/MiOPC model results and computes changes in predicted probabilities when the value of a variable changes.
-This allows you to illustrate how the changes in the split-probit covariates affect the probablilities of being in one population versus another. The example below illustrates the marginal effects of the variable 'gender_dum' on the outcome variable in the ZiOPC model estimated in ths documentation.
+You can compute changes in predicted probabilities when the value of a variable changes.
+This allows you to illustrate how the changes in the split-probit covariates affect the probabilities of being in one population versus another. The example below illustrates the marginal effects of the variable 'gender_dum' on the outcome variable in the ZiOPC model estimated in ths documentation.
 
 .. testcode::
 
     ziopcgender = idcempy.split_effects(ziopc_tob, 1, nsims = 10000)
 
 The returned dataframe contains predicted probabilities when 'gender_dum' equals 0, and when 'gender_dum' equals 1.
-The box plots below illustrate the change in predicted probabilities using the values from the 'ziopparl' dataframe.
 
 .. testcode::
 
@@ -405,22 +405,21 @@ To estimate the predicted probabilities:
   fittedmiop = zmiopc.iopcfit(miop_EU)
   print(fittedziopc.responsefull)
 
-:func:`zmiopc.split_effects` simulates data from MiOP model results and computes changes in predicted probabilities when the value of a variable changes.
+The package also allows you to simulates data from MiOP model results and compute changes in predicted probabilities when the value of a variable changes.
 This allows you to illustrate how the changes in the split-probit covariates affect the probablilities of being in one population versus another. The example below illustrates the marginal effects of the variable 'gender_dum' on the outcome variable in the ZiOPC model estimated in ths documentation.
 
 .. testcode::
 
     miopxeno = idcempy.split_effects(miop_EU, 1, nsims = 10000)
 
-The returned dataframe contains predicted probabilities when 'gender_dum' equals 0, and when 'gender_dum' equals 1.
-The box plots below illustrate the change in predicted probablities using the values from the 'ziopparl' dataframe.
+To plot the predicted probabilities.
 
 .. testcode::
 
      miopxeno.plot.box(grid='False')
 
 
-:func:: `zmiopc.ordered_effects` calculates the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities of the outcome variable in the MiOPC model estimated above when Xenophobia increases one standard deviation from its mean value.
+You can calculate the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities of the outcome variable in the MiOPC model estimated above when Xenophobia increases one standard deviation from its mean value.
 
 .. testcode::
 
@@ -501,22 +500,21 @@ To estimate the predicted probabilities:
   fittedmiopc = zmiopc.iopcfit(miopc_EU)
   print(fittedziopc.responsefull)
 
-:func:`zmiopc.split_effects` simulates data from MiOP model results and computes changes in predicted probabilities when the value of a variable changes.
-This allows you to illustrate how the changes in the split-probit covariates affect the probablilities of being in one population versus another. The example below illustrates the marginal effects of the variable 'gender_dum' on the outcome variable in the ZiOPC model estimated in ths documentation.
+The following line of code allows you to compute changes in predicted probabilities when the value of a variable changes.
+This allows you to illustrate how the changes in the split-probit covariates affect the probablilities of being in one population versus another.
 
 .. testcode::
 
     miopcxeno = idcempy.split_effects(miopc_EU, 1, nsims = 10000)
 
-The returned dataframe contains predicted probabilities when 'gender_dum' equals 0, and when 'gender_dum' equals 1.
-The box plots below illustrate the change in predicted probablities using the values from the 'ziopparl' dataframe.
+A box plot can illustrate the change in predicted probabilities.
 
 .. testcode::
 
      miopcxeno.plot.box(grid='False')
 
 
-:func:: `zmiopc.ordered_effects` calculates the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities of the outcome variable in the MiOPC model estimated above when Xenophobia increases one standard deviation from its mean value.
+To calculate the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities of the outcome variable in the MiOPC model estimated above when Xenophobia increases one standard deviation from its mean value.
 
 .. testcode::
 
@@ -639,38 +637,6 @@ The Vuong test can also be implemented to compare the ZiOPC, MiOP and MiOPC mode
 .. testoutput::
 
    -9.638360843003559
-
-Split Equtation Predicted Probablities
-======================================
-
-:func:`zmiopc.split_effects` simulates data from ZiOP/ZiOPC and MiOP/MiOPC model results and computes changes in predicted probabilities when the value of a variable changes.
-This allows you to illustrate how the changes in the split-probit covariates affect the probablilities of being in one population versus another. The example below illustrates the marginal effects of the variable 'gender_dum' on the outcome variable in the ZiOPC model estimated in ths documentation.
-
-.. testcode::
-
-    ziopcgender = idcempy.split_effects(ziopc_tob, 1, nsims = 10000)
-
-The returned dataframe contains predicted probabilities when 'gender_dum' equals 0, and when 'gender_dum' equals 1.
-The box plots below illustrate the change in predicted probablities using the values from the 'ziopparl' dataframe.
-
-.. testcode::
-
-     ziopcgender.plot.box(grid='False')
-
-.. image:: ../graphics/ziopc_me.png
-
-Outcome Equation Predicted Probabilities
-========================================
-
-:func:: `zmiopc.ordered_effects` calculates the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities of the outcome variable in the MiOPC model estimated above when Xenophobia increases one standard deviation from its mean value.
-
-.. testcode::
-
-    xeno = zmiopc.ordered_effects(miopc_EU, 2, nsims = 10000)
-    xeno.plot.box(grid='False')
-
-.. image:: ../graphics/MiOPC_Xenophobia.png
-
 
 Generalized Inflated Multinomial logit LGiMNL) Model
 ----------------------------------------------------
