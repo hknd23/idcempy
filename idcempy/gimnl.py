@@ -401,9 +401,8 @@ def gimnlmod(data, x, y, z, reference, inflatecat, method="BFGS", pstart=None):
         2], [2, 1, 0]. etc...). The parameter inflatecat then specifies which
         category in the list inflated.
     :param inflatecat: inflated category. One of "baseline" for the first,
-        "second" for the second,
-         or "third" for the third in reference list to specify the inflated
-         category.
+        "second" for the second, or "third" for the third in reference list
+        to specify the inflated category.
     :param method: Optimization method.  Default is 'BFGS'. For other
         available methods, see scipy.optimize.minimize documentation.
     :param pstart: Starting parameters.
