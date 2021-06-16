@@ -180,7 +180,7 @@ being in one population versus another. The example below illustrates the margin
 
 The returned dataframe contains predicted probabilities when 'gender_dum' equals 0, and when 'gender_dum' equals 1.
 
-You can also calculate the change in predicted probabilities of the outcome variable when the value of a covarariate changes.
+You can also calculate the change in predicted probabilities of the outcome variable when the value of a covarariate changes, and plot those values.
 
 .. testcode::
 
@@ -303,12 +303,14 @@ The returned dataframe contains predicted probabilities when 'gender_dum' equals
      ziopcgender.plot.box(grid='False')
 
 You can calculate the change in predicted probabilities of the outcome variable when the value of a covarariate changes.
-
-A box plot below display the change in predicted probabilities of the outcome variable in the ZiOPC model.
+In addition, a you can obtain a box plot that displays the change in predicted probabilities of the outcome variable in the ZiOPC model.
 
 .. testcode::
-    gender = zmiopc.ordered_effects(ziop_tob, 2, nsims = 10000)
-    gender.plot.box(grid='False')
+   # Calculate change in predicted probabilities
+   gender = zmiopc.ordered_effects(ziop_tob, 2, nsims = 10000)
+
+   # Box-plot of precicted probablilites
+   gender.plot.box(grid='False')
 
 Middle-inflated Ordered Probit (MiOP) without Correlated Errors
 ---------------------------------------------------------------
