@@ -573,7 +573,7 @@ def opmod(data, x, y, pstart=None, method="BFGS", weights=1, offsetx=0):
     :param y: Dependent Variable (DV).
     :type y: list of str
     :param method: method for optimization, default 'BFGS'. For other
-    available methods, see scipy.optimize.minimize documentation.
+        available methods, see scipy.optimize.minimize documentation.
     :param weights: weights.
     :param offsetx: offset for X.
     :return: OpModel
@@ -762,7 +762,7 @@ def iopmod(
     :type z: list of str.
     :param modeltype: must be one of "ziop" or 'miop'.
     :param method: method for optimization, default 'BFGS'. For other
-    available methods, see scipy.optimize.minimize documentation.
+        available methods, see scipy.optimize.minimize documentation.
     :param weights: weights.
     :param offsetx: offset for X.
     :param offsetz: offset for Z.
@@ -830,7 +830,7 @@ def iopcmod(
     :type z: list of str
     :param modeltype: Type of model to be estimated ("ziopc" or 'miopc').
     :param method: method for optimization, default 'BFGS'.  For other
-    available methods, see scipy.optimize.minimize documentation.
+        available methods, see scipy.optimize.minimize documentation.
     :param weights: weights.
     :param offsetx: offset for X.
     :param offsetz: offset for Z.

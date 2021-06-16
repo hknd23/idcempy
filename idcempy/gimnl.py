@@ -398,14 +398,14 @@ def gimnlmod(data, x, y, z, reference, inflatecat, method="BFGS", pstart=None):
             with a number from 0-2 representing each category.
     :param z: Inflation stage covariates.
     :param reference:  List specifying the order of categories (e.g [0, 1,
-    2], [2, 1, 0]. etc...). The parameter inflatecat then specifies which
-    category in the list inflated.
+        2], [2, 1, 0]. etc...). The parameter inflatecat then specifies which
+        category in the list inflated.
     :param inflatecat: inflated category. One of "baseline" for the first,
-    "second" for the second,
+        "second" for the second,
          or "third" for the third in reference list to specify the inflated
          category.
     :param method: Optimization method.  Default is 'BFGS'. For other
-    available methods, see scipy.optimize.minimize documentation.
+        available methods, see scipy.optimize.minimize documentation.
     :param pstart: Starting parameters.
     """
     varlist = np.unique(y + z + x)
@@ -470,9 +470,9 @@ def mnlmod(data, x, y, reference, method="BFGS", pstart=None):
     :param y: Dependent Variable. Variable needs to be in factor form,
          with a number from 0-2 representing each category.
     :param reference: order of categories. List specifying the order of
-    categories (e.g [0, 1, 2], [2, 1, 0]. etc...)
+        categories (e.g [0, 1, 2], [2, 1, 0]. etc...)
     :param method: Optimization method.  Default is 'BFGS'. For other
-    available methods, see scipy.optimize.minimize documentation.
+        available methods, see scipy.optimize.minimize documentation.
     :param pstart: Starting parameters.
     """
     varlist = np.unique(y + x)
