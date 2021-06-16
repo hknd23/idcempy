@@ -392,20 +392,24 @@ def gimnlmod(data, x, y, z, reference, inflatecat, method="BFGS", pstart=None):
     """
     Estimate three-category inflated Multinomial Logit model.
 
-    :param data: dataset.
+    :param data: Full dataset. Missing values are listwise deleted.
+    :type data: pandas.dataframe.
     :param x: MNL stage covariates.
-    :param y: Dependent Variable. Variable needs to be in factor form,
+    :type x: list of str, with elements matching column names of ``data``.
+    :param y: Dependent Variable. Values should be integers,
             with a number from 0-2 representing each category.
+    :type y: list of str, with element matching column names of ``data``.
     :param z: Inflation stage covariates.
+    :type z: list of str, with element matching column names of ``data``.
     :param reference:  List specifying the order of categories (e.g [0, 1,
         2], [2, 1, 0]. etc...). The parameter inflatecat then specifies which
         category in the list inflated.
-    :param inflatecat: inflated category. One of "baseline" for the first,
-        "second" for the second, or "third" for the third in reference list
-        to specify the inflated category.
+    :param inflatecat: A string specifying the inflated category. One of
+        "baseline" for the first, "second" for the second, or "third" for the
+        third in reference list to specify the inflated category.
     :param method: Optimization method.  Default is 'BFGS'. For other
         available methods, see scipy.optimize.minimize documentation.
-    :param pstart: Starting parameters.
+    :param pstart: A list of starting parameters.
     """
     varlist = np.unique(y + z + x)
     dataset = data[varlist]
@@ -464,15 +468,17 @@ def mnlmod(data, x, y, reference, method="BFGS", pstart=None):
     """
     Estimate three-category Multinomial Logit model.
 
-    :param data: dataset.
+    :param data: Full dataset. Missing values are listwise deleted.
+    :type data: pandas.dataframe.
     :param x: MNL stage covariates.
-    :param y: Dependent Variable. Variable needs to be in factor form,
-         with a number from 0-2 representing each category.
+    :type x: list of str, with elements matching column names of ``data``.
+    :param y: Dependent Variable. Values should be integers,
+            with a number from 0-2 representing each category.
     :param reference: order of categories. List specifying the order of
         categories (e.g [0, 1, 2], [2, 1, 0]. etc...)
     :param method: Optimization method.  Default is 'BFGS'. For other
         available methods, see scipy.optimize.minimize documentation.
-    :param pstart: Starting parameters.
+    :param pstart: A list of starting parameters.
     """
     varlist = np.unique(y + x)
     dataset = data[varlist]
