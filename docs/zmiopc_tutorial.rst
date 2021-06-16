@@ -39,6 +39,7 @@ The package can be installed in two different ways.
 1. From `PyPi <https://pypi.org/>`__:
 
 .. testcode::
+
   # Import the package
 
   pip install idcempy
@@ -46,6 +47,7 @@ The package can be installed in two different ways.
 2. From its `GitHub Repository <https://github.com/hknd23/idcempy/>`__:
 
 .. testcode::
+
   # Import the package
 
   git clone https://github.com/hknd23/idcempy.git
@@ -62,6 +64,7 @@ The `iopcmod` function estimates regression objects for "zero-inflated" and "mid
 We first import the required libraries, set up the package and import the dataset:
 
 .. testcode::
+
   # Import the necessary libraries and package
 
   import numpy as np
