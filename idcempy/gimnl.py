@@ -28,9 +28,11 @@ class GimnlModel:
             ystr,
             zstr,
     ):
-        """Store model results, goodness-of-fit tests, and other information.
+        """Store model results, goodness-of-fit tests, and other information
+        for the Generalized Inflated Multinomial Logit Model.
 
-        :param modeltype: Type of GIMNL Model (bimnl3).
+        :param modeltype: Type of GIMNL Model (bimnl3, simnl3, or timnl3),
+        indicating the inflated category.
         :param reference: Order of categories. The order category will be
         the first element.
         :param llik: Log-Likelihood.
@@ -38,16 +40,18 @@ class GimnlModel:
         :param aic: Model Akaike information .
         :param vcov: Variance-Covariance matrix.
             (optimized as inverted Hessian matrix)
-        :param data: Full dataset.
+        :param data: Full dataset used for estimation, with missing values
+        dropped.
         :param zs: Inflation stage estimates (Gammas).
-        :param xs: Ordered probit estimates (Betas).
+        :param xs: Multinomial Logit probit estimates (Betas).
         :param ycatu: Number of categories in the Dependent Variable (DV).
         :param x_: X Data.
         :param yx_: Y (DV) data.
         :param z_: Z Data.
-        :param xstr: list of string for x names.
-        :param ystr: list of string for y names.
-        :param zstr: list of string for z names.
+        :param xstr: list of string for variable names in the MNL stage.
+        :param ystr: list of string for dependent variable name .
+        :param zstr: list of string for variable names in the Logit Split
+        stage.
         """
         self.modeltype = modeltype
         self.reference = reference
@@ -87,7 +91,8 @@ class MnlModel:
             xstr,
             ystr,
     ):
-        """Store model results, goodness-of-fit tests, and other information.
+        """Store model results, goodness-of-fit tests, and other information
+        for the Multinomial Logit Model.
 
         :param modeltype: Type of Model (mnl3).
         :param reference: Order of categories. The order category will be
@@ -97,8 +102,9 @@ class MnlModel:
         :param aic: Model Akaike information .
         :param vcov: Variance-Covariance matrix.
             (optimized as inverted Hessian matrix)
-        :param data: Full dataset.
-        :param xs: Ordered probit estimates (Betas).
+        :param data: Full dataset used in estimation, with missing values
+        dropped.
+        :param xs: Multinomial Logit estimates (Betas).
         :param ycatu: Number of categories in the Dependent Variable (DV).
         :param x_: X Data.
         :param yx_: Y (DV) data.
@@ -125,10 +131,9 @@ def mnl3(pstart, x2, x3, y, reference):
     Likelihood function for the baseline inflated three-category MNL model.
 
     :param pstart: starting parameters.
-    :param x2: X covariates.
-    :param x3: X covariates (should be identical to x2.
+    :param x2: X (Multinomial Logit) covariates.
+    :param x3: X (Multinomial Logit) covariates (should be identical to x2).
     :param y: Dependent Variable (DV).
-    :param z: Inflation stage covariates.
     :param reference: order of categories.
     """
     b2 = pstart[0: len(x2.columns)]
@@ -152,10 +157,10 @@ def bimnl3(pstart, x2, x3, y, z, reference):
     Likelihood function for the baseline inflated three-category MNL model.
 
     :param pstart: starting parameters.
-    :param x2: X covariates.
-    :param x3: X covariates (should be identical to x2.
+    :param x2: X (Multinomial Logit) covariates.
+    :param x3: X (Multinomial Logit) covariates (should be identical to x2.
     :param y: Dependent Variable (DV).
-    :param z: Inflation stage covariates.
+    :param z: Logit Split stage covariates.
     :param reference: order of categories (first category/baseline inflated).
     """
     b2 = pstart[len(z.columns): (len(z.columns) + len(x2.columns))]
