@@ -532,7 +532,7 @@ def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
 def opresults(model, data, x, y):
     """Produce estimation results, part of :py:func:`opmod`.
 
-    :param model: model object created from minimization.
+    :param model: Model estimation results obtained from minimization.
     :param data: dataset.
     :param x: Independent variables.
     :param y: : Dependent Variable.
@@ -614,7 +614,7 @@ def opmod(data, x, y, pstart=None, method="BFGS", weights=1, offsetx=0):
 def iopresults(model, data, x, y, z, modeltype):
     """Produce estimation results, part of :py:func:`iopmod`.
 
-    :param model: model object created from minimization.
+    :param model: Model estimation results obtained from minimization.
     :param data: dataset.
     :param x: Ordered stage variables.
     :param y: : Dependent Variable (DV).
@@ -683,7 +683,7 @@ def iopresults(model, data, x, y, z, modeltype):
 def iopcresults(model, data, x, y, z, modeltype):
     """Produce estimation results, part of :py:func:`ziopc  mod`.
 
-    :param model: model object created from minimization.
+    :param model: Model estimation results obtained from minimization.
     :param data: dataset.
     :param x: Ordered stage variables.
     :param y: : Dependent Variable (DV).
