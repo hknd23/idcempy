@@ -606,7 +606,8 @@ The Vuong Test
 --------------
 
 Harris and Zhao (`2007 <https://doi.org/10.1016/j.jeconom.2007.01.002>`__) suggest that a variant of the Vuong (`1989 <https://www.jstor.org/stable/1912557>`__) Test (with a v statistic) can be used to compare the performance of the ZiOP versus the standard Ordered Probit (OP) model using :func:`zmiopc.vuong_opiop`.
-The Vuong test denotes m\:sub:`i`\ as the natural logarithm of the ratio of the predicted probablity that i\:sub:`j`\  of the simpler OP model (in the numerator) and the more general (ZiOP/ZiOPC) model (in the denominaor) and evaluates m\:sub:`i`\  via a bidirectional test statistic of:
+
+The formula to estimate the Vuong test is: 
 
 .. math::
 
