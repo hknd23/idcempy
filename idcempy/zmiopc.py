@@ -240,20 +240,23 @@ def ziop(pstart, x, y, z, data, weights, offsetx, offsetz):
 
     :param pstart: A list of starting parameters.
     :type pstart: list
-    :param x: Ordered stage variables.
+    :param x: Ordered stage variables. Data subsetted to selected
+        variables.
     :type x: pandas dataframe
-    :param y: Dependent Variable (DV).
+    :param y: Dependent Variable (DV). Data subsetted to selected
+        variables.
     :type y: pandas dataframe
-    :param z: Inflation stage variables.
+    :param z: Inflation stage variables. Data subsetted to selected
+        variables.
     :type z: pandas dataframe
-    :param data: dataset.
+    :param data: Dataset with missing values listwise deleted.
     :type data: pandas dataframe
     :param weights: weights.
-    :type weights: int
+    :type weights: float
     :param offsetx: offset for X.
-    :type offsetx: int
+    :type offsetx: float
     :param offsetz: offset for z.
-    :type offsetz: int
+    :type offsetz: float
     """
     n = len(data)
     ycat = y.astype("category")
@@ -295,20 +298,23 @@ def ziopc(pstart, x, y, z, data, weights, offsetx, offsetz):
 
     :param pstart: A list of starting parameters.
     :type pstart: list
-    :param x: Ordered stage variables.
+    :param x: Ordered stage variables. Data subsetted to selected
+        variables.
     :type x: pandas dataframe
-    :param y: Dependent Variable (DV)
+    :param y: Dependent Variable (DV). Data subsetted to selected
+        variables.
     :type y: pandas dataframe
-    :param z: Inflation stage variables.
+    :param z: Inflation stage variables. Data subsetted to selected
+        variables.
     :type z: pandas dataframe
-    :param data: dataset.
+    :param data: Dataset with missing values listwise deleted.
     :type data: pandas dataframe
     :param weights: weights.
-    :type weights: int
+    :type weights: float
     :param offsetx: offset for X.
-    :type offsetx: int
+    :type offsetx: float
     :param offsetz: offset for z.
-    :type offsetz: int
+    :type offsetz: float
     """
     n = len(data)
     ycat = y.astype("category")
@@ -375,20 +381,23 @@ def miop(pstart, x, y, z, data, weights, offsetx, offsetz):
 
     :param pstart: A list of starting parameters.
     :type pstart: list
-    :param x: Ordered stage variables.
+    :param x: Ordered stage variables. Data subsetted to selected
+        variables.
     :type x: pandas dataframe
-    :param y: Dependent Variable (DV)
+    :param y: Dependent Variable (DV). Data subsetted to selected
+        variables.
     :type y: pandas dataframe
-    :param z: Inflation stage variables.
+    :param z: Inflation stage variables. Data subsetted to selected
+        variables.
     :type z: pandas dataframe
-    :param data: dataset.
+    :param data: Dataset with missing values listwise deleted.
     :type data: pandas dataframe
     :param weights: weights.
-    :type weights: int
+    :type weights: float
     :param offsetx: offset for X.
-    :type offsetx: int
+    :type offsetx: float
     :param offsetz: offset for z.
-    :type offsetz: int
+    :type offsetz: float
     """
     n = len(data)
     ycat = y.astype("category")
@@ -437,20 +446,23 @@ def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
 
     :param pstart: A list of starting parameters.
     :type pstart: list
-    :param x: Ordered stage variables.
+    :param x: Ordered stage variables. Data subsetted to selected
+        variables.
     :type x: pandas dataframe
-    :param y: Dependent Variable (DV).
+    :param y: Dependent Variable (DV). Data subsetted to selected
+        variables.
     :type y: pandas dataframe
-    :param z: Inflation stage variables.
+    :param z: Inflation stage variables. Data subsetted to selected
+        variables.
     :type z: pandas dataframe
-    :param data: dataset.
+    :param data: Dataset with missing values listwise deleted.
     :type data: pandas dataframe
     :param weights: weights.
-    :type weights: int
+    :type weights: float
     :param offsetx: offset for X.
-    :type offsetx: int
+    :type offsetx: float
     :param offsetz: offset for z.
-    :type offsetz: int
+    :type offsetz: float
     """
     n = len(data)
     ycat = y.astype("category")

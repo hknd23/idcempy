@@ -128,7 +128,8 @@ class MnlModel:
 
 def mnl3(pstart, x2, x3, y, reference):
     """
-    Likelihood function for the baseline inflated three-category MNL model.
+    Calculate likelihood function for the baseline inflated three-category MNL
+    model.
 
     :param pstart: A list of starting parameters.
     :type pstart: list
@@ -160,7 +161,8 @@ def mnl3(pstart, x2, x3, y, reference):
 
 def bimnl3(pstart, x2, x3, y, z, reference):
     """
-    Likelihood function for the baseline inflated three-category MNL model.
+    Calculate likelihood function for the baseline inflated three-category
+    MNL model.
 
     :param pstart: A list of starting parameters.
     :type pstart: list
@@ -199,7 +201,8 @@ def bimnl3(pstart, x2, x3, y, z, reference):
 
 def simnl3(pstart, x2, x3, y, z, reference):
     """
-    Likelihood function for the baseline inflated three-category MNL model.
+    Calculate likelihood function for the second category inflated
+    three-category MNL model.
 
     :param pstart: A list of starting parameters.
     :type pstart: list
@@ -238,7 +241,8 @@ def simnl3(pstart, x2, x3, y, z, reference):
 
 def timnl3(pstart, x2, x3, y, z, reference):
     """
-    Likelihood function for the baseline inflated three-category MNL model.
+    Calculate likelihood function for the third category inflated
+    three-category MNL model.
 
     :param pstart: A list of starting parameters.
     :type pstart: list
