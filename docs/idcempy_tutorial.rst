@@ -67,7 +67,6 @@ We first import the required libraries, set up the package and import the datase
 
   # Import the necessary libraries and package
 
-  import numpy as np
   import pandas as pd
   import urllib
   from idcempy import zmiopc
@@ -200,7 +199,6 @@ We first import the required libraries, set up the package and import the datase
 
   # Import the necessary libraries and IDCeMPy.
 
-  import numpy as np
   import pandas as pd
   import urllib
   from idcempy import zmiopc
@@ -313,7 +311,7 @@ In addition, a you can obtain a box plot that displays the change in predicted p
 
 Middle-inflated Ordered Probit (MiOP) without Correlated Errors
 ---------------------------------------------------------------
-If your ordered outcome variable is inflated in the middle category, you should estimate a  Middle-inflated Ordered Probit (MiOP) model.
+If your ordered outcome variable is inflated in the middle category, you should estimate a Middle-inflated Ordered Probit (MiOP) model.
 
 The following example uses data from Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_).
 
@@ -323,7 +321,6 @@ We begin by loading the required libraries and IDCeMPy
 
   # Import the necessary libraries and IDCeMPy.
 
-  import numpy as np
   import pandas as pd
   import urllib
   from idcempy import zmiopc
@@ -334,6 +331,7 @@ Next, we load the dataset.
 
     # Import and read the dataset
     url = 'https://github.com/hknd23/zmiopc/blob/main/data/'
+    
     # Define a `Pandas` DataFrame
     data = pd_read.stata(url)
 
@@ -445,7 +443,6 @@ We begin by loading the required libraries and IDCeMPy
 
   # Import the necessary libraries and IDCeMPy.
 
-  import numpy as np
   import pandas as pd
   import urllib
   from idcempy import zmiopc
@@ -546,7 +543,6 @@ We first import the required libraries, set up the package and import the datase
 
    # Import the necessary libraries and package
 
-   import numpy as np
    import pandas as pd
    import urllib
    from idcempy import zmiopc
@@ -621,9 +617,7 @@ Log-likelihood, AIC, and Variance-Covariance matrix can be extracted with:
 The Vuong Test
 --------------
 
-Harris and Zhao (`2007 <https://doi.org/10.1016/j.jeconom.2007.01.002>`__) suggest that a variant of the Vuong (`1989 <https://www.jstor.org/stable/1912557>`__) Test (with a v statistic) can be used to compare the performance of the ZiOP versus the standard Ordered Probit (OP) model using :func:`zmiopc.vuong_opiop`.
-The Vuong test denotes m\ :sub:`i`\ as the natural logarithm of the ratio of the predicted probablity that i\ :sub:`j`\ of the simpler OP model (in the numerator) and the more general (ZiOP/ZiOPC) model (in the denominaor) and evaluates m\ :sub:`i`\
-via a bidirectional test statistic of:
+Harris and Zhao (`2007 <https://doi.org/10.1016/j.jeconom.2007.01.002>`__) suggest that a variant of the Vuong (`1989 <https://www.jstor.org/stable/1912557>`__) Test (with a v statistic) can be used to compare the performance of the ZiOP versus the standard Ordered Probit (OP) model according to the following formula:
 
 .. math::
 
@@ -654,7 +648,9 @@ To estimate the GiMNL model, we first import the library and the dataset introdu
 .. testcode::
 
    # Import the module
-   from idcempy import gimnl
+    import pandas as pd
+    import urllib   
+    from idcempy import gimnl
 
    # Load the dataset
    url= 'https://github.com/hknd23/zmiopc/raw/main/data/replicationdata.dta'
