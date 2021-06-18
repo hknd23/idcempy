@@ -52,7 +52,7 @@ class TestBimnlLlike(unittest.TestCase):
                                       [0, 1, 2]),
                          gimnl.bimnl3(pstart_gimnl, x_, x_, yx_, z_,
                                       [0, 2, 1]))
-        self.assertAlmostEqual(gimnl.bimnl3(pstart_mnl, x_, x_, yx_,
+        self.assertAlmostEqual(gimnl.bimnl3(pstart_mnl, x_, x_, yx_, z_
                                             [0, 1, 2]), 2109.38, places=2)
 
 
