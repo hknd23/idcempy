@@ -109,12 +109,12 @@ class VuongOpZiopc(unittest.TestCase):
                                                                 offsetx=0,
                                                                 offsetz=0)),
                                -4.909, places=3)
-        self.assertAlmostEqual(zmiopc.vuong_opiop(zmiopc.opmod(data, X, Y,
+        self.assertAlmostEqual(zmiopc.vuong_opiopc(zmiopc.opmod(data, X, Y,
                                                                pstart=pstartop,
                                                                method='bfgs',
                                                                weights=1,
                                                                offsetx=0),
-                                                  zmiopc.iopmod('ziopc',
+                                                  zmiopc.iopcmod('ziopc',
                                                                 data, X, Y, Z,
                                                                 pstart=
                                                                 pstartziopc,
