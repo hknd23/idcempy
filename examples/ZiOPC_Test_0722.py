@@ -66,7 +66,9 @@ DAT = pd.read_stata("C:/Users/Nguyen/Box/Summer 20/bp_exact_for_analysis.dta")
 X = ['logGDPpc', 'parliament', 'disaster', 'major_oil', 'major_primary']
 Y = ['rep_civwar_DV']
 data = DAT
-JCR_OP = zmiopc.opmod(pstartop, data, X, Y, method='bfgs', weights=1, offsetx=0)
+JCR_OP = zmiopc.opmod(data, X, Y,
+                      pstart=pstartop, method='bfgs', weights=1,
+                      offsetx=0)
 
 # Vuong test
 zmiopc.vuong_opiop(JCR_OP, ziop_JCR)
