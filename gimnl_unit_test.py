@@ -47,42 +47,42 @@ pstart_gimnl = np.repeat(0.01, len(x_.columns) + len(x_.columns)
 
 
 class TestBimnlLlike(unittest.TestCase):
-    def test_volume(self):
+    def test_bimnloglike(self):
         self.assertEqual(gimnl.bimnl3(pstart_gimnl, x_, x_, yx_, z_,
                                       [0, 1, 2]),
                          gimnl.bimnl3(pstart_gimnl, x_, x_, yx_, z_,
                                       [0, 2, 1]))
         self.assertAlmostEqual(gimnl.bimnl3(pstart_gimnl, x_, x_, yx_, z_,
-                                            [0, 1, 2]), 2109.38, places=2)
+                                            [0, 1, 2]), 2109.38643, places=2)
 
 
 class TestSimnlTimnlLlike(unittest.TestCase):
-    def test_volume(self):
+    def test_stimnloglike(self):
         self.assertEqual(gimnl.simnl3(pstart_gimnl, x_, x_, yx_, z_,
                                       [2, 0, 1]),
                          gimnl.timnl3(pstart_gimnl, x_, x_, yx_, z_,
                                       [2, 1, 0]))
         self.assertAlmostEqual(gimnl.simnl3(pstart_gimnl, x_, x_, yx_, z_,
-                                            [2, 0, 1]), 2242.67, places=2)
+                                            [2, 0, 1]), 2242.670607, places=2)
         self.assertEqual(gimnl.simnl3(pstart_gimnl, x_, x_, yx_, z_,
                                       [1, 0, 2]),
                          gimnl.timnl3(pstart_gimnl, x_, x_, yx_, z_,
                                       [1, 2, 0]))
         self.assertAlmostEqual(gimnl.timnl3(pstart_gimnl, x_, x_, yx_, z_,
-                                            [1, 2, 0]), 2242.88, places=2)
+                                            [1, 2, 0]), 2242.880607, places=2)
 
 
 class TestMnlLlike(unittest.TestCase):
-    def test_volume(self):
+    def test_mnloglike(self):
         self.assertEqual(gimnl.mnl3(pstart_mnl, x_, x_, yx_, [0, 1, 2]),
                          gimnl.mnl3(pstart_mnl, x_, x_, yx_, [0, 2, 1]))
         self.assertAlmostEqual(gimnl.mnl3(pstart_mnl, x_, x_, yx_, [0, 1, 2]),
-                               1401.98,
+                               1401.98008,
                                places=2)
 
 
 class TestMnl(unittest.TestCase):
-    def test_volume(self):
+    def test_mnlmodel(self):
         self.assertEqual(len(
             gimnl.mnlmod(DAT, x, y, order_Bush).coefs),
             40)
@@ -101,7 +101,7 @@ class TestMnl(unittest.TestCase):
 
 
 class TestGimnl(unittest.TestCase):
-    def test_volume(self):
+    def test_gimmnlmodel(self):
         self.assertEqual(len(
             gimnl.gimnlmod(DAT, x, y, z, order_Kerry, "baseline").coefs),
             45)
@@ -126,7 +126,7 @@ class TestGimnl(unittest.TestCase):
 
 
 class TestVuongGimnl(unittest.TestCase):
-    def test_volume(self):
+    def test_vuongmnlgimnl(self):
         self.assertAlmostEqual(gimnl.vuong_gimnl(gimnl.mnlmod(
             DAT, x, y, order_Kerry), gimnl.gimnlmod(
             DAT, x, y, z, order_Kerry, "baseline")), -1.9174562877, places=5)
