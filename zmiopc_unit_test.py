@@ -73,23 +73,26 @@ class TestZiop(unittest.TestCase):
 
 class TestZiopc(unittest.TestCase):
     def test_ziopcmodel(self):
-        self.assertAlmostEqual(zmiopc.iopmod('ziopc',
-                                             data, X, Y, Z, pstart=pstartziopc,
-                                             method='bfgs', weights=1,
-                                             offsetx=0,
-                                             offsetz=0).coefs.iloc[-1, 0],
+        self.assertAlmostEqual(zmiopc.iopcmod('ziopc',
+                                              data, X, Y, Z,
+                                              pstart=pstartziopc,
+                                              method='bfgs', weights=1,
+                                              offsetx=0,
+                                              offsetz=0).coefs.iloc[-1, 0],
                                -0.889, places=2)
-        self.assertAlmostEqual(zmiopc.iopmod('ziopc',
-                                             data, X, Y, Z, pstart=pstartziopc,
-                                             method='bfgs', weights=1,
-                                             offsetx=0,
-                                             offsetz=0).coefs.iloc[4, 0],
+        self.assertAlmostEqual(zmiopc.iopcmod('ziopc',
+                                              data, X, Y, Z,
+                                              pstart=pstartziopc,
+                                              method='bfgs', weights=1,
+                                              offsetx=0,
+                                              offsetz=0).coefs.iloc[4, 0],
                                -0.3, places=1)
-        self.assertAlmostEqual(zmiopc.iopmod('ziopc',
-                                             data, X, Y, Z, pstart=pstartziopc,
-                                             method='bfgs', weights=1,
-                                             offsetx=0,
-                                             offsetz=0).coefs.iloc[5, 0],
+        self.assertAlmostEqual(zmiopc.iopcmod('ziopc',
+                                              data, X, Y, Z,
+                                              pstart=pstartziopc,
+                                              method='bfgs', weights=1,
+                                              offsetx=0,
+                                              offsetz=0).coefs.iloc[5, 0],
                                0.3, places=1)
 
 
@@ -110,16 +113,18 @@ class VuongOpZiopc(unittest.TestCase):
                                                                 offsetz=0)),
                                -4.909, places=3)
         self.assertAlmostEqual(zmiopc.vuong_opiopc(zmiopc.opmod(data, X, Y,
-                                                               pstart=pstartop,
-                                                               method='bfgs',
-                                                               weights=1,
-                                                               offsetx=0),
-                                                  zmiopc.iopcmod('ziopc',
-                                                                data, X, Y, Z,
                                                                 pstart=
-                                                                pstartziopc,
+                                                                pstartop,
                                                                 method='bfgs',
                                                                 weights=1,
-                                                                offsetx=0,
-                                                                offsetz=0)),
+                                                                offsetx=0),
+                                                   zmiopc.iopcmod('ziopc',
+                                                                  data, X, Y,
+                                                                  Z,
+                                                                  pstart=
+                                                                  pstartziopc,
+                                                                  method='bfgs'
+                                                                  , weights=1,
+                                                                  offsetx=0,
+                                                                  offsetz=0)),
                                -5.424, places=3)
