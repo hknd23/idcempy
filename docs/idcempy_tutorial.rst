@@ -5,7 +5,7 @@ IDCeMPy Package
 Description
 ===========
 `IDCeMPy` is a Python package that provides functions to fit and assess the performance of the following distinct
-sets of “inflated” discrete choice models.
+sets of “inflated” discrete choice models:
 
 * Fit the Zero-Inflated Ordered Probit (ZIOP) model without and with correlated errors (ZIOPC model) to evaluate zero-inflated ordered choice outcomes that results from a dual data generating process (d.g.p.).
 
@@ -20,7 +20,7 @@ sets of “inflated” discrete choice models.
 When should you use `IDCeMPy`?
 ==============================
 
-An excessive (“inflated”) share of observations—stemming from two distinct d.g.p’s—fall into a single choice category in many ordered and unordered polytomous outcome variables. Standard Ordered Probit and Multinomial Logit models cannot account for such category inflation which leads to biased inferences. Examples include,
+An excessive (“inflated”) share of observations—stemming from two distinct d.g.p’s—fall into a single choice category in many ordered and unordered polytomous outcome variables. Standard Ordered Probit and Multinomial Logit models cannot account for such category inflation which leads to biased inferences. Examples for such d.g.p’s include:
 
 * The inflated zero-category of "no smoking" in ordered measures of self-reported smoking behavior is generated from nonsmokers who never smoke cigarettes and those who smoked previously but temporarily stopped smoking because of high cigarette prices.
 
@@ -34,32 +34,29 @@ Each inflated discrete choice model in this package addresses category inflation
 
 Installation
 =============
-The package can be installed in two different ways.
+The package can be installed in two different ways:
 
-1. From `PyPi <https://pypi.org/>`__:
+1. From `PyPi <https://pypi.org/project/idcempy/>`__:
 
 .. testcode::
 
-  # Import the package
-
-  pip install idcempy
+  $  pip install idcempy
 
 2. From its `GitHub Repository <https://github.com/hknd23/idcempy/>`__:
 
 .. testcode::
 
-  # Import the package
-
-  git clone https://github.com/hknd23/idcempy.git
-  cd idcempy
-  python setup.py install
+  $  git clone https://github.com/hknd23/idcempy.git
+  $  cd idcempy
+  $  python setup.py install
 
 Examples
 ========
 
 Zero-inflated Ordered Probit (ZiOP) Model without Correlated Errors
 --------------------------------------------------------------------
-The `iopcmod` function estimates regression objects for "zero-inflated" and "middle-inflated" ordered probit models without correlated errors.  Below you will find instructions to estimate a ZiOP model.
+The `iopcmod` function estimates regression objects for "zero-inflated" and "middle-inflated" ordered probit models without correlated errors.
+This section provides instruction to estimate the ZiOP model using the self-reported smoking behavior as empirical example.
 
 We first import the required libraries, set up the package and import the dataset:
 
@@ -71,14 +68,12 @@ We first import the required libraries, set up the package and import the datase
   import urllib
   from idcempy import zmiopc
 
-  # Import the "Youth Tobacco Consumption" dataset.
+  # Import the "Youth Tobacco Consumption" dataset as a pandas.DataFrame
 
   url='https://github.com/hknd23/zmiopc/blob/main/data/tobacco_cons.csv'
-
-  # Define a `Pandas` DataFrame
   data = pd.read_csv(url)
 
-Our data is now a `pandas` DataFrame, and we can proceed to estimate the ZiOP model as follows.
+The data is now a `pandas` DataFrame, and we can proceed to estimate the ZiOP model as follows.
 
 .. testcode::
 
@@ -91,7 +86,8 @@ Our data is now a `pandas` DataFrame, and we can proceed to estimate the ZiOP mo
   Z = ['gender_dum']
   Y = ['cig_count']
 
-The package sets a default start value of .01 for all parameters.  Users can modify it by creating an array with their desired values, define such array as `pstart` and add it to as an argument in the model function.  
+The package sets a default start value of .01 for all parameters.
+ Users can specify their own starting parameters by creatin a list or numpy.array with their desired values.
 
 :func:`zmiopc.iopmod` estimates the ZiOP model and returns :class:`zmiopc.IopModel`.
 
@@ -114,7 +110,7 @@ The following message will appear when the model has converged:
 
 Object :class:`zmiopc.IopModel` stores model results and goodness-of-fit tests in its attributes 'coefs', 'AIC', 'llik', and 'vcov'.
 
-Use the following line of code to see the estimates of coefficients:
+The following line of code prints the estimates of coefficients:
 
 .. testcode::
 
@@ -135,7 +131,7 @@ Use the following line of code to see the estimates of coefficients:
 
 In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals.
 
-The model object also stores three different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
+The model object :class:`zmiopc.IopModel` also stores three different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
 
 .. testcode::
 
@@ -153,7 +149,7 @@ An example for the AIC:
 
   10138.321806674261
 
-You can also extract predicted probabilities from the model:
+The following funtion extracts predicted probabilities from the model:
 :func:`zmiopc.iopfit` returns :class:`zmiopc.FittedVals` containing fitted probablities.
 
 .. testcode::
@@ -171,18 +167,20 @@ You can also extract predicted probabilities from the model:
  [0.87603805 0.06808193 0.01543795 0.02735256 0.01308951]
  [0.82681957 0.08778215 0.02153509 0.04095753 0.02290566]]
 
-You can compute changes in predicted probabilities when the value of a variable changes.
-This allows you to illustrate how changes in the split-probit covariates affect the probabilities of
+:func:`zmiopc.split_effects` and :func:`zmiopc.ordered_effects` compute changes in predicted probabilities when the value of a variable changes in the Inflation or Ordered stages, respectively.
+
+:func:`zmiopc.split_effects` computes how changes in the split-probit covariates affect the probabilities of
 being in one population versus another. The example below illustrates the marginal effects of the variable
 'gender_dum' on the outcome variable in the ZiOP model estimated above.
 
 .. testcode::
 
-    ziopcgender = idcempy.split_effects(ziop_tob, 1, nsims = 10000)
+    ziopcgender = zmiopc.split_effects(ziop_tob, 1, nsims = 10000)
 
 The returned dataframe contains predicted probabilities when 'gender_dum' equals 0, and when 'gender_dum' equals 1.
 
-You can also calculate the change in predicted probabilities of the outcome variable when the value of a covarariate changes, and plot those values.
+Likewise, :func:`zmiopc.ordered_effects` can also calculate the change in predicted probabilities in each of the ordered outcomes in the ordered-probit stage when the value of a covarariate changes.
+Results from :func:`zmiopc.split_effects` and :func:`zmiopc.ordered_effects` can be illustrated using box plots:
 
 .. testcode::
 
@@ -331,7 +329,7 @@ Next, we load the dataset.
 
     # Import and read the dataset
     url = 'https://github.com/hknd23/zmiopc/blob/main/data/'
-    
+
     # Define a `Pandas` DataFrame
     data = pd_read.stata(url)
 
@@ -649,7 +647,7 @@ To estimate the GiMNL model, we first import the library and the dataset introdu
 
    # Import the module
     import pandas as pd
-    import urllib   
+    import urllib
     from idcempy import gimnl
 
    # Load the dataset
@@ -717,7 +715,7 @@ You can, for example, print the AIC as follows.
 .. testcode::
 
     print(gimnl_2004vote.AIC)
-    
+
 .. testoutput::
 
     1656.8324085039708
