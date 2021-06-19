@@ -23,8 +23,10 @@ Z = ["discuss_politics", "rural", "female", "age",
      "student", "EUbid_Know", "EU_Know_obj", "TV", "Educ_high",
      "Educ_high_mid", "Educ_low_mid"]
 
-miopc_EU = zmiopc.iopcmod('miopc', DAT, X, Y, Z)
-miop_EU = zmiopc.iopmod('miop', DAT, X, Y, Z)
+
+# miopc_EU = zmiopc.iopcmod('miopc', DAT, X, Y, Z)
+# miop_EU = zmiopc.iopmod('miop', DAT, X, Y, Z)
+# op_EU = zmiopc.opmod(DAT, X, Y)
 
 
 class TestOp(unittest.TestCase):
@@ -46,11 +48,6 @@ class TestMiop(unittest.TestCase):
 class TestMiopc(unittest.TestCase):
     def test_miopcmodel(self):
         self.assertAlmostEqual(zmiopc.iopcmod('miopc',
-                                              DAT, X, Y, Z).coefs.iloc[2, 0],
-                               0.57, places=0)
-        self.assertAlmostEqual(zmiopc.iopcmod('miopc',
-                                              DAT, X, Y, Z).coefs.iloc[-1, 0],
-                               -0.747, places=0)
-        self.assertAlmostEqual(zmiopc.iopcmod('miopc',
                                               DAT, X, Y, Z).coefs.iloc[14, 0],
                                0.84, places=0)
+
