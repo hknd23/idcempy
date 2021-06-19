@@ -61,9 +61,9 @@ This section provides instruction to estimate the ZiOP model using the self-repo
 We first import the required libraries, set up the package and import the dataset:
 
 .. testcode::
-
   # Import the necessary libraries and package
 
+  import numpy as np
   import pandas as pd
   import urllib
   from idcempy import zmiopc
@@ -94,7 +94,19 @@ The package sets a default start value of .01 for all parameters.
 .. testcode::
 
    # Model estimation:
-  ziop_tob= zmiopc.iopmod('ziop', data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
+
+   ziop_tob= zmiopc.iopmod('ziop', data, X, Y, Z, method = 'bfgs', weights = 1, offsetx = 0, offsetz = 0)
+
+   # 'ziop' = model to be estimated. In this case 'ziop'
+   # data = name of Pandas DataFrame
+   # X = variables in the ordered probit stage.
+   # Y = pependent variable.
+   # Z = variables in the inflation stage.
+   # method = method for optimization.  By default set to 'bfgs'
+   # weights = weights.
+   # offsetx = offset of X.  By Default is zero.
+   # offsetz = offset of z
+
 
 Results from the model:
 
@@ -155,6 +167,9 @@ The following funtion extracts predicted probabilities from the model:
 .. testcode::
 
   fittedziop = ziopc.iopfit(ziop_tob)
+
+  # Print the predicted probabilities
+
   print(fittedziopc.responsefull)
 
 .. testoutput::
@@ -185,6 +200,9 @@ Results from :func:`zmiopc.split_effects` and :func:`zmiopc.ordered_effects` can
 .. testcode::
 
     gender = zmiopc.ordered_effects(ziop_tob, 2, nsims = 10000)
+
+    # You can now plot the predicted probabilities estimated earlier
+
     gender.plot.box(grid='False')
 
 Zero-inflated Ordered Probit (ZiOPC) with Correlated Errors
@@ -194,9 +212,9 @@ The package also includes the function `iopcmod` which fits "zero-inflated" orde
 We first import the required libraries, set up the package and import the dataset:
 
 .. testcode::
-
   # Import the necessary libraries and IDCeMPy.
 
+  import numpy as np
   import pandas as pd
   import urllib
   from idcempy import zmiopc
@@ -223,7 +241,18 @@ Our data is now a `Pandas` DataFrame, and we can proceed to estimate the ZiOP mo
 
 .. testcode::
 
-    ziopc_tob = zmiopc.iopcmod('ziopc', data, X, Y, Z, method='bfgs', weights=1, offsetx=0, offsetz=0)
+    ziopc_tob = zmiopc.iopcmod('ziopc', data, X, Y, Z, method = 'bfgs', weights = 1, offsetx = 0, offsetz = 0)
+
+   # 'ziopc' = model to be estimated. In this case 'ziopc'
+   # data = name of Pandas DataFrame
+   # X = variables in the ordered probit stage.
+   # Y = pependent variable.
+   # Z = variables in the inflation stage.
+   # method = method for optimization.  By default set to 'bfgs'
+   # weights = weights.
+   # offsetx = offset of X.  By Default is zero.
+   # offsetz = offset of z
+
 
 The package sets a default start value of .01 for all parameters.  Users can modify it by creating an array with their desired values, define such array as `pstart` and add it to as an argument in the model function.
 
@@ -260,8 +289,16 @@ To print the estimates of the log-likelihood, AIC, and Variance-Covariance matri
 
 .. testcode::
 
+  # Print Log-Likelihood
+
   print(ziopc_tob.llik)
+
+  # Print AIC
+
   print(ziopc_tob.AIC)
+
+  # Print VCOV matrix
+
   print(ziopc_tob.vcov)
 
 The AIC of the ziopc_tob model, for example, is:
@@ -272,11 +309,15 @@ The AIC of the ziopc_tob model, for example, is:
 
 The predicted probabilities from the `ziopc_tob` model can ve obtained as follows.
 
-:func:`zmiopc.iopcfit` returns :class:`zmiopc.FittedVals` containing fitted probablities.
 
 .. testcode::
 
+  # Define the model for which you want to estimate the predicted probabilities
+
   fittedziopc = zmiopc.iopcfit(ziopc_tob)
+
+  # Print predicted probabilities
+
   print(fittedziopc.responsefull)
 
 .. testoutput::
@@ -297,46 +338,46 @@ This allows you to illustrate how the changes in the split-probit covariates aff
     ziopcgender = idcempy.split_effects(ziopc_tob, 1, nsims = 10000)
 
 You can calculate the change in predicted probabilities of the outcome variable when the value of a covarariate changes.
-In addition, a you can obtain a box plot that displays the change in predicted probabilities of the outcome variable in the ZiOPC model.
+
+You can also obtain a box plot that displays the change in predicted probabilities of the outcome variable in the ZiOPC model.
 
 .. testcode::
-
    # Calculate change in predicted probabilities
+
    gender = zmiopc.ordered_effects(ziopc_tob, 1, nsims = 10000)
 
-   # Box-plot of precicted probablilites
+   # Box-plot of precicted probabilities
+
    gender.plot.box(grid='False')
 
 Middle-inflated Ordered Probit (MiOP) without Correlated Errors
 ---------------------------------------------------------------
-If your ordered outcome variable is inflated in the middle category, you should estimate a Middle-inflated Ordered Probit (MiOP) model.
+If your ordered outcome variable is inflated in the middle category, you should estimate a  Middle-inflated Ordered Probit (MiOP) model.
 
 The following example uses data from Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_).
 
 We begin by loading the required libraries and IDCeMPy
 
 .. testcode::
-
   # Import the necessary libraries and IDCeMPy.
 
+  import numpy as np
   import pandas as pd
   import urllib
   from idcempy import zmiopc
 
 Next, we load the dataset.
-
 .. testcode::
-
     # Import and read the dataset
+
     url = 'https://github.com/hknd23/zmiopc/blob/main/data/'
 
     # Define a `Pandas` DataFrame
+
     data = pd_read.stata(url)
 
 We then define the lists with the names of the variables used in the model
-
 .. testcode::
-
   # First, you should define a list of variable names of X, Z, and Y.
   # X = Column names of covariates (from `DataFrame`) used in ordered probit stage.
   # Z = Column names of covariates (from `DataFrame`) used in split-population stage.
@@ -348,12 +389,21 @@ We then define the lists with the names of the variables used in the model
 
 Your data is now ready, and you can begin the estimation process.
 
-:func:`zmiopc.iopmod` estimates the MiOP model and returns :class:`zmiopc.IopModel`.
-
 .. testcode::
 
-  # Model estimation:
-  miop_EU = zmiopc.iopmod('miop', data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
+   # Model estimation:
+
+   miop_EU = zmiopc.iopmod('miop', data, X, Y, Z, method = 'bfgs', weights = 1,offsetx = 0, offsetz = 0)
+
+   # 'miop' = Type of model to be estimated. In this case 'miop'
+   # data = name of Pandas DataFrame
+   # X = variables in the ordered probit stage.
+   # Y = pependent variable.
+   # Z = variables in the inflation stage.
+   # method = method for optimization.  By default set to 'bfgs'
+   # weights = weights.
+   # offsetx = offset of X.  By Default is zero.
+   # offsetz = offset of z
 
 The following message will appear when the model finishes converging.
 
@@ -365,8 +415,7 @@ The following message will appear when the model finishes converging.
          Function evaluations: 488
          Gradient evaluations: 61  # See estimates:
 
-Print the results.
-
+Print the results of the model.
 .. testcode::
 
    print(miop_EU.coefs)
@@ -389,25 +438,30 @@ The model object also stores three different diagnostic tests: (1) Log-likelihoo
 .. testcode::
 
    # Print estimates of LL, AIC and VCOV
+
+   # Print Log-Likelihood
+
    print(miop_EU.llik)
+
+   # Print AIC
+
    print(miop_EU.AIC)
+
+   # Print VCOV
+
    print(miop_EU.vcov)
 
-For example, the AIC in this case is:
-
-.. testcode::
-
-   print(miop_EU.AIC)
-
-.. testoutput::
-
-   21729.390980849777
 
 To estimate the predicted probabilities:
 
 .. testcode::
 
+   # Define the model for which you want to estimate the predicted probabilities
+
    fittedmiop = zmiopc.iopcfit(miop_EU)
+
+   # Print predicted probabilities
+
    print(fittedziopc.responsefull)
 
 The package also allows you to simulates data from MiOP model results and compute changes in predicted probabilities when the value of a variable changes.
@@ -415,11 +469,16 @@ This allows you to illustrate how the changes in the split-probit covariates aff
 
 .. testcode::
 
+    # Define model from which predicted probabilities will be estimated and the number of simulations.
+
     miopxeno = idcempy.split_effects(miop_EU, 1, nsims = 10000)
 
 To plot the predicted probabilities.
 
 .. testcode::
+
+
+     # Get box plot of predicted probabilities
 
      miopxeno.plot.box(grid='False')
 
@@ -428,7 +487,12 @@ You can calculate the change in predicted probabilities of the outcome variable 
 
 .. testcode::
 
+    # Define model from which predicted probabilities will be estimated and the number of simulations.
+
     xeno = zmiopc.ordered_effects(miop_EU, 2, nsims = 10000)
+
+    # Get box plot of predicted probabilities
+
     xeno.plot.box(grid='False')
 
 Middle-inflated Ordered Probit (MiOPC) Model with Correlated Errors
@@ -438,9 +502,9 @@ You can estimate a Middle-inflated Ordered Probit (MiOPC) with correlated errors
 We begin by loading the required libraries and IDCeMPy
 
 .. testcode::
-
   # Import the necessary libraries and IDCeMPy.
 
+  import numpy as np
   import pandas as pd
   import urllib
   from idcempy import zmiopc
@@ -450,8 +514,11 @@ Next, we load the dataset.
 .. testcode::
 
     # Import and read the dataset
+
     url = 'https://github.com/hknd23/zmiopc/blob/main/data/'
+
     # Define a `Pandas` DataFrame
+
     data = pd_read.stata(url)
 
 We then define the lists with the names of the variables used in the model
@@ -469,14 +536,27 @@ We then define the lists with the names of the variables used in the model
 
 The model can be estimated as follows.
 
-:func:`zmiopc.iopcmod` estimates the MiOPC model and returns :class:`zmiopc.IopcModel`.
+.. testcode::
+
+   # Model estimation
+
+   miopc_EU = zmiopc.iopcmod('miopc', pstartziop, data, X, Y, Z, method = 'bfgs', weights = 1,offsetx = 0, offsetz =0 )
+
+   # 'miopc' = Type of model to be estimated. In this case 'miopc'
+   # data = name of Pandas DataFrame
+   # X = variables in the ordered probit stage.
+   # Y = pependent variable.
+   # Z = variables in the inflation stage.
+   # method = method for optimization.  By default set to 'BFGS'
+   # weights = weights.
+   # offsetx = offset of X.  By Default is zero.
+   # offsetz = offset of z
+
+Print coefficients,
 
 .. testcode::
 
-   # Model estimation:
-   miopc_EU = zmiopc.iopcmod('miopc', pstartziop, data, X, Y, Z, method='bfgs', weights= 1,offsetx= 0, offsetz=0)
-
-Now print(miopc_EU.coefs).
+   print(miopc_EU.coefs).
 
 .. testoutput::
 
@@ -496,15 +576,28 @@ The model object also stores three different diagnostic tests: (1) Log-likelihoo
 
 .. testcode::
 
+   # Print Log-Likelihood
+
    print(miopc_EU.llik)
+
+   # Print AIC
+
    print(miopc_EU.AIC)
-   print(miopc_EU.vcov)
+
+   # Print VCCOV matrix
+
+   rint(miopc_EU.vcov)
 
 To estimate the predicted probabilities:
 
 .. testcode::
 
+   # Define model to fit
+
    fittedmiopc = zmiopc.iopcfit(miopc_EU)
+
+   # Print predicted probabilities
+
    print(fittedziopc.responsefull)
 
 The following line of code allows you to compute changes in predicted probabilities when the value of a variable changes.
@@ -512,35 +605,44 @@ This allows you to illustrate how the changes in the split-probit covariates aff
 
 .. testcode::
 
-    miopcxeno = idcempy.split_effects(miopc_EU, 1, nsims = 10000)
+   # Define model from which effects will be estimated and number of simulations
+
+   miopcxeno = idcempy.split_effects(miopc_EU, 1, nsims = 10000)
 
 A box plot can illustrate the change in predicted probabilities.
 
 .. testcode::
 
-     miopcxeno.plot.box(grid='False')
+    # Get box plot of predicted probabilities
+
+    miopcxeno.plot.box(grid='False')
 
 
-To calculate the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities of the outcome variable in the MiOPC model estimated above when Xenophobia increases one standard deviation from its mean value.
+To calculate the change in predicted probabilities of the outcome variable in the outcome-stage when the value of a covarariate changes. The box plots below display the change in predicted probabilities of the outcome variable in the MiOPC model estimated above when Xenophobia increases one standard deviation from its mean value.
 
 .. testcode::
 
+    # Define model from which effects will be estimated and number of simulations
+
     xeno = zmiopc.ordered_effects(miopc_EU, 2, nsims = 10000)
+
+    # Get box plot of predicted probabilities
+
     xeno.plot.box(grid='False')
 
 
 The Standard Ordered Probit (OP) model
 --------------------------------------
 
-The package also includes a function that estimates a standard Ordered Probit (OP) model.
-The OP model does not account for the "zero inflation", so it does not have a split-probit stage.
+The package also includes a function that allows you to estimate a standard Ordered Probit (OP) model.
+The OP model does not account for neither "zero inflation" not "middle inflation," so it does not have a split-probit stage.
 
 We first import the required libraries, set up the package and import the dataset:
 
 .. testcode::
-
    # Import the necessary libraries and package
 
+   import numpy as np
    import pandas as pd
    import urllib
    from idcempy import zmiopc
@@ -550,6 +652,7 @@ We first import the required libraries, set up the package and import the datase
   url='https://github.com/hknd23/zmiopc/blob/main/data/tobacco_cons.csv'
 
   # Define a `Pandas` DataFrame
+
   data = pd.read_csv(url)
 
 .. testcode::
@@ -565,13 +668,25 @@ Your data is not ready for estimation.
 
 .. testcode::
 
-  # Starting parameters for optimization:
+  # Define starting parameters parameters for optimization:
+
   pstartop = np.array([.01, .01, .01, .01, .01, .01, .01])
 
   # Model estimation:
-  op_tob = zmiopc.opmod(pstartop, data, X, Y, method='bfgs', weights=1, offsetx=0)
 
-  # See estimates:
+  op_tob = zmiopc.opmod(pstartop, data, X, Y, method = 'bfgs', weights = 1, offsetx  =0)
+
+   # pstart = list of values of starting parameters.
+   # data = name of Pandas DataFrame
+   # X = variables in the ordered probit stage.
+   # Y = pependent variable.
+   # method = method for optimization.  By default set to 'bfgs'
+   # weights = weights.
+   # offsetx = offset of X.  By Default is zero.
+   # offsetz = offset of z
+
+  # Print estimates:
+
   print(ziop_tob.coefs)
 
 Results from the model:
@@ -591,6 +706,8 @@ The following line of code to see the estimates of coefficients:
 
 .. testcode::
 
+   # Print coefficients of the models
+
    print(op_tob.coefs)
 
 .. testoutput::
@@ -608,14 +725,24 @@ Log-likelihood, AIC, and Variance-Covariance matrix can be extracted with:
 
 .. testcode::
 
+  # Print Log-Likelihood
+
   print(op_tob.llik)
+
+  # Print AIC
+
   print(op_tob.AIC)
+
+  # Print VCOV matrix
+
   print(op_tob.vcov)
 
 The Vuong Test
 --------------
 
-Harris and Zhao (`2007 <https://doi.org/10.1016/j.jeconom.2007.01.002>`__) suggest that a variant of the Vuong (`1989 <https://www.jstor.org/stable/1912557>`__) Test (with a v statistic) can be used to compare the performance of the ZiOP versus the standard Ordered Probit (OP) model according to the following formula:
+Harris and Zhao (`2007 <https://doi.org/10.1016/j.jeconom.2007.01.002>`__) suggest that a variant of the Vuong (`1989 <https://www.jstor.org/stable/1912557>`__) Test (with a v statistic) can be used to compare the performance of the ZiOP versus the standard Ordered Probit (OP) model using :func:`zmiopc.vuong_opiop`.
+The Vuong test denotes m\ :sub:`i`\ as the natural logarithm of the ratio of the predicted probablity that i\ :sub:`j`\ of the simpler OP model (in the numerator) and the more general (ZiOP/ZiOPC) model (in the denominaor) and evaluates m\ :sub:`i`\
+via a bidirectional test statistic of:
 
 .. math::
 
@@ -626,6 +753,8 @@ where v < -1.96 favors the more general (ZiOP/ZiOPC) model, -1.96 < v < 1.96 len
 The OP and ZiOP models must have the same number of observations, and the OP must have the same number of covariates as ZiOP's OP stage. The statistic reveals that the OP model is preferred over the ZiOP model.
 
 .. testcode::
+
+   # Estimate Vuong test.  OP model first, ZIOP model specified next in this case
 
    zmiopc.vuong_opiop(op_tob, ziop_tob)
 
@@ -644,22 +773,22 @@ Failing to account for such inflation could lead to inaccurate inferences.
 To estimate the GiMNL model, we first import the library and the dataset introduced above.
 
 .. testcode::
-
    # Import the module
     import pandas as pd
     import urllib
     from idcempy import gimnl
 
    # Load the dataset
+
    url= 'https://github.com/hknd23/zmiopc/raw/main/data/replicationdata.dta'
 
-   #Define a `Pandas` DataFrame
+   # Define a `Pandas` DataFrame
+
    data = pd.read_stata(url)
 
 We the define the list of covariates in the split-stage (z), the second-stage (x) and the outcome variable (y).
 
 .. testcode::
-
    # x = Column names of covariates (from `DataFrame`) in the outcome-stage.
    # z = Column names of covariates (from `DataFrame`) in the split-stage.
    # y = Column names of outcome variable (from `DataFrame`).
@@ -670,21 +799,36 @@ We the define the list of covariates in the split-stage (z), the second-stage (x
 
 Users can employ the argument `inflatecat` to specify any unordered category as the inflated category (dictated by the distribution) in their unordered-polytomous outcome measure. If a higher category (say 1) is inflated in a 0,1,2 unordered outcome measure.
 We first need to specify the order of the outcome variable. Then, you need to define which category is "inflated."
-
 .. testcode::
 
+   # Define order of variables
+
    order = [0, 1, 2]
+
+   # Define "inflation" category
+
    inflatecat = "baseline"
 
 Further, employing the argument `reference`, users can select which category of the unordered outcome variable is the baseline ("reference") category by placing it first. Since the baseline ("0") category in the Presidential vote choice outcome measure is inflated, the following code fits the BIMNL Model.
 
 .. testcode::
 
-   gimnl_2004vote = gimnl.gimnlmod(data, x, y, z, order, inflatecat)
+   # Estimate the model
+
+   gimnl_2004vote = gimnl.gimnlmod(data, x, y, z, method = 'bfgs', order, inflatecat)
+
+   # data = name of pandas DataFrame.
+   # x = variables in the ordered stage.
+   # y = dependent variable.
+   # z = variables in the inflation stage.
+   # method = optimization method.  Default is 'bfgs'
+   # order = order of variables.
+   # inflatecat = inflated category.
 
 The following line of code prints the coefficients of the covariates.
-
 .. testcode::
+
+   # Print coefficients
 
    print(gimnl_2004vote.coefs)
 
@@ -711,20 +855,36 @@ The results from the model are stored in a :class:`gimnlModel` with the followin
 - vcov: Variance-covariance matrix.
 
 You can, for example, print the AIC as follows.
-
 .. testcode::
+
+    # Print Log_Likelihood
+
+    print(gimnl_2004vote.llik)
+
+    # Print AIC
 
     print(gimnl_2004vote.AIC)
 
-.. testoutput::
+    # Print VCOV matrix
 
-    1656.8324085039708
+    print(gimnl_2004vote.vcov)
 
-Using the function :py:func:`gimnl.mnlmod`, users can fit a standard Multinomial Logit Model (MNL) by specifying the list of **X**, **Y**, and baseline (using `reference`).
+
+Users can fit a standard Multinomial Logit Model (MNL) by specifying the list of **x**, **y**, and baseline (using `reference`).
 
 .. testcode::
 
-   mnl_2004vote = gimnl.mnlmod(data, x, y, z, order)
+   #Estimate the model
+
+   mnl_2004vote = gimnl.mnlmod(data, x, y, method = )
+
+   # data = name of Pandas DataFrame.
+   # x = variables in MNL stage.
+   # y = dependent variable
+   # method = optimization method. Default is 'bfgs'
+
+   # Print the coefficients
+
    print(mnl_2004vote.coefs)
 
 .. testoutput::
@@ -743,8 +903,15 @@ Similar to the GiMNL model, the AIC for the MNL model can also be given by:
 
 .. testcode::
 
+
+    # Print Log-Likelihood
+
     print(mnl_2004vote.AIC)
 
-.. testoutput::
+    # Print AIC
 
-    1657.192925769978
+    print(mnl_2004vote.AIC)
+
+    # Print VCOV matrix
+
+    print(mnl_2004vote.vcov)
