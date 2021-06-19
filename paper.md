@@ -59,13 +59,13 @@ choice situations, an excessive share of observations—stemming from two
 distinct d.g.p’s—fall into a single category which is thus “inflated.” For instance,
 ordered outcome measures of self-reported smoking behavior that range from 0
 for “no smoking” to 3 for “smoking 20 cigarettes or more daily” contain excessive
-observations in the zero (no smoking) category that includes two types of non-
-smokers: individuals who never smoke cigarettes, and those who smoked
+observations in the zero (no smoking) category that includes two types of 
+non-smokers: individuals who never smoke cigarettes, and those who smoked
 previously but temporarily stopped smoking because of their high price
 [@harris2007zero; @greene2015inflated].
 
-In ordered choice measures such as immigration attitudes, it is the middle-
-category of “indifference” that is inflated since it includes respondents who are
+In ordered choice measures such as immigration attitudes, it is the 
+middle-category of “indifference” that is inflated since it includes respondents who are
 truly indifferent about immigration and those who select “indifference” because of
 social desirability reasons [@bagozzi2012mixture; @brown2020modelling].
 Further, in unordered polytomous variables of vote choice, for example, the
@@ -90,8 +90,8 @@ and inflated MNL models. `IDCeMPy` entirely depends on [Python](https://www.pyth
 `IDCeMPy` provides functions to fit the Zero-Inflated Ordered Probit (ZIOP) model
 without and with correlated errors (ZIOPC model), and the Middle-Inflated
 Ordered Probit (MIOP) model without and with correlated errors (MIOPC). These
-models account for the inflated share of observations in either the zero or middle-
-category by combining a single binary “split-stage” probit equation with an
+models account for the inflated share of observations in either the zero or 
+middle-category by combining a single binary “split-stage” probit equation with an
 ordered probit “outcome-stage” equation. Users can treat the error terms from
 these two equations as independent or correlated in the package’s estimation
 routines. `IDCeMPy` also includes functions to fit Generalized Inflated MNL models
@@ -144,8 +144,8 @@ function in IDCeMPy to account for excessive baseline category observations in u
 polytomous measures which leads to accurate inferences.
 
 A full discussion of the package’s functionality is available on the [documentation
-website](https://idcempy.readthedocs.io/en/latest/). The documentation is open-
-source and hosted by [ReadTheDocs](https://readthedocs.org/). Yet we provide below a brief survey of the
+website](https://idcempy.readthedocs.io/en/latest/). The documentation is 
+open-source and hosted by [ReadTheDocs](https://readthedocs.org/). Yet we provide below a brief survey of the
 main functions included in `IDCeMPy`, which are estimated via MLE using Newton
 numerical optimization methods.
 
@@ -161,7 +161,7 @@ numerical optimization methods.
 
 * `mnlmod`; `gimnlmod`: Fits MNL model and Generalized-Inflated MNL models.
 
-* `mnlresults`; `gimnlresults`; `vuong_gimnl`: Presents covariate estimates, VCV matrix, Log-Likelihood and AIC statistics of `mnlmod`;`gimnlmod`. Vuong test statistic for comparing MNL to GIMNL models obtained from `vuong_gimnl`. 
+* `mnlresults`; `gimnlresults`; `vuong_gimnl`: Presents covariate estimates, VCV matrix, Log-Likelihood and AIC statistics of `mnlmod`; `gimnlmod`. Vuong test statistic for comparing MNL to GIMNL models obtained from `vuong_gimnl`. 
 
 # Application
 
