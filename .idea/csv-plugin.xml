@@ -31,6 +31,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\miop_unit_test.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\tests\gimnl_unit_test.py">
           <value>
             <Attribute>

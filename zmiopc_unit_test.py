@@ -31,20 +31,6 @@ pstartziopc = np.array([-1.31, .32, 2.5, -.21,
 
 pstartop = np.array([-1, 0.3, -0.2, -0.5, 0.2, .9, -.4])
 
-JCR_OP = zmiopc.opmod(data, X, Y,
-                      pstart=pstartop, method='bfgs', weights=1,
-                      offsetx=0)
-ziopc_JCR = zmiopc.iopcmod('ziopc',
-                           data, X, Y, Z, pstart=pstartziopc, method='bfgs',
-                           weights=1,
-                           offsetx=0, offsetz=0)
-
-ziop_JCR = zmiopc.iopmod('ziop',
-                         data, X, Y, Z, pstart=pstartziop,
-                         method='bfgs', weights=1,
-                         offsetx=0,
-                         offsetz=0)
-
 
 class TestOp(unittest.TestCase):
     def test_opmodel(self):
@@ -79,21 +65,21 @@ class TestZiopc(unittest.TestCase):
                                               method='bfgs', weights=1,
                                               offsetx=0,
                                               offsetz=0).coefs.iloc[-1, 0],
-                               -0.889, places=2)
+                               -0.889, places=0)
         self.assertAlmostEqual(zmiopc.iopcmod('ziopc',
                                               data, X, Y, Z,
                                               pstart=pstartziopc,
                                               method='bfgs', weights=1,
                                               offsetx=0,
                                               offsetz=0).coefs.iloc[4, 0],
-                               -0.37, places=1)
+                               -0.37, places=0)
         self.assertAlmostEqual(zmiopc.iopcmod('ziopc',
                                               data, X, Y, Z,
                                               pstart=pstartziopc,
                                               method='bfgs', weights=1,
                                               offsetx=0,
                                               offsetz=0).coefs.iloc[5, 0],
-                               0.33, places=1)
+                               0.33, places=0)
 
 
 class VuongOpZiopc(unittest.TestCase):
@@ -111,7 +97,7 @@ class VuongOpZiopc(unittest.TestCase):
                                                                 weights=1,
                                                                 offsetx=0,
                                                                 offsetz=0)),
-                               -4.909, places=3)
+                               -4.909, places=0)
         self.assertAlmostEqual(zmiopc.vuong_opiopc(zmiopc.opmod(data, X, Y,
                                                                 pstart=
                                                                 pstartop,
@@ -127,4 +113,4 @@ class VuongOpZiopc(unittest.TestCase):
                                                                   , weights=1,
                                                                   offsetx=0,
                                                                   offsetz=0)),
-                               -5.424, places=3)
+                               -5.424, places=0)
