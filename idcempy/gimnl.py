@@ -490,7 +490,7 @@ def gimnlmod(data, x, y, z, reference, inflatecat, method="BFGS", pstart=None):
                 pstart,
                 args=(x2, x3, yx_, z_, reference),
                 method=method,
-                options={"gtol": 1e-6, "disp": True, "maxiter": 500},
+                options={"disp": True, "maxiter": 500},
             )
         elif inflatecat == "second":
             model = minimize(
@@ -498,7 +498,7 @@ def gimnlmod(data, x, y, z, reference, inflatecat, method="BFGS", pstart=None):
                 pstart,
                 args=(x2, x3, yx_, z_, reference),
                 method=method,
-                options={"gtol": 1e-6, "disp": True, "maxiter": 500},
+                options={"disp": True, "maxiter": 500},
             )
         elif inflatecat == "third":
             model = minimize(
@@ -506,7 +506,7 @@ def gimnlmod(data, x, y, z, reference, inflatecat, method="BFGS", pstart=None):
                 pstart,
                 args=(x2, x3, yx_, z_, reference),
                 method=method,
-                options={"gtol": 1e-6, "disp": True, "maxiter": 500},
+                options={"disp": True, "maxiter": 500},
             )
     results = gimnlresults(model, data, x, y, z, modeltype, reference,
                            inflatecat)
@@ -560,7 +560,7 @@ def mnlmod(data, x, y, reference, method="BFGS", pstart=None):
                 pstart,
                 args=(x2, x3, yx_, reference),
                 method=method,
-                options={"gtol": 1e-6, "disp": True, "maxiter": 500},
+                options={"disp": True, "maxiter": 500},
             )
     results = mnlresults(model, data, x, y, modeltype, reference)
     return results

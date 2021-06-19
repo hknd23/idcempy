@@ -668,9 +668,9 @@ Your data is not ready for estimation.
 
 .. testcode::
 
-  # Define starting parameters parameters for optimization:
+  # Define a list of starting parameters parameters for optimization:
 
-  pstartop = np.array([.01, .01, .01, .01, .01, .01, .01])
+  pstartop = [.01, .01, .01, .01, .01, .01, .01]
 
   # Model estimation:
 

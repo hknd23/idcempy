@@ -605,7 +605,7 @@ def opmod(data, x, y, pstart=None, method="BFGS", weights=1, offsetx=0):
         pstart,
         args=(x_, yx_, datasetnew, weights, offsetx),
         method=method,
-        options={"gtol": 1e-6, "disp": True, "maxiter": 500},
+        options={"disp": True, "maxiter": 500},
     )
     results = opresults(model, data, x, y)
     return results
@@ -807,7 +807,7 @@ def iopmod(
                 pstart,
                 args=(x_, yx_, z_, datasetnew, weights, offsetx, offsetz),
                 method=method,
-                options={"gtol": 1e-6, "disp": True, "maxiter": 500},
+                options={"disp": True, "maxiter": 500},
             )
         elif modeltype == "miop":
             if len(np.unique(y_.astype("category").iloc[:, 0])) % 2 == 1:
@@ -816,7 +816,7 @@ def iopmod(
                     pstart,
                     args=(x_, yx_, z_, datasetnew, weights, offsetx, offsetz),
                     method=method,
-                    options={"gtol": 1e-6, "disp": True, "maxiter": 500},
+                    options={"disp": True, "maxiter": 500},
                 )
             else:
                 raise Exception("miop requires odd number of categories.")
@@ -883,7 +883,7 @@ def iopcmod(
                 pstart,
                 args=(x_, yx_, z_, datasetnew, weights, offsetx, offsetz),
                 method=method,
-                options={"gtol": 1e-6, "disp": True, "maxiter": 500},
+                options={"disp": True, "maxiter": 500},
             )
         elif modeltype == "miopc":
             if len(np.unique(y_.astype("category").iloc[:, 0])) % 2 == 1:
@@ -892,7 +892,7 @@ def iopcmod(
                     pstart,
                     args=(x_, yx_, z_, datasetnew, weights, offsetx, offsetz),
                     method=method,
-                    options={"gtol": 1e-6, "disp": True, "maxiter": 500},
+                    options={"disp": True, "maxiter": 500},
                 )
             else:
                 raise Exception("miopc requires odd number of categories.")
