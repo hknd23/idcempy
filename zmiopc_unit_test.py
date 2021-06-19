@@ -38,7 +38,7 @@ class TestOp(unittest.TestCase):
                                             pstart=pstartop, method='bfgs',
                                             weights=1,
                                             offsetx=0).coefs.iloc[2, 0],
-                               -0.21, places=1)
+                               -0.21, places=0)
 
 
 class TestZiop(unittest.TestCase):
@@ -48,13 +48,13 @@ class TestZiop(unittest.TestCase):
                                              method='bfgs', weights=1,
                                              offsetx=0,
                                              offsetz=0).coefs.iloc[4, 0],
-                               -0.29, places=1)
+                               -0.29, places=0)
         self.assertAlmostEqual(zmiopc.iopmod('ziop',
                                              data, X, Y, Z, pstart=pstartziop,
                                              method='bfgs', weights=1,
                                              offsetx=0,
                                              offsetz=0).coefs.iloc[5, 0],
-                               0.04, places=1)
+                               0.04, places=0)
 
 
 class TestZiopc(unittest.TestCase):
