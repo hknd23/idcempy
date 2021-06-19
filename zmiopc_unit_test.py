@@ -86,14 +86,14 @@ class TestZiopc(unittest.TestCase):
                                               method='bfgs', weights=1,
                                               offsetx=0,
                                               offsetz=0).coefs.iloc[4, 0],
-                               -0.3, places=1)
+                               -0.37, places=1)
         self.assertAlmostEqual(zmiopc.iopcmod('ziopc',
                                               data, X, Y, Z,
                                               pstart=pstartziopc,
                                               method='bfgs', weights=1,
                                               offsetx=0,
                                               offsetz=0).coefs.iloc[5, 0],
-                               0.3, places=1)
+                               0.33, places=1)
 
 
 class VuongOpZiopc(unittest.TestCase):
