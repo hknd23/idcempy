@@ -17,7 +17,7 @@ sets of “inflated” discrete choice models:
 
 `IDCeMPy` uses Newton numerical optimization methods to estimate the models listed above via Maximum Likelihood Estimation (MLE).
 
-When should you use `IDCeMPy`?
+When Should You use `IDCeMPy`?
 ==============================
 
 An excessive (“inflated”) share of observations—stemming from two distinct d.g.p’s—fall into a single choice category in many ordered and unordered polytomous outcome variables. Standard Ordered Probit and Multinomial Logit models cannot account for such category inflation which leads to biased inferences. Examples for such d.g.p’s include:
@@ -64,7 +64,6 @@ We first import the required libraries, set up the package and import the datase
 
   # Import the necessary libraries and package
 
-  import numpy as np
   import pandas as pd
   import urllib
   from idcempy import zmiopc
@@ -78,7 +77,7 @@ The data is now a `pandas` DataFrame, and we can proceed to estimate the ZiOP mo
 
 .. testcode::
 
-  # First, you should define a list of variable names of X, Z, and Y.
+  # First, define a list of variable names of X, Z, and Y.
   # X = Column names of covariates (from `DataFrame`) used in ordered probit stage.
   # Z = Column names of covariates (from `DataFrame`) used in split-population stage.
   # Y = Column name of ordinal outcome variable (from `DataFrame`).
@@ -218,7 +217,6 @@ We first import the required libraries, set up the package and import the datase
 
   # Import the necessary libraries and IDCeMPy.
 
-  import numpy as np
   import pandas as pd
   import urllib
   from idcempy import zmiopc
@@ -232,7 +230,7 @@ We first import the required libraries, set up the package and import the datase
 
 .. testcode::
 
-  # First, you should define a list of variable names of X, Z, and Y.
+  # First, define a list of variable names of X, Z, and Y.
   # X = Column names of covariates (from `DataFrame`) used in ordered probit stage.
   # Z = Column names of covariates (from `DataFrame`) used in split-population stage.
   # Y = Column name of ordinal outcome variable (from `DataFrame`).
@@ -380,7 +378,7 @@ We then define the lists with the names of the variables used in the model
 
 .. testcode::
 
-  # First, you should define a list of variable names of X, Z, and Y.
+  # First, define a list of variable names of X, Z, and Y.
   # X = Column names of covariates (from `DataFrame`) used in ordered probit stage.
   # Z = Column names of covariates (from `DataFrame`) used in split-population stage.
   # Y = Column name of ordinal outcome variable (from `DataFrame`).
@@ -504,7 +502,6 @@ First is importing the data and libraries:
 
   # Import the necessary libraries and IDCeMPy.
 
-  import numpy as np
   import pandas as pd
   import urllib
   from idcempy import zmiopc
@@ -525,7 +522,7 @@ We then define the lists with the names of the variables used in the model:
 
 .. testcode::
 
-   # First, you should define a list of variable names of X, Z, and Y.
+   # First, define a list of variable names of X, Z, and Y.
    # X = Column names of covariates (from `DataFrame`) used in ordered probit stage.
    # Z = Column names of covariates (from `DataFrame`) used in split-population stage.
    # Y = Column name of ordinal outcome variable (from `DataFrame`).
@@ -643,7 +640,6 @@ First, import the required libraries and data:
 
    # Import the necessary libraries and package
 
-   import numpy as np
    import pandas as pd
    import urllib
    from idcempy import zmiopc
@@ -763,7 +759,7 @@ The Vuong test can also be implemented to compare the ZiOPC, MiOP and MiOPC mode
 Generalized Inflated Multinomial Logit (GiMNL) Model
 ----------------------------------------------------
 
-The :py:mod:`gimnl` module provides :func:`zmiopc.gimnlmod` to estimate the General "inflated" Multinomial Logit models (GiMNL) with three outcomes in the dependent variable.
+The :py:mod:`gimnl` module provides :func:`gimnl.gimnlmod` to estimate the General "inflated" Multinomial Logit models (GiMNL) with three outcomes in the dependent variable.
 The GiMNL model minimize issues present when unordered polytomous outcome variables have an excessive share and heterogeneous pool of observations in the lower category.
 
 Similar to the models in the :py:mod:`zmiopc` module, the first step is to import the libraries and 2004 presidential vote choice dataset.
@@ -783,7 +779,9 @@ Similar to the models in the :py:mod:`zmiopc` module, the first step is to impor
 
    data = pd.read_stata(url)
 
-We the define the list of covariates in the split-stage (z), the multinomial logit-stage (x) and the outcome variable (y).
+We the define the list of covariates in the split-stage (z), the multinomial logit-stage (x) and the outcome variable (y). The values of the dependent variable must be represented numerically as "0", "1", and "2" to represent each category. To specify the baseline/reference category, users provide a three-element list for the `reference` argument (e.g [0,1,2]).
+ The first element of the list is the baseline/reference category.
+
 
 .. testcode::
 
@@ -795,9 +793,9 @@ We the define the list of covariates in the split-stage (z), the multinomial log
    z = ['educ', 'agegroup2']
    y = ['vote_turn']
 
-The values of the dependent variable must be represented numerically as "0", "1", and "2". To specify the baseline/reference category, users provide a three-element list for the `reference` argument (e.g [0,1,2]). The first element is the baseline/reference category.
-Users can employ the argument `inflatecat` to specify any unordered category as the inflated category (dictated by the distribution) in their unordered-polytomous outcome measure. If a higher category (say 1) is inflated in a 0,1,2 unordered outcome measure.
-We first need to specify the order of the outcome variable. Then, you need to define which category is "inflated."
+
+The flexibility of :func:`gimnl.gimnlmod allows users to customize the baseline and inflated categories. Users can employ the argument `inflatecat` with `'baseline'`, `'second'`, or `'third'` to specify any unordered category as the inflated category (dictated by the distribution) in their unordered-polytomous outcome measure. If `'baseline'` is selected, the first element (baseline/reference category) in `reference` is the inflated outcome.
+Likewise, if `'second'` or `'third'` is selection, the second or third element will be the inflated outcome. The following code specifies the outcome '0' (Abstain) as both the baseline and inflated category.
 
 .. testcode::
 
@@ -809,7 +807,6 @@ We first need to specify the order of the outcome variable. Then, you need to de
 
    inflatecat = "baseline"
 
-Further, employing the argument `reference`, users can select which category of the unordered outcome variable is the baseline ("reference") category by placing it first. Since the baseline ("0") category in the Presidential vote choice outcome measure is inflated, the following code fits the BIMNL Model.
 
 .. testcode::
 
@@ -825,7 +822,7 @@ Further, employing the argument `reference`, users can select which category of 
    # order = order of variables.
    # inflatecat = inflated category.
 
-The following line of code prints the coefficients of the covariates.
+The following line of code prints the coefficients of the covariates:
 
 .. testcode::
 
@@ -872,7 +869,7 @@ For example, AIC can be printed as follows.
     print(gimnl_2004vote.vcov)
 
 
-Users can fit a standard Multinomial Logit Model (MNL) by specifying the list of **x**, **y**, and baseline (using `reference`).
+Users can fit a standard three-category Multinomial Logit Model (MNL) by specifying the list of **x**, **y**, and baseline (using `reference`).
 
 .. testcode::
 
@@ -904,7 +901,6 @@ Users can fit a standard Multinomial Logit Model (MNL) by specifying the list of
 Similar to the GiMNL model, the AIC for the MNL model can also be given by:
 
 .. testcode::
-
 
     # Print Log-Likelihood
 
