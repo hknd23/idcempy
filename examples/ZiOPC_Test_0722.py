@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-
+import time
 # import this after importing all other packages.
 from idcempy import zmiopc
 
@@ -22,7 +22,7 @@ pstartziopc = [-1.31, .32, 2.5, -.21,
 
 # These are correct pstart
 
-start_time= time.time()
+start_time = time.time()
 ziopc_JCR = zmiopc.iopcmod('ziopc',
                            data, X, Y, Z, pstart=pstartziopc, method='bfgs',
                            weights=1,
