@@ -357,4 +357,4 @@ gimnl.gimnlmod(data, x, y, z, reference, inflatecat="third")
 ```
 ## Contributions
 
-The authors welcome and encourage new contributors to help test `IDCeMPy` and add new functionality. If one wishes to contact the authors, they may do so by emailing nkh8@psu.edu. Response times may vary.
+The authors welcome and encourage new contributors to help test `IDCeMPy` and add new functionality. Issues can be raised by any users for questions and bug reports. To make suggestions for improvements or new features, please contact <nkh8@psu.edu>.
