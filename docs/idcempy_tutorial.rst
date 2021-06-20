@@ -839,6 +839,7 @@ The results from the model are stored in a :class:`gimnlModel` with the followin
 - vcov: Variance-covariance matrix.
 
 You can, for example, print the AIC as follows.
+
 .. testcode::
 
     # Print Log_Likelihood
