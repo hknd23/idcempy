@@ -667,7 +667,9 @@ After importing the data and specifying the model, the following code fits the O
 
   # Model estimation:
 
-  op_tob = zmiopc.opmod(data, X, Y, method = 'bfgs', weights = 1, offsetx  =0)
+.. testcode::
+
+   op_tob = zmiopc.opmod(data, X, Y, method = 'bfgs', weights = 1, offsetx  =0)
 
    # data = name of pandas DataFrame
    # X = variables in the ordered probit stage.
@@ -677,11 +679,6 @@ After importing the data and specifying the model, the following code fits the O
    # offsetx = offset of X.  By Default is zero.
    # offsetz = offset of z
 
-  # Print estimates:
-
-  print(op_tob.coefs)
-
-Results from the model:
 
 The following message will appear when the model has converged:
 
