@@ -143,7 +143,8 @@ The following line of code prints the estimates of coefficients:
 
 In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals.
 
-The model object :class:`zmiopc.IopModel` also stores three different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
+The model object :class:`zmiopc.IopModel` also stores three different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).
+They can be obtained via the following:
 
 .. testcode::
 
@@ -201,7 +202,7 @@ Results from :func:`zmiopc.split_effects` and :func:`zmiopc.ordered_effects` can
 
     gender = zmiopc.ordered_effects(ziop_tob, 2, nsims = 10000)
 
-    # You can now plot the predicted probabilities estimated earlier
+    # The box plot from the results:
 
     gender.plot.box(grid='False')
 
@@ -561,7 +562,8 @@ Print model coefficients:
 
 In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals.
 
-The model object :class:`zmiopc.IopCModel` also stores three different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
+The model object :class:`zmiopc.IopCModel` also stores three different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).
+ They can be obtained via the following:
 
 .. testcode::
 
@@ -838,7 +840,7 @@ The results from the model are stored in a :class:`gimnlModel` with the followin
 - AIC: Akaike information criterion.
 - vcov: Variance-covariance matrix.
 
-You can, for example, print the AIC as follows.
+For example, AIC can be printed as follows.
 
 .. testcode::
 
