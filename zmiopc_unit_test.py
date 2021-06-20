@@ -31,6 +31,31 @@ pstartziopc = np.array([-1.31, .32, 2.5, -.21,
 
 pstartop = np.array([-1, 0.3, -0.2, -0.5, 0.2, .9, -.4])
 
+varlist = np.unique(Y + Z + X)
+dataset = data[varlist]
+datasetnew = dataset.dropna(how="any")
+datasetnew = datasetnew.reset_index(drop=True)
+x_ = datasetnew[X]
+y_ = datasetnew[Y]
+yx_ = y_.iloc[:, 0]
+yncat = len(np.unique(yx_))
+z_ = datasetnew[Z]
+z_.insert(0, "ones", np.repeat(1, len(z_)))
+
+
+class TestZiopLlike(unittest.TestCase):
+    def test_zioploglike(self):
+        self.assertAlmostEqual(zmiopc.ziop(pstartziop, x_, yx_, z_,
+                                           datasetnew, 1, 0, 0), 1486.169,
+                               places=0)
+
+
+class TestZiopCLlike(unittest.TestCase):
+    def test_ziopcloglike(self):
+        self.assertAlmostEqual(zmiopc.ziopc(pstartziopc, x_, yx_, z_,
+                                           datasetnew, 1, 0, 0), 1487.748,
+                               places=0)
+
 
 class TestOp(unittest.TestCase):
     def test_opmodel(self):
