@@ -27,8 +27,8 @@ class OpModel:
         :param yncat: Number of categories in the outcome variable.
         :param x_: X (Covariates) Data.
         :param yx_: Y (Dependent Variable) data.
-        :param xstr: list of strings for variable(s) in the outcome stage (x).
-        :param ystr: list of strings for outcome variable name (y).
+        :param xstr: List of strings for variable(s) in the outcome stage (x).
+        :param ystr: List of strings for outcome variable name (y).
         """
         self.llik = llik
         self.coefs = coef
@@ -82,9 +82,9 @@ class IopModel:
         :param x_: X Data.
         :param yx_: Y (DV) data.
         :param z_: Z Data.
-        :param xstr: list of strings for x names.
-        :param ystr: list of strings for y names.
-        :param zstr: list of strings for z names.
+        :param xstr: List of strings for x names.
+        :param ystr: List of strings for y names.
+        :param zstr: List of strings for z names.
 
         """
         self.modeltype = modeltype
@@ -145,9 +145,9 @@ class IopCModel:
         :param x_: X Data.
         :param yx_: Y (DV) data.
         :param z_: Z Data.
-        :param xstr: list of strings for x names.
-        :param ystr: list of strings for y names.
-        :param zstr: list of strings for z names.
+        :param xstr: List of strings for x names.
+        :param ystr: List of strings for y names.
+        :param zstr: List of strings for z names.
         """
         self.modeltype = modeltype
         self.llik = llik
@@ -189,17 +189,17 @@ class FittedVals:
 def op(pstart, x, y, data, weights, offsetx):
     """Calculate likelihood function for Ordered Probit Model.
 
-    :param pstart: A list of starting parameters.
+    :param pstart: A list of starting values for the estimation.  Length of the number of parameters. 
     :type pstart: list
-    :param x: Ordered stage variables.
+    :param x: Covariates for the ordered stage.
     :type x: pandas dataframe
-    :param y: DV.
+    :param y: The dependent variable (DV)
     :type y: pandas dataframe
     :param data: dataset.
     :type data: pandas dataframe
     :param weights: weights.
     :type weights: int
-    :param offsetx: offset for X.
+    :param offsetx: Offset for covariates in the ordered stage.
     :type offsetx: int
     """
     n = len(data)
@@ -238,24 +238,21 @@ def op(pstart, x, y, data, weights, offsetx):
 def ziop(pstart, x, y, z, data, weights, offsetx, offsetz):
     """Calculate likelihood function for Zero-inflated Model.
 
-    :param pstart: A list of starting parameters.
+    :param pstart: A list of starting values for the estimation.  Length of the number of parameters. 
     :type pstart: list
-    :param x: Ordered stage variables. Data subsetted to selected
-        variables.
+    :param x: Covariates for the ordered probit stage. 
     :type x: pandas dataframe
-    :param y: Dependent Variable (DV). Data subsetted to selected
-        variables.
+    :param y: The ordinal dependent Variable (DV). 
     :type y: pandas dataframe
-    :param z: Inflation stage variables. Data subsetted to selected
-        variables.
+    :param z: Covariates for the inflation stage. 
     :type z: pandas dataframe
     :param data: Dataset with missing values listwise deleted.
     :type data: pandas dataframe
     :param weights: weights.
     :type weights: float
-    :param offsetx: offset for X.
+    :param offsetx: Offset for the ordered stage covariates (X). 
     :type offsetx: float
-    :param offsetz: offset for z.
+    :param offsetz: Offset for the inflation stage covariates (Z).
     :type offsetz: float
     """
     n = len(data)
@@ -296,24 +293,21 @@ def ziop(pstart, x, y, z, data, weights, offsetx, offsetz):
 def ziopc(pstart, x, y, z, data, weights, offsetx, offsetz):
     """Calculate likelihood function for Zero-inflated Correlated-Errors Model.
 
-    :param pstart: A list of starting parameters.
+    :param pstart: A list of starting values for the estimation.  Length of the number of parameters. 
     :type pstart: list
-    :param x: Ordered stage variables. Data subsetted to selected
-        variables.
+    :param x: Covariates for the ordered probit stage. 
     :type x: pandas dataframe
-    :param y: Dependent Variable (DV). Data subsetted to selected
-        variables.
+    :param y: The dependent variable (DV).
     :type y: pandas dataframe
-    :param z: Inflation stage variables. Data subsetted to selected
-        variables.
+    :param z: Covariates for the inflation stage. 
     :type z: pandas dataframe
     :param data: Dataset with missing values listwise deleted.
     :type data: pandas dataframe
     :param weights: weights.
     :type weights: float
-    :param offsetx: offset for X.
+    :param offsetx: Offset for the ordered probit stage covariates (X).
     :type offsetx: float
-    :param offsetz: offset for z.
+    :param offsetz: Offset for the inflation stage (Z).
     :type offsetz: float
     """
     n = len(data)
@@ -377,26 +371,23 @@ def miop(pstart, x, y, z, data, weights, offsetx, offsetz):
     """
     Likelihood function for Middle-inflated Ordered Probit Model
     "without" correlated errors.
-    Number of outcomes must be odd.
+    You must have an odd number of categories in your ordered dependent variable. 
 
-    :param pstart: A list of starting parameters.
+    :param pstart: A list of starting values for the estimation.  Length of the number of parameters.
     :type pstart: list
-    :param x: Ordered stage variables. Data subsetted to selected
-        variables.
+    :param x: Covariates in the ordered probit stage. 
     :type x: pandas dataframe
-    :param y: Dependent Variable (DV). Data subsetted to selected
-        variables.
+    :param y: The dependent variable (DV).
     :type y: pandas dataframe
-    :param z: Inflation stage variables. Data subsetted to selected
-        variables.
+    :param z: Covariates in the inflation stage. 
     :type z: pandas dataframe
     :param data: Dataset with missing values listwise deleted.
     :type data: pandas dataframe
     :param weights: weights.
     :type weights: float
-    :param offsetx: offset for X.
+    :param offsetx: Offset for covariates in the ordered probit stage (X).
     :type offsetx: float
-    :param offsetz: offset for z.
+    :param offsetz: Offset for covariates in the inflation stage.
     :type offsetz: float
     """
     n = len(data)
@@ -442,26 +433,23 @@ def miop(pstart, x, y, z, data, weights, offsetx, offsetz):
 def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
     """
     Likelihood function for Middle-inflated Correlated-Errors Model.
-    Number of outcomes must be odd.
+    You must have an odd number of categories in your ordered dependent variable.  
 
-    :param pstart: A list of starting parameters.
+    :param pstart: A list of starting values for the estimation.  Length of the number of parameters.
     :type pstart: list
-    :param x: Ordered stage variables. Data subsetted to selected
-        variables.
+    :param x: Covariates in the ordered probit stage.
     :type x: pandas dataframe
-    :param y: Dependent Variable (DV). Data subsetted to selected
-        variables.
+    :param y: The dependent variable (DV). 
     :type y: pandas dataframe
-    :param z: Inflation stage variables. Data subsetted to selected
-        variables.
+    :param z: Covariates in the inflation stage.
     :type z: pandas dataframe
     :param data: Dataset with missing values listwise deleted.
     :type data: pandas dataframe
     :param weights: weights.
     :type weights: float
-    :param offsetx: offset for X.
+    :param offsetx: Offset for the ordered probit stage covariates (X).
     :type offsetx: float
-    :param offsetz: offset for z.
+    :param offsetz: Offset for the covariates in the inflation stage (Z).
     :type offsetz: float
     """
     n = len(data)
@@ -530,10 +518,10 @@ def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
 
 
 def opresults(model, data, x, y):
-    """Produce estimation results, part of :py:func:`opmod`.
+    """Produces estimation results, part of :py:func:`opmod`.
 
     :param model: Model estimation results obtained from minimization.
-    :param data: dataset.
+    :param data: Dataset.
     :param x: Independent variables.
     :param y: : Dependent Variable.
     """
@@ -577,18 +565,18 @@ def opresults(model, data, x, y):
 
 
 def opmod(data, x, y, pstart=None, method="BFGS", weights=1, offsetx=0):
-    """Estimate Ordered Probit model and return :class:`OpModel` class object.
+    """Estimates Ordered Probit model and returns :class:`OpModel` class object.
 
-    :param pstart: A list of starting parameters.
+    :param pstart: A list of starting values for the estimation.  Length of the number of parameters.  
     :type pstart: list
-    :param data: full dataset.
+    :param data: Dataset.
     :type x: list of str
     :param y: Dependent Variable (DV).
     :type y: list of str
-    :param method: method for optimization, default 'BFGS'. For other
+    :param method: method for optimization, default is 'BFGS'. For other
         available methods, see scipy.optimize.minimize documentation.
     :param weights: weights.
-    :param offsetx: offset for X.
+    :param offsetx: offset for covariates (X).
     :return: OpModel
     """
     varlist = np.unique(y + x)
@@ -615,11 +603,11 @@ def iopresults(model, data, x, y, z, modeltype):
     """Produce estimation results, part of :py:func:`iopmod`.
 
     :param model: Model estimation results obtained from minimization.
-    :param data: dataset.
-    :param x: Ordered stage variables.
+    :param data: Dataset.
+    :param x: Covariates in the ordered probit stage.
     :param y: : Dependent Variable (DV).
-    :param z: : Inflation stage variables.
-    :param modeltype: : 'ziop' or 'miop' model.
+    :param z: : Covariates in the inflation stage.
+    :param modeltype: : Type of model. Options are: 'ziop' or 'miop'.
     """
     varlist = np.unique(y + z + x)
     dataset = data[varlist]
@@ -684,10 +672,10 @@ def iopcresults(model, data, x, y, z, modeltype):
     """Produce estimation results, part of :py:func:`ziopc  mod`.
 
     :param model: Model estimation results obtained from minimization.
-    :param data: dataset.
-    :param x: Ordered stage variables.
+    :param data: Dataset.
+    :param x: Covariates in the ordered probit stage.
     :param y: : Dependent Variable (DV).
-    :param z: : Inflation stage variables.
+    :param z: : Covariates in the inflation stage. 
     :param modeltype: : Type of model. Options are: 'ziopc' or 'miopc'
     """
     varlist = np.unique(y + z + x)
@@ -766,25 +754,25 @@ def iopmod(
 ):
     """Estimate ZiOP model and return :class:`IopModel` class object as output.
 
-    :param pstart: A list of starting parameters.
+    :param pstart: A list of starting values for the estimation.  Length of the number of parameters.
     :type pstart: list
-    :param data: Model data used for estimation, subsetted to selected
+    :param data: Dataset used for estimation, subsetted to selected
         variables and missing values listwise deleted.
-    :param x: Ordered Probit stage variables. The elements must match column
+    :param x: Covariates in the ordered probit stage. Elements must match column
     names of ``data``.
     :type x: list of str
-    :param y: Dependent variable (DV). The element must match column
+    :param y: Dependent variable (DV). Element must match column
     names of ``data``.
     :type y: list of str
-    :param z: Inflation stage variables. The elements must match column
+    :param z: Inflation stage variable. Elements must match column
     names of ``data``.
     :type z: list of str
-    :param modeltype: Type of model to be estimated ("ziop" or 'miop').
+    :param modeltype: Type of model to be estimated. Options are: "ziop" or 'miop'.
     :param method: method for optimization, default 'BFGS'.  For other
         available methods, see scipy.optimize.minimize documentation.
     :param weights: weights.
-    :param offsetx: offset for X.
-    :param offsetz: offset for Z.
+    :param offsetx: offset for ordered probit stage covariates (X).
+    :param offsetz: offset for inflation stage covariates (Z).
     :return: IopModel
     """
     types = ["ziop", "miop"]
@@ -840,21 +828,20 @@ def iopcmod(
 ):
     """Estimate an iOP model (ZiOP or MiOP) and return :class:`IopcModel`.
 
-    :param pstart: A list of starting parameters.
-    :type pstart: list
-    :param data: Model data used for estimation, subsetted to selected
+    :param pstart: A list of starting values for the estimation.  Length of the number of parameters.    :type pstart: list
+    :param data: Dataset used for estimation, subsetted to selected
         variables and missing values listwise deleted.
-    :param x: Ordered Probit stage variables. The elements must match column
+    :param x: Covariates for the ordered probit stage. Elements must match column
     names of ``data``.
     :type x: list of str
-    :param y: Dependent variable (DV). The element must match column
+    :param y: The dependent variable (DV). Element must match column
     names of ``data``.
     :type y: list of str
-    :param z: Inflation stage variables. The elements must match column
+    :param z: Covariates for the inflation stage. Elements must match column
     names of ``data``.
     :type z: list of str
-    :param modeltype: Type of model to be estimated ("ziopc" or 'miopc').
-    :param method: method for optimization, default 'BFGS'.  For other
+    :param modeltype: Type of model to be estimated.  Options are: 'ziopc' or 'miopc'.
+    :param method: method for optimization, default is 'BFGS'.  For other
         available methods, see scipy.optimize.minimize documentation.
     :param weights: weights.
     :param offsetx: offset for X.
@@ -1218,7 +1205,7 @@ def ordered_effects(model, ordvar, nsims=10000):
     """Calculate the changes in probability in each outcome in OP stage.
 
     This function calculates predicted probabilities
-    when there is change in value of a variable
+    when there is a change in the value of a covariate
     in the ordered probit equation.
     The chosen dummy variable is changed from 0 to 1,
     and chosen numerical variable is mean value + 1 standard deviation.
