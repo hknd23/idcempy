@@ -913,3 +913,8 @@ Similar to the GiMNL model, the AIC for the MNL model can also be given by:
     # Print VCOV matrix
 
     print(mnl_2004vote.vcov)
+
+Contributions
+=============
+
+The authors welcome and encourage new contributors to help test `IDCeMPy` and add new functionality. If one wishes to contact the authors, they may do so by emailing nkh8@psu.edu. Response times may vary.

@@ -48,9 +48,9 @@ class GimnlModel:
         :param x_: X Data.
         :param yx_: Y (DV) data.
         :param z_: Z Data.
-        :param xstr: list of string for variable names in the MNL stage.
-        :param ystr: list of string for dependent variable name .
-        :param zstr: list of string for variable names in the Logit Split
+        :param xstr: List of string for variable names in the MNL stage.
+        :param ystr: List of string for dependent variable name .
+        :param zstr: List of string for variable names in the Logit Split
         stage.
         """
         self.modeltype = modeltype
@@ -108,8 +108,8 @@ class MnlModel:
         :param ycatu: Number of categories in the Dependent variable (DV).
         :param x_: X Data.
         :param yx_: Y (DV) data.
-        :param xstr: list of string for x names.
-        :param ystr: list of string for y names.
+        :param xstr: List of string for x names.
+        :param ystr: List of string for y names.
         """
         self.modeltype = modeltype
         self.reference = reference
@@ -135,13 +135,13 @@ def mnl3(pstart, x2, x3, y, reference):
     :type pstart: list
     :param x2: Multinomial Logit variables. Data subsetted to selected
         variables.
-    :type x2: pandas dataframe
+    :type x2: Pandas dataframe
     :param x3: Multinomial Logit variables (should be identical to x2.
-    :type x3: pandas dataframe
+    :type x3: Pandas dataframe
     :param y: Dependent variable (DV). Data subsetted to selected
         variable.
-    :type y: pandas dataframe
-    :param reference: list of order of categories.
+    :type y: Pandas dataframe
+    :param reference: List of order of categories.
     """
     b2 = pstart[0: len(x2.columns)]
     b3 = pstart[len(x2.columns): (len(pstart))]
@@ -177,7 +177,7 @@ def bimnl3(pstart, x2, x3, y, z, reference):
     :param z: Logit Split stage variables. Data subsetted to selected
         variables.
     :type z: pandas dataframe
-    :param reference: list of order of categories (first element will be the
+    :param reference: List of order of categories (first element will be the
         inflated category).
     """
     b2 = pstart[len(z.columns): (len(z.columns) + len(x2.columns))]
@@ -217,7 +217,7 @@ def simnl3(pstart, x2, x3, y, z, reference):
     :param z: Logit Split stage variables. Data subsetted to selected
         variables.
     :type z: pandas dataframe
-    :param reference: list of order of categories (second element will be the
+    :param reference: List of order of categories (second element will be the
         inflated category).
     """
     b2 = pstart[len(z.columns): (len(z.columns) + len(x2.columns))]
@@ -246,18 +246,16 @@ def timnl3(pstart, x2, x3, y, z, reference):
 
     :param pstart: A list of starting parameters.
     :type pstart: list
-    :param x2: Multinomial Logit variables. Data subsetted to selected
-        variables.
+    :param x2: Covariates in the MNL. 
     :type x2: pandas dataframe
-    :param x3: Multinomial Logit variables (should be identical to x2.
+    :param x3: Multinomial Logit variables (should be identical to x2).
     :type x3: pandas dataframe
-    :param y: Dependent variable (DV). Data subsetted to selected
-        variable.
+    :param y: Dependent variable (DV). 
     :type y: pandas dataframe
-    :param z: Logit Split stage variables. Data subsetted to selected
+    :param z: Covariates in the Logit model (i.e. split stage). 
         variables.
     :type z: pandas dataframe
-    :param reference: list of order of categories (third element will be the
+    :param reference: List of order of categories (third element will be the
         inflated category).
     """
     b2 = pstart[len(z.columns): (len(z.columns) + len(x2.columns))]
@@ -289,14 +287,14 @@ def gimnlresults(model, data, x, y, z, modeltype, reference, inflatecat):
     :param model: Estimation results.
     :param data: Model data used for estimation, subsetted to selected
         variables and missing values listwise deleted.
-    :param x: Multinomial Logit stage variables.
+    :param x: Covariates in Multinomial Logit stage.
     :param y: Dependent variable (DV).
-    :param z: Spplit-stage variables.
-    :param modeltype: type of inflated MNL model. One of 'bimnl3', 'simnl3',
+    :param z: Covariates in split-stage.
+    :param modeltype: Type of inflated MNL model. One of 'bimnl3', 'simnl3',
         or 'timnl3'.
     :param reference: List of order of categories. First element is the
         baseline/ reference category.
-    :param inflatecat: Tnflated category. One of 'baseline', 'second',
+    :param inflatecat: Inflated category. One of 'baseline', 'second',
         or 'third'.
     """
     varlist = np.unique(y + z + x)
@@ -371,9 +369,9 @@ def mnlresults(model, data, x, y, modeltype, reference):
     :param model: Estimation results.
     :param data: Model data used for estimation, subsetted to selected
         variables and missing values listwise deleted.
-    :param x: Multinomial Logit variables.
+    :param x: Covariates in Multi Nomial Logit stage.
     :param y: Dependent variable (DV).
-    :param modeltype: three-category MNL model ('mnl3').
+    :param modeltype: Three-category MNL model ('mnl3').
     :param reference: List of order of categories. First element is the
         baseline/ reference category.
     """
@@ -437,14 +435,14 @@ def gimnlmod(data, x, y, z, reference, inflatecat, method="BFGS", pstart=None):
 
     :param data: Full dataset.
     :type data: pandas.dataframe
-    :param x: MNL stage variables. The elements must match column
+    :param x: Covariates in Multi Nomial Logit stage. The elements must match column
     names of ``data``.
     :type x: list of str
     :param y: Dependent Variable. Values should be integers,
             with a number from 0-2 representing each category. The element
             must match column names of ``data``.
     :type y: list of str
-    :param z: Inflation stage variables. The elements must match column
+    :param z: Covariates in split-stage. The elements must match column
     names of ``data``.
     :type z: list of str
     :param reference:  List of three elements specifying the order of
@@ -519,7 +517,7 @@ def mnlmod(data, x, y, reference, method="BFGS", pstart=None):
 
     :param data: Full dataset.
     :type data: pandas.dataframe
-    :param x: MNL stage variables. The elements must match column
+    :param x: Covariates in MNL stage. The elements must match column
     names of ``data``
     :type x: list of str
     :param y: Dependent variable. Values should be integers,

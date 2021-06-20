@@ -355,3 +355,6 @@ Users can employ the argument `inflatecat` to specify any unordered category as 
 gimnl.gimnlmod(data, x, y, z, reference, inflatecat="second")
 gimnl.gimnlmod(data, x, y, z, reference, inflatecat="third")
 ```
+## Contributions
+
+The authors welcome and encourage new contributors to help test `IDCeMPy` and add new functionality. If one wishes to contact the authors, they may do so by emailing nkh8@psu.edu. Response times may vary.
