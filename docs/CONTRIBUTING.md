@@ -1,6 +1,6 @@
 # How to request support
 
-Questions about IDCeMPy can be sent to <nkh8@psu.edu> or by opening a new issue. 
+For questions about IDCeMPy, please contact <nkh8@psu.edu> or by open a new issue. 
 
 # How to contribute
 
