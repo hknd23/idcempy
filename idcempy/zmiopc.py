@@ -195,9 +195,9 @@ def op(pstart, x, y, data, weights, offsetx):
     :type x: pandas dataframe
     :param y: The dependent variable (DV)
     :type y: pandas dataframe
-    :param data: dataset.
+    :param data: Dataset.
     :type data: pandas dataframe
-    :param weights: weights.
+    :param weights: Weights.
     :type weights: int
     :param offsetx: Offset for covariates in the ordered stage.
     :type offsetx: int
@@ -303,7 +303,7 @@ def ziopc(pstart, x, y, z, data, weights, offsetx, offsetz):
     :type z: pandas dataframe
     :param data: Dataset with missing values listwise deleted.
     :type data: pandas dataframe
-    :param weights: weights.
+    :param weights: Weights.
     :type weights: float
     :param offsetx: Offset for the ordered probit stage covariates (X).
     :type offsetx: float
@@ -383,7 +383,7 @@ def miop(pstart, x, y, z, data, weights, offsetx, offsetz):
     :type z: pandas dataframe
     :param data: Dataset with missing values listwise deleted.
     :type data: pandas dataframe
-    :param weights: weights.
+    :param weights: Weights.
     :type weights: float
     :param offsetx: Offset for covariates in the ordered probit stage (X).
     :type offsetx: float
@@ -445,7 +445,7 @@ def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
     :type z: pandas dataframe
     :param data: Dataset with missing values listwise deleted.
     :type data: pandas dataframe
-    :param weights: weights.
+    :param weights: Weights.
     :type weights: float
     :param offsetx: Offset for the ordered probit stage covariates (X).
     :type offsetx: float
@@ -573,10 +573,10 @@ def opmod(data, x, y, pstart=None, method="BFGS", weights=1, offsetx=0):
     :type x: list of str
     :param y: Dependent Variable (DV).
     :type y: list of str
-    :param method: method for optimization, default is 'BFGS'. For other
+    :param method: Method for optimization, default is 'BFGS'. For other
         available methods, see scipy.optimize.minimize documentation.
-    :param weights: weights.
-    :param offsetx: offset for covariates (X).
+    :param weights: Weights.
+    :param offsetx: Offset for covariates (X).
     :return: OpModel
     """
     varlist = np.unique(y + x)
@@ -768,11 +768,11 @@ def iopmod(
     names of ``data``.
     :type z: list of str
     :param modeltype: Type of model to be estimated. Options are: "ziop" or 'miop'.
-    :param method: method for optimization, default 'BFGS'.  For other
+    :param method: Method for optimization, default 'BFGS'.  For other
         available methods, see scipy.optimize.minimize documentation.
-    :param weights: weights.
-    :param offsetx: offset for ordered probit stage covariates (X).
-    :param offsetz: offset for inflation stage covariates (Z).
+    :param weights: Weights.
+    :param offsetx: Offset for ordered probit stage covariates (X).
+    :param offsetz: Offset for inflation stage covariates (Z).
     :return: IopModel
     """
     types = ["ziop", "miop"]
@@ -841,11 +841,11 @@ def iopcmod(
     names of ``data``.
     :type z: list of str
     :param modeltype: Type of model to be estimated.  Options are: 'ziopc' or 'miopc'.
-    :param method: method for optimization, default is 'BFGS'.  For other
+    :param method: Method for optimization, default is 'BFGS'.  For other
         available methods, see scipy.optimize.minimize documentation.
-    :param weights: weights.
-    :param offsetx: offset for X.
-    :param offsetz: offset for Z.
+    :param weights: Weights.
+    :param offsetx: Offset for variables in ordered probit stage (X).
+    :param offsetz: Offset for variables in inflation stage (Z).
     :return: IopCModel
     """
     types = ["ziopc", "miopc"]
@@ -1042,7 +1042,7 @@ def vuong_opiop(opmodel, iopmodel):
 
     :param opmodel: The OP model from :class:`OpModel`.
     :param iopmodel: The ZiOP model from :class:`IopModel`.
-    :return: vuongopiop: Result of the Vuong test
+    :return: vuongopiop: Result of the Vuong test.
     """
     n1 = len(opmodel.data)
     y = iopmodel.Y
@@ -1093,7 +1093,7 @@ def vuong_opiopc(opmodel, iopcmodel):
 
     :param opmodel: The OP model from :class:`OpModel`.
     :param iopcmodel: The iOPC model from :class:`IopCModel`.
-    :return: vuongopiopc: Result of the Vuong test
+    :return: vuongopiopc: Result of the Vuong test.
     """
     n1 = len(opmodel.data)
     y = iopcmodel.Y
@@ -1151,9 +1151,9 @@ def split_effects(model, inflvar, nsims=10000):
         in the split-probit equation.
         (attribute .inflate of :class:`IopModel` or :class:`IopCModel`)
     :type inflvar: int
-    :param nsims: number of simulated observations, default is 10000.
+    :param nsims: Number of simulated observations, default is 10000.
     :type nsims: int
-    :return: changeprobs: a dataframe of the predicted
+    :return: changeprobs: A dataframe of the predicted
         probabilities when there is change in the variable (1)
         versus original values (0).
     """
@@ -1218,9 +1218,9 @@ def ordered_effects(model, ordvar, nsims=10000):
         in the ordered probit equation.
         (attribute .ordered of :class:`IopModel` or :class:`IopCModel`)
     :type ordvar: int
-    :param nsims: number of simulated observations, default is 10000.
+    :param nsims: Number of simulated observations, default is 10000.
     :type nsims: int
-    :return: changeprobs: a dataframe of the predicted
+    :return: changeprobs: A dataframe of the predicted
         probabilities when there is change in the variable for each outcome (1)
         versus original values (0).
     """
