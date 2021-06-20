@@ -61,6 +61,7 @@ This section provides instruction to estimate the ZiOP model using the self-repo
 We first import the required libraries, set up the package and import the dataset:
 
 .. testcode::
+
   # Import the necessary libraries and package
 
   import numpy as np
@@ -214,6 +215,7 @@ The package also includes :func:`zmiopc.iopcmod` which fits "zero-inflated" orde
 We first import the required libraries, set up the package and import the dataset:
 
 .. testcode::
+
   # Import the necessary libraries and IDCeMPy.
 
   import numpy as np
@@ -336,6 +338,7 @@ The predicted probabilities from the `ziopc_tob` model can be obtained with :fun
     ziopcgender = zmiopc.split_effects(ziopc_tob, 1, nsims = 10000)
 
 .. testcode::
+
    # Calculate change in predicted probabilities
 
    gender = zmiopc.ordered_effects(ziopc_tob, 1, nsims = 10000)
@@ -354,6 +357,7 @@ The following example uses 2004 presidential vote data from Elgun and Tilam (`20
 We begin by loading the required libraries and IDCeMPy
 
 .. testcode::
+
   # Import the necessary libraries and IDCeMPy.
 
   import pandas as pd
@@ -361,7 +365,9 @@ We begin by loading the required libraries and IDCeMPy
   from idcempy import zmiopc
 
 Next, we load the dataset.
+
 .. testcode::
+
     # Import and read the dataset
 
     url = 'https://github.com/hknd23/idcempy/raw/main/data/EUKnowledge.dta'
@@ -373,6 +379,7 @@ Next, we load the dataset.
 We then define the lists with the names of the variables used in the model
 
 .. testcode::
+
   # First, you should define a list of variable names of X, Z, and Y.
   # X = Column names of covariates (from `DataFrame`) used in ordered probit stage.
   # Z = Column names of covariates (from `DataFrame`) used in split-population stage.
@@ -411,6 +418,7 @@ The following message will appear when the model finishes converging.
          Gradient evaluations: 61  # See estimates:
 
 Print the results of the model.
+
 .. testcode::
 
    print(miop_EU.coefs)
@@ -491,7 +499,9 @@ Middle-inflated Ordered Probit (MiOPC) Model with Correlated Errors
 The steps to estimate the Middle-inflated Ordered Probit (MiOPC) with correlated errors is as folowws.
 
 First is importing the data and libraries:
+
 .. testcode::
+
   # Import the necessary libraries and IDCeMPy.
 
   import numpy as np
@@ -630,6 +640,7 @@ The OP model does not account for "zero inflation" or "middle inflation," so it 
 First, import the required libraries and data:
 
 .. testcode::
+
    # Import the necessary libraries and package
 
    import numpy as np
@@ -758,6 +769,7 @@ The GiMNL model minimize issues present when unordered polytomous outcome variab
 Similar to the models in the :py:mod:`zmiopc` module, the first step is to import the libraries and 2004 presidential vote choice dataset.
 
 .. testcode::
+
    # Import the module
     import pandas as pd
     import urllib
@@ -774,6 +786,7 @@ Similar to the models in the :py:mod:`zmiopc` module, the first step is to impor
 We the define the list of covariates in the split-stage (z), the multinomial logit-stage (x) and the outcome variable (y).
 
 .. testcode::
+
    # x = Column names of covariates (from `DataFrame`) in the outcome-stage.
    # z = Column names of covariates (from `DataFrame`) in the split-stage.
    # y = Column names of outcome variable (from `DataFrame`).
@@ -785,6 +798,7 @@ We the define the list of covariates in the split-stage (z), the multinomial log
 The values of the dependent variable must be represented numerically as "0", "1", and "2". To specify the baseline/reference category, users provide a three-element list for the `reference` argument (e.g [0,1,2]). The first element is the baseline/reference category.
 Users can employ the argument `inflatecat` to specify any unordered category as the inflated category (dictated by the distribution) in their unordered-polytomous outcome measure. If a higher category (say 1) is inflated in a 0,1,2 unordered outcome measure.
 We first need to specify the order of the outcome variable. Then, you need to define which category is "inflated."
+
 .. testcode::
 
    # Define order of variables
@@ -812,6 +826,7 @@ Further, employing the argument `reference`, users can select which category of 
    # inflatecat = inflated category.
 
 The following line of code prints the coefficients of the covariates.
+
 .. testcode::
 
    # Print coefficients
