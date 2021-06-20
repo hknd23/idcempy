@@ -22,17 +22,20 @@ pstartziopc = [-1.31, .32, 2.5, -.21,
 
 # These are correct pstart
 
-
+start_time= time.time()
 ziopc_JCR = zmiopc.iopcmod('ziopc',
                            data, X, Y, Z, pstart=pstartziopc, method='bfgs',
                            weights=1,
                            offsetx=0, offsetz=0)
+print("--- %s seconds ---" % (time.time() - start_time))
 
+start_time = time.time()
 ziop_JCR = zmiopc.iopmod('ziop',
                          data, X, Y, Z, pstart=pstartziop,
                          method='bfgs', weights=1,
                          offsetx=0,
                          offsetz=0)
+print("--- %s seconds ---" % (time.time() - start_time))
 
 ziopc_JCR_test = zmiopc.iopcmod('ziopc', data, X, Y, Z)
 
