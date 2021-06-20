@@ -100,7 +100,7 @@ The package sets a default start value of .01 for all parameters.
    # 'ziop' = model to be estimated. In this case 'ziop'
    # data = name of Pandas DataFrame
    # X = variables in the ordered probit stage.
-   # Y = pependent variable.
+   # Y = dependent variable.
    # Z = variables in the inflation stage.
    # method = method for optimization.  By default set to 'bfgs'
    # weights = weights.
@@ -207,6 +207,7 @@ Results from :func:`zmiopc.split_effects` and :func:`zmiopc.ordered_effects` can
 
 Zero-inflated Ordered Probit (ZiOPC) with Correlated Errors
 -----------------------------------------------------------
+
 The package also includes :func:`zmiopc.iopcmod` which fits "zero-inflated" ordered probit models (ZiOPC) under the assumption that the two errors are correlated with each other (i.e. correlated errors).
 
 We first import the required libraries, set up the package and import the dataset:
@@ -246,7 +247,7 @@ We first import the required libraries, set up the package and import the datase
    # 'ziopc' = model to be estimated. In this case 'ziopc'
    # data = name of Pandas DataFrame
    # X = variables in the ordered probit stage.
-   # Y = pependent variable.
+   # Y = dependent variable.
    # Z = variables in the inflation stage.
    # method = method for optimization.  By default set to 'bfgs'
    # weights = weights.
@@ -344,6 +345,7 @@ The predicted probabilities from the `ziopc_tob` model can be obtained with :fun
 
 Middle-inflated Ordered Probit (MiOP) without Correlated Errors
 ---------------------------------------------------------------
+
 A Middle-inflated Ordered Probit (MiOP) model should be estimated ehn the ordered outcome variable is inflated in the middle category.
 
 The following example uses 2004 presidential vote data from Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_).
@@ -390,7 +392,7 @@ After importing the dataset and specifying the list of variables from it, the Mi
    # 'miop' = Type of model to be estimated. In this case 'miop'
    # data = name of Pandas DataFrame
    # X = variables in the ordered probit stage.
-   # Y = pependent variable.
+   # Y = dependent variable.
    # Z = variables in the inflation stage.
    # method = method for optimization.  By default set to 'bfgs'
    # weights = weights.
@@ -532,7 +534,7 @@ The model can be estimated as follows:
    # 'miopc' = Type of model to be estimated. In this case 'miopc'
    # data = name of Pandas DataFrame
    # X = variables in the ordered probit stage.
-   # Y = pependent variable.
+   # Y = dependent variable.
    # Z = variables in the inflation stage.
    # method = method for optimization.  By default set to 'BFGS'
    # weights = weights.
@@ -587,14 +589,13 @@ To calculate the predicted probabilities:
 
    print(fittedziopc.responsefull)
 
-The following line of code allows you to compute changes in predicted probabilities when the value of a variable changes.
-This allows you to illustrate how the changes in the split-probit covariates affect the probablilities of being in one population versus another.
+The following line of code computes changes in predicted probabilities when the value of a variable changes.
 
 .. testcode::
 
    # Define model from which effects will be estimated and number of simulations
 
-   miopcxeno = idcempy.split_effects(miopc_EU, 1, nsims = 10000)
+   miopcxeno = zmiopc.split_effects(miopc_EU, 1, nsims = 10000)
 
 A box plot can illustrate the change in predicted probabilities.
 
@@ -621,10 +622,10 @@ To calculate the change in predicted probabilities of the outcome variable in th
 The Standard Ordered Probit (OP) model
 --------------------------------------
 
-The package also includes a function that allows you to estimate a standard Ordered Probit (OP) model.
-The OP model does not account for neither "zero inflation" not "middle inflation," so it does not have a split-probit stage.
+The package also includes :func:`zmiopc.opmod` that estimates a standard Ordered Probit (OP) model.
+The OP model does not account for "zero inflation" or "middle inflation," so it does not have a split-probit stage.
 
-We first import the required libraries, set up the package and import the dataset:
+First, import the required libraries and data:
 
 .. testcode::
    # Import the necessary libraries and package
@@ -642,6 +643,8 @@ We first import the required libraries, set up the package and import the datase
 
   data = pd.read_csv(url)
 
+The list of variable names for the Independent and Dependent variables needs to be specified:
+
 .. testcode::
 
      # Define a list of variable names (strings) X,Y:
@@ -651,22 +654,15 @@ We first import the required libraries, set up the package and import the datase
      X = ['age', 'grade', 'gender_dum']
      Y = ['cig_count']
 
-Your data is not ready for estimation.
-
-.. testcode::
-
-  # Define a list of starting parameters parameters for optimization:
-
-  pstartop = [.01, .01, .01, .01, .01, .01, .01]
+After importing the data and specifying the model, the following code fits the OP model:
 
   # Model estimation:
 
-  op_tob = zmiopc.opmod(pstartop, data, X, Y, method = 'bfgs', weights = 1, offsetx  =0)
+  op_tob = zmiopc.opmod(data, X, Y, method = 'bfgs', weights = 1, offsetx  =0)
 
-   # pstart = list of values of starting parameters.
-   # data = name of Pandas DataFrame
+   # data = name of pandas DataFrame
    # X = variables in the ordered probit stage.
-   # Y = pependent variable.
+   # Y = dependent variable.
    # method = method for optimization.  By default set to 'bfgs'
    # weights = weights.
    # offsetx = offset of X.  By Default is zero.
@@ -674,7 +670,7 @@ Your data is not ready for estimation.
 
   # Print estimates:
 
-  print(ziop_tob.coefs)
+  print(op_tob.coefs)
 
 Results from the model:
 
@@ -737,7 +733,7 @@ via a bidirectional test statistic of:
 
 where v < -1.96 favors the more general (ZiOP/ZiOPC) model, -1.96 < v < 1.96 lends no support to either model, and v > 1.96 supports the simpler (OP) model.
 
-The OP and ZiOP models must have the same number of observations, and the OP must have the same number of covariates as ZiOP's OP stage. The statistic reveals that the OP model is preferred over the ZiOP model.
+The OP and ZiOP models must have the same number of observations, and the OP must have the same number of covariates as ZiOP's OP stage. The statistic below reveals that the OP model is preferred over the ZiOP model.
 
 .. testcode::
 
@@ -749,15 +745,15 @@ The OP and ZiOP models must have the same number of observations, and the OP mus
 
    6.624742132792222
 
-The Vuong test can also be implemented to compare the ZiOPC, MiOP and MiOPC models and the OP model.
+The Vuong test can also be implemented to compare the ZiOPC, MiOP and MiOPC models with the OP model.
 
 Generalized Inflated Multinomial Logit (GiMNL) Model
 ----------------------------------------------------
 
-The IDCeMPy package also includes a function that estimates General "inflated" Multinomial Logit models (GiMNL). GiMNL models minimize issues present when unordered polytomous outcome variables have an excessive share and heterogeneous pool of observations in the lower category.
-Failing to account for such inflation could lead to inaccurate inferences.
+The :py:mod:`gimnl` module provides :func:`zmiopc.gimnlmod` to estimate the General "inflated" Multinomial Logit models (GiMNL) with three outcomes in the dependent variable.
+The GiMNL model minimize issues present when unordered polytomous outcome variables have an excessive share and heterogeneous pool of observations in the lower category.
 
-To estimate the GiMNL model, we first import the library and the dataset introduced above.
+Similar to the models in the :py:mod:`zmiopc` module, the first step is to import the libraries and 2004 presidential vote choice dataset.
 
 .. testcode::
    # Import the module
@@ -773,7 +769,7 @@ To estimate the GiMNL model, we first import the library and the dataset introdu
 
    data = pd.read_stata(url)
 
-We the define the list of covariates in the split-stage (z), the second-stage (x) and the outcome variable (y).
+We the define the list of covariates in the split-stage (z), the multinomial logit-stage (x) and the outcome variable (y).
 
 .. testcode::
    # x = Column names of covariates (from `DataFrame`) in the outcome-stage.
@@ -784,6 +780,7 @@ We the define the list of covariates in the split-stage (z), the second-stage (x
    z = ['educ', 'agegroup2']
    y = ['vote_turn']
 
+The values of the dependent variable must be represented numerically as "0", "1", and "2". To specify the baseline/reference category, users provide a three-element list for the `reference` argument (e.g [0,1,2]). The first element is the baseline/reference category.
 Users can employ the argument `inflatecat` to specify any unordered category as the inflated category (dictated by the distribution) in their unordered-polytomous outcome measure. If a higher category (say 1) is inflated in a 0,1,2 unordered outcome measure.
 We first need to specify the order of the outcome variable. Then, you need to define which category is "inflated."
 .. testcode::
