@@ -13,12 +13,12 @@ Z = ['logGDPpc', 'parliament']
 Y = ['rep_civwar_DV']
 data = DAT
 
-pstartziop = np.array([-1.31, .32, 2.5, -.21, .2, -0.2, -0.4, 0.2, .9, -.4])
+pstartziop = [-1.31, .32, 2.5, -.21, .2, -0.2, -0.4, 0.2, .9, -.4]
 
-pstartziopsmall = np.array([-1.31, .32, 2.5, -.21, .2, -0.2, -0.4, 0.2])
+pstartziopsmall = [-1.31, .32, 2.5, -.21, .2, -0.2, -0.4, 0.2]
 
-pstartziopc = np.array([-1.31, .32, 2.5, -.21,
-                        .2, -0.2, -0.4, 0.2, .9, -.4, .1])
+pstartziopc = [-1.31, .32, 2.5, -.21,
+                        .2, -0.2, -0.4, 0.2, .9, -.4, .1]
 
 # These are correct pstart
 
@@ -53,14 +53,9 @@ print(ziopc_JCR.coefs)
 print(ziop_JCR.coefs)
 
 # OP Model
-pstartop = np.array([-1, 0.3, -0.2, -0.5, 0.2, .9, -.4])
+pstartop = np.array[-1, 0.3, -0.2, -0.5, 0.2, .9, -.4]
 
-array1 = np.array([1, 2, 3])
-array2 = np.array([1, 2, 3])
-list1 = [1, 2, 3]
-list2 = [1, 2, 3]
-pstartcut = [-1, 0.3]
-pstartx = [-0.2, -0.5, 0.2, .9, -.4]
+
 
 DAT = pd.read_stata("C:/Users/Nguyen/Box/Summer 20/bp_exact_for_analysis.dta")
 X = ['logGDPpc', 'parliament', 'disaster', 'major_oil', 'major_primary']

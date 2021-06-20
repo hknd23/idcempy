@@ -207,7 +207,7 @@ Results from :func:`zmiopc.split_effects` and :func:`zmiopc.ordered_effects` can
 
 Zero-inflated Ordered Probit (ZiOPC) with Correlated Errors
 -----------------------------------------------------------
-The package also includes the function `iopcmod` which fits "zero-inflated" ordered probit models (ZiOPC) under the assumption that the two errors are correlated with each other (i.e. correlated errors).
+The package also includes :func:`zmiopc.iopcmod` which fits "zero-inflated" ordered probit models (ZiOPC) under the assumption that the two errors are correlated with each other (i.e. correlated errors).
 
 We first import the required libraries, set up the package and import the dataset:
 
@@ -237,7 +237,7 @@ We first import the required libraries, set up the package and import the datase
   Z = ['gender_dum']
   Y = ['cig_count']
 
-Our data is now a `Pandas` DataFrame, and we can proceed to estimate the ZiOP model as follows.
+:func:`zmiopc.iopcmod` estimates the ZiOPC model using the keyword `'ziopc'` in the first argument:
 
 .. testcode::
 
@@ -253,9 +253,6 @@ Our data is now a `Pandas` DataFrame, and we can proceed to estimate the ZiOP mo
    # offsetx = offset of X.  By Default is zero.
    # offsetz = offset of z
 
-
-The package sets a default start value of .01 for all parameters.  Users can modify it by creating an array with their desired values, define such array as `pstart` and add it to as an argument in the model function.
-
 The results are stored in the attributes of :class:`zmiopc.IopCModel`.
 
 .. testoutput::
@@ -265,7 +262,7 @@ The results are stored in the attributes of :class:`zmiopc.IopCModel`.
          Function evaluations: 1562
          Gradient evaluations: 142
 
-The following line of code prints the results
+The following line of code prints the results:
 
 .. testcode::
 
@@ -285,7 +282,7 @@ The following line of code prints the results
    Ordered: gender_dum    0.602136  0.053084  11.343020  0.000000e+00   0.498091   0.706182
    rho                   -0.415770  0.074105  -5.610526  2.017123e-08  -0.561017  -0.270524
 
-To print the estimates of the log-likelihood, AIC, and Variance-Covariance matrix, you should type:
+To print the estimates of the log-likelihood, AIC, and Variance-Covariance matrix:
 
 .. testcode::
 
@@ -307,8 +304,7 @@ The AIC of the ziopc_tob model, for example, is:
 
   10140.103819465658
 
-The predicted probabilities from the `ziopc_tob` model can ve obtained as follows.
-
+The predicted probabilities from the `ziopc_tob` model can be obtained with :func:`zmiopc.iopcfit` as follows.
 
 .. testcode::
 
@@ -330,16 +326,12 @@ The predicted probabilities from the `ziopc_tob` model can ve obtained as follow
  [0.87523652 0.06888286 0.01564958 0.0275354  0.01269564]
  [0.82678185 0.0875059  0.02171135 0.04135142 0.02264948]]
 
-You can compute changes in predicted probabilities when the value of a variable changes.
-This allows you to illustrate how the changes in the split-probit covariates affect the probabilities of being in one population versus another. The example below illustrates the marginal effects of the variable 'gender_dum' on the outcome variable in the ZiOPC model estimated in ths documentation.
+ Similar to the ZiOP model, :func:`zmiopc.split_effects` and :func:`zmiopc.ordered_effects` can also
+ compute changes in predicted probabilities for the ZiOPC model.
 
 .. testcode::
 
-    ziopcgender = idcempy.split_effects(ziopc_tob, 1, nsims = 10000)
-
-You can calculate the change in predicted probabilities of the outcome variable when the value of a covarariate changes.
-
-You can also obtain a box plot that displays the change in predicted probabilities of the outcome variable in the ZiOPC model.
+    ziopcgender = zmiopc.split_effects(ziopc_tob, 1, nsims = 10000)
 
 .. testcode::
    # Calculate change in predicted probabilities
@@ -352,16 +344,15 @@ You can also obtain a box plot that displays the change in predicted probabiliti
 
 Middle-inflated Ordered Probit (MiOP) without Correlated Errors
 ---------------------------------------------------------------
-If your ordered outcome variable is inflated in the middle category, you should estimate a  Middle-inflated Ordered Probit (MiOP) model.
+A Middle-inflated Ordered Probit (MiOP) model should be estimated ehn the ordered outcome variable is inflated in the middle category.
 
-The following example uses data from Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_).
+The following example uses 2004 presidential vote data from Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_).
 
 We begin by loading the required libraries and IDCeMPy
 
 .. testcode::
   # Import the necessary libraries and IDCeMPy.
 
-  import numpy as np
   import pandas as pd
   import urllib
   from idcempy import zmiopc
@@ -370,13 +361,14 @@ Next, we load the dataset.
 .. testcode::
     # Import and read the dataset
 
-    url = 'https://github.com/hknd23/zmiopc/blob/main/data/'
+    url = 'https://github.com/hknd23/idcempy/raw/main/data/EUKnowledge.dta'
 
     # Define a `Pandas` DataFrame
 
     data = pd_read.stata(url)
 
 We then define the lists with the names of the variables used in the model
+
 .. testcode::
   # First, you should define a list of variable names of X, Z, and Y.
   # X = Column names of covariates (from `DataFrame`) used in ordered probit stage.
@@ -387,7 +379,7 @@ We then define the lists with the names of the variables used in the model
   Z = ['discuss_politics', 'EU_Know_ob']
   Y = ['EU_support_ET']
 
-Your data is now ready, and you can begin the estimation process.
+After importing the dataset and specifying the list of variables from it, the MiOP model is estimated with the following step:
 
 .. testcode::
 
@@ -433,7 +425,7 @@ Print the results of the model.
 
 In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals.
 
-The model object also stores three different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).
+The model object :class:`zmiopc.IopModel` also stores three different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).
 
 .. testcode::
 
@@ -452,38 +444,33 @@ The model object also stores three different diagnostic tests: (1) Log-likelihoo
    print(miop_EU.vcov)
 
 
-To estimate the predicted probabilities:
+:func:`zmiopc.iopfit` calculates the predicted probabilities for the MiOP model:
 
 .. testcode::
 
    # Define the model for which you want to estimate the predicted probabilities
 
-   fittedmiop = zmiopc.iopcfit(miop_EU)
+   fittedmiop = zmiopc.iopfit(miop_EU)
 
    # Print predicted probabilities
 
-   print(fittedziopc.responsefull)
+   print(fittedmiop.responsefull)
 
-The package also allows you to simulates data from MiOP model results and compute changes in predicted probabilities when the value of a variable changes.
-This allows you to illustrate how the changes in the split-probit covariates affect the probablilities of being in one population versus another.
+The MiOP model can also work with :func:`zmiopc.split_effects` and :func:`zmiopc.ordered_effects` to compute changes in predicted probabilities when the value of a variable changes.
 
 .. testcode::
 
     # Define model from which predicted probabilities will be estimated and the number of simulations.
 
-    miopxeno = idcempy.split_effects(miop_EU, 1, nsims = 10000)
+    miopxeno = zmiopc.split_effects(miop_EU, 1, nsims = 10000)
 
-To plot the predicted probabilities.
+To plot the predicted probabilities:
 
 .. testcode::
-
 
      # Get box plot of predicted probabilities
 
      miopxeno.plot.box(grid='False')
-
-
-You can calculate the change in predicted probabilities of the outcome variable when the value of a covarariate changes. The box plots below display the change in predicted probabilities of the outcome variable in the MiOP model estimated above when Xenophobia increases one standard deviation from its mean value.
 
 .. testcode::
 
@@ -496,11 +483,11 @@ You can calculate the change in predicted probabilities of the outcome variable 
     xeno.plot.box(grid='False')
 
 Middle-inflated Ordered Probit (MiOPC) Model with Correlated Errors
---------------------------------------------------------------------
-You can estimate a Middle-inflated Ordered Probit (MiOPC) with correlated errors as follows.
+-------------------------------------------------------------------
 
-We begin by loading the required libraries and IDCeMPy
+The steps to estimate the Middle-inflated Ordered Probit (MiOPC) with correlated errors is as folowws.
 
+First is importing the data and libraries:
 .. testcode::
   # Import the necessary libraries and IDCeMPy.
 
@@ -515,13 +502,13 @@ Next, we load the dataset.
 
     # Import and read the dataset
 
-    url = 'https://github.com/hknd23/zmiopc/blob/main/data/'
+    url = 'https://github.com/hknd23/idcempy/raw/main/data/EUKnowledge.dta'
 
     # Define a `Pandas` DataFrame
 
     data = pd_read.stata(url)
 
-We then define the lists with the names of the variables used in the model
+We then define the lists with the names of the variables used in the model:
 
 .. testcode::
 
@@ -534,13 +521,13 @@ We then define the lists with the names of the variables used in the model
    Z = ['discuss_politics', EU_Know_ob]
    Y = ['EU_support_ET']
 
-The model can be estimated as follows.
+The model can be estimated as follows:
 
 .. testcode::
 
    # Model estimation
 
-   miopc_EU = zmiopc.iopcmod('miopc', pstartziop, data, X, Y, Z, method = 'bfgs', weights = 1,offsetx = 0, offsetz =0 )
+   miopc_EU = zmiopc.iopcmod('miopc', data, X, Y, Z, method = 'bfgs', weights = 1,offsetx = 0, offsetz =0 )
 
    # 'miopc' = Type of model to be estimated. In this case 'miopc'
    # data = name of Pandas DataFrame
@@ -552,7 +539,7 @@ The model can be estimated as follows.
    # offsetx = offset of X.  By Default is zero.
    # offsetz = offset of z
 
-Print coefficients,
+Print model coefficients:
 
 .. testcode::
 
@@ -572,7 +559,7 @@ Print coefficients,
 
 In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals.
 
-The model object also stores three different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
+The model object :class:`zmiopc.IopCModel` also stores three different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).  You can obtain them via the following commands:
 
 .. testcode::
 
@@ -588,7 +575,7 @@ The model object also stores three different diagnostic tests: (1) Log-likelihoo
 
    rint(miopc_EU.vcov)
 
-To estimate the predicted probabilities:
+To calculate the predicted probabilities:
 
 .. testcode::
 
