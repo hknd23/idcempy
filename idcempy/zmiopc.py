@@ -759,13 +759,13 @@ def iopmod(
     :param data: Dataset used for estimation, subsetted to selected
         variables and missing values listwise deleted.
     :param x: Covariates in the ordered probit stage. Elements must match column
-    names of ``data``.
+        names of ``data``.
     :type x: list of str
     :param y: Dependent variable (DV). Element must match column
-    names of ``data``.
+        names of ``data``.
     :type y: list of str
     :param z: Inflation stage variable. Elements must match column
-    names of ``data``.
+        names of ``data``.
     :type z: list of str
     :param modeltype: Type of model to be estimated. Options are: "ziop" or 'miop'.
     :param method: Method for optimization, default 'BFGS'.  For other
@@ -833,13 +833,13 @@ def iopcmod(
     :param data: Dataset used for estimation, subsetted to selected
         variables and missing values listwise deleted.
     :param x: Covariates for the ordered probit stage. Elements must match column
-    names of ``data``.
+        names of ``data``.
     :type x: list of str
     :param y: The dependent variable (DV). Element must match column
-    names of ``data``.
+        names of ``data``.
     :type y: list of str
     :param z: Covariates for the inflation stage. Elements must match column
-    names of ``data``.
+        names of ``data``.
     :type z: list of str
     :param modeltype: Type of model to be estimated.  Options are: 'ziopc' or 'miopc'.
     :param method: Method for optimization, default is 'BFGS'.  For other
