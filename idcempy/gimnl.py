@@ -32,9 +32,9 @@ class GimnlModel:
         for the Generalized Inflated Multinomial Logit Model.
 
         :param modeltype: Type of GIMNL Model (bimnl3, simnl3, or timnl3),
-        indicating the inflated category.
+            indicating the inflated category.
         :param reference: Order of categories. The order category will be
-        the first element.
+            the first element.
         :param llik: Log-Likelihood.
         :param coef: Model coefficients.
         :param aic: Model Akaike information .
@@ -96,7 +96,7 @@ class MnlModel:
 
         :param modeltype: Type of Model (mnl3).
         :param reference: Order of categories. The order category will be
-        the first element.
+            the first element.
         :param llik: Log-Likelihood.
         :param coef: Model coefficients.
         :param aic: Model Akaike information .
@@ -435,12 +435,12 @@ def gimnlmod(data, x, y, z, reference, inflatecat, method="BFGS", pstart=None):
 
     :param data: Full dataset.
     :type data: pandas.dataframe
-    :param x: Covariates in Multi Nomial Logit stage. The elements must match column
-    names of ``data``.
+    :param x: Covariates in Multi Nomial Logit stage. The elements must match
+        column names of ``data``.
     :type x: list of str
     :param y: Dependent Variable. Values should be integers,
-            with a number from 0-2 representing each category. The element
-            must match column names of ``data``.
+        with a number from 0-2 representing each category. The element
+        must match column names of ``data``.
     :type y: list of str
     :param z: Covariates in split-stage. The elements must match column
     names of ``data``.
@@ -518,10 +518,10 @@ def mnlmod(data, x, y, reference, method="BFGS", pstart=None):
     :param data: Full dataset.
     :type data: pandas.dataframe
     :param x: Covariates in MNL stage. The elements must match column
-    names of ``data``
+        names of ``data``
     :type x: list of str
     :param y: Dependent variable. Values should be integers,
-            with a number from 0-2 representing each category.
+        with a number from 0-2 representing each category.
     :param reference:  List of three elements specifying the order of
         categories (e.g [0, 1, 2], [2, 1, 0]. etc...). The first element is
         the baseline/reference category.
