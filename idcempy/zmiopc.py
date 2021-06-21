@@ -189,7 +189,8 @@ class FittedVals:
 def op(pstart, x, y, data, weights, offsetx):
     """Calculate likelihood function for Ordered Probit Model.
 
-    :param pstart: A list of starting values for the estimation.  Length of the number of parameters. 
+    :param pstart: A list of starting values for the estimation.
+        Length of the number of parameters to be estimated.
     :type pstart: list
     :param x: Covariates for the ordered stage.
     :type x: pandas dataframe
@@ -238,7 +239,8 @@ def op(pstart, x, y, data, weights, offsetx):
 def ziop(pstart, x, y, z, data, weights, offsetx, offsetz):
     """Calculate likelihood function for Zero-inflated Model.
 
-    :param pstart: A list of starting values for the estimation.  Length of the number of parameters. 
+    :param pstart: A list of starting values for the estimation.
+        Length of the number of parameters to be estimated.
     :type pstart: list
     :param x: Covariates for the ordered probit stage. 
     :type x: pandas dataframe
@@ -293,7 +295,8 @@ def ziop(pstart, x, y, z, data, weights, offsetx, offsetz):
 def ziopc(pstart, x, y, z, data, weights, offsetx, offsetz):
     """Calculate likelihood function for Zero-inflated Correlated-Errors Model.
 
-    :param pstart: A list of starting values for the estimation.  Length of the number of parameters. 
+    :param pstart: A list of starting values for the estimation.
+        Length of the number of parameters to be estimated.
     :type pstart: list
     :param x: Covariates for the ordered probit stage. 
     :type x: pandas dataframe
@@ -371,9 +374,12 @@ def miop(pstart, x, y, z, data, weights, offsetx, offsetz):
     """
     Likelihood function for Middle-inflated Ordered Probit Model
     "without" correlated errors.
-    You must have an odd number of categories in your ordered dependent variable. 
 
-    :param pstart: A list of starting values for the estimation.  Length of the number of parameters.
+    The number of categories in the dependent
+    variable must be odd.
+
+    :param pstart: A list of starting values for the estimation.
+        Length of the number of parameters to be estimated.
     :type pstart: list
     :param x: Covariates in the ordered probit stage. 
     :type x: pandas dataframe
@@ -433,9 +439,11 @@ def miop(pstart, x, y, z, data, weights, offsetx, offsetz):
 def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
     """
     Likelihood function for Middle-inflated Correlated-Errors Model.
-    You must have an odd number of categories in your ordered dependent variable.  
+    
+    The number of categories in the dependent variable must be odd.
 
-    :param pstart: A list of starting values for the estimation.  Length of the number of parameters.
+    :param pstart: A list of starting values for the estimation.
+        Length of the number of parameters to be estimated.
     :type pstart: list
     :param x: Covariates in the ordered probit stage.
     :type x: pandas dataframe
@@ -567,7 +575,8 @@ def opresults(model, data, x, y):
 def opmod(data, x, y, pstart=None, method="BFGS", weights=1, offsetx=0):
     """Estimates Ordered Probit model and returns :class:`OpModel` class object.
 
-    :param pstart: A list of starting values for the estimation.  Length of the number of parameters.  
+    :param pstart: A list of starting values for the estimation. 
+        Length of the number of parameters to be estimated.  
     :type pstart: list
     :param data: Dataset.
     :type x: list of str
@@ -754,7 +763,8 @@ def iopmod(
 ):
     """Estimate ZiOP model and return :class:`IopModel` class object as output.
 
-    :param pstart: A list of starting values for the estimation.  Length of the number of parameters.
+    :param pstart: A list of starting values for the estimation.
+        Length of the number of parameters to be estimated.
     :type pstart: list
     :param data: Dataset used for estimation, subsetted to selected
         variables and missing values listwise deleted.
@@ -828,12 +838,13 @@ def iopcmod(
 ):
     """Estimate an iOP model (ZiOP or MiOP) and return :class:`IopcModel`.
 
-    :param pstart: A list of starting values for the estimation.  Length of the number of parameters.    
+    :param pstart: A list of starting values for the estimation.
+        Length of the number of parameters to be estimated.
     :type pstart: list
     :param data: Dataset used for estimation, subsetted to selected
         variables and missing values listwise deleted.
-    :param x: Covariates for the ordered probit stage. Elements must match column
-        names of ``data``.
+    :param x: Covariates for the ordered probit stage.
+        Elements must match column names of ``data``.
     :type x: list of str
     :param y: The dependent variable (DV). Element must match column
         names of ``data``.
@@ -841,8 +852,9 @@ def iopcmod(
     :param z: Covariates for the inflation stage. Elements must match column
         names of ``data``.
     :type z: list of str
-    :param modeltype: Type of model to be estimated.  Options are: 'ziopc' or 'miopc'.
-    :param method: Method for optimization, default is 'BFGS'.  For other
+    :param modeltype: Type of model to be estimated.
+        Options are: 'ziopc' or 'miopc'.
+    :param method: Method for optimization, default is 'BFGS'. For other
         available methods, see scipy.optimize.minimize documentation.
     :param weights: Weights.
     :param offsetx: Offset for variables in ordered probit stage (X).
