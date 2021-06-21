@@ -199,9 +199,7 @@ def op(pstart, x, y, data, weights, offsetx):
     :param data: Dataset.
     :type data: pandas.DataFrame
     :param weights: Weights.
-    :type weights: int
     :param offsetx: Offset for covariates in the ordered stage.
-    :type offsetx: int
     """
     n = len(data)
     ycat = y.astype("category")
