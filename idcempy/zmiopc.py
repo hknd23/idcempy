@@ -193,11 +193,11 @@ def op(pstart, x, y, data, weights, offsetx):
         Length of the number of parameters to be estimated.
     :type pstart: list
     :param x: Covariates for the ordered stage.
-    :type x: pandas dataframe
+    :type x: pandas.DataFrame
     :param y: The dependent variable (DV).
-    :type y: pandas dataframe
+    :type y: pandas.DataFrame
     :param data: Dataset.
-    :type data: pandas dataframe
+    :type data: pandas.DataFrame
     :param weights: Weights.
     :type weights: int
     :param offsetx: Offset for covariates in the ordered stage.
@@ -243,13 +243,13 @@ def ziop(pstart, x, y, z, data, weights, offsetx, offsetz):
         Length of the number of parameters to be estimated.
     :type pstart: list
     :param x: Covariates for the ordered probit stage. 
-    :type x: pandas dataframe
+    :type x: pandas.DataFrame
     :param y: The ordinal dependent Variable (DV). 
-    :type y: pandas dataframe
+    :type y: pandas.DataFrame
     :param z: Covariates for the inflation stage. 
-    :type z: pandas dataframe
+    :type z: pandas.DataFrame
     :param data: Dataset with missing values listwise deleted.
-    :type data: pandas dataframe
+    :type data: pandas.DataFrame
     :param weights: weights.
     :type weights: float
     :param offsetx: Offset for the ordered stage covariates (X). 
@@ -299,13 +299,13 @@ def ziopc(pstart, x, y, z, data, weights, offsetx, offsetz):
         Length of the number of parameters to be estimated.
     :type pstart: list
     :param x: Covariates for the ordered probit stage. 
-    :type x: pandas dataframe
+    :type x: pandas.DataFrame
     :param y: The dependent variable (DV).
-    :type y: pandas dataframe
+    :type y: pandas.DataFrame
     :param z: Covariates for the inflation stage. 
-    :type z: pandas dataframe
+    :type z: pandas.DataFrame
     :param data: Dataset with missing values listwise deleted.
-    :type data: pandas dataframe
+    :type data: pandas.DataFrame
     :param weights: Weights.
     :type weights: float
     :param offsetx: Offset for the ordered probit stage covariates (X).
@@ -382,13 +382,13 @@ def miop(pstart, x, y, z, data, weights, offsetx, offsetz):
         Length of the number of parameters to be estimated.
     :type pstart: list
     :param x: Covariates in the ordered probit stage. 
-    :type x: pandas dataframe
+    :type x: pandas.DataFrame
     :param y: The dependent variable (DV).
-    :type y: pandas dataframe
+    :type y: pandas.DataFrame
     :param z: Covariates in the inflation stage. 
-    :type z: pandas dataframe
+    :type z: pandas.DataFrame
     :param data: Dataset with missing values listwise deleted.
-    :type data: pandas dataframe
+    :type data: pandas.DataFrame
     :param weights: Weights.
     :type weights: float
     :param offsetx: Offset for covariates in the ordered probit stage (X).
@@ -446,13 +446,13 @@ def miopc(pstart, x, y, z, data, weights, offsetx, offsetz):
         Length of the number of parameters to be estimated.
     :type pstart: list
     :param x: Covariates in the ordered probit stage.
-    :type x: pandas dataframe
+    :type x: pandas.DataFrame
     :param y: The dependent variable (DV). 
-    :type y: pandas dataframe
+    :type y: pandas.DataFrame
     :param z: Covariates in the inflation stage.
-    :type z: pandas dataframe
+    :type z: pandas.DataFrame
     :param data: Dataset with missing values listwise deleted.
-    :type data: pandas dataframe
+    :type data: pandas.DataFrame
     :param weights: Weights.
     :type weights: float
     :param offsetx: Offset for the ordered probit stage covariates (X).
@@ -766,10 +766,10 @@ def iopmod(
     :param pstart: A list of starting values for the estimation.
         Length of the number of parameters to be estimated.
     :type pstart: list
-    :param data: Dataset used for estimation, subsetted to selected
-        variables and missing values listwise deleted.
-    :param x: Covariates in the ordered probit stage. Elements must match column
-        names of ``data``.
+    :param data: Full dataset used for estimation.
+    :type data: pandas.DataFrame
+    :param x: Covariates in the ordered probit stage.
+        Elements must match column names of ``data``.
     :type x: list of str
     :param y: Dependent variable (DV). Element must match column
         names of ``data``.
@@ -777,7 +777,8 @@ def iopmod(
     :param z: Inflation stage variable. Elements must match column
         names of ``data``.
     :type z: list of str
-    :param modeltype: Type of model to be estimated. Options are: "ziop" or 'miop'.
+    :param modeltype: Type of model to be estimated.
+        Options are: "ziop" or 'miop'.
     :param method: Method for optimization, default 'BFGS'.  For other
         available methods, see scipy.optimize.minimize documentation.
     :param weights: Weights.
@@ -841,8 +842,8 @@ def iopcmod(
     :param pstart: A list of starting values for the estimation.
         Length of the number of parameters to be estimated.
     :type pstart: list
-    :param data: Dataset used for estimation, subsetted to selected
-        variables and missing values listwise deleted.
+    :param data: Dataset used for estimation.
+    :type data: pandas.DataFrame
     :param x: Covariates for the ordered probit stage.
         Elements must match column names of ``data``.
     :type x: list of str
