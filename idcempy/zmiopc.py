@@ -193,7 +193,7 @@ def op(pstart, x, y, data, weights, offsetx):
     :type pstart: list
     :param x: Covariates for the ordered stage.
     :type x: pandas dataframe
-    :param y: The dependent variable (DV)
+    :param y: The dependent variable (DV).
     :type y: pandas dataframe
     :param data: Dataset.
     :type data: pandas dataframe
@@ -828,7 +828,8 @@ def iopcmod(
 ):
     """Estimate an iOP model (ZiOP or MiOP) and return :class:`IopcModel`.
 
-    :param pstart: A list of starting values for the estimation.  Length of the number of parameters.    :type pstart: list
+    :param pstart: A list of starting values for the estimation.  Length of the number of parameters.    
+    :type pstart: list
     :param data: Dataset used for estimation, subsetted to selected
         variables and missing values listwise deleted.
     :param x: Covariates for the ordered probit stage. Elements must match column
