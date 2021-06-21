@@ -1156,7 +1156,7 @@ def split_effects(model, inflvar, nsims=10000):
     and chosen numerical variable is mean value + 1 standard deviation.
     Other variables are kept at 0 or mean value
     (Note: the current version of the function
-    recognize ordinal variables as numerical).
+    recognizes ordinal variables as numerical).
 
     :param model: :class:`IopModel` or :class:`IopCModel`.
     :param inflvar: Number representing the location of variable
@@ -1223,7 +1223,7 @@ def ordered_effects(model, ordvar, nsims=10000):
     and chosen numerical variable is mean value + 1 standard deviation.
     Other variables are kept at 0 or mean value
     (Note: the current version of the function
-    recognize ordinal variables as numerical).
+    recognizes ordinal variables as numerical).
 
     :param model: :class:`IopModel` or :class:`IopCModel`.
     :param ordvar: Number representing the location of variable

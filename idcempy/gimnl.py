@@ -443,7 +443,7 @@ def gimnlmod(data, x, y, z, reference, inflatecat, method="BFGS", pstart=None):
         must match column names of ``data``.
     :type y: list of str
     :param z: Covariates in split-stage. The elements must match column
-    names of ``data``.
+        names of ``data``.
     :type z: list of str
     :param reference:  List of three elements specifying the order of
         categories (e.g [0, 1, 2], [2, 1, 0]. etc...). The first element is
