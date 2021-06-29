@@ -69,14 +69,14 @@ class TestMiop(unittest.TestCase):
     def test_miopmodel(self):
         self.assertAlmostEqual(zmiopc.iopmod('miop',
                                              DAT, X, Y, Z).coefs.iloc[2, 0],
-                               0.43, places=0)
+                               0.43, places=1)
         self.assertAlmostEqual(zmiopc.iopmod('miop',
                                              DAT, X, Y, Z).coefs.iloc[14, 0],
-                               0.90, places=0)
+                               0.90, places=1)
 
 
 class TestMiopc(unittest.TestCase):
     def test_miopcmodel(self):
         self.assertAlmostEqual(zmiopc.iopcmod('miopc',
                                               DAT, X, Y, Z).coefs.iloc[14, 0],
-                               0.84, places=0)
+                               0.84, places=1)
