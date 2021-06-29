@@ -47,14 +47,14 @@ class TestZiopLlike(unittest.TestCase):
     def test_zioploglike(self):
         self.assertAlmostEqual(zmiopc.ziop(pstartziop, x_, yx_, z_,
                                            datasetnew, 1, 0, 0), 1486.169,
-                               places=0)
+                               places=2)
 
 
 class TestZiopCLlike(unittest.TestCase):
     def test_ziopcloglike(self):
         self.assertAlmostEqual(zmiopc.ziopc(pstartziopc, x_, yx_, z_,
                                            datasetnew, 1, 0, 0), 1487.748,
-                               places=0)
+                               places=2)
 
 
 class TestOp(unittest.TestCase):
@@ -63,7 +63,7 @@ class TestOp(unittest.TestCase):
                                             pstart=pstartop, method='bfgs',
                                             weights=1,
                                             offsetx=0).coefs.iloc[2, 0],
-                               -0.21, places=0)
+                               -0.21, places=1)
 
 
 class TestZiop(unittest.TestCase):
@@ -73,13 +73,13 @@ class TestZiop(unittest.TestCase):
                                              method='bfgs', weights=1,
                                              offsetx=0,
                                              offsetz=0).coefs.iloc[4, 0],
-                               -0.29, places=0)
+                               -0.29, places=1)
         self.assertAlmostEqual(zmiopc.iopmod('ziop',
                                              data, X, Y, Z, pstart=pstartziop,
                                              method='bfgs', weights=1,
                                              offsetx=0,
                                              offsetz=0).coefs.iloc[5, 0],
-                               0.04, places=0)
+                               0.04, places=1)
 
 
 class TestZiopc(unittest.TestCase):
@@ -90,21 +90,21 @@ class TestZiopc(unittest.TestCase):
                                               method='bfgs', weights=1,
                                               offsetx=0,
                                               offsetz=0).coefs.iloc[-1, 0],
-                               -0.889, places=0)
+                               -0.889, places=1)
         self.assertAlmostEqual(zmiopc.iopcmod('ziopc',
                                               data, X, Y, Z,
                                               pstart=pstartziopc,
                                               method='bfgs', weights=1,
                                               offsetx=0,
                                               offsetz=0).coefs.iloc[4, 0],
-                               -0.37, places=0)
+                               -0.37, places=1)
         self.assertAlmostEqual(zmiopc.iopcmod('ziopc',
                                               data, X, Y, Z,
                                               pstart=pstartziopc,
                                               method='bfgs', weights=1,
                                               offsetx=0,
                                               offsetz=0).coefs.iloc[5, 0],
-                               0.33, places=0)
+                               0.33, places=1)
 
 
 class VuongOpZiopc(unittest.TestCase):
@@ -122,7 +122,7 @@ class VuongOpZiopc(unittest.TestCase):
                                                                 weights=1,
                                                                 offsetx=0,
                                                                 offsetz=0)),
-                               -4.909, places=0)
+                               -4.909, places=1)
         self.assertAlmostEqual(zmiopc.vuong_opiopc(zmiopc.opmod(data, X, Y,
                                                                 pstart=
                                                                 pstartop,
@@ -138,4 +138,4 @@ class VuongOpZiopc(unittest.TestCase):
                                                                   , weights=1,
                                                                   offsetx=0,
                                                                   offsetz=0)),
-                               -5.424, places=0)
+                               -5.424, places=1)

@@ -49,20 +49,20 @@ class TestMiopLlike(unittest.TestCase):
     def test_zioploglike(self):
         self.assertAlmostEqual(zmiopc.miop(pstartmiop, x_, yx_, z_,
                                            datasetnew, 1, 0, 0), 11030.403,
-                               places=0)
+                               places=2)
 
 
 class TestMiopCLlike(unittest.TestCase):
     def test_ziopcloglike(self):
         self.assertAlmostEqual(zmiopc.miopc(pstartmiopc, x_, yx_, z_,
                                             datasetnew, 1, 0, 0), 11009.157,
-                               places=0)
+                               places=2)
 
 
 class TestOp(unittest.TestCase):
     def test_opmodel(self):
         self.assertAlmostEqual(zmiopc.opmod(DAT, X, Y).coefs.iloc[2, 0],
-                               0.76, places=0)
+                               0.76, places=1)
 
 
 class TestMiop(unittest.TestCase):
