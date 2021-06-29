@@ -528,6 +528,7 @@ def opresults(model, data, x, y):
 
     :param model: Model estimation results obtained from minimization.
     :param data: Dataset.
+    :type data: pandas.DataFrame
     :param x: Independent variables.
     :param y: : Dependent Variable.
     """
@@ -577,6 +578,7 @@ def opmod(data, x, y, pstart=None, method="BFGS", weights=1, offsetx=0):
         Length of the number of parameters to be estimated.  
     :type pstart: list
     :param data: Dataset.
+    :type data: pandas.DataFrame
     :type x: list of str
     :param y: Dependent Variable (DV).
     :type y: list of str
@@ -611,6 +613,7 @@ def iopresults(model, data, x, y, z, modeltype):
 
     :param model: Model estimation results obtained from minimization.
     :param data: Dataset.
+    :type data: pandas.DataFrame
     :param x: Covariates in the ordered probit stage.
     :param y: : Dependent Variable (DV).
     :param z: : Covariates in the inflation stage.
@@ -680,6 +683,7 @@ def iopcresults(model, data, x, y, z, modeltype):
 
     :param model: Model estimation results obtained from minimization.
     :param data: Dataset.
+    :type data: pandas.DataFrame
     :param x: Covariates in the ordered probit stage.
     :param y: : Dependent Variable (DV).
     :param z: : Covariates in the inflation stage. 

@@ -287,6 +287,7 @@ def gimnlresults(model, data, x, y, z, modeltype, reference, inflatecat):
     :param model: Estimation results.
     :param data: Model data used for estimation, subsetted to selected
         variables and missing values listwise deleted.
+    :type data: pandas.DataFrame
     :param x: Covariates in Multinomial Logit stage.
     :param y: Dependent variable (DV).
     :param z: Covariates in split-stage.
@@ -369,6 +370,7 @@ def mnlresults(model, data, x, y, modeltype, reference):
     :param model: Estimation results.
     :param data: Model data used for estimation, subsetted to selected
         variables and missing values listwise deleted.
+    :type data: pandas.DataFrame
     :param x: Covariates in Multi Nomial Logit stage.
     :param y: Dependent variable (DV).
     :param modeltype: Three-category MNL model ('mnl3').
