@@ -168,7 +168,6 @@ The following funtion extracts predicted probabilities from the model:
   fittedziop = ziopc.iopfit(ziop_tob)
 
   # Print the predicted probabilities
-
   print(fittedziopc.responsefull)
 
 .. testoutput::
@@ -201,7 +200,6 @@ Results from :func:`zmiopc.split_effects` and :func:`zmiopc.ordered_effects` can
     gender = zmiopc.ordered_effects(ziop_tob, 2, nsims = 10000)
 
     # The box plot from the results:
-
     gender.plot.box(grid='False')
 
 Zero-inflated Ordered Probit (ZiOPC) with Correlated Errors
@@ -285,15 +283,12 @@ To print the estimates of the log-likelihood, AIC, and Variance-Covariance matri
 .. testcode::
 
   # Print Log-Likelihood
-
   print(ziopc_tob.llik)
 
   # Print AIC
-
   print(ziopc_tob.AIC)
 
   # Print VCOV matrix
-
   print(ziopc_tob.vcov)
 
 The AIC of the ziopc_tob model, for example, is:
@@ -307,11 +302,9 @@ The predicted probabilities from the `ziopc_tob` model can be obtained with :fun
 .. testcode::
 
   # Define the model for which you want to estimate the predicted probabilities
-
   fittedziopc = zmiopc.iopcfit(ziopc_tob)
 
   # Print predicted probabilities
-
   print(fittedziopc.responsefull)
 
 .. testoutput::
@@ -329,17 +322,15 @@ The predicted probabilities from the `ziopc_tob` model can be obtained with :fun
 
 .. testcode::
 
-    ziopcgender = zmiopc.split_effects(ziopc_tob, 1, nsims = 10000)
+  ziopcgender = zmiopc.split_effects(ziopc_tob, 1, nsims = 10000)
 
 .. testcode::
 
-   # Calculate change in predicted probabilities
+  # Calculate change in predicted probabilities
+  gender = zmiopc.ordered_effects(ziopc_tob, 1, nsims = 10000)
 
-   gender = zmiopc.ordered_effects(ziopc_tob, 1, nsims = 10000)
-
-   # Box-plot of precicted probabilities
-
-   gender.plot.box(grid='False')
+  # Box-plot of precicted probabilities
+  gender.plot.box(grid='False')
 
 Middle-inflated Ordered Probit (MiOP) without Correlated Errors
 ---------------------------------------------------------------
@@ -361,11 +352,11 @@ Next, we load the dataset.
 
 .. testcode::
 
-    # Import and read the dataset
-    url = 'https://github.com/hknd23/idcempy/raw/main/data/EUKnowledge.dta'
+  # Import and read the dataset
+  url = 'https://github.com/hknd23/idcempy/raw/main/data/EUKnowledge.dta'
 
-    # Define a `Pandas` DataFrame
-    data = pd_read.stata(url)
+  # Define a `Pandas` DataFrame
+  data = pd_read.stata(url)
 
 We then define the lists with the names of the variables used in the model
 
@@ -384,19 +375,18 @@ After importing the dataset and specifying the list of variables from it, the Mi
 
 .. testcode::
 
-   # Model estimation:
+ # Model estimation:
+ miop_EU = zmiopc.iopmod('miop', data, X, Y, Z, method = 'bfgs', weights = 1,offsetx = 0, offsetz = 0)
 
-   miop_EU = zmiopc.iopmod('miop', data, X, Y, Z, method = 'bfgs', weights = 1,offsetx = 0, offsetz = 0)
-
-   # 'miop' = Type of model to be estimated. In this case 'miop'
-   # data = name of Pandas DataFrame
-   # X = variables in the ordered probit stage.
-   # Y = dependent variable.
-   # Z = variables in the inflation stage.
-   # method = method for optimization.  By default set to 'bfgs'
-   # weights = weights.
-   # offsetx = offset of X.  By Default is zero.
-   # offsetz = offset of z
+ # 'miop' = Type of model to be estimated. In this case 'miop'
+ # data = name of Pandas DataFrame
+ # X = variables in the ordered probit stage.
+ # Y = dependent variable.
+ # Z = variables in the inflation stage.
+ # method = method for optimization.  By default set to 'bfgs'
+ # weights = weights.
+ # offsetx = offset of X.  By Default is zero.
+ # offsetz = offset of z
 
 The following message will appear when the model finishes converging.
 
@@ -434,15 +424,12 @@ The model object :class:`zmiopc.IopModel` also stores three different diagnostic
    # Print estimates of LL, AIC and VCOV
 
    # Print Log-Likelihood
-
    print(miop_EU.llik)
 
    # Print AIC
-
    print(miop_EU.AIC)
 
    # Print VCOV
-
    print(miop_EU.vcov)
 
 
@@ -451,11 +438,9 @@ The model object :class:`zmiopc.IopModel` also stores three different diagnostic
 .. testcode::
 
    # Define the model for which you want to estimate the predicted probabilities
-
    fittedmiop = zmiopc.iopfit(miop_EU)
 
    # Print predicted probabilities
-
    print(fittedmiop.responsefull)
 
 The MiOP model can also work with :func:`zmiopc.split_effects` and :func:`zmiopc.ordered_effects` to compute changes in predicted probabilities when the value of a variable changes.
@@ -463,7 +448,6 @@ The MiOP model can also work with :func:`zmiopc.split_effects` and :func:`zmiopc
 .. testcode::
 
     # Define model from which predicted probabilities will be estimated and the number of simulations.
-
     miopxeno = zmiopc.split_effects(miop_EU, 1, nsims = 10000)
 
 To plot the predicted probabilities:
@@ -471,17 +455,14 @@ To plot the predicted probabilities:
 .. testcode::
 
      # Get box plot of predicted probabilities
-
      miopxeno.plot.box(grid='False')
 
 .. testcode::
 
     # Define model from which predicted probabilities will be estimated and the number of simulations.
-
     xeno = zmiopc.ordered_effects(miop_EU, 2, nsims = 10000)
 
     # Get box plot of predicted probabilities
-
     xeno.plot.box(grid='False')
 
 Middle-inflated Ordered Probit (MiOPC) Model with Correlated Errors
@@ -762,7 +743,7 @@ The first element of the list is the baseline/reference category.
    y = ['vote_turn']
 
 
-The flexibility of :func:`gimnl.gimnlmod allows users to customize the baseline and inflated categories. Users can employ the argument `inflatecat` with `'baseline'`, `'second'`, or `'third'` to specify any unordered category as the inflated category (dictated by the distribution) in their unordered-polytomous outcome measure. If `'baseline'` is selected, the first element (baseline/reference category) in `reference` is the inflated outcome.
+The flexibility of :func:`gimnl.gimnlmod` allows users to customize the baseline and inflated categories. Users can employ the argument `inflatecat` with `'baseline'`, `'second'`, or `'third'` to specify any unordered category as the inflated category (dictated by the distribution) in their unordered-polytomous outcome measure. If `'baseline'` is selected, the first element (baseline/reference category) in `reference` is the inflated outcome.
 Likewise, if `'second'` or `'third'` is selection, the second or third element will be the inflated outcome. The following code specifies the outcome '0' (Abstain) as both the baseline and inflated category.
 
 .. testcode::
