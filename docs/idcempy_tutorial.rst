@@ -63,13 +63,11 @@ We first import the required libraries, set up the package and import the datase
 .. testcode::
 
   # Import the necessary libraries and package
-
   import pandas as pd
   import urllib
   from idcempy import zmiopc
 
   # Import the "Youth Tobacco Consumption" dataset as a pandas.DataFrame
-
   url='https://github.com/hknd23/zmiopc/blob/main/data/tobacco_cons.csv'
   data = pd.read_csv(url)
 
@@ -216,13 +214,11 @@ We first import the required libraries, set up the package and import the datase
 .. testcode::
 
   # Import the necessary libraries and IDCeMPy.
-
   import pandas as pd
   import urllib
   from idcempy import zmiopc
 
   # Import the "Youth Tobacco Consumption" dataset.
-
   url='https://github.com/hknd23/zmiopc/blob/main/data/tobacco_cons.csv'
 
   # Define a `Pandas` DataFrame.
@@ -357,7 +353,6 @@ We begin by loading the required libraries and IDCeMPy
 .. testcode::
 
   # Import the necessary libraries and IDCeMPy.
-
   import pandas as pd
   import urllib
   from idcempy import zmiopc
@@ -367,11 +362,9 @@ Next, we load the dataset.
 .. testcode::
 
     # Import and read the dataset
-
     url = 'https://github.com/hknd23/idcempy/raw/main/data/EUKnowledge.dta'
 
     # Define a `Pandas` DataFrame
-
     data = pd_read.stata(url)
 
 We then define the lists with the names of the variables used in the model
@@ -501,7 +494,6 @@ First is importing the data and libraries:
 .. testcode::
 
   # Import the necessary libraries and IDCeMPy.
-
   import pandas as pd
   import urllib
   from idcempy import zmiopc
@@ -510,13 +502,11 @@ Next, we load the dataset.
 
 .. testcode::
 
-    # Import and read the dataset
+  # Import and read the dataset
+  url = 'https://github.com/hknd23/idcempy/raw/main/data/EUKnowledge.dta'
 
-    url = 'https://github.com/hknd23/idcempy/raw/main/data/EUKnowledge.dta'
-
-    # Define a `Pandas` DataFrame
-
-    data = pd_read.stata(url)
+  # Define a `Pandas` DataFrame
+  data = pd_read.stata(url)
 
 We then define the lists with the names of the variables used in the model:
 
@@ -575,15 +565,12 @@ The model object :class:`zmiopc.IopCModel` also stores three different diagnosti
 .. testcode::
 
    # Print Log-Likelihood
-
    print(miopc_EU.llik)
 
    # Print AIC
-
    print(miopc_EU.AIC)
 
    # Print VCCOV matrix
-
    rint(miopc_EU.vcov)
 
 To calculate the predicted probabilities:
@@ -591,11 +578,9 @@ To calculate the predicted probabilities:
 .. testcode::
 
    # Define model to fit
-
    fittedmiopc = zmiopc.iopcfit(miopc_EU)
 
    # Print predicted probabilities
-
    print(fittedziopc.responsefull)
 
 The following line of code computes changes in predicted probabilities when the value of a variable changes.
@@ -603,7 +588,6 @@ The following line of code computes changes in predicted probabilities when the 
 .. testcode::
 
    # Define model from which effects will be estimated and number of simulations
-
    miopcxeno = zmiopc.split_effects(miopc_EU, 1, nsims = 10000)
 
 A box plot can illustrate the change in predicted probabilities.
@@ -611,7 +595,6 @@ A box plot can illustrate the change in predicted probabilities.
 .. testcode::
 
     # Get box plot of predicted probabilities
-
     miopcxeno.plot.box(grid='False')
 
 
@@ -620,11 +603,9 @@ To calculate the change in predicted probabilities of the outcome variable in th
 .. testcode::
 
     # Define model from which effects will be estimated and number of simulations
-
     xeno = zmiopc.ordered_effects(miopc_EU, 2, nsims = 10000)
 
     # Get box plot of predicted probabilities
-
     xeno.plot.box(grid='False')
 
 
@@ -638,46 +619,44 @@ First, import the required libraries and data:
 
 .. testcode::
 
-   # Import the necessary libraries and package
-
-   import pandas as pd
-   import urllib
-   from idcempy import zmiopc
+  # Import the necessary libraries and package
+  import pandas as pd
+  import urllib
+  from idcempy import zmiopc
 
   # Import the "Youth Tobacco Consumption" dataset.
-
   url='https://github.com/hknd23/zmiopc/blob/main/data/tobacco_cons.csv'
 
   # Define a `Pandas` DataFrame
-
   data = pd.read_csv(url)
 
 The list of variable names for the Independent and Dependent variables needs to be specified:
 
 .. testcode::
 
-     # Define a list of variable names (strings) X,Y:
-     # X = Column names of covariates (from `DataFrame`) in the OP equation
-     # Y = Column name of outcome variable (from `DataFrame`).
+  # Define a list of variable names (strings) X,Y:
+  # X = Column names of covariates (from `DataFrame`) in the OP equation
+  # Y = Column name of outcome variable (from `DataFrame`).
 
-     X = ['age', 'grade', 'gender_dum']
-     Y = ['cig_count']
+  X = ['age', 'grade', 'gender_dum']
+  Y = ['cig_count']
 
 After importing the data and specifying the model, the following code fits the OP model:
 
-  # Model estimation:
+
 
 .. testcode::
 
-   op_tob = zmiopc.opmod(data, X, Y, method = 'bfgs', weights = 1, offsetx  =0)
+  # Model estimation:
+  op_tob = zmiopc.opmod(data, X, Y, method = 'bfgs', weights = 1, offsetx  =0)
 
-   # data = name of pandas DataFrame
-   # X = variables in the ordered probit stage.
-   # Y = dependent variable.
-   # method = method for optimization.  By default set to 'bfgs'
-   # weights = weights.
-   # offsetx = offset of X.  By Default is zero.
-   # offsetz = offset of z
+  # data = name of pandas DataFrame
+  # X = variables in the ordered probit stage.
+  # Y = dependent variable.
+  # method = method for optimization.  By default set to 'bfgs'
+  # weights = weights.
+  # offsetx = offset of X.  By Default is zero.
+  # offsetz = offset of z
 
 
 The following message will appear when the model has converged:
@@ -715,15 +694,12 @@ Log-likelihood, AIC, and Variance-Covariance matrix can be extracted with:
 .. testcode::
 
   # Print Log-Likelihood
-
   print(op_tob.llik)
 
   # Print AIC
-
   print(op_tob.AIC)
 
   # Print VCOV matrix
-
   print(op_tob.vcov)
 
 The Vuong Test
@@ -742,7 +718,6 @@ The OP and ZiOP models must have the same number of observations, and the OP mus
 .. testcode::
 
    # Estimate Vuong test.  OP model first, ZIOP model specified next in this case
-
    zmiopc.vuong_opiop(op_tob, ziop_tob)
 
 .. testoutput::
@@ -761,21 +736,20 @@ Similar to the models in the :py:mod:`zmiopc` module, the first step is to impor
 
 .. testcode::
 
-   # Import the module
-    import pandas as pd
-    import urllib
-    from idcempy import gimnl
+  # Import the module
+  import pandas as pd
+  import urllib
+  from idcempy import gimnl
 
-   # Load the dataset
+  # Load the dataset
+  url= 'https://github.com/hknd23/zmiopc/raw/main/data/replicationdata.dta'
 
-   url= 'https://github.com/hknd23/zmiopc/raw/main/data/replicationdata.dta'
+  # Define a `Pandas` DataFrame
+  data = pd.read_stata(url)
 
-   # Define a `Pandas` DataFrame
-
-   data = pd.read_stata(url)
-
-We the define the list of covariates in the split-stage (z), the multinomial logit-stage (x) and the outcome variable (y). The values of the dependent variable must be represented numerically as "0", "1", and "2" to represent each category. To specify the baseline/reference category, users provide a three-element list for the `reference` argument (e.g [0,1,2]).
- The first element of the list is the baseline/reference category.
+We the define the list of covariates in the split-stage (z), the multinomial logit-stage (x) and the outcome variable (y). The values of the dependent variable must be represented numerically as "0", "1", and "2" to represent each category.
+To specify the baseline/reference category, users provide a three-element list for the `reference` argument (e.g [0,1,2]).
+The first element of the list is the baseline/reference category.
 
 
 .. testcode::
