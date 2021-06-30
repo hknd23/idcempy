@@ -129,4 +129,4 @@ class TestVuongGimnl(unittest.TestCase):
     def test_vuongmnlgimnl(self):
         self.assertAlmostEqual(gimnl.vuong_gimnl(gimnl.mnlmod(
             DAT, x, y, order_Kerry), gimnl.gimnlmod(
-            DAT, x, y, z, order_Kerry, "baseline")), -1.9174562877, places=0)
+            DAT, x, y, z, order_Kerry, "baseline")), -1.9174562877, places=4)
