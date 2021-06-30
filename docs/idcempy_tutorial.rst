@@ -675,7 +675,6 @@ The following line of code to see the estimates of coefficients:
 .. testcode::
 
    # Print coefficients of the models
-
    print(op_tob.coefs)
 
 .. testoutput::
@@ -769,18 +768,15 @@ Likewise, if `'second'` or `'third'` is selection, the second or third element w
 .. testcode::
 
    # Define order of variables
-
    order = [0, 1, 2]
 
    # Define "inflation" category
-
    inflatecat = "baseline"
 
 
 .. testcode::
 
    # Estimate the model
-
    gimnl_2004vote = gimnl.gimnlmod(data, x, y, z, method = 'bfgs', order, inflatecat)
 
    # data = name of pandas DataFrame.
@@ -796,7 +792,6 @@ The following line of code prints the coefficients of the covariates:
 .. testcode::
 
    # Print coefficients
-
    print(gimnl_2004vote.coefs)
 
 .. testoutput::
@@ -825,17 +820,14 @@ For example, AIC can be printed as follows.
 
 .. testcode::
 
-    # Print Log_Likelihood
+  # Print Log_Likelihood
+  print(gimnl_2004vote.llik)
 
-    print(gimnl_2004vote.llik)
+  # Print AIC
+  print(gimnl_2004vote.AIC)
 
-    # Print AIC
-
-    print(gimnl_2004vote.AIC)
-
-    # Print VCOV matrix
-
-    print(gimnl_2004vote.vcov)
+  # Print VCOV matrix
+  print(gimnl_2004vote.vcov)
 
 
 Users can fit a standard three-category Multinomial Logit Model (MNL) by specifying the list of **x**, **y**, and baseline (using `reference`).
@@ -843,8 +835,7 @@ Users can fit a standard three-category Multinomial Logit Model (MNL) by specify
 .. testcode::
 
    #Estimate the model
-
-   mnl_2004vote = gimnl.mnlmod(data, x, y, method = )
+   mnl_2004vote = gimnl.mnlmod(data, x, y, method = 'bfgs')
 
    # data = name of Pandas DataFrame.
    # x = variables in MNL stage.
@@ -852,7 +843,6 @@ Users can fit a standard three-category Multinomial Logit Model (MNL) by specify
    # method = optimization method. Default is 'bfgs'
 
    # Print the coefficients
-
    print(mnl_2004vote.coefs)
 
 .. testoutput::
@@ -871,17 +861,14 @@ Similar to the GiMNL model, the AIC for the MNL model can also be given by:
 
 .. testcode::
 
-    # Print Log-Likelihood
+  # Print Log-Likelihood
+  print(mnl_2004vote.AIC)
 
-    print(mnl_2004vote.AIC)
+  # Print AIC
+  print(mnl_2004vote.AIC)
 
-    # Print AIC
-
-    print(mnl_2004vote.AIC)
-
-    # Print VCOV matrix
-
-    print(mnl_2004vote.vcov)
+  # Print VCOV matrix
+  print(mnl_2004vote.vcov)
 
 Contributions
 =============
