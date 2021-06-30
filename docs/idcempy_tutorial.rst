@@ -317,8 +317,7 @@ The predicted probabilities from the `ziopc_tob` model can be obtained with :fun
  [0.87523652 0.06888286 0.01564958 0.0275354  0.01269564]
  [0.82678185 0.0875059  0.02171135 0.04135142 0.02264948]]
 
- Similar to the ZiOP model, :func:`zmiopc.split_effects` and :func:`zmiopc.ordered_effects` can also
- compute changes in predicted probabilities for the ZiOPC model.
+Similar to the ZiOP model, :func:`zmiopc.split_effects` and :func:`zmiopc.ordered_effects` can also compute changes in predicted probabilities for the ZiOPC model.
 
 .. testcode::
 
@@ -507,7 +506,6 @@ The model can be estimated as follows:
 .. testcode::
 
    # Model estimation
-
    miopc_EU = zmiopc.iopcmod('miopc', data, X, Y, Z, method = 'bfgs', weights = 1,offsetx = 0, offsetz =0 )
 
    # 'miopc' = Type of model to be estimated. In this case 'miopc'
@@ -524,7 +522,7 @@ Print model coefficients:
 
 .. testcode::
 
-   print(miopc_EU.coefs).
+   print(miopc_EU.coefs)
 
 .. testoutput::
 
