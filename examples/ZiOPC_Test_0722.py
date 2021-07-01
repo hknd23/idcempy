@@ -1,26 +1,26 @@
 import numpy as np
 import pandas as pd
 import time
-# import this after importing all other packages.
+import os
 from idcempy import zmiopc
 
-DAT = pd.read_stata("C:/Users/Nguyen/Box/Summer 20/bp_exact_for_analysis.dta")
+DAT = pd.read_stata(
+    os.getcwd() + "/data/bp_exact_for_analysis.dta",
+    convert_categoricals=False)
+
 # Ziop and ziopc examples
 # Specifying Xs, Zs, and Y
+
 X = ['logGDPpc', 'parliament', 'disaster', 'major_oil', 'major_primary']
-Xsmall = ['logGDPpc', 'parliament', 'disaster']
 Z = ['logGDPpc', 'parliament']
 Y = ['rep_civwar_DV']
 data = DAT
 
 pstartziop = [-1.31, .32, 2.5, -.21, .2, -0.2, -0.4, 0.2, .9, -.4]
 
-pstartziopsmall = [-1.31, .32, 2.5, -.21, .2, -0.2, -0.4, 0.2]
-
 pstartziopc = [-1.31, .32, 2.5, -.21,
-                        .2, -0.2, -0.4, 0.2, .9, -.4, .1]
+               .2, -0.2, -0.4, 0.2, .9, -.4, .1]
 
-# These are correct pstart
 
 start_time = time.time()
 ziopc_JCR = zmiopc.iopcmod('ziopc',
@@ -37,53 +37,17 @@ ziop_JCR = zmiopc.iopmod('ziop',
                          offsetz=0)
 print("--- %s seconds ---" % (time.time() - start_time))
 
-ziopc_JCR_test = zmiopc.iopcmod('ziopc', data, X, Y, Z)
 
-ziop_JCR = zmiopc.iopmod('ziop', data, X, Y, Z)
+#OP Model
+pstartop = [-1, 0.3, -0.2, -0.5, 0.2, .9, -.4]
 
-ziop_JCRsmall = zmiopc.iopmod('ziop', pstartziopsmall,
-                              data, Xsmall, Y, Z, method='bfgs', weights=1,
-                              offsetx=0, offsetz=0)
-
-# ziopc_JCR.coefs.to_csv("ZIOPC_0131.csv")
-# ziop_JCR.coefs.to_csv("ZIOP_0131.csv")
-
-
-fitttedziopc = zmiopc.iopcfit(ziopc_JCR)
-fitttedziop = zmiopc.iopfit(ziop_JCR)
-
-print(ziopc_JCR.coefs)
-print(ziop_JCR.coefs)
-
-# OP Model
-pstartop = np.array[-1, 0.3, -0.2, -0.5, 0.2, .9, -.4]
-
-
-
-DAT = pd.read_stata("C:/Users/Nguyen/Box/Summer 20/bp_exact_for_analysis.dta")
-X = ['logGDPpc', 'parliament', 'disaster', 'major_oil', 'major_primary']
-Y = ['rep_civwar_DV']
-data = DAT
+start_time = time.time()
 JCR_OP = zmiopc.opmod(data, X, Y,
                       pstart=pstartop, method='bfgs', weights=1,
                       offsetx=0)
+print("--- %s seconds ---" % (time.time() - start_time))
 
-# Vuong test
-zmiopc.vuong_opiop(JCR_OP, ziop_JCR)
-zmiopc.vuong_opiopc(JCR_OP, ziopc_JCR)
 
-# Box plots for predicted probabilities
-ziopparl = zmiopc.split_effects(ziop_JCR, 2)
-ziopcparl = zmiopc.split_effects(ziopc_JCR, 2)
-
-ziopparl.plot.box(grid='False')
-ziopcparl.plot.box(grid='False')
-
-ziopord = zmiopc.ordered_effects(ziop_JCR, 1)
-ziopcord = zmiopc.ordered_effects(ziopc_JCR, 1)
-
-ziopord.plot.box(grid='False')
-ziopcord.plot.box(grid='False')
 
 # MiOP Examples
 
