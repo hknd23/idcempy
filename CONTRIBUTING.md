@@ -1,12 +1,12 @@
-# Contributing to ICDeMPy
+# Contributing to IDCeMPy
 
-Welcome to `ICDeMPy` package, and thank you for considering contributing to this Python
+Welcome to `IDCeMPy` package, and thank you for considering contributing to this Python
 package. Please note that you can contribute in many ways, including fixing a bug, adding a new
 feature, code patches, editing the documentation, and patch reviews. We appreciate your help in
 improving any feature included in this package.
 
 This contributing guide contains the necessary information you need to know to help build and
-improve `ICDeMPy`. Please read and follow these guidelines as it will make both communication
+improve `IDCeMPy`. Please read and follow these guidelines as it will make both communication
 and the contribution process easy and effective. We will reciprocate by fixing bugs, evaluating changes, and helping you finalize your pull requests.
 
 ## Code of Conduct
