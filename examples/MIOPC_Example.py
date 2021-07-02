@@ -25,14 +25,26 @@ start_time = time.time()
 miopc_model_paper = zmiopc.iopcmod('miopc', DAT, X, Y, Z)
 print("--- %s seconds ---" % (time.time() - start_time))
 
-Y2 = ["EU_support_ET"]
 X2 = ['Xenophobia', 'discuss_politics']
 Z2 = ['discuss_politics', 'EU_Know_obj']
 
 start_time = time.time()
-miop_model_short = zmiopc.iopmod('miop', DAT, X2, Y2, Z2)
+miop_model_short = zmiopc.iopmod('miop', DAT, X2, Y, Z2)
 print("--- %s seconds ---" % (time.time() - start_time))
 
 start_time = time.time()
-miopc_model_short = zmiopc.iopcmod('miopc', DAT, X2, Y2, Z2)
+miopc_model_short = zmiopc.iopcmod('miopc', DAT, X2, Y, Z2)
+print("--- %s seconds ---" % (time.time() - start_time))
+
+X3 = ["polit_trust", "Xenophobia", "discuss_politics", "Professional",
+      "Executive"]
+
+Z3 = ["discuss_politics", "rural", "female", "age", "student"]
+
+start_time = time.time()
+miop_model_short2 = zmiopc.iopmod('miop', DAT, X3, Y, Z3)
+print("--- %s seconds ---" % (time.time() - start_time))
+
+start_time = time.time()
+miopc_model_short2 = zmiopc.iopcmod('miopc', DAT, X3, Y, Z3)
 print("--- %s seconds ---" % (time.time() - start_time))
