@@ -852,4 +852,4 @@ Similar to the GiMNL model, the AIC for the MNL model can also be given by:
 Contributions
 =============
 
-The authors welcome and encourage new contributors to help test `IDCeMPy` and add new functionality. You can find detailed instructions on "how to contribute" to `IDCeMPy` `here <https://github.com/hknd23/idcempy/blob/main/CONTRIBUTING.md>`_
+The authors welcome and encourage new contributors to help test `IDCeMPy` and add new functionality. You can find detailed instructions on "how to contribute" to `IDCeMPy` `here <https://github.com/hknd23/idcempy/blob/main/CONTRIBUTING.md>`_.
