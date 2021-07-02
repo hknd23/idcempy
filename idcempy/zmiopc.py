@@ -529,8 +529,11 @@ def opresults(model, data, x, y):
     :param model: Model estimation results obtained from minimization.
     :param data: Dataset.
     :type data: pandas.DataFrame
-    :param x: Independent variables.
-    :param y: : Dependent Variable.
+    :param x: List of names for independent variables matching column names
+        in data.
+    :type x: list of str
+    :param y: : List of name for dependent Variablematching column names
+        in data.
     """
     varlist = np.unique(y + x)
     dataset = data[varlist]
@@ -577,7 +580,7 @@ def opmod(data, x, y, pstart=None, method="BFGS", weights=1, offsetx=0):
     :param pstart: A list of starting values for the estimation. 
         Length of the number of parameters to be estimated.  
     :type pstart: list
-    :param data: Dataset.
+    :param data: Full dataset used for estimation.
     :type data: pandas.DataFrame
     :type x: list of str
     :param y: Dependent Variable (DV).
@@ -612,11 +615,14 @@ def iopresults(model, data, x, y, z, modeltype):
     """Produce estimation results, part of :py:func:`iopmod`.
 
     :param model: Model estimation results obtained from minimization.
-    :param data: Dataset.
+    :param data: Full dataset used for estimation.
     :type data: pandas.DataFrame
-    :param x: Covariates in the ordered probit stage.
-    :param y: : Dependent Variable (DV).
-    :param z: : Covariates in the inflation stage.
+    :param x: List of names for covariates in the ordered probit stage.
+    :type x: list of str
+    :param y: : List of names for dependent cariable.
+    :type y: list of str
+    :param z: : List of names for covariates in the inflation stage.
+    :type z: list of str
     :param modeltype: : Type of model. Options are: 'ziop' or 'miop'.
     """
     varlist = np.unique(y + z + x)
@@ -682,11 +688,14 @@ def iopcresults(model, data, x, y, z, modeltype):
     """Produce estimation results, part of :py:func:`ziopc  mod`.
 
     :param model: Model estimation results obtained from minimization.
-    :param data: Dataset.
+    :param data: Full dataset used for estimation.
     :type data: pandas.DataFrame
-    :param x: Covariates in the ordered probit stage.
-    :param y: : Dependent Variable (DV).
-    :param z: : Covariates in the inflation stage. 
+    :param x: List of names for covariates in the ordered probit stage.
+    :type x: list of str
+    :param y: : List of names for dependent cariable.
+    :type y: list of str
+    :param z: : List of names for covariates in the inflation stage.
+    :type z: list of str
     :param modeltype: : Type of model. Options are: 'ziopc' or 'miopc'
     """
     varlist = np.unique(y + z + x)

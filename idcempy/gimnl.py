@@ -288,9 +288,12 @@ def gimnlresults(model, data, x, y, z, modeltype, reference, inflatecat):
     :param data: Model data used for estimation, subsetted to selected
         variables and missing values listwise deleted.
     :type data: pandas.DataFrame
-    :param x: Covariates in Multinomial Logit stage.
-    :param y: Dependent variable (DV).
-    :param z: Covariates in split-stage.
+    :param x: List of names for covariates in Multinomial Logit stage.
+    :type x: list of str
+    :param y: List of names for dependent variable .
+    :type y: list of str
+    :param z: List of names for covariates in split-stage.
+    :type z: list of str
     :param modeltype: Type of inflated MNL model. One of 'bimnl3', 'simnl3',
         or 'timnl3'.
     :param reference: List of order of categories. First element is the
@@ -371,8 +374,10 @@ def mnlresults(model, data, x, y, modeltype, reference):
     :param data: Model data used for estimation, subsetted to selected
         variables and missing values listwise deleted.
     :type data: pandas.DataFrame
-    :param x: Covariates in Multi Nomial Logit stage.
-    :param y: Dependent variable (DV).
+    :param x: List of names for covariates in Multinomial Logit stage.
+    :type x: list of str
+    :param y: List of names for dependent variable .
+    :type y: list of str
     :param modeltype: Three-category MNL model ('mnl3').
     :param reference: List of order of categories. First element is the
         baseline/ reference category.

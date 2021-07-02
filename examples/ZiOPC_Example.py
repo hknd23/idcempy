@@ -55,13 +55,18 @@ Z = ['gender_dum']
 
 start_time = time.time()
 ziopc_tob = zmiopc.iopcmod('ziopc', DAT, X, Y, Z)
-print("--- %s seconds ---" % (time.time() - start_time))
+model_time = time.time() - start_time
+print("%s seconds" % model_time)
 
 start_time = time.time()
 ziop_tob = zmiopc.iopmod('ziop', DAT, X, Y, Z)
-print("--- %s seconds ---" % (time.time() - start_time))
+model_time = time.time() - start_time
+print("%s seconds" % model_time)
 
+start_time = time.time()
 op_tob = zmiopc.opmod(DAT, X, Y)
+model_time = time.time() - start_time
+print("%s seconds" % model_time)
 
 zmiopc.vuong_opiopc(op_tob, ziopc_tob)
 zmiopc.vuong_opiop(op_tob, ziop_tob)
