@@ -7,7 +7,7 @@ improving any feature included in this package.
 
 This contributing guide contains the necessary information you need to know to help build and
 improve `ICDeMPy`. Please read and follow these guidelines as it will make both communication
-and the contribution process easy and effective. We will reciprocate by [bug reports](#fixing bugs), [feature requests](#evaluating changes), and helping you finalize your [pull requests](#pull requests).
+and the contribution process easy and effective. We will reciprocate by fixing bugs, evaluating changes, and helping you finalize your pull requests.
 
 ## Code of Conduct
 
