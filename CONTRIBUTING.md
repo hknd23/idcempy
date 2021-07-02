@@ -13,11 +13,11 @@ and the contribution process easy and effective. We will reciprocate by [bug rep
 
 We treat the open-source community with respect and hold ourselves as well as other
 contributors to high standards of communication. By contributing to this project, you agree to
-uphold our following [Code of Conduct](https://github.com/auth0/open-source-template/blob/master/CODE-OF-CONDUCT.md)
+uphold our following [Code of Conduct](https://github.com/auth0/open-source-template/blob/master/CODE-OF-CONDUCT.md):
 
-- Focusing on what is best for the community
-- Respect differing viewpoints and accept constructive criticisms
-- Avoid conduct that could reasonably be considered inappropriate in a professional setting
+- Focusing on what is best for the community.
+- Respect differing viewpoints and accept constructive criticisms.
+- Avoid conduct that could reasonably be considered inappropriate in a professional setting.
 
 Our responsibilities as maintainers include the right to remove, edit, or reject comments,
 commits, code, issues, and other contributions that are not aligned to this **Code of Conduct**.
@@ -35,31 +35,9 @@ main issues that you are raising.
 to your expectations).
 - Finally, please note the steps you may have undertaken to address the bug.
 
-Below you will find an example of the anatomy of a useful bug report. 
-
-Example:
-
-> Title: Short and descriptive example bug report title
->
-> Description: A summary of the issue and the browser/OS environment in which it occurs. If
-> suitable, include the steps required to reproduce the bug as follows.
->
-> 1. This is the first step
-> 2. This is the second step
-> 3. Further steps, etc.
->
-> `<url>` - a link to the reduced test case
->
-> Additional Information: Any other information you want to share that is relevant to the issue being
-> reported. This might include the lines of code that you have identified as
-> causing the bug, and potential solutions (and your opinions on their
-> merits).
-
-> Name:  Your name and preferred method of contact. 
-
 ## Feature Requests
 
-We welcome any Feature Requests. That said, please ensure that your request to add a new
+We welcome any requests to add new features. That said, please ensure that your request to add a new
 feature, for example, fits the objectives and scope of the `IDCeMPy`. Please provide as much
 detail as possible and ensure that the feature that you intend to add is compatible with other
 features included in this package.
