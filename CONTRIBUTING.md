@@ -25,7 +25,7 @@ commits, code, issues, and other contributions that are not aligned to this **Co
 ## Bug Reports
 
 We use GitHub issues to track public bugs. Note that a bug can be reported by simply opening a
-new issue. A useful Bug Report is one that includes:
+new issue. An issue template for reporting bugs is available. A useful Bug Report is one that includes:
 
 - A summary or background.
 - Steps to reproduce. Please be as specific as possible in this regard.
@@ -38,7 +38,8 @@ to your expectations).
 ## Feature Requests
 
 We welcome any requests to add new features. That said, please ensure that your request to add a new
-feature, for example, fits the objectives and scope of the `IDCeMPy`. Please provide as much
+feature, for example, fits the objectives and scope of the `IDCeMPy`.
+Please use the feature request template when creating an issue and provide as much
 detail as possible and ensure that the feature that you intend to add is compatible with other
 features included in this package.
 
