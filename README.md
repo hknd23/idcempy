@@ -4,8 +4,8 @@
 
 <!-- badges: start -->
 
-[![PyPI version fury.io](https://badge.fury.io/py/idcempy.svg)](https://pypi.org/project/idcempy/0.0.5/)
-[![PyPI pyversions](https://img.shields.io/pypi/pyversions/idcempy.svg)](https://pypi.org/project/idcempy/0.0.5/)
+[![PyPI version fury.io](https://badge.fury.io/py/idcempy.svg)](https://pypi.org/project/idcempy/0.0.9/)
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/idcempy.svg)](https://pypi.org/project/idcempy/0.0.9/)
 [![Downloads](https://pepy.tech/badge/idcempy)](https://pepy.tech/project/idcempy)
 [![Project Status: Active â€“ The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
