@@ -26,7 +26,8 @@ ziopc_JCR = zmiopc.iopcmod('ziopc',
                            data, X, Y, Z, pstart=pstartziopc, method='bfgs',
                            weights=1,
                            offsetx=0, offsetz=0)
-print("--- %s seconds ---" % (time.time() - start_time))
+model_time = time.time() - start_time
+print("%s seconds" % model_time)
 
 start_time = time.time()
 ziop_JCR = zmiopc.iopmod('ziop',
@@ -34,7 +35,8 @@ ziop_JCR = zmiopc.iopmod('ziop',
                          method='bfgs', weights=1,
                          offsetx=0,
                          offsetz=0)
-print("--- %s seconds ---" % (time.time() - start_time))
+model_time = time.time() - start_time
+print("%s seconds" % model_time)
 
 # OP Model
 pstartop = [-1, 0.3, -0.2, -0.5, 0.2, .9, -.4]
@@ -43,7 +45,8 @@ start_time = time.time()
 JCR_OP = zmiopc.opmod(data, X, Y,
                       pstart=pstartop, method='bfgs', weights=1,
                       offsetx=0)
-print("--- %s seconds ---" % (time.time() - start_time))
+model_time = time.time() - start_time
+print("%s seconds" % model_time)
 
 # Tobacco
 
