@@ -158,7 +158,7 @@ ziopcgender_split.plot.box(grid='False')
 ```
 
 <p align="center">
-   <img src="https://github.com/hknd23/idcempy/blob/main/graphics/ziopc_split_gender.png?raw=true" width="500" height="300" />
+   <img src="https://github.com/hknd23/idcempy/raw/main/graphics/ziopc_split_gender.png" width="500" height="300" />
    <br>
    <em>Fig. 1: Marginal Effect of Gender on Probability of Permanent Nonsmoker</em>
 </p>
@@ -171,7 +171,7 @@ ziopcgender_ordered.plot.box(grid='False')
 ```
 
 <p align="center">
-   <img src="https://github.com/hknd23/idcempy/blob/main/graphics/ziopc_ordered_gender_0214.png" width="500" height="300" />
+   <img src="https://github.com/hknd23/idcempy/raw/main/graphics/ziopc_ordered_gender_0214.png" width="500" height="300" />
    <br>
    <em>Fig. 2: Marginal Effect of Gender on Self-Reported Tobacco Consumption</em>
 </p>
@@ -261,7 +261,7 @@ xeno.plot.box(grid='False')
 ```
 
 <p align="center">
-   <img src="https://github.com/hknd23/idcempy/blob/main/graphics/MiOPC_EU_Xenophobia_0214.png" width="500" height="300" />
+   <img src="https://github.com/hknd23/idcempy/raw/main/graphics/MiOPC_EU_Xenophobia_0214.png" width="500" height="300" />
    <br>
    <em>Fig. 4: Marginal Effect of Xenophobia on EU Support</em>
 </p>
