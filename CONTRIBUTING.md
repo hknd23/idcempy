@@ -13,7 +13,7 @@ and the contribution process easy and effective. We will reciprocate by fixing b
 
 We treat the open-source community with respect and hold ourselves as well as other
 contributors to high standards of communication. By contributing to this project, you agree to
-uphold our following [Code of Conduct](https://github.com/auth0/open-source-template/blob/master/CODE-OF-CONDUCT.md):
+uphold our following [Code of Conduct](https://github.com/hknd23/idcempy/blob/main/CODE_OF_CONDUCT.md):
 
 - Focusing on what is best for the community.
 - Respect differing viewpoints and accept constructive criticisms.
