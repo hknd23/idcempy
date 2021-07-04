@@ -357,4 +357,4 @@ gimnl.gimnlmod(data, x, y, z, reference, inflatecat="third")
 ```
 ## Contributions
 
-The authors welcome and encourage new contributors to help test `IDCeMPy` and add new functionality. Issues can be raised by any users for questions and bug reports. For further details, see [Guidelines for Contributors](https://github.com/hknd23/idcempy/edit/main/CONTRIBUTING.md).
+The authors welcome and encourage new contributors to help test `IDCeMPy` and add new functionality. Issues can be raised by any users for questions and bug reports. For further details, see [Guidelines for Contributors](https://github.com/hknd23/idcempy/blob/main/CONTRIBUTING.md).
