@@ -7,11 +7,11 @@ Description
 `IDCeMPy` is a Python package that provides functions to fit and assess the performance of the following distinct
 sets of “inflated” discrete choice models:
 
-* Fit the Zero-Inflated Ordered Probit (ZIOP) model without and with correlated errors (ZIOPC model) to evaluate zero-inflated ordered choice outcomes that results from a dual data generating process (d.g.p.).
+* Fit the Zero-Inflated Ordered Probit (ZiOP) model without and with correlated errors (ZiOPC model) to evaluate zero-inflated ordered choice outcomes that results from a dual data generating process (d.g.p.).
 
-* Fit the Middle-Inflated Ordered Probit (MIOP) model without and with correlated errors (MIOPC) to account for the inflated middle-category in ordered choice measures that relates to a dual d.g.p.
+* Fit the Middle-Inflated Ordered Probit (MiOP) model without and with correlated errors (MiOPC) to account for the inflated middle-category in ordered choice measures that relates to a dual d.g.p.
 
-* Fit Generalized Inflated Multinomial Logit (GIMNL) models that account for the preponderant and heterogeneous share of observations in the baseline or any lower category in unordered polytomous choice outcomes.
+* Fit Generalized Inflated Multinomial Logit (GiMNL) models that account for the preponderant and heterogeneous share of observations in the baseline or any lower category in unordered polytomous choice outcomes.
 
 * Compute AIC and Log-likelihood statistics and the Vuong Test statistic to assess the performance of each inflated discrete choice model in the package.
 
@@ -53,7 +53,8 @@ The package can be installed in two different ways:
 Examples
 ========
 
-The examples below demonstrate how to use the `IDCeMPy` package to estimate the inflated discrete choice models ZiOP(C), MiOP(C), and GiMNL. The example code files, with rough calculation of model run time, are available in the `/examples <https://pypi.org/project/idcempy/>`__ directory
+The examples below demonstrate how to use the `IDCeMPy` package to estimate the inflated discrete choice models ZiOP(C), MiOP(C), and GiMNL.
+ The example code files, with rough calculation of model run time, are available in the `/examples <https://github.com/hknd23/idcempy/tree/main/examples>`__ directory.
 
 Zero-inflated Ordered Probit (ZiOP) Model without Correlated Errors
 --------------------------------------------------------------------
