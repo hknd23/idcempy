@@ -48,8 +48,7 @@ JCR_OP = zmiopc.opmod(data, X, Y,
 model_time = time.time() - start_time
 print("%s seconds" % model_time)
 
-# Tobacco
-
+# This is the Tobacco consumption specification for the Documentation Example:
 
 DAT = pd.read_csv(os.getcwd() + "/data/tobacco_cons.csv")
 X = ['age', 'grade', 'gender_dum']

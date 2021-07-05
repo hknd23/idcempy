@@ -27,6 +27,8 @@ miopc_model_paper = zmiopc.iopcmod('miopc', DAT, X, Y, Z)
 model_time = time.time() - start_time
 print("%s seconds" % model_time)
 
+# This is the specification for the Documentation Example:
+
 X2 = ['Xenophobia', 'discuss_politics']
 Z2 = ['discuss_politics', 'EU_Know_obj']
 
