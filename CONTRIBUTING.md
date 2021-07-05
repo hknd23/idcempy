@@ -20,7 +20,7 @@ uphold our following [Code of Conduct](https://github.com/hknd23/idcempy/blob/ma
 - Avoid conduct that could reasonably be considered inappropriate in a professional setting.
 
 Our responsibilities as maintainers include the right to remove, edit, or reject comments,
-commits, code, issues, and other contributions that are not aligned to this **Code of Conduct**.
+commits, code, issues, and other contributions that are not aligned to this [Code of Conduct](https://github.com/hknd23/idcempy/blob/main/CODE_OF_CONDUCT.md).
 
 ## Bug Reports
 
