@@ -53,6 +53,8 @@ The package can be installed in two different ways:
 Examples
 ========
 
+The examples below demonstrate how to use the `IDCeMPy` package to estimate the inflated discrete choice models ZiOP(C), MiOP(C), and GiMNL. The example code files, with rough calculation of model run time, are available in the `/examples <https://pypi.org/project/idcempy/>`__ directory
+
 Zero-inflated Ordered Probit (ZiOP) Model without Correlated Errors
 --------------------------------------------------------------------
 The `iopcmod` function estimates regression objects for "zero-inflated" and "middle-inflated" ordered probit models without correlated errors.
