@@ -39,13 +39,11 @@ The package can be installed in two different ways:
 1. From `PyPi <https://pypi.org/project/idcempy/>`__:
 
 .. testcode::
-
   $  pip install idcempy
 
 2. From its `GitHub Repository <https://github.com/hknd23/idcempy/>`__:
 
 .. testcode::
-
   $  git clone https://github.com/hknd23/idcempy.git
   $  cd idcempy
   $  python setup.py install
@@ -67,7 +65,6 @@ This section provides instruction to estimate the ZiOP model using the self-repo
 We first import the required libraries, set up the package and import the dataset:
 
 .. testcode::
-
   # Import the necessary libraries and package
   import pandas as pd
   import urllib
@@ -80,7 +77,6 @@ We first import the required libraries, set up the package and import the datase
 The data is now a `pandas` DataFrame, and we can proceed to estimate the ZiOP model as follows.
 
 .. testcode::
-
   # First, define a list of variable names of X, Z, and Y.
   # X = Column names of covariates (from `DataFrame`) used in ordered probit stage.
   # Z = Column names of covariates (from `DataFrame`) used in split-population stage.
@@ -96,7 +92,6 @@ The package sets a default start value of .01 for all parameters.
 :func:`zmiopc.iopmod` estimates the ZiOP model and returns :class:`zmiopc.IopModel`.
 
 .. testcode::
-
    # Model estimation:
 
    ziop_tob= zmiopc.iopmod('ziop', data, X, Y, Z, method = 'bfgs', weights = 1, offsetx = 0, offsetz = 0)
@@ -117,7 +112,6 @@ Results from the model:
 The following message will appear when the model has converged:
 
 .. testoutput::
-
          Warning: Desired error not necessarily achieved due to precision loss.
          Current function value: 5060.160903
          Iterations: 79
@@ -130,11 +124,9 @@ Object :class:`zmiopc.IopModel` stores model results and goodness-of-fit tests i
 The following line of code prints the estimates of coefficients:
 
 .. testcode::
-
    print(ziop_tob.coefs)
 
 .. testoutput::
-
                             Coef        SE      tscore        p           2.5%      97.5%
    cut1                   1.693797  0.054383  31.145912  0.000000e+00   1.587207   1.800387
    cut2                  -0.757830  0.032290 -23.469359  0.000000e+00  -0.821119  -0.694542
@@ -152,7 +144,6 @@ The model object :class:`zmiopc.IopModel` also stores three different diagnostic
 They can be obtained via the following:
 
 .. testcode::
-
   print(ziop_tob.llik)
   print(ziop_tob.AIC)
   print(ziop_tob.vcov)
@@ -160,25 +151,21 @@ They can be obtained via the following:
 An example for the AIC:
 
 .. testcode::
-
   print(ziop_tob.AIC)
 
 .. testoutput::
-
   10138.321806674261
 
 The following funtion extracts predicted probabilities from the model:
 :func:`zmiopc.iopfit` returns :class:`zmiopc.FittedVals` containing fitted probablities.
 
 .. testcode::
-
   fittedziop = ziopc.iopfit(ziop_tob)
 
   # Print the predicted probabilities
   print(fittedziopc.responsefull)
 
 .. testoutput::
-
   array[[0.8822262  0.06879832 0.01455244 0.0242539  0.01016914]
  [0.84619828 0.08041296 0.01916279 0.03549797 0.01872801]
  [0.93105632 0.04349743 0.00831396 0.0127043  0.004428  ]
