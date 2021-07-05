@@ -54,11 +54,14 @@ Examples
 ========
 
 The examples below demonstrate how to use the `IDCeMPy` package to estimate the inflated discrete choice models ZiOP(C), MiOP(C), and GiMNL.
- The example code files, with rough calculation of model run time, are available in the `/examples <https://github.com/hknd23/idcempy/tree/main/examples>`__ directory.
+The example code files, with rough calculation of model run time, are available in the `/examples <https://github.com/hknd23/idcempy/tree/main/examples>`__ directory.
+For each model example below, the run time is available as reference point. The specification used to record the times is Intel Core i7-2600 (3.40GHz Quad core), 16GB RAM.
+Please note that for models in the `zmiopc` module, the run-time for models with correlated errors estimated with :func:`zmiopc.iopcmod` is substantially higher
+than their without correlated errors counterparts using :func:`zmiopc.iopmod`. Other factors affecting run-time are the number of observations and the number of covariates. 
 
 Zero-inflated Ordered Probit (ZiOP) Model without Correlated Errors
 --------------------------------------------------------------------
-The `iopcmod` function estimates regression objects for "zero-inflated" and "middle-inflated" ordered probit models without correlated errors.
+The :func:`zmiopc.iopmod` function estimates regression objects for "zero-inflated" and "middle-inflated" ordered probit models without correlated errors.
 This section provides instruction to estimate the ZiOP model using the self-reported smoking behavior as empirical example.
 
 We first import the required libraries, set up the package and import the dataset:
@@ -337,11 +340,11 @@ Similar to the ZiOP model, :func:`zmiopc.split_effects` and :func:`zmiopc.ordere
 Middle-inflated Ordered Probit (MiOP) without Correlated Errors
 ---------------------------------------------------------------
 
-A Middle-inflated Ordered Probit (MiOP) model should be estimated ehn the ordered outcome variable is inflated in the middle category.
+A Middle-inflated Ordered Probit (MiOP) model should be estimated when the ordered outcome variable is inflated in the middle category.
 
 The following example uses 2004 presidential vote data from Elgun and Tilam (`2007 <https://journals.sagepub.com/doi/10.1177/1065912907305684>`_).
 
-We begin by loading the required libraries and IDCeMPy
+We begin by loading the required libraries and IDCeMPy:
 
 .. testcode::
 
@@ -470,7 +473,7 @@ To plot the predicted probabilities:
 Middle-inflated Ordered Probit (MiOPC) Model with Correlated Errors
 -------------------------------------------------------------------
 
-The steps to estimate the Middle-inflated Ordered Probit (MiOPC) with correlated errors is as folowws.
+The steps to estimate the Middle-inflated Ordered Probit (MiOPC) with correlated errors is as follows:
 
 First is importing the data and libraries:
 
@@ -542,7 +545,7 @@ Print model coefficients:
 In addition to coefficient estimates, the table also presents the standard errors, and confidence intervals.
 
 The model object :class:`zmiopc.IopCModel` also stores three different diagnostic tests: (1) Log-likelihood, (2) Akaike Information Criteria (AIC), and Variance-Covariance Matrix (VCM).
- They can be obtained via the following:
+They can be obtained via the following:
 
 .. testcode::
 
