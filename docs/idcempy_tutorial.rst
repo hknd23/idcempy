@@ -33,7 +33,7 @@ An excessive (“inflated”) share of observations—stemming from two distinct
 Each inflated discrete choice model in this package addresses category inflation in one’s discrete outcome—unordered or unordered polytomous—of interest by jointly estimating a binary split-stage equation and an ordered or multinomial discrete choice outcome equation.
 
 Installation
-=============
+============
 The package can be installed in two different ways:
 
 1. From `PyPi <https://pypi.org/project/idcempy/>`__:
@@ -60,7 +60,7 @@ Please note that for models in the `zmiopc` module, the run-time for models with
 than their without correlated errors counterparts using :func:`zmiopc.iopmod`. Other factors affecting run-time are the number of observations and the number of covariates.
 
 Zero-inflated Ordered Probit (ZiOP) Model without Correlated Errors
---------------------------------------------------------------------
+-------------------------------------------------------------------
 The :func:`zmiopc.iopmod` function estimates regression objects for "zero-inflated" and "middle-inflated" ordered probit models without correlated errors.
 This section provides instruction to estimate the ZiOP model using the self-reported smoking behavior as empirical example.
 
@@ -584,7 +584,8 @@ A box plot can illustrate the change in predicted probabilities.
     miopcxeno.plot.box(grid='False')
 
 
-To calculate the change in predicted probabilities of the outcome variable in the outcome-stage when the value of a covarariate changes. The box plots below display the change in predicted probabilities of the outcome variable in the MiOPC model estimated above when Xenophobia increases one standard deviation from its mean value.
+To calculate the change in predicted probabilities of the outcome variable in the outcome-stage when the value of a covarariate changes.
+The box plots below display the change in predicted probabilities of the outcome variable in the MiOPC model estimated above when Xenophobia increases one standard deviation from its mean value.
 
 .. testcode::
 
@@ -688,7 +689,8 @@ Log-likelihood, AIC, and Variance-Covariance matrix can be extracted with:
 The Vuong Test
 --------------
 
-Harris and Zhao (`2007 <https://doi.org/10.1016/j.jeconom.2007.01.002>`__) suggest that a variant of the Vuong (`1989 <https://www.jstor.org/stable/1912557>`__) Test (with a v statistic) can be used to compare the performance of the ZiOP versus the standard Ordered Probit (OP) model. The Vuong's test formula is:
+Harris and Zhao (`2007 <https://doi.org/10.1016/j.jeconom.2007.01.002>`__) suggest that a variant of the Vuong (`1989 <https://www.jstor.org/stable/1912557>`__)
+Test (with a v statistic) can be used to compare the performance of the ZiOP versus the standard Ordered Probit (OP) model. The Vuong's test formula is:
 
 .. math::
 
@@ -696,7 +698,8 @@ Harris and Zhao (`2007 <https://doi.org/10.1016/j.jeconom.2007.01.002>`__) sugge
 
 where v < -1.96 favors the more general (ZiOP/ZiOPC) model, -1.96 < v < 1.96 lends no support to either model, and v > 1.96 supports the simpler (OP) model.
 
-The OP and ZiOP models must have the same number of observations, and the OP must have the same number of covariates as ZiOP's OP stage. The statistic below reveals that the OP model is preferred over the ZiOP model.
+The OP and ZiOP models must have the same number of observations, and the OP must have the same number of covariates as ZiOP's OP stage.
+The statistic below reveals that the OP model is preferred over the ZiOP model.
 
 .. testcode::
 
@@ -730,7 +733,8 @@ Similar to the models in the :py:mod:`zmiopc` module, the first step is to impor
   # Define a `Pandas` DataFrame
   data = pd.read_stata(url)
 
-We the define the list of covariates in the split-stage (z), the multinomial logit-stage (x) and the outcome variable (y). The values of the dependent variable must be represented numerically as "0", "1", and "2" to represent each category.
+We the define the list of covariates in the split-stage (z), the multinomial logit-stage (x) and the outcome variable (y).
+The values of the dependent variable must be represented numerically as "0", "1", and "2" to represent each category.
 To specify the baseline/reference category, users provide a three-element list for the `reference` argument (e.g [0,1,2]).
 The first element of the list is the baseline/reference category.
 
@@ -746,7 +750,9 @@ The first element of the list is the baseline/reference category.
    y = ['vote_turn']
 
 
-The flexibility of :func:`gimnl.gimnlmod` allows users to customize the baseline and inflated categories. Users can employ the argument `inflatecat` with `'baseline'`, `'second'`, or `'third'` to specify any unordered category as the inflated category (dictated by the distribution) in their unordered-polytomous outcome measure. If `'baseline'` is selected, the first element (baseline/reference category) in `reference` is the inflated outcome.
+The flexibility of :func:`gimnl.gimnlmod` allows users to customize the baseline and inflated categories.
+Users can employ the argument `inflatecat` with `'baseline'`, `'second'`, or `'third'` to specify any unordered category as the inflated category (dictated by the distribution) in their unordered-polytomous outcome measure.
+If `'baseline'` is selected, the first element (baseline/reference category) in `reference` is the inflated outcome.
 Likewise, if `'second'` or `'third'` is selection, the second or third element will be the inflated outcome. The following code specifies the outcome '0' (Abstain) as both the baseline and inflated category.
 
 .. testcode::
@@ -856,4 +862,5 @@ The MNL model's run-time is 8.276 seconds. Similar to the GiMNL model, the AIC f
 Contributions
 =============
 
-The authors welcome and encourage new contributors to help test `IDCeMPy` and add new functionality. You can find detailed instructions on "how to contribute" to `IDCeMPy` `here <https://github.com/hknd23/idcempy/blob/main/CONTRIBUTING.md>`_.
+The authors welcome and encourage new contributors to help test `IDCeMPy` and add new functionality.
+You can find detailed instructions on "how to contribute" to `IDCeMPy` `here <https://github.com/hknd23/idcempy/blob/main/CONTRIBUTING.md>`_.
