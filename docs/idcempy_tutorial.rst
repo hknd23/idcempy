@@ -57,7 +57,7 @@ The examples below demonstrate how to use the `IDCeMPy` package to estimate the 
 The example code files, with rough calculation of model run time, are available in the `/examples <https://github.com/hknd23/idcempy/tree/main/examples>`__ directory.
 For each model example below, the run time is available as reference point. The specification used to record the times is Intel Core i7-2600 (3.40GHz Quad core), 16GB RAM.
 Please note that for models in the `zmiopc` module, the run-time for models with correlated errors estimated with :func:`zmiopc.iopcmod` is substantially higher
-than their without correlated errors counterparts using :func:`zmiopc.iopmod`. Other factors affecting run-time are the number of observations and the number of covariates. 
+than their without correlated errors counterparts using :func:`zmiopc.iopmod`. Other factors affecting run-time are the number of observations and the number of covariates.
 
 Zero-inflated Ordered Probit (ZiOP) Model without Correlated Errors
 --------------------------------------------------------------------
@@ -124,6 +124,7 @@ The following message will appear when the model has converged:
          Function evaluations: 1000
          Gradient evaluations: 100
 
+The run-time for this model is 80.006 seconds (N= 9624).
 Object :class:`zmiopc.IopModel` stores model results and goodness-of-fit tests in its attributes 'coefs', 'AIC', 'llik', and 'vcov'.
 
 The following line of code prints the estimates of coefficients:
@@ -255,7 +256,7 @@ We first import the required libraries, set up the package and import the datase
    # offsetx = offset of X.  By Default is zero.
    # offsetz = offset of z
 
-The results are stored in the attributes of :class:`zmiopc.IopCModel`.
+The run-time for this ZiOPC model is 4261.707 seconds. The results are stored in the attributes of :class:`zmiopc.IopCModel`.
 
 .. testoutput::
 
@@ -401,9 +402,9 @@ The following message will appear when the model finishes converging.
          Current function value: 10857.695490
          Iterations: 37
          Function evaluations: 488
-         Gradient evaluations: 61  # See estimates:
+         Gradient evaluations: 61
 
-Print the results of the model.
+The run-time for the model is: 18.886 seconds (N= 11887). Print the results of the model with:
 
 .. testcode::
 
@@ -524,7 +525,7 @@ The model can be estimated as follows:
    # offsetx = offset of X.  By Default is zero.
    # offsetz = offset of z
 
-Print model coefficients:
+The run-time for the model is: 1929.000 seconds (N= 11887). Print model coefficients:
 
 .. testcode::
 
@@ -628,8 +629,6 @@ The list of variable names for the Independent and Dependent variables needs to 
 
 After importing the data and specifying the model, the following code fits the OP model:
 
-
-
 .. testcode::
 
   # Model estimation:
@@ -654,7 +653,7 @@ The following message will appear when the model has converged:
          Function evaluations: 976
          Gradient evaluations: 121
 
-:class:`zmiopc.OpModel` stores results from model estimation and other information in its attributes.
+The model's run-time is 37.694 seconds (N= 9624). :class:`zmiopc.OpModel` stores results from model estimation and other information in its attributes.
 The following line of code to see the estimates of coefficients:
 
 .. testcode::
@@ -758,7 +757,6 @@ Likewise, if `'second'` or `'third'` is selection, the second or third element w
    # Define "inflation" category
    inflatecat = "baseline"
 
-
 .. testcode::
 
    # Estimate the model
@@ -794,7 +792,7 @@ The following line of code prints the coefficients of the covariates:
    2: party7            -0.577 0.058  -9.928 0.000  -0.691 -0.463
    2: agegroup2          0.916 0.235   3.905 0.000   0.456  1.376
 
-The results from the model are stored in a :class:`gimnlModel` with the following attributes:
+The model's run-time is 16.646 seconds (N= 1341). The results from the model are stored in a :class:`gimnlModel` with the following attributes:
 
 - coefs: Model coefficients and standard errors.
 - llik: Log-likelihood.
@@ -842,7 +840,7 @@ Users can fit a standard three-category Multinomial Logit Model (MNL) by specify
   2: party7    -0.567 0.085  -6.641 0.000 -0.734 -0.399
   2: agegroup2  0.899 0.138   6.514 0.000  0.629  1.170
 
-Similar to the GiMNL model, the AIC for the MNL model can also be given by:
+The MNL model's run-time is 8.276 seconds. Similar to the GiMNL model, the AIC for the MNL model can also be given by:
 
 .. testcode::
 
