@@ -39,11 +39,13 @@ The package can be installed in two different ways:
 1. From `PyPi <https://pypi.org/project/idcempy/>`__:
 
 .. testcode::
+
   $  pip install idcempy
 
 2. From its `GitHub Repository <https://github.com/hknd23/idcempy/>`__:
 
 .. testcode::
+
   $  git clone https://github.com/hknd23/idcempy.git
   $  cd idcempy
   $  python setup.py install
@@ -65,6 +67,7 @@ This section provides instruction to estimate the ZiOP model using the self-repo
 We first import the required libraries, set up the package and import the dataset:
 
 .. testcode::
+
   # Import the necessary libraries and package
   import pandas as pd
   import urllib
@@ -77,6 +80,7 @@ We first import the required libraries, set up the package and import the datase
 The data is now a `pandas` DataFrame, and we can proceed to estimate the ZiOP model as follows.
 
 .. testcode::
+
   # First, define a list of variable names of X, Z, and Y.
   # X = Column names of covariates (from `DataFrame`) used in ordered probit stage.
   # Z = Column names of covariates (from `DataFrame`) used in split-population stage.
@@ -92,6 +96,7 @@ The package sets a default start value of .01 for all parameters.
 :func:`zmiopc.iopmod` estimates the ZiOP model and returns :class:`zmiopc.IopModel`.
 
 .. testcode::
+
    # Model estimation:
 
    ziop_tob= zmiopc.iopmod('ziop', data, X, Y, Z, method = 'bfgs', weights = 1, offsetx = 0, offsetz = 0)
