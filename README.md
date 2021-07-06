@@ -107,13 +107,13 @@ Z = ['gender_dum']
 
 The default value of the starting parameters is set to .01. Users can, however, define an array of starting parameters before estimating the `ziopc` model and add it as an argument in the `iopcmod` function. 
 
-The following line of code creates a ziopc regression object model. Please note that the models with correlated errors estimated with `zmiopc.iopcmod` have substantially higher run-time.
+The following line of code creates a ziopc regression object model.
 
 ```python
 ziopc_tob = zmiopc.iopcmod('ziopc', data, X, Y, Z, method='bfgs',
                     weights=1, offsetx=0, offsetz=0)
 ```
-Users can estimate the ZIOP model without correlated errors by using `zmiopc.iopmod` and the parameter 'ziop'.
+Users can estimate the ZIOP model without correlated errors by using `zmiopc.iopmod` and the parameter 'ziop'. Please note that the models with correlated errors estimated with `zmiopc.iopcmod` have substantially higher run-time than `zmiopc.iopmod`. The above model takes roughly 1 hour and 8 minutes (on Windows 10, Intel Core i7-2600, 16GB RAM). 
 
 The results from the ZIOPC model for this application are stored in a class (`ZiopcModel`) with the following attributes:
 
@@ -219,7 +219,7 @@ X = ['Xenophobia', 'discuss_politics']
 Z = ['discuss_politics', 'EU_Know_obj']
 ```
 
-Run the model and print the results:
+Run the model and print the results (this MiOPC specification takes roughly 31 minutes to finish):
 
 ```python
 miopc_EU = zmiopc.iopcmod('miopc', data, X, Y, Z)
