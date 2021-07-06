@@ -84,6 +84,7 @@ First, install pandas and matplotlib to import and visualize data (if the packag
 ```sh
 pip install pandas
 pip install matplotlib
+pip install urllib
 ```
 
 Then, import `IDCeMPy`, required packages, and dataset.
