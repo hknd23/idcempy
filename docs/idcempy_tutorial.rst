@@ -92,14 +92,13 @@ The data is now a `pandas` DataFrame, and we can proceed to estimate the ZiOP mo
   Y = ['cig_count']
 
 The package sets a default start value of .01 for all parameters.
- Users can specify their own starting parameters by creatin a list or numpy.array with their desired values.
+Users can specify their own starting parameters by creating a list or numpy.array with their desired values.
 
 :func:`zmiopc.iopmod` estimates the ZiOP model and returns :class:`zmiopc.IopModel`.
 
 .. testcode::
 
    # Model estimation:
-
    ziop_tob= zmiopc.iopmod('ziop', data, X, Y, Z, method = 'bfgs', weights = 1, offsetx = 0, offsetz = 0)
 
    # 'ziop' = model to be estimated. In this case 'ziop'
@@ -245,7 +244,7 @@ We first import the required libraries, set up the package and import the datase
 
 .. testcode::
 
-    ziopc_tob = zmiopc.iopcmod('ziopc', data, X, Y, Z, method = 'bfgs', weights = 1, offsetx = 0, offsetz = 0)
+   ziopc_tob = zmiopc.iopcmod('ziopc', data, X, Y, Z, method = 'bfgs', weights = 1, offsetx = 0, offsetz = 0)
 
    # 'ziopc' = model to be estimated. In this case 'ziopc'
    # data = name of Pandas DataFrame
@@ -317,7 +316,7 @@ The predicted probabilities from the `ziopc_tob` model can be obtained with :fun
 
 .. testoutput::
 
-  array[[0.88223509 0.06878162 0.01445941 0.0241296  0.01039428]
+ array[[0.88223509 0.06878162 0.01445941 0.0241296  0.01039428]
  [0.84550989 0.08074461 0.01940226 0.03589458 0.01844865]
  [0.93110954 0.04346074 0.00825639 0.01264189 0.00453143]
  ...
@@ -355,7 +354,7 @@ We begin by loading the required libraries and IDCeMPy:
   import urllib
   from idcempy import zmiopc
 
-Next, we load the dataset.
+Next, we load the dataset:
 
 .. testcode::
 
@@ -395,7 +394,7 @@ After importing the dataset and specifying the list of variables from it, the Mi
  # offsetx = offset of X.  By Default is zero.
  # offsetz = offset of z
 
-The following message will appear when the model finishes converging.
+The following message will appear when the model finishes converging:
 
 .. testoutput::
 
@@ -450,7 +449,7 @@ The model object :class:`zmiopc.IopModel` also stores three different diagnostic
    # Print predicted probabilities
    print(fittedmiop.responsefull)
 
-The MiOP model can also work with :func:`zmiopc.split_effects` and :func:`zmiopc.ordered_effects` to compute changes in predicted probabilities when the value of a variable changes.
+The MiOP model can also work with :func:`zmiopc.split_effects` and :func:`zmiopc.ordered_effects` to compute changes in predicted probabilities when the value of a variable changes:
 
 .. testcode::
 
@@ -486,7 +485,7 @@ First is importing the data and libraries:
   import urllib
   from idcempy import zmiopc
 
-Next, we load the dataset.
+Next, we load the dataset:
 
 .. testcode::
 
@@ -570,14 +569,14 @@ To calculate the predicted probabilities:
    # Print predicted probabilities
    print(fittedziopc.responsefull)
 
-The following line of code computes changes in predicted probabilities when the value of a variable changes.
+The following line of code computes changes in predicted probabilities when the value of a chosen variable in the split stage changes:
 
 .. testcode::
 
    # Define model from which effects will be estimated and number of simulations
    miopcxeno = zmiopc.split_effects(miopc_EU, 1, nsims = 10000)
 
-A box plot can illustrate the change in predicted probabilities.
+A box plot can illustrate the change in predicted probabilities:
 
 .. testcode::
 
@@ -739,7 +738,6 @@ The values of the dependent variable must be represented numerically as "0", "1"
 To specify the baseline/reference category, users provide a three-element list for the `reference` argument (e.g [0,1,2]).
 The first element of the list is the baseline/reference category.
 
-
 .. testcode::
 
    # x = Column names of covariates (from `DataFrame`) in the outcome-stage.
@@ -749,7 +747,6 @@ The first element of the list is the baseline/reference category.
    x = ['educ', 'party7', 'agegroup2']
    z = ['educ', 'agegroup2']
    y = ['vote_turn']
-
 
 The flexibility of :func:`gimnl.gimnlmod` allows users to customize the baseline and inflated categories.
 Users can employ the argument `inflatecat` with `'baseline'`, `'second'`, or `'third'` to specify any unordered category as the inflated category (dictated by the distribution) in their unordered-polytomous outcome measure.
@@ -818,7 +815,6 @@ For example, AIC can be printed as follows.
 
   # Print VCOV matrix
   print(gimnl_2004vote.vcov)
-
 
 Users can fit a standard three-category Multinomial Logit Model (MNL) by specifying the list of **x**, **y**, and baseline (using `reference`).
 
