@@ -84,6 +84,7 @@ First, import `IDCeMPy`, required packages, and dataset.
 ```python
 from idcempy import zmiopc
 import pandas as pd
+import matplotlib.pyplot as plot
 import urllib
 url = 'https://github.com/hknd23/idcempy/raw/main/data/tobacco_cons.csv'
 data = pd.read_csv(url)
@@ -155,6 +156,7 @@ The AIC of the OP and ZIOP model reported in the documentation is 8837.44 and 10
 ```python
 ziopcgender_split = zmiopc.split_effects(ziopc_tob, 1)
 ziopcgender_split.plot.box(grid='False')
+plot.show()
 ```
 
 <p align="center">
@@ -168,6 +170,7 @@ ziopcgender_split.plot.box(grid='False')
 ```python
 ziopcgender_ordered = zmiopc.ordered_effects(ziopc_tob, 2)
 ziopcgender_ordered.plot.box(grid='False')
+plot.show()
 ```
 
 <p align="center">
