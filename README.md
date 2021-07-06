@@ -295,7 +295,7 @@ The Vuong test statistic thus favors the MIOPC over the OP model, and also the M
 Users can fit the standard MNL model(available from `mnlmod`) to the Campbell and Monson (2008) data, which is described in the documentation. To illustrate how users can fit the BIMNL model to this data, however, we begin by importing the `gimnl` module.
 
 ```python
-from zmiopc import gimnl
+from idcempy import gimnl
 url= 'https://github.com/hknd23/idcempy/raw/main/data/replicationdata.dta'
 data= pd.read_stata(url)
 ```
