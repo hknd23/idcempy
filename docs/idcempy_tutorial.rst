@@ -80,6 +80,7 @@ We first import the required libraries, set up the package and import the datase
   # Import the necessary libraries and package
   import pandas as pd
   import urllib
+  import matplotlib.pyplot as plot
   from idcempy import zmiopc
 
   # Import the "Youth Tobacco Consumption" dataset as a pandas.DataFrame
@@ -208,7 +209,7 @@ being in one population versus another. The example below illustrates the margin
 The returned dataframe contains predicted probabilities when 'gender_dum' equals 0, and when 'gender_dum' equals 1.
 
 Likewise, :func:`zmiopc.ordered_effects` can also calculate the change in predicted probabilities in each of the ordered outcomes in the ordered-probit stage when the value of a covarariate changes.
-Results from :func:`zmiopc.split_effects` and :func:`zmiopc.ordered_effects` can be illustrated using box plots:
+Results from :func:`zmiopc.split_effects` and :func:`zmiopc.ordered_effects` can be illustrated using `matplotlib` box plots:
 
 .. testcode::
 
@@ -229,6 +230,7 @@ We first import the required libraries, set up the package and import the datase
   # Import the necessary libraries and IDCeMPy.
   import pandas as pd
   import urllib
+  import matplotlib.pyplot as plot
   from idcempy import zmiopc
 
   # Import the "Youth Tobacco Consumption" dataset.
@@ -360,6 +362,7 @@ We begin by loading the required libraries and IDCeMPy:
   # Import the necessary libraries and IDCeMPy.
   import pandas as pd
   import urllib
+  import matplotlib.pyplot as plot
   from idcempy import zmiopc
 
 Next, we load the dataset:
@@ -491,6 +494,7 @@ First is importing the data and libraries:
   # Import the necessary libraries and IDCeMPy.
   import pandas as pd
   import urllib
+  import matplotlib.pyplot as plot
   from idcempy import zmiopc
 
 Next, we load the dataset:
