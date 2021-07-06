@@ -180,7 +180,7 @@ Module `zmiopc` also provides the function `vuong_opiopc` that employs the Vuong
 
 ```python
 op_tob = zmiopc.opmod(data, X, Y)
-zmiopc.vuong_opiopc(op_tob,ziopc_tob)
+zmiopc.vuong_opiopc(op_tob, ziopc_tob)
 ```
 
 ```python
@@ -196,8 +196,8 @@ We next illustrate how **IDCeMPy** can be employed to fit the OP and MIOP(C) mod
 We turn to fit the Middle-Inflated Ordered Probit Model with correlated errors (MIOPC) to the aforementioned data. To this end, first load the dataset.
 
 ```python
-url= 'https://github.com/hknd23/idcempy/raw/main/data/EUKnowledge.dta'
-data= pd.read_stata(url)
+url = 'https://github.com/hknd23/idcempy/raw/main/data/EUKnowledge.dta'
+data = pd.read_stata(url)
 ```
 
 Users can define the lists with names of the covariates they would like to include in the MIOPC model's split-stage (**Z**) and the second-stage (**X**) as well as the name of the ordered "middle-inflated" outcome variable (**Y**).
@@ -352,8 +352,8 @@ gimnl.vuong_gimnl(mnl_2004vote, gimnl_2004vote)
 
 Users can employ the argument `inflatecat` to specify any unordered category as the inflated category (dictated by the distribution) in their unordered-polytomous outcome measure. If a higher category (say 1 or 2) is inflated in the 0,1,2 unordered-polytomous outcome measure, then users can specify `reference` and `inflatecat` as follows,
 ```python
-gimnl.gimnlmod(data, x, y, z, reference, inflatecat="second")
-gimnl.gimnlmod(data, x, y, z, reference, inflatecat="third")
+gimnl.gimnlmod(data, x, y, z, reference, inflatecat = "second")
+gimnl.gimnlmod(data, x, y, z, reference, inflatecat = "third")
 ```
 ## Contributions
 
