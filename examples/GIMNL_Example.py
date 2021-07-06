@@ -2,7 +2,6 @@ import pandas as pd
 from idcempy import gimnl
 import os
 import time
-import numpy as np
 
 DAT = pd.read_stata(
     os.getcwd() + "/data/replicationdata.dta", convert_categoricals=False)

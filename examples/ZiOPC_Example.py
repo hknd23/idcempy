@@ -1,7 +1,7 @@
-import numpy as np
 import pandas as pd
 import time
 import os
+import matplotlib.pyplot as plot
 from idcempy import zmiopc
 
 DAT = pd.read_stata(
