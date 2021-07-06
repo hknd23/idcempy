@@ -20,7 +20,8 @@ sets of “inflated” discrete choice models:
 When Should You use `IDCeMPy`?
 ==============================
 
-An excessive (“inflated”) share of observations—stemming from two distinct d.g.p’s—fall into a single choice category in many ordered and unordered polytomous outcome variables. Standard Ordered Probit and Multinomial Logit models cannot account for such category inflation which leads to biased inferences. Examples for such d.g.p’s include:
+An excessive (“inflated”) share of observations—stemming from two distinct d.g.p’s—fall into a single choice category in many ordered and unordered polytomous outcome variables.
+Standard Ordered Probit and Multinomial Logit models cannot account for such category inflation which leads to biased inferences. Examples for such d.g.p’s include:
 
 * The inflated zero-category of "no smoking" in ordered measures of self-reported smoking behavior is generated from nonsmokers who never smoke cigarettes and those who smoked previously but temporarily stopped smoking because of high cigarette prices.
 
