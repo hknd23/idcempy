@@ -79,11 +79,19 @@ We illustrate how **IDCeMPy** can be used to estimate the OP and ZIOP(C) models 
 
 **IDCeMPy** allows users to fit the ordered probit (OP) and Zero-inflated Ordered Probit (ZIOP) model without and with correlated errors (ZIOPC). The application of the OP model (avaiable from `opmod`) and ZIOP model without correlated errors (see `iopmod`) to the CDC's 2018 Tobacco Consumption data is provided in the package's documentation. We fit the Zero-Inflated Ordered Probit Model with correlated errors to this data below.
 
-First, import `IDCeMPy`, required packages, and dataset.
+First, install pandas and matplotlib to import and visualize data (if the packages are not already installed):
+
+```sh
+pip install pandas
+pip install matplotlib
+```
+
+Then, import `IDCeMPy`, required packages, and dataset.
 
 ```python
 from idcempy import zmiopc
 import pandas as pd
+import matplotlib.pyplot as plot
 import urllib
 url = 'https://github.com/hknd23/idcempy/raw/main/data/tobacco_cons.csv'
 data = pd.read_csv(url)
@@ -98,13 +106,13 @@ Z = ['gender_dum']
 
 The default value of the starting parameters is set to .01. Users can, however, define an array of starting parameters before estimating the `ziopc` model and add it as an argument in the `iopcmod` function. 
 
-The following line of code creates a ziopc regression object model.
+The following line of code creates a ziopc regression object model. Please note that the models with correlated errors estimated with `zmiopc.iopcmod` have substantially higher run-time.
 
 ```python
 ziopc_tob = zmiopc.iopcmod('ziopc', data, X, Y, Z, method='bfgs',
                     weights=1, offsetx=0, offsetz=0)
 ```
-Users can estimate the ZIOP model without correlated errors by simply substituting the parameter 'ziop' for 'ziopc'.
+Users can estimate the ZIOP model without correlated errors by using `zmiopc.iopmod` and the parameter 'ziop'.
 
 The results from the ZIOPC model for this application are stored in a class (`ZiopcModel`) with the following attributes:
 
@@ -116,7 +124,7 @@ The results from the ZIOPC model for this application are stored in a class (`Zi
 We can generate the covariate estimates, standard errors, *p* value and *t* statistics in the ZIOPC case by typing:
 
 ```python
-print(ziopc_tobb.coefs)
+print(ziopc_tob.coefs)
 ```
 
 ```python
@@ -142,7 +150,7 @@ rho                   -0.415770  0.074105  -5.610526  2.017123e-08  -0.561017  -
 The Akaike Information Criterion (AIC) statistics for the ZIOPC model is given by,
 
 ```python
-print(ziopc_tobb.AIC)
+print(ziopc_tob.AIC)
 ```
 
 ```python
@@ -155,6 +163,7 @@ The AIC of the OP and ZIOP model reported in the documentation is 8837.44 and 10
 ```python
 ziopcgender_split = zmiopc.split_effects(ziopc_tob, 1)
 ziopcgender_split.plot.box(grid='False')
+plot.show()
 ```
 
 <p align="center">
@@ -168,6 +177,7 @@ ziopcgender_split.plot.box(grid='False')
 ```python
 ziopcgender_ordered = zmiopc.ordered_effects(ziopc_tob, 2)
 ziopcgender_ordered.plot.box(grid='False')
+plot.show()
 ```
 
 <p align="center">
