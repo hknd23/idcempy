@@ -1,7 +1,7 @@
 # Contributing to IDCeMPy
 
 Welcome to `IDCeMPy` package, and thank you for considering contributing to this Python
-package. Please note that you can contribute in many ways, including fixing a bug, adding a new
+package. Please note that you can contribute in many ways, including fixing a bug, requesting a new
 feature, code patches, editing the documentation, and patch reviews. We appreciate your help in
 improving any feature included in this package.
 
