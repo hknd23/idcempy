@@ -79,7 +79,14 @@ We illustrate how **IDCeMPy** can be used to estimate the OP and ZIOP(C) models 
 
 **IDCeMPy** allows users to fit the ordered probit (OP) and Zero-inflated Ordered Probit (ZIOP) model without and with correlated errors (ZIOPC). The application of the OP model (avaiable from `opmod`) and ZIOP model without correlated errors (see `iopmod`) to the CDC's 2018 Tobacco Consumption data is provided in the package's documentation. We fit the Zero-Inflated Ordered Probit Model with correlated errors to this data below.
 
-First, import `IDCeMPy`, required packages, and dataset.
+First, install pandas and matplotlib to import and visualize data (if the packages are not already installed):
+
+```sh
+pip install pandas
+pip install matplotlib
+```
+
+Then, import `IDCeMPy`, required packages, and dataset.
 
 ```python
 from idcempy import zmiopc
@@ -99,13 +106,13 @@ Z = ['gender_dum']
 
 The default value of the starting parameters is set to .01. Users can, however, define an array of starting parameters before estimating the `ziopc` model and add it as an argument in the `iopcmod` function. 
 
-The following line of code creates a ziopc regression object model.
+The following line of code creates a ziopc regression object model. Please note that the models with correlated errors estimated with `zmiopc.iopcmod` have substantially higher run-time.
 
 ```python
 ziopc_tob = zmiopc.iopcmod('ziopc', data, X, Y, Z, method='bfgs',
                     weights=1, offsetx=0, offsetz=0)
 ```
-Users can estimate the ZIOP model without correlated errors by simply substituting the parameter 'ziop' for 'ziopc'.
+Users can estimate the ZIOP model without correlated errors by using `zmiopc.iopmod` and the parameter 'ziop'.
 
 The results from the ZIOPC model for this application are stored in a class (`ZiopcModel`) with the following attributes:
 
