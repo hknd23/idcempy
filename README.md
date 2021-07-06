@@ -124,7 +124,7 @@ The results from the ZIOPC model for this application are stored in a class (`Zi
 We can generate the covariate estimates, standard errors, *p* value and *t* statistics in the ZIOPC case by typing:
 
 ```python
-print(ziopc_tobb.coefs)
+print(ziopc_tob.coefs)
 ```
 
 ```python
@@ -150,7 +150,7 @@ rho                   -0.415770  0.074105  -5.610526  2.017123e-08  -0.561017  -
 The Akaike Information Criterion (AIC) statistics for the ZIOPC model is given by,
 
 ```python
-print(ziopc_tobb.AIC)
+print(ziopc_tob.AIC)
 ```
 
 ```python
