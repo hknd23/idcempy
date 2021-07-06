@@ -60,6 +60,14 @@ For each model example below, the run time is available as reference point. The 
 Please note that for models in the `zmiopc` module, the run-time for models with correlated errors estimated with :func:`zmiopc.iopcmod` is substantially higher
 than their without correlated errors counterparts using :func:`zmiopc.iopmod`. Other factors affecting run-time are the number of observations and the number of covariates.
 
+The examples use the pandas, urllib, and matplotlib packages for importing and visualizing data:
+
+.. testcode::
+
+  $  pip install pandas
+  $  pip install matplotlib
+  $  pip install urllib
+
 Zero-inflated Ordered Probit (ZiOP) Model without Correlated Errors
 -------------------------------------------------------------------
 The :func:`zmiopc.iopmod` function estimates regression objects for "zero-inflated" and "middle-inflated" ordered probit models without correlated errors.
