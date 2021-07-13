@@ -5,7 +5,7 @@
 <!-- badges: start -->
 
 [![PyPI version](https://badge.fury.io/py/idcempy.svg)](https://badge.fury.io/py/idcempy)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/idcempy)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/idcempy)](https://pypi.org/project/idcempy/)
 [![Downloads](https://pepy.tech/badge/idcempy)](https://pepy.tech/project/idcempy)
 [![Project Status: Active â€“ The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
