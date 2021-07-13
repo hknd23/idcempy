@@ -4,7 +4,7 @@
 
 <!-- badges: start -->
 
-[![PyPI version](https://badge.fury.io/py/idcempy.svg)](https://badge.fury.io/py/idcempy)
+[![PyPI](https://img.shields.io/pypi/v/idcempy?color=green)](https://pypi.org/project/idcempy/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/idcempy)](https://pypi.org/project/idcempy/)
 [![Downloads](https://pepy.tech/badge/idcempy)](https://pepy.tech/project/idcempy)
 [![Project Status: Active â€“ The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
