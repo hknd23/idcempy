@@ -59,7 +59,7 @@ The functions in `IDCeMPy` use quasi-Newton optimization methods such as the Bro
 
 * `opmod`; `iopmod`; `iopcmod`: Fits the ordered probit model, the Zero-Inflated (ZIOP) and Middle-Inflated ordered probit (MIOP) models without correlated errors, and the ZIOPC and MIOPC models that incorporate correlated errors.
 
-* `opresults`; `iopresults`; `iopcresults`: Presents covariate estimates, Variance-Covariance (VCV) matrix, Log-Likelihood and AIC statistics of the object models.
+* `opresults`; `iopresults`; `iopcresults`: Presents covariate estimates, Variance-Covariance (VCV) matrix, Log-Likelihood, and AIC statistics of the object models.
 
 * `iopfit`; `iopcfit`: Computes fitted probabilities from each estimated model’s objects.
 
@@ -69,7 +69,7 @@ The functions in `IDCeMPy` use quasi-Newton optimization methods such as the Bro
 
 * `mnlmod`; `gimnlmod`: Fits MNL model and Generalized-Inflated MNL models.
 
-* `mnlresults`; `gimnlresults`; `vuong_gimnl`: Presents covariate estimates, VCV matrix, Log-Likelihood and AIC statistics of `mnlmod`; `gimnlmod`. Vuong test statistic for comparing MNL to GIMNL models obtained from `vuong_gimnl`. 
+* `mnlresults`; `gimnlresults`; `vuong_gimnl`: Presents covariate estimates, VCV matrix, Log-Likelihood, and AIC statistics of `mnlmod`; `gimnlmod`. Vuong test statistic for comparing MNL to GIMNL models obtained from `vuong_gimnl`. 
 
 
 Details about the functionality summarized above are available at the [package’s documentation website](https://idcempy.readthedocs.io/en/latest/), which is open-source and hosted by [ReadTheDocs](https://readthedocs.org/). The features of the functions in `IDCeMPy` that fit the, 
