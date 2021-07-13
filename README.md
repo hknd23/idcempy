@@ -15,10 +15,10 @@
 sets of “inflated” discrete choice models.
 
 * Fit the Zero-Inflated Ordered Probit (ZIOP) model without and with correlated errors (ZIOPC
-model) to evaluate zero-inflated ordered choice outcomes that results from a dual data generating
+model) to evaluate zero-inflated ordered choice outcomes that result from a dual data generating
 process (d.g.p.).
-* Fit the Middle-Inflated Ordered Probit (MIOP) model without and with correlated errors (MIOPC) to account for the inflated middle-category in ordered choice measures that relates to a dual d.g.p.
-* Fit Generalized Inflated Multinomial Logit (GIMNL) models that account for the preponderant and heterogeneous share of observations in the baseline or any lower category in unordered polytomous choice outcomes.
+* Fit the Middle-Inflated Ordered Probit (MIOP) model without and with correlated errors (MIOPC) to account for the inflated middle-category in ordered choice measures related to a dual d.g.p.
+* Fit Generalized Inflated Multinomial Logit (GIMNL) models account for the predominant and heterogeneous share of observations in the baseline or any lower category in unordered polytomous choice outcomes.
 * Compute AIC and Log-likelihood statistics and the Vuong Test statistic to assess the performance of each inflated discrete choice model in the package.
 
 **IDCeMPy** uses Newton numerical optimization methods to estimate the inflated discrete choice models listed above via Maximum Likelihood Estimation (MLE).  
@@ -75,9 +75,9 @@ On [readthedocs](https://idcempy.readthedocs.io/en/latest/) you will find the in
 ## Using the Package
 
 ### Example 1: Zero-inflated Ordered Probit Model with Correlated Errors (ZIOPC)
-We illustrate how **IDCeMPy** can be used to estimate the OP and ZIOP(C) models for zero-inflated ordered outcome variables by using the CDC's 2018 [National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm). The self-reported ordered tobacco consumption outcome variable in this data ranges from 0 for "no smoking" to 4 for "15 or more cigarettes". The zero "no smoking" category contains excessive observations that includes permanent nonsmokers who never smoke (non-inflated cases) and transient nonsmokers (inflated cases) who temporarily stopped smoking because of high cigarette prices.   
+We illustrate how **IDCeMPy** can be used to estimate the OP and ZIOP(C) models for zero-inflated ordered outcome variables by using the CDC's 2018 [National Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/index.htm). The self-reported ordered tobacco consumption outcome variable in this data ranges from 0 for "no smoking" to 4 for "15 or more cigarettes". The zero "no smoking" category contains excessive observations that include permanent nonsmokers who never smoke (non-inflated cases) and transient nonsmokers (inflated cases) who temporarily stopped smoking because of high cigarette prices.   
 
-**IDCeMPy** allows users to fit the ordered probit (OP) and Zero-inflated Ordered Probit (ZIOP) model without and with correlated errors (ZIOPC). The application of the OP model (avaiable from `opmod`) and ZIOP model without correlated errors (see `iopmod`) to the CDC's 2018 Tobacco Consumption data is provided in the package's documentation. We fit the Zero-Inflated Ordered Probit Model with correlated errors to this data below.
+**IDCeMPy** allows users to fit the ordered probit (OP) and Zero-inflated Ordered Probit (ZIOP) model without and with correlated errors (ZIOPC). The application of the OP model (available from `opmod`) and ZIOP model without correlated errors (see `iopmod`) to the CDC's 2018 Tobacco Consumption data is provided in the package's documentation. We fit the Zero-Inflated Ordered Probit Model with correlated errors to this data below.
 
 First, install pandas and matplotlib to import and visualize data (if the packages are not already installed):
 
@@ -157,7 +157,7 @@ print(ziopc_tob.AIC)
 ```python
 16061.716497590078
 ```
-The AIC of the OP and ZIOP model reported in the documentation is 8837.44 and 10138.32, respectively.
+The AIC of the OP and ZIOP models reported in the documentation is 8837.44 and 10138.32, respectively.
 
 `split_effects` creates a dataframe that provides values to illustrate via boxplots (with 95% Confidence Intervals) the marginal effect of the ZIOP(C) model's split-stage covariates on the first difference in the predicted probability that the zero-category observations are non-inflated. In the tobacco consumption example,`split_effects` provides and illustrates via boxplots (with 95% CIs) the first difference in the predicted probability of zero-category observations being permanent nonsmokers (non-inflated cases) when the dummy split-stage covariate 'gender_dum' changes from 0 (female) to 1 (male).
 
@@ -187,7 +187,7 @@ plot.show()
    <em>Fig. 2: Marginal Effect of Gender on Self-Reported Tobacco Consumption</em>
 </p>
 
-Module `zmiopc` also provides the function `vuong_opiopc` that employs the Vuong test statistic to compare the performace of the standard OP model (also available through `opmod`) versus the ZIOPC model and also the OP versus ZIOP model. The Vuong statistics from comparing the OP and the ZIOPC model is given by,
+Module `zmiopc` also provides the function `vuong_opiopc` that employs the Vuong test statistic to compare the performance of the standard OP model (also available through `opmod`) versus the ZIOPC model and also the OP versus ZIOP model. The Vuong statistics from comparing the OP and the ZIOPC model is given by,
 
 ```python
 op_tob = zmiopc.opmod(data, X, Y)
@@ -200,7 +200,7 @@ zmiopc.vuong_opiopc(op_tob, ziopc_tob)
 The Vuong test statistic favors the OP over both the ZIOPC model and ZIOP model (see documentation).
 
 ### Example 2: Middle-inflated Ordered Probit Models with Correlated Errors (MIOPC)
-We next illustrate how **IDCeMPy** can be employed to fit the OP and MIOP(C) models for inflated middle-category ordered outcome variables. This is done by using Elgün and Tillman's ([2007](https://journals.sagepub.com/doi/10.1177/1065912907305684)) survey-response data in which the ordered outcome measure of support for the European Union (EU) by Europeans is given by 1 for “a bad thing,” 2 for “neither good nor bad,” and 3 for “a good thing.” The middle (neither good nor bad) category in this ordered measure contains excessive observations that includes informed respondents who opt for this category based on their knowledge about the EU and uninformed respondents who choose this category to save face.
+We next illustrate how **IDCeMPy** can be employed to fit the OP and MIOP(C) models for inflated middle-category ordered outcome variables. This is done by using Elgün and Tillman's ([2007](https://journals.sagepub.com/doi/10.1177/1065912907305684)) survey-response data in which the ordered outcome measure of support for the European Union (EU) by Europeans is given by 1 for “a bad thing,” 2 for “neither good nor bad,” and 3 for “a good thing.” The middle (neither good nor bad) category in this ordered measure contains excessive observations that include informed respondents who opt for this category based on their knowledge about the EU and uninformed respondents who choose this category to save face.
 
 **IDCeMPy** allows users to fit the OP and Middle-inflated Ordered Probit (MIOP) model without and with correlated errors (MIOPC). The application of the OP model from `opmod` and MIOP model without correlated errors from `iopmod` to the EU support data is provided in the package's documentation. Users can estimate the MIOP model without correlated errors by simply substituting 'miop' for 'miopc'.
 
@@ -264,7 +264,7 @@ In this EU support example, the `split_effects` dataframe provides and illustrat
    <em>Fig. 3: Marginal Effect of EU Knowledge on Probability of Informed Respondents</em>
 </p>
 
-`ordered_effects()` calculates and illustrates via boxplots (with 95% CI) the first difference in predicted probabilities of each ordered outcome category of "EU Support" when the  outcome-stage Xenophobia covariate is increased by 1 standard deviation from its mean value, conditional on middle-category observations being informed respondents.
+`ordered_effects()` calculates and illustrates via boxplots (with 95% CI) the first difference in predicted probabilities of each ordered outcome category of "EU Support" when the outcome-stage Xenophobia covariate is increased by 1 standard deviation from its mean value, conditional on middle-category observations being informed respondents.
 
 ```python
 xeno = zmiopc.ordered_effects(miopc_EU, 2)
@@ -290,7 +290,7 @@ zmiopc.vuong_opiopc(op_EU, miopc_EU)
 The Vuong test statistic thus favors the MIOPC over the OP model, and also the MIOP over the OP model (see documentation).
 
 ### Example 3: Generalized Inflated Multinomial Logit Models (GIMNL)
-**IDCeMPy** also includes functions to fit the GIMNL and standard MNL models. The Generalized Inflated Multinomial Logit Models account for the inflated and thus heterogenous share of observations that can exist in the baseline or any other category of unordered polytomous outcome variables. To save space, we focus on just presenting the "Baseline" Inflated MNL (i.e., BIMNL) model that addresses excessive observations in the baseline category of unordered outcome measures. We fit this BIMNL model to the 2004 Presidential vote choice data from [Campbell and Monson (2008)](https://academic.oup.com/poq/article-abstract/72/3/399/1836972). The 0,1,2 unordered-polytomous Presidential vote choice dependent variable in their data includes the following options: abstained (their MNL baseline category), Bush, or Kerry. The inflated baseline category incorporates excessive observations of abstained nonvoters who did not vote in the said elections owing to temporary factors and routine nonvoters who never vote.   
+**IDCeMPy** also includes functions to fit the GIMNL and standard MNL models. The Generalized Inflated Multinomial Logit Models account for the inflated and thus heterogeneous share of observations that can exist in the baseline or any other category of unordered polytomous outcome variables. To save space, we focus on just presenting the "Baseline" Inflated MNL (i.e., BIMNL) model that addresses excessive observations in the baseline category of unordered outcome measures. We fit this BIMNL model to the 2004 Presidential vote choice data from [Campbell and Monson (2008)](https://academic.oup.com/poq/article-abstract/72/3/399/1836972). The 0,1,2 unordered-polytomous Presidential vote choice dependent variable in their data includes the following options: abstained (their MNL baseline category), Bush, or Kerry. The inflated baseline category incorporates excessive observations of abstained nonvoters who did not vote in the said elections due to temporary factors and routine nonvoters who never vote.   
 
 Users can fit the standard MNL model(available from `mnlmod`) to the Campbell and Monson (2008) data, which is described in the documentation. To illustrate how users can fit the BIMNL model to this data, however, we begin by importing the `gimnl` module.
 
