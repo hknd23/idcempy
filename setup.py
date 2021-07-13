@@ -9,7 +9,7 @@ with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
 setup(
     name="idcempy",
     packages=find_packages(where="idcempy"),
-    version="0.0.9",
+    version="0.1.0",
     license='GPLv3',
     description="Inflated Discrete Choice Models",
     long_description=long_description,
@@ -23,6 +23,8 @@ setup(
         "Development Status :: 3 - Alpha",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "Intended Audience :: Science/Research",
     ],
 )
