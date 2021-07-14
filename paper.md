@@ -84,6 +84,6 @@ Youth Tobacco Dataset](https://www.cdc.gov/tobacco/data_statistics/surveys/nyts/
 
 # Availability and Installation
 
-`IDCeMPy` is an Open-source software made available under the [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0). It can be installed from [PyPi](https://pypi.org/project/idcempy/) or from its [GitHub repository](https://github.com/hknd23/idcempy). 
+`IDCeMPy` is an Open-source software made available under the [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0). It can be installed from [PyPI](https://pypi.org/project/idcempy/) or from its [GitHub repository](https://github.com/hknd23/idcempy). 
 
 # References
