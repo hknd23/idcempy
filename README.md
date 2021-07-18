@@ -3,7 +3,7 @@
 *Nguyen K. Huynh, Sergio Bejar, Vineeta Yadav, Bumba Mukherjee*
 
 <!-- badges: start -->
-
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5112352.svg)](https://doi.org/10.5281/zenodo.5112352)
 [![PyPI](https://img.shields.io/pypi/v/idcempy?color=brightgreen)](https://pypi.org/project/idcempy/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/idcempy)](https://pypi.org/project/idcempy/)
 [![Downloads](https://pepy.tech/badge/idcempy)](https://pepy.tech/project/idcempy)
