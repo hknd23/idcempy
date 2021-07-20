@@ -63,7 +63,7 @@ From [PyPi](https://pypi.org/project/idcempy/):
 pip install idcempy
 ```
 
-From [GitHub](https://github.com/)
+From [GitHub](https://github.com/hknd23/idcempy/)
 
 ```sh
 git clone https://github.com/hknd23/idcempy.git
