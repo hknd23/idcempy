@@ -9,6 +9,7 @@
 [![Downloads](https://pepy.tech/badge/idcempy)](https://pepy.tech/project/idcempy)
 [![Project Status: Active â€“ The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Documentation Status](https://readthedocs.org/projects/idcempy/badge/?version=latest)](https://idcempy.readthedocs.io/en/latest/?badge=latest)
 <!-- badges: end -->
 
 **IDCeMPy** is a Python package that provides functions to fit and assess the performance of the following distinct
